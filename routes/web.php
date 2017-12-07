@@ -11,6 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// HF Routes
+Route::get('/','Guest\InitPageController@view')
+	->name('view_init_page');
+
+	
