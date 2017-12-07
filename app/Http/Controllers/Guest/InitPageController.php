@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 class InitPageController extends Controller
 {
 	public function view() {
-		return view('guest.init', array());
+		return view('template.index', array());
+// 		return view('guest.init', array());
 	}
 }
