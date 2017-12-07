@@ -21,11 +21,11 @@
 	<!-- Jquery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-<!-- Google Font & Icons-->
-<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<!-- Google Font & Icons-->
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-<!-- MDL -->
+	<!-- MDL -->
 	<link rel="stylesheet" type="text/css" href="https://code.getmdl.io/1.3.0/material.blue-red.min.css">
 	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
@@ -56,60 +56,16 @@
 			</div>
 			<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
 				<div class="mdl-grid">
+					@foreach ($groups as $group)
 					<div class="mdl-cell mdl-cell--2-col-phone mdl-cell--2-col-tablet mdl-cell--1-offset-tablet mdl-cell--2-col-desktop">
 						<div class="card_service_col2">
-							<a class="card_service_button" href="/sua-dien">
-								<img src="img/services/sua-dien-icon.png" class="card_service_img">
-								<br>
-								<p class="card_service_title">SỬA ĐIỆN</p>
+							<a class="card_service_button" href="#">
+								<img src="img/services/groups/{{ $group['id'] }}.png" class="card_service_img">
+								<br><p class="card_service_title">{{ $group['name'] }}</p>
 							</a>
 						</div>
 					</div>
-					<div class="mdl-cell mdl-cell--2-col-phone mdl-cell--2-col-tablet mdl-cell--2-col-desktop">
-						<div class="card_service_col2">
-							<a class="card_service_button" href="/sua-dien">
-								<img src="img/services/sua-nuoc-icon.png" class="card_service_img">
-								<br>
-								<p class="card_service_title">SỬA NƯỚC</p>
-							</a>
-						</div>
-					</div>
-					<div class="mdl-cell mdl-cell--2-col-phone mdl-cell--2-col-tablet mdl-cell--2-col-desktop">
-						<div class="card_service_col2">
-							<a class="card_service_button" href="/sua-dien">
-								<img src="img/services/dien-lanh-icon.png" class="card_service_img">
-								<br>
-								<p class="card_service_title">ĐIỆN LẠNH</p>
-							</a>
-						</div>
-					</div>
-					<div class="mdl-cell mdl-cell--2-col-phone mdl-cell--2-col-tabletmdl-cell--1-offset-tablet mdl-cell--2-col-desktop">
-						<div class="card_service_col2">
-							<a class="card_service_button" href="/sua-dien">
-								<img src="img/services/sua-khoa-icon.png" class="card_service_img">
-								<br>
-								<p class="card_service_title">KHÓA - CỬA</p>
-							</a>
-						</div>
-					</div>
-					<div class="mdl-cell mdl-cell--2-col-phone mdl-cell--2-col-tablet mdl-cell--2-col-desktop">
-						<div class="card_service_col2">
-							<a class="card_service_button" href="/sua-dien">
-								<img src="img/services/chup-anh-icon.png" class="card_service_img">
-								<br>
-								<p class="card_service_title">CHỤP ẢNH</p>
-							</a>
-						</div>
-					</div>
-					<div class="mdl-cell mdl-cell--2-col-phone mdl-cell--2-col-tablet mdl-cell--2-col-desktop">
-						<div class="card_service_col2">
-							<a class="card_service_button" href="/sua-dien">
-								<img src="img/services/su-kien-icon.png" class="card_service_img">
-								<br>
-								<p class="card_service_title">SỰ KIỆN</p>
-							</a>
-						</div>
-					</div>	
+					@endforeach
 				</div>
 			</div>
 		</div>
@@ -144,39 +100,6 @@
 		</div>
 	</section>
 
-	<!-- SECTION SERVICE -->
-	<section id="service" >
-		<div class="mdl-grid">
-			<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--8-col-desktop mdl-cell--2-offset-desktop">
-				<div class="mdl-grid">
-					<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--4-col-tablet mdl-cell--6-col-desktop">
-						<button class="services" id="">
-							<img src="img/services/icon.png" class="service-icon">
-							<h4></h4>
-						</button>
-					</div>
-
-					<!-- The Modal -->
-					<div id="myModal" class="modal">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button style="float:left; vertical-align: middle;" class="close"><i class="material-icons">keyboard_backspace</i></button>
-								<img style="margin-top: 20px;" src="img/logoh.png" width="50%">
-							</div>
-							<div class="modal-body" style="overflow-y: auto;">
-								<div class="service_switch_row">
-									<button class="selected_service">Câu Hỏi 1 (Trong 5)</button>
-								</div>
-							</div>
-							<div class="modal-footer">
-								<input type="submit" value="ĐẶT" id="order_button">
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
 
 		<!-- SECTION FEATURED -->
 	<section style="text-align: center;">
@@ -219,67 +142,6 @@
 		</div>
 	</section>
 
-	@include('template.nav')
 	</div>
-
-
-	<script type="text/javascript">
-		$(document).ready(function(){
-		$(".services").click(function(){
-		$(this).next().toggle();
-		});
-		});
-	</script>
-	<script type="text/javascript">
-		$('.services').click(function() {
-		var service_group = $(this).attr('id');
-		$.ajax ({
-			url: "ajax.php",
-			method: "post",
-			data: { service_group: service_group },
-			success: function (data){
-				$('.mdl-dialog__content').html(data);
-			}
-		}); 
-		$('#myModal').css({ display: "block" });
-	});
-
-		$('.close').click(function() {
-		$('#myModal').css({ display: "none" });
-		});
-
-		// When the user clicks anywhere outside of the modal, close it
-		var modal = document.getElementById('myModal');
-		window.onclick = function(event) {
-		if (event.target == modal) {
-		modal.style.display = "none";
-		}
-		}
-	</script>
-
-	<!-- <script>
-	var dialog = document.querySelector('dialog');
-	if (!dialog.showModal) {
-	dialogPolyfill.registerDialog(dialog);
-	}
-
-	$('.services').click(function() {
-		var service_group = $(this).attr('id');
-		$.ajax ({
-			url: "ajax.php",
-			method: "post",
-			data: { service_group: service_group },
-			success: function (data){
-				$('.mdl-dialog__content').html(data);
-			}
-		}); 
-		dialog.showModal();
-	});
-
-	dialog.querySelector('.close').addEventListener('click', function() {
-	dialog.close();
-	});
-	</script> -->
-<script src="./app.js" async></script>
 </body>
 </html>
