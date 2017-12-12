@@ -58,7 +58,7 @@
 			<p style="margin: 20px;">Vui lòng điền thông tin đầy đủ và chính xác để Hand Free có thể liên hệ bạn sớm nhất.</p>
 			<!-- Form Signup -->
 			<div class="login-signup-tab-panel" id="signup-panel">
-				<form id="frmMain" class="login-signup-form" role="form" method="POST" action="partner/sign-up">
+				<form id="frmMain" class="login-signup-form" role="form" method="POST" action="partner/signup">
 					<div class="mdl-textfield mdl-js-textfield">
 						<input class="mdl-textfield__input" type="text" name='name' placeholder="Tên đầy đủ" style="font-family: 'Roboto';font-size: 14px;">
 					</div>
@@ -102,7 +102,6 @@
 					<div class="mdl-textfield mdl-js-textfield">							
 						<input class="mdl-textfield__input" type="text" name='nationalid' placeholder="CMND" style="font-family: 'Roboto';font-size: 14px;">
 					</div>
-					
 					
 					<center><button type="submit" id="btnSignUp" class='mdl-button mdl-js-button mdl-button--raised mdl-button--colored'>ĐĂNG KÝ</button></center>
 					<input type="hidden" name="role" value="1" />

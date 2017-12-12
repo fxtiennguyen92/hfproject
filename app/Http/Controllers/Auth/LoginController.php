@@ -4,36 +4,90 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
+	/*
+	|--------------------------------------------------------------------------
+	| Login Controller
+	|--------------------------------------------------------------------------
+	|
+	| This controller handles authenticating users for the application and
+	| redirecting them to your home screen. The controller uses a trait
+	| to conveniently provide its functionality to your applications.
+	|
+	*/
 
-    use AuthenticatesUsers;
+	use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
+	/**
+	 * Where to redirect users after login.
+	 *
+	 * @var string
+	 */
+	protected $redirectTo = '/test';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
+	/**
+	 * Create a new controller instance.
+	 *
+	 * @return void
+	 */
+	public function __construct() {
+		$this->middleware('guest')->except('logout');
+	}
+
+	/**
+	 * Define username
+	 * 
+	 * @return string
+	 */
+	public function username() {
+		return 'email';
+	}
+
+	/**
+	 * View login page.
+	 * 
+	 * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+	 */
+	public function view() {
+		return view(Config::get('constants.LOGIN_PAGE'));
+	}
+
+	/**
+	 * Handle an authentication attempt.
+	 *
+	 * @return Response
+	 */
+	public function authenticate(Request $request) {
+		$data = [
+			'username' => $request->email,
+			'password' => $request->password,
+			'delete_flg' => 0,
+			'confirm_flg' => 1
+		];
+		
+		if (Auth::attempt($data)) {
+			$role =  Auth::user()->role;
+			
+			if ($role === 0) {
+				// Go to Partner Homepage
+			}
+			// Go to User Homepage
+			
+			return redirect($this->redirectPath());
+		} else {
+			return response()->json(false);
+		}
+	}
+
+	/**
+	 * 
+	 */
+	public function logout() {
+		Auth::logout();
+	}
 }

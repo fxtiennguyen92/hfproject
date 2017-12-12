@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
+use App\Http\Controllers\MailController;
 
 class RegisterController extends Controller
 {
@@ -29,15 +31,14 @@ class RegisterController extends Controller
 	 *
 	 * @var string
 	 */
-	protected $redirectTo = '/';
+	protected $redirectTo = '/test';
 
 	/**
 	 * Create a new controller instance.
 	 *
 	 * @return void
 	 */
-	public function __construct()
-	{
+	public function __construct() {
 		$this->middleware('guest');
 	}
 
@@ -47,13 +48,18 @@ class RegisterController extends Controller
 	 * @param  array  $data
 	 * @return \Illuminate\Contracts\Validation\Validator
 	 */
-	protected function validator(array $data)
-	{
+	protected function validator(array $data) {
+		// Define error messages
+		$messages = array(
+			'name.required' => 'Chưa nhập tên',
+			'name.max' => 'Nhiều quá',
+		);
+		
 		return Validator::make($data, [
 			'name' => 'required|string|max:255',
 			'email' => 'required|string|email|max:255|unique:users',
 			'password' => 'required|string|min:6|confirmed',
-		]);
+		], $messages);
 	}
 
 	/**
@@ -62,13 +68,23 @@ class RegisterController extends Controller
 	 * @param  array  $data
 	 * @return \App\User
 	 */
-	protected function create(array $data)
-	{
+	protected function create(array $data) {
 		return User::create([
 			'name' => $data['name'],
 			'email' => $data['email'],
 			'password' => bcrypt($data['password']),
+			'confirm_code' => str_random(45),
 		]);
+	}
+
+	/**
+	 * View partner sign up page
+	 *
+	 * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+	 */
+	public function view() {
+		return view(Config::get('constants.PARTNER_SIGN_UP_PAGE'), array(
+		));
 	}
 
 	/**
@@ -77,25 +93,40 @@ class RegisterController extends Controller
 	 * @param Request $request
 	 * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
 	 */
-	public function signUp(Request $request)
-	{
+	public function authenticate(Request $request) {
 		$req = $request->all();
 		
 		$validator = $this->validator($req);
 		if ($validator->fails()) {
+			$errors = $validator->errors()->getMessages();
 			
-			var_dump($validator->getMessageBag());die;
-			
-			$this->throwValidationException($request, $validator);
-			
-			
+			dd($errors);die;
+			return response()->json($errors);
 		}
 		
-		var_dump($this->create($req));die;
+		// registration
+		$user = $this->create($request->all());
 		
-		//Auth::login($this->create($request->all()));
+		$mail = new MailController();
+		$mail->sendVerifyMail($user->name, $user->email, $user->confirm_code);
 		
+		// go to confirm email page
+		dd('Confirm email to active'); die;
+	}
+
+	public function verify($confirmCode) {
+		$user = User::where('confirm_code', $confirmCode)->first();
 		
-		//return redirect($this->redirectPath());
+		if (!$user) {
+			dd('verify_error');die;
+		}
+		
+		$user->confirm_flg = 1;
+		$user->confirm_code = null;
+		$user->save();
+		
+		Auth::login($user);
+		
+		return redirect($this->redirectPath());
 	}
 }
