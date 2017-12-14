@@ -49,7 +49,7 @@ class LoginController extends Controller
 	}
 
 	/**
-	 * View login page.
+	 * View log in page.
 	 * 
 	 * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
 	 */
@@ -71,20 +71,27 @@ class LoginController extends Controller
 		];
 		
 		if (Auth::attempt($data)) {
-			$role =  Auth::user()->role;
-			
-			if ($role === 0) {
-				// Go to Partner Homepage
-			}
-			// Go to User Homepage
-			
-			return redirect($this->redirectPath());
+			return $this->redirectPath();
 		} else {
 			return response()->json(false);
 		}
 	}
 
 	/**
+	 * Redirect after login
+	 * 
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+	public function redirectPath() {
+		if (Auth::user()->role == 0) {
+			return redirect()->route('home');
+		} else if (Auth::user()->role == 1) {
+			return redirect()->route('dashboard');
+		}
+	}
+
+	/**
+	 * Log out.
 	 * 
 	 */
 	public function logout() {

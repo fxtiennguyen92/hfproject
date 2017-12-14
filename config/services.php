@@ -35,4 +35,15 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'facebook' => [
+        'client_id' => '136548870376149',
+        'client_secret' => 'b714acc480f1ec447708013f0934ce98',
+        'redirect' => 'http://localhost/hfproject/public/callback/facebook',
+    ],
+
+    'google' => [
+        'client_id' => '641434236169-r0jpcmvjlv0hhnenqrlfqtn6832l268i.apps.googleusercontent.com',
+        'client_secret' => 'hOjLV9pEBtop_wy-yIfus72A',
+        'redirect' => 'http://localhost/hfproject/public/callback/google'
+    ]
 ];
