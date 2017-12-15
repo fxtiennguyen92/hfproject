@@ -30,12 +30,11 @@ class SocialAuthController extends Controller
 
 	private function authenticate($user, $socialNetwork = 0) {
 		// Check existed user
-		$registedUser = null;
-		if ($socialNetwork == 0) {
-			$registedUser = User::where('facebook_id', $user->id)->first();
-		} else {
-			$registedUser = User::where('google_id', $user->id)->first();
-		}
+		$registedUser = User::where(function ($query) use ($user) {
+				$query->where('email', '=', $user->email)
+				->orWhere('facebook_id', '=', $user->id)
+				->orWhere('google_id', '=', $user->id);
+		})->first();
 		
 		if ($registedUser) {
 			if ($registedUser->delele_flg != 0) { // User is deleted

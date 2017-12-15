@@ -11,18 +11,21 @@
 |
 */
 
-Route::get('/', 'InitPageController@view')
-	->name('landing_page');
+Route::get('/', 'InitPageController@viewIndexPage')
+	->name('index_page');
 
-Route::get('/home', 'InitPageController@view')
-	->name('home');
+Route::get('/home', 'InitPageController@viewHomePage')
+	->name('home_page');
 
-Route::get('/dashboard', 'InitPageController@view')
-	->name('dashboard');
+Route::get('/dashboard', 'InitPageController@viewDashboardPage')
+	->name('dashboard_page');
+
+Route::get('/redirect', 'LoginController@redirectPath')
+	->name('redirect');
 
 /** Login and Logout **/
 Route::get('/login', 'Auth\LoginController@view')
-	->name('view_login_page');
+	->name('login_page');
 Route::post('/login', 'Auth\LoginController@authenticate')
 	->name('login');
 Route::get('/logout', 'Auth\LoginController@logout')
@@ -48,7 +51,7 @@ Route::get('/verify/{confirmCode}', 'Auth\RegisterController@verify')
 
 /** Partner **/
 Route::get('/partner/signup', 'Auth\RegisterController@view')
-	->name('view_partner_sign_up_page');
+	->name('partner_sign_up_page');
 Route::post('/partner/signup', 'Auth\RegisterController@authenticate');
 
 Route::get('/partner/verify/{confirmCode}', 'Auth\RegisterController@verify');

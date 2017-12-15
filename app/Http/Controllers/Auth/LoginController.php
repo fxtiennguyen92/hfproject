@@ -64,7 +64,7 @@ class LoginController extends Controller
 	 */
 	public function authenticate(Request $request) {
 		$data = [
-			'username' => $request->email,
+			'email' => $request->email,
 			'password' => $request->password,
 			'delete_flg' => 0,
 			'confirm_flg' => 1
@@ -83,10 +83,13 @@ class LoginController extends Controller
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	public function redirectPath() {
+		if (!Auth::check()) {
+			return redirect()->route('index_page');
+		}
 		if (Auth::user()->role == 0) {
-			return redirect()->route('home');
+			return redirect()->route('home_page');
 		} else if (Auth::user()->role == 1) {
-			return redirect()->route('dashboard');
+			return redirect()->route('dashboard_page');
 		}
 	}
 
@@ -96,5 +99,6 @@ class LoginController extends Controller
 	 */
 	public function logout() {
 		Auth::logout();
+		return redirect()->route('index_page');
 	}
 }

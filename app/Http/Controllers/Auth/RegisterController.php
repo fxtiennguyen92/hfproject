@@ -51,15 +51,14 @@ class RegisterController extends Controller
 	protected function validator(array $data) {
 		// Define error messages
 		$messages = array(
-			'name.required' => 'Chưa nhập tên',
-			'name.max' => 'Nhiều quá',
+			'email.unique' => 'Email đã được sử dụng.'
 		);
 		
 		return Validator::make($data, [
 			'name' => 'required|string|max:255',
 			'email' => 'required|string|email|max:255|unique:users',
 			'phone' => 'required|numeric',
-			'password' => 'required|string|min:6',
+			'password' => 'required|string|min:10',
 		], $messages);
 	}
 
@@ -85,7 +84,7 @@ class RegisterController extends Controller
 	 * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
 	 */
 	public function view() {
-		return view(Config::get('constants.PARTNER_SIGN_UP_PAGE'), array(
+		return view(Config::get('constants.SIGNUP_PAGE'), array(
 		));
 	}
 
@@ -102,7 +101,6 @@ class RegisterController extends Controller
 		if ($validator->fails()) {
 			$errors = $validator->errors()->getMessages();
 			
-			dd($errors);die;
 			return response()->json($errors);
 		}
 		
