@@ -23,17 +23,24 @@
 								url: '{{ route("signup") }}',
 								data: $('#frmMain').serialize(),
 								success: function(response) {
-									if (response == false) {
+									
+								},
+								error: function(xhr) {
+									if (xhr.status == 409) {
+										$.notify({
+											title: '<strong>Thất bại! </strong>',
+											message: 'Email hoặc Số Điện Thoại đã được sử dụng.'
+										},{
+											type: 'danger'
+										});
+									} else {
 										$.notify({
 											title: '<strong>Thất bại! </strong>',
 											message: 'Tạo tài khoản thất bại, hãy thử lại.'
 										},{
-											type: 'danger',
-											placement: {
-												align: "center"
-											}
+											type: 'danger'
 										});
-									}
+									};
 								}
 							});
 						}

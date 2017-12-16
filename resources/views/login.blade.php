@@ -35,17 +35,24 @@
 								url: '{{ route("login") }}',
 								data: $('#frmMain').serialize(),
 								success: function(response) {
-									if (response == false) {
+									
+								},
+								error: function(xhr) {
+									if (xhr.status == 401) {
 										$.notify({
 											title: '<strong>Thất bại! </strong>',
 											message: 'Tài khoản bạn nhập chưa đúng.'
 										},{
 											type: 'danger',
-											placement: {
-												align: "center"
-											}
 										});
-									}
+									} else {
+										$.notify({
+											title: '<strong>Thất bại! </strong>',
+											message: 'Đăng nhập không thành công, hãy thử lại.'
+										},{
+											type: 'danger'
+										});
+									};
 								}
 							});
 						}

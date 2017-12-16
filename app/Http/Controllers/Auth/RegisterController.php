@@ -49,17 +49,12 @@ class RegisterController extends Controller
 	 * @return \Illuminate\Contracts\Validation\Validator
 	 */
 	protected function validator(array $data) {
-		// Define error messages
-		$messages = array(
-			'email.unique' => 'Email đã được sử dụng.'
-		);
-		
 		return Validator::make($data, [
 			'name' => 'required|string|max:255',
 			'email' => 'required|string|email|max:255|unique:users',
-			'phone' => 'required|numeric',
+			'phone' => 'required|numeric|unique:users',
 			'password' => 'required|string|min:10',
-		], $messages);
+		]);
 	}
 
 	/**
@@ -101,7 +96,7 @@ class RegisterController extends Controller
 		if ($validator->fails()) {
 			$errors = $validator->errors()->getMessages();
 			
-			return response()->json($errors);
+			return response()->json($errors, 409);
 		}
 		
 		// registration
@@ -126,7 +121,6 @@ class RegisterController extends Controller
 		$user->save();
 		
 		Auth::login($user);
-		
 		return redirect($this->redirectPath());
 	}
 }

@@ -73,7 +73,7 @@ class LoginController extends Controller
 		if (Auth::attempt($data)) {
 			return $this->redirectPath();
 		} else {
-			return response()->json(false);
+			return response()->json('', 401);
 		}
 	}
 

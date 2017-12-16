@@ -21,7 +21,7 @@
         <div class="menu-user-block">
         	<div class="dropdown dropdown-avatar">
                 <a href="javascript: void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <span class="avatar" href="javascript:void(0);">
+                    <span class="avatar">
                         <img src="../assets/common/img/temp/avatars/1.jpg" alt="User">
                     </span>
                 </a>

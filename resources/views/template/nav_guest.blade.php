@@ -15,8 +15,8 @@
                 </div>
             </div>
             <div class="right example-buy-btn hidden-xs-down">
-                <a href="{{ route('login') }}" target="_blank" class="btn btn-info-outline margin-left-20">Đăng Nhập</a>
-                <a href="https://handfree.co/pro/" target="_blank" class="btn btn-info margin-left-20">Trở Thành Đối Tác</a>
+                <a href="{{ route('login') }}" class="btn btn-info-outline margin-left-20">Đăng Nhập</a>
+                <a href="https://handfree.co/pro/" class="btn btn-info margin-left-20">Trở Thành Đối Tác</a>
             </div>
         </div>
     </div>
