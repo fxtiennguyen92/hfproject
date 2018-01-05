@@ -6,6 +6,7 @@
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<title>@yield('title') | Hand Free</title>
 
+	<base href="{{ asset('') }}">
 	<link href="assets/common/img/favicon.144x144.png" rel="apple-touch-icon" type="image/png" sizes="144x144">
 	<link href="assets/common/img/favicon.114x114.png" rel="apple-touch-icon" type="image/png" sizes="114x114">
 	<link href="assets/common/img/favicon.72x72.png" rel="apple-touch-icon" type="image/png" sizes="72x72">
@@ -38,6 +39,9 @@
 	<link rel="stylesheet" type="text/css" href="assets/vendors/datatables/media/css/dataTables.bootstrap4.min.css">
 	<link rel="stylesheet" type="text/css" href="assets/vendors/c3/c3.min.css">
 	<link rel="stylesheet" type="text/css" href="assets/vendors/chartist/dist/chartist.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendors/barrating/bars-reversed.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendors/barrating/fontawesome-stars.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendors/barrating/fontawesome-stars-o.css">
 	<!-- v1.4.0 -->
 	<link rel="stylesheet" type="text/css" href="assets/vendors/nprogress/nprogress.css">
 	<link rel="stylesheet" type="text/css" href="assets/vendors/jquery-steps/demo/css/jquery.steps.css">
@@ -62,7 +66,6 @@
 	<script src="assets/vendors/ladda/dist/ladda.min.js"></script>
 	<script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
 	<script src="assets/vendors/html5-form-validation/dist/jquery.validation.min.js"></script>
-	<script src="assets/vendors/jquery-typeahead/dist/jquery.typeahead.min.js"></script>
 	<script src="assets/vendors/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
 	<script src="assets/vendors/autosize/dist/autosize.min.js"></script>
 	<script src="assets/vendors/bootstrap-show-password/bootstrap-show-password.min.js"></script>
@@ -86,6 +89,8 @@
 	<script src="assets/vendors/c3/c3.min.js"></script>
 	<script src="assets/vendors/chartist/dist/chartist.min.js"></script>
 	<script src="assets/vendors/peity/jquery.peity.min.js"></script>
+	<script src="assets/vendors/barrating/jquery.barrating.min.js"></script>
+	<script src="assets/vendors/jquery-typeahead/dist/jquery.typeahead.min.js"></script>
 	<!-- v1.0.1 -->
 	<script src="assets/vendors/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.min.js"></script>
 	<!-- v1.1.1 -->
@@ -104,6 +109,7 @@
 	<!-- Clean UI Scripts -->
 	<script src="assets/common/js/common.js"></script>
 	<script src="assets/common/js/demo.temp.js"></script>
+	<script src="assets/common/js/hf.js"></script>
 	<style type="text/css">
         .single-page-block-inner {
             margin-top: 0px;

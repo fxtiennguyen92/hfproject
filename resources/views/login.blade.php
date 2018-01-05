@@ -91,7 +91,7 @@
 						</a>
 					</div>
 					<div class="single-page-block-form">
-						<form id="frmMain" name="form-validation" method="GET">
+						<form id="frmMain" name="form-validation" method="POST">
 							<div class="form-group">
 								<div class="social-login">
 									<div class="social-container row">
@@ -131,8 +131,8 @@
 								<input id="inpPassword"
 										class="form-control password"
 										name="password"
-										type="password" data-validation="[L>=6]"
-										data-validation-message="Mật khẩu có ít nhất là 6 ký tự"
+										type="password" data-validation="[L>=10]"
+										data-validation-message="Mật khẩu có ít nhất là 10 ký tự"
 										placeholder="Mật Khẩu">
 							</div>
 							<a href="javascript: void(0);" class="pull-right link-blue" style="font-size: 12px">Quên mật khẩu?</a>
@@ -143,7 +143,6 @@
 								<a href="{{ route('signup_page') }}" type="button" class="btn btn-link margin-inline" style="color: #02B3E4 !important;">Chưa có tài khoản, Đăng ký!</a>
 								
 								<input type="hidden" name="_token" value="{{ csrf_token() }}" />
-								
 							</div>
 						</form>
 					</div>

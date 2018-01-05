@@ -27,13 +27,6 @@ class RegisterController extends Controller
 	use RegistersUsers;
 
 	/**
-	 * Where to redirect users after registration.
-	 *
-	 * @var string
-	 */
-	protected $redirectTo = '/test';
-
-	/**
 	 * Create a new controller instance.
 	 *
 	 * @return void
@@ -116,11 +109,11 @@ class RegisterController extends Controller
 			dd('verify_error');die;
 		}
 		
-		$user->confirm_flg = 1;
+		$user->confirm_flg = Config::get('constants.FLG_ON');
 		$user->confirm_code = null;
 		$user->save();
 		
 		Auth::login($user);
-		return redirect($this->redirectPath());
+		return LoginController::redirectPath();
 	}
 }

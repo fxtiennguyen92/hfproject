@@ -106,10 +106,10 @@
 								<input id="inpName" maxlength="200"
 										class="form-control"
 										placeholder="Họ và Tên"
-										name="name" data-validation="[L<=200]"
+										name="name"
 										type="text"
 										data-validation-message="Họ tên chưa được nhập"
-										data-validation="[NAME]">
+										data-validation="[L>=0]">
 							</div>
 							<div class="form-group">
 								<input id="inpEmail" maxlength="100"
@@ -126,7 +126,7 @@
 										name="phone"
 										type="text"
 										data-validation="[INTEGER]"
-										data-validation-message="Số điện thoại chưa đúng"
+										data-validation-message="Số điện thoại không đúng"
 										placeholder="Số Điện Thoại">
 							</div>
 							<div class="form-group">

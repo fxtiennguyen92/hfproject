@@ -6,6 +6,8 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
+use App\Http\Controllers\FileController;
 
 class SocialAuthController extends Controller
 {
@@ -37,22 +39,26 @@ class SocialAuthController extends Controller
 		})->first();
 		
 		if ($registedUser) {
-			if ($registedUser->delele_flg != 0) { // User is deleted
+			if ($registedUser->delele_flg != Config::get('constants.FLG_OFF')) { // User is deleted
 				// TODO: Error Page User Can not Use
 			}
 			
-			if ($registedUser->confirm_flg != 1) { // Email is not confirmed
+			if ($registedUser->confirm_flg != Config::get('constants.FLG_ON')) { // Email is not confirmed
 				// TODO: Redirect Confirm Email Page
 			}
 		} else {
 			// Create new user
 			$registedUser = $this->create($user, $socialNetwork);
 		}
-
+		
 		// Login
 		Auth::login($registedUser);
-		$loginController = new LoginController();
-		return $loginController->redirectPath();
+		
+		// Get image from Socialite
+		$data = file_get_contents($user->getAvatar());
+		FileController::saveAvatar($data);
+		
+		return LoginController::redirectPath();
 	}
 
 	private function create($user, $socialNetwork = 0) {
@@ -61,16 +67,14 @@ class SocialAuthController extends Controller
 				'name' => $user->name,
 				'email' => $user->email,
 				'facebook_id' => $user->id,
-				'avatar' => str_random(10),
-				'confirm_flg' => 1,
+				'confirm_flg' => Config::get('constants.FLG_ON'),
 			]);
 		} else { // Google
 			return User::create([
 				'name' => $user->name,
 				'email' => $user->email,
 				'google_id' => $user->id,
-				'avatar' => str_random(10),
-				'confirm_flg' => 1,
+				'confirm_flg' => Config::get('constants.FLG_ON'),
 			]);
 		}
 	}

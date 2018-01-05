@@ -14,16 +14,10 @@
 Route::get('/', 'InitPageController@viewIndexPage')
 	->name('index_page');
 
-Route::get('/home', 'InitPageController@viewHomePage')
-	->name('home_page');
-
-Route::get('/dashboard', 'InitPageController@viewDashboardPage')
-	->name('dashboard_page');
-
 Route::get('/redirect', 'LoginController@redirectPath')
 	->name('redirect');
 
-/** Login and Logout **/
+/** Login and Logout - STA **/
 Route::get('/login', 'Auth\LoginController@view')
 	->name('login_page');
 Route::post('/login', 'Auth\LoginController@authenticate')
@@ -40,7 +34,9 @@ Route::get('/redirect/google', 'Auth\SocialAuthController@redirectGG')
 Route::get('/callback/google', 'Auth\SocialAuthController@callbackGG')
 	->name('callback_gg');
 
-/** Partner **/
+/** Login and Logout - END **/
+
+/** Sign Up - STA **/
 Route::get('/signup', 'Auth\RegisterController@view')
 	->name('signup_page');
 Route::post('/signup', 'Auth\RegisterController@authenticate')
@@ -48,19 +44,44 @@ Route::post('/signup', 'Auth\RegisterController@authenticate')
 Route::get('/verify/{confirmCode}', 'Auth\RegisterController@verify')
 	->name('verify');
 
+/** Sign Up - END **/
 
-/** Partner **/
-Route::get('/partner/signup', 'Auth\RegisterController@view')
-	->name('partner_sign_up_page');
-Route::post('/partner/signup', 'Auth\RegisterController@authenticate');
+/** Survey - Order - STA **/
+Route::middleware('auth')->group(function() {
+	Route::get('/home', 'InitPageController@viewHomePage')
+		->name('home_page');
+});
 
-Route::get('/partner/verify/{confirmCode}', 'Auth\RegisterController@verify');
+Route::get('/survey/{serviceId}', 'SurveyController@view')
+	->name('survey_page');
+Route::post('/order/details', 'SurveyController@submitOrderDetails')
+	->name('submit_order_details');
+
+/** Survey - Order - END **/
+
+/** Pro - STA **/
+Route::middleware('pro')->group(function() {
+	Route::get('/dashboard', 'InitPageController@viewDashboardPage')
+		->name('dashboard_page');
+	Route::get('/pro', 'Pro\ProProfileController@view')
+		->name('pro_profile_page');
+	Route::post('/pro/change', 'Pro\ProProfileController@changeProfile')
+		->name('change_pro_profile');
+	Route::post('/pro/avatar/change', 'Pro\ProProfileController@changeAvatar')
+		->name('change_pro_avatar');
+	Route::get('/pro/companies', 'Pro\ProProfileController@getCompanies')
+		->name('get_companies');
+});
+
+// 	Route::get('/pro/companies', 'Pro\ProProfileController@getCompanies')
+// 	->name('get_companies');
+
+Route::post('/password/change', 'Pro\ProProfileController@changePassword')
+	->name('change_password');
+
+/** Pro - END **/
 
 
 
 
 Route::get('/test', 'InitPageController@test');
-
-Route::get('/mail', 'MailController@sendSignUpConfirmMail');
-
-	

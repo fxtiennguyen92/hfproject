@@ -24,13 +24,6 @@ class LoginController extends Controller
 	use AuthenticatesUsers;
 
 	/**
-	 * Where to redirect users after login.
-	 *
-	 * @var string
-	 */
-	protected $redirectTo = '/test';
-
-	/**
 	 * Create a new controller instance.
 	 *
 	 * @return void
@@ -54,6 +47,10 @@ class LoginController extends Controller
 	 * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
 	 */
 	public function view() {
+		if (Auth::check()) {
+			return redirect()->back();
+		}
+		
 		return view(Config::get('constants.LOGIN_PAGE'));
 	}
 
@@ -66,8 +63,8 @@ class LoginController extends Controller
 		$data = [
 			'email' => $request->email,
 			'password' => $request->password,
-			'delete_flg' => 0,
-			'confirm_flg' => 1
+			'delete_flg' => Config::get('constants.FLG_OFF'),
+			'confirm_flg' => Config::get('constants.FLG_ON')
 		];
 		
 		if (Auth::attempt($data)) {
@@ -82,15 +79,16 @@ class LoginController extends Controller
 	 * 
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public function redirectPath() {
+	public static function redirectPath() {
 		if (!Auth::check()) {
 			return redirect()->route('index_page');
 		}
-		if (Auth::user()->role == 0) {
-			return redirect()->route('home_page');
-		} else if (Auth::user()->role == 1) {
+		
+		if (Auth::user()->role === Config::get('constants.ROLE_PRO')) {
 			return redirect()->route('dashboard_page');
 		}
+		
+		return redirect()->route('home_page');
 	}
 
 	/**
