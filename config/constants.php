@@ -10,6 +10,7 @@ return [
 	'SURVEY_PAGE' => 'survey',
 
 	'PRO_PROFILE_PAGE' => 'pro.profile',
+	'PRO_ORDER_PAGE' => 'pro.order',
 	
 	/** ERROR PAGE **/
 	'404_PAGE' => 'error.404',
@@ -23,4 +24,12 @@ return [
 	
 	'FLG_OFF' => '0',
 	'FLG_ON' => '1',
+	
+	'INIT_OFF' => '0',
+	'INIT_ON' => '1',
+	'INIT_OTHER' => '2',
+	
+	'ANS_TEXT' => '0',
+	'ANS_CHKBOX' => '1',
+	'ANS_RADBTN' => '2',
 ];

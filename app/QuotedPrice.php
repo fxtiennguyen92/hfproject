@@ -4,20 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProProfile extends Model
+class QuotedPrice extends Model
 {
 	// table name
-	protected $table = 'pro_profiles';
+	protected $table = 'quoted_prices';
 	
 	protected $fillable = [
-		'id', 'date_of_birth', 'gender'
+		'id','order_id', 'pro_id', 'price',
 	];
 	
-	/**
-	 * Get profile by id
-	 * 
-	 * @return array
-	 */
 	public function getById($id) {
 		return $this->where('id', $id)->first();
 	}

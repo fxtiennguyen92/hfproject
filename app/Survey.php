@@ -9,6 +9,13 @@ class Survey extends Model
 	// table name
 	protected $table = 'survey_questions';
 
+	public function getByQuestion($questionId) {
+		return $this::with('answers')
+			->where('id', $questionId)
+			->available()
+			->first();
+	}
+
 	public function getByService($serviceId) {
 		return $this::with('answers')
 			->where('service_id', $serviceId)

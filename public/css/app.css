@@ -70,3 +70,12 @@ nav.top-menu {
     border-radius: 10px;
     background-color: transparent;
 }
+
+@media screen and (max-width: 540px) {
+    /* For mobile phones: */
+    .dropdown-avatar.file
+    {
+       display:none;
+    }
+    
+}

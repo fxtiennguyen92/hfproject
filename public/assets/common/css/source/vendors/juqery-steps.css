@@ -107,7 +107,7 @@
     color: #bbb8cb !important;
 }
 
-@media (max-width: 991px) {
+/*@media (max-width: 991px) {
     .cui-wizard .steps ul {
         -webkit-box-orient: vertical;
         -webkit-box-direction: normal;
@@ -115,7 +115,7 @@
             -ms-flex-direction: column;
                 flex-direction: column;
     }
-}
+}*/
 
 .cui-wizard .actions {
     text-align: center;

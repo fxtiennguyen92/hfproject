@@ -53,6 +53,7 @@
 	<!-- Clean UI Styles -->
 	<link rel="stylesheet" type="text/css" href="assets/common/css/source/main.css">	
 	<link rel="stylesheet" type="text/css" href="css/app.css">
+	<link rel="stylesheet" type="text/css" href="css/question.css">
 
 
 	<!-- Vendors Scripts -->

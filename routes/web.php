@@ -76,6 +76,16 @@ Route::middleware('pro')->group(function() {
 // 	Route::get('/pro/companies', 'Pro\ProProfileController@getCompanies')
 // 	->name('get_companies');
 
+Route::get('/pro/order/{orderId}', 'Pro\ProOrderController@viewOrder')
+	->name('view_pro_order');
+Route::post('/pro/order/quote', 'Pro\ProOrderController@quotePrice')
+	->name('quote_price');
+	
+
+	Route::get('/location', 'SurveyController@getLocation')
+	->name('get_location');
+	
+
 Route::post('/password/change', 'Pro\ProProfileController@changePassword')
 	->name('change_password');
 

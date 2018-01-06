@@ -1,0 +1,92 @@
+/* CSS Document */
+
+.margin-bottom-50 {
+     margin-bottom: 0px; 
+     height:100%;
+}
+
+.btn-default-outline {
+    font-size:24px;
+    margin-left:15px;
+    margin-right:15px;
+}
+.btn-group {
+    float:left; 
+    margin-top:25px; 
+    padding:10px;
+}
+.wizard > .content > .body {
+    position:relative;
+    margin:2.5%;
+}
+.question{background-color:#f4f4f4;font-size:20px;color:#000;}
+
+.btn.btn-default-outline.active{
+    background-color:#02b3e4;
+    }
+.btn.btn-default-outline:hover{}
+@media screen and (min-width: 981px) {
+    .btn-group{padding-left:9em;}
+}
+@media screen and (max-width: 980px) {
+    .btn-group{padding-left:6em;}
+    .wizard > .content > .body{
+        position:relative;
+        margin:0%;
+        width:100%;
+    }
+    .question{
+        font-size:16px;
+        
+    }
+    .btn-default-outline{
+    font-size:20px;
+    margin:5px;
+    text-align:left;
+    }
+    
+    .wizard > .content{ 
+        margin-top:-15px;
+    }
+}
+@media screen and (max-width: 543px) {
+    .btn-group{
+        padding-left:0em;
+        margin-top:5px;
+        padding:0px;
+        margin-left:0px;
+    }
+    #example-numbers{height:100%}
+    .answwer {padding-left:0px;padding-right:0px;}
+    .btn-default-outline{
+        border:#FFF;
+        
+        
+    }
+    .cui-wizard .number {line-height:29px;}
+    .icon{
+        padding-right:20px;
+    }
+    .wizard > .content{     
+        margin-top:-25px;
+    }
+    .btn-default-outline{
+    font-size:16px;
+    
+    }
+    .question{
+        font-size:14px;
+        padding-top: 10px;
+    }
+    .cui-wizard__numbers .number{
+        width:33px;
+        height:33px;
+    }
+    .cui-wizard .actions {
+        border-top:1px #999999 solid;
+        padding-top:7px;
+        position:fixed;
+        bottom:0px;
+        
+    }
+}
