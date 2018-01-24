@@ -1,0 +1,57 @@
+/* CSS Document */
+@media screen and (max-width:  543px) {
+    .nav-item {
+        width: 32.7%;
+        text-align: center;
+    }
+    .order-row {
+        padding: 10px;
+        border-bottom: solid 1px #c0c0c0
+    }
+    .order-info {
+        width: 70%;
+        float: left;
+        padding-left: 20px;
+    }
+    .order-info>label {
+        font-weight: bold;
+    }
+    .order-info>p {
+        font-size: 12px;
+        color: #7d7d7d;
+        padding-top: 10px;
+    }
+    .order-req {
+        overflow: auto;
+        font-size: 14px;
+    }
+    .order-state {
+        width: 30%;
+        float: right;
+        padding-top: 7%;
+        font-size: 12px;
+        text-align: center;
+    }
+    .order-state .state-now {
+        color: #02b3e4;
+    }
+    .order-state .state-confirm {
+        color: #fe9429;
+    }
+    .panel-body> div.row {
+        border-bottom: 0px;
+    }
+    .padding-vertical-20 {
+        padding-top:  10px;
+        padding-bottom:  10px;
+    }
+    .orders {
+        padding-left: 0px;
+        padding-right: 0px;
+        margin-left: 0em;
+        margin-right: 0em;
+    }
+    .nav-link {
+        font-size: 11.8px;
+    }
+}

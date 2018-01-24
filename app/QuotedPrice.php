@@ -16,4 +16,12 @@ class QuotedPrice extends Model
 	public function getById($id) {
 		return $this->where('id', $id)->first();
 	}
+
+	public function getByOrder($id) {
+		return $this->where('order_id', $id)->get();
+	}
+	
+	public static function getListQuotedOrderIdByPro($id) {
+		return QuotedPrice::where('pro_id', $id)->pluck('order_id')->toArray();
+	}
 }

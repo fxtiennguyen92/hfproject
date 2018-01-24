@@ -37,6 +37,7 @@ class SurveyController extends Controller
 		// get survey info
 		$survey = new Survey();
 		$requirements = array();
+		$short_requirements = array();
 		foreach ($request->q as $qId => $a) {
 			// get question info
 			$question = $survey->getByQuestion($qId);
@@ -46,18 +47,24 @@ class SurveyController extends Controller
 			if ($question->answer_type == Config::get('constants.ANS_CHKBOX')) { // checkbox
 				$answers = array();
 				foreach ($a as $aId) {
+					$ans = '';
 					$i = $aId - 1;
 					if ($question->answers[$i]->init_flg == Config::get('constants.INIT_OTHER')) {
 						$inp = $qId.'_'.$aId.'_text';
-						$answers[] = $request->$inp;
+						$ans = $request->$inp;
 					} else {
-						$answers[] = $question->answers[$i]->content;
+						$ans= $question->answers[$i]->content;
 					}
+					
+					$answers[] = $ans;
+					$short_requirements[] = $ans;
 				}
 			} else if ($question->answer_type == Config::get('constants.ANS_RADBTN')) { // radio button
 				$answers = $question->answers[$a - 1]->content;
+				$short_requirements[] = $answers;
 			} else { // text
 				$answers = $a;
+				$short_requirements[] = $answers;
 			}
 			
 			$requirements[] = [
@@ -75,7 +82,9 @@ class SurveyController extends Controller
 		$order->user_phone = auth()->user()->phone;
 		$order->service_id = $serviceId;
 		$order->requirements = json_encode($requirements);
+		$order->short_requirements = implode(', ', $short_requirements);
 		$order->address = $request->address;
+		$order->time_state = $request->time;
 		
 		$order->save();
 		response()->json('', 200);

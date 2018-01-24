@@ -8,6 +8,7 @@ use App\Order;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Http\Request;
 use App\QuotedPrice;
+use App\User;
 
 class ProOrderController extends Controller
 {
@@ -16,12 +17,29 @@ class ProOrderController extends Controller
 //		$this->middleware('pro');
 	}
 
+	public function viewOrders($style = null) {
+		$order = new Order();
+		//$orders = $order->getByPro(auth()->user()->id);
+		$newOrders = $order->getNewByPro(auth()->user()->id);
+		$quotedOrders = $order->getQuotedByPro(auth()->user()->id);
+		//$completeOrders = $order->getCompleteByPro(auth()->user()->id);
+		
+// 		dd($quotedOrders);
+		
+		return view(Config::get('constants.PRO_ORDER_LIST_PAGE'), array(
+						'newOrders' => $newOrders,
+						'quotedOrders' => $quotedOrders,
+		));
+	}
+
 	public function viewOrder($orderId, Request $request) {
 		$order = new Order();
 		$order = $order->getById($orderId);
 		if (!$order) {
 			throw new NotFoundHttpException();
 		}
+		// avatar of customer
+		$order['user_avatar'] = User::getAvatar($order->user_id);
 		
 		// put orderId to session
 		$request->session()->put('quoted_order', $orderId);
@@ -37,12 +55,13 @@ class ProOrderController extends Controller
 	}
 
 	public function quotePrice(Request $request) {
-		//dd($request->all());
-		
 		// session
 		if (!$request->session()->has('quoted_order')) {
 			response()->json('', 400);
 		}
+		
+		// TODO check state of order - ERROR 417
+		
 		$orderId = $request->session()->get('quoted_order');
 		
 		QuotedPrice::updateOrCreate([
@@ -53,6 +72,6 @@ class ProOrderController extends Controller
 						'price' => $request->price
 		]);
 		
-		return '';
+		response()->json('', 200);
 	}
 }

@@ -80,7 +80,8 @@ Route::get('/pro/order/{orderId}', 'Pro\ProOrderController@viewOrder')
 	->name('view_pro_order');
 Route::post('/pro/order/quote', 'Pro\ProOrderController@quotePrice')
 	->name('quote_price');
-	
+Route::get('/pro/orders/{style?}', 'Pro\ProOrderController@viewOrders')
+	->name('view_pro_orders');	
 
 	Route::get('/location', 'SurveyController@getLocation')
 	->name('get_location');
@@ -94,4 +95,4 @@ Route::post('/password/change', 'Pro\ProProfileController@changePassword')
 
 
 
-Route::get('/test', 'InitPageController@test');
+	Route::get('/test', function () { return view('pro.order_temp'); });

@@ -50,6 +50,9 @@
 	<!-- v1.7.0 -->
 	<link rel="stylesheet" type="text/css" href="assets/vendors/dropify/dist/css/dropify.min.css">
 
+	<!-- More -->
+	<link rel="stylesheet" type="text/css" href="assets/vendors/number/number.css">
+
 	<!-- Clean UI Styles -->
 	<link rel="stylesheet" type="text/css" href="assets/common/css/source/main.css">	
 	<link rel="stylesheet" type="text/css" href="css/app.css">
@@ -106,6 +109,10 @@
 	<script src="assets/vendors/chart.js/src/Chart.bundle.min.js"></script>
 	<!-- v1.7.0 -->
 	<script src="assets/vendors/dropify/dist/js/dropify.min.js"></script>
+	
+	<!-- More -->
+	<script src="assets/vendors/number/number.js"></script>
+	<script src="assets/vendors/number/accounting.js"></script>
 
 	<!-- Clean UI Scripts -->
 	<script src="assets/common/js/common.js"></script>

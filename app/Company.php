@@ -16,12 +16,14 @@ class Company extends Model
 	 * @return array
 	 */
 	public function autocompleteByName($input) {
-		return $this->where('name','LIKE', '%'.$input.'%')
+		return $this
+			->where('name','LIKE', '%'.$input.'%')
 			->orWhere('id', 'LIKE', '%'.$input.'%')
-			->available()->select('id', 'name')->get();
+			->available()->select('id', 'name')
+			->get();
 	}
 	
 	public function scopeAvailable($query) {
-		return $query->where('delete_flg', '=', Config::get('constants.FLG_OFF'));
+		return $query->where('delete_flg', Config::get('constants.FLG_OFF'));
 	}
 }

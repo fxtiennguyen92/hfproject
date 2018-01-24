@@ -10,6 +10,7 @@ return [
 	'SURVEY_PAGE' => 'survey',
 
 	'PRO_PROFILE_PAGE' => 'pro.profile',
+	'PRO_ORDER_LIST_PAGE' => 'pro.orders',
 	'PRO_ORDER_PAGE' => 'pro.order',
 	
 	/** ERROR PAGE **/
@@ -32,4 +33,9 @@ return [
 	'ANS_TEXT' => '0',
 	'ANS_CHKBOX' => '1',
 	'ANS_RADBTN' => '2',
+	
+	'ORD_NEW' => '0',
+	'ORD_PROCESSING' => '1',
+	'ORD_COMPLETE' => '2',
+	'ORD_CANCEL' => '3',
 ];

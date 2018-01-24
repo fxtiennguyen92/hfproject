@@ -1,6 +1,7 @@
 @extends('template.index')
 
 @push('stylesheets')
+	<link rel="stylesheet" type="text/css" href="css/question.css">
 	<style>
 		input.input-other {
 			display: inline !important;
