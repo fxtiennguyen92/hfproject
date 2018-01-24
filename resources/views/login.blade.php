@@ -4,10 +4,43 @@
 		.single-page-block-inner {
 			margin-top: 0px;
 		}
+		.single-page-login-alpha{
+			background-image: url(assets/common/img/temp/login/5.jpg);
+		}
 		@media only screen and (min-width: 540px) {
 			.single-page-block-inner {
 				margin-top: 100px;
-			} 
+			}
+			.page-content {
+				margin-top: -30px;
+				position: fixed;
+			}
+		}
+		@media only screen and (max-width: 425px) {
+			.page-content {
+				margin-top: -40px;
+				position: fixed;
+			}
+			.title {
+				padding-bottom: 5px;
+			}
+			.single-page-login-alpha {
+				background-image: none;
+				position: fixed;
+			}
+			.single-page-block-inner {				
+				box-shadow: none !important;
+				padding-left: 0px !important;
+				padding-right: 0px !important;				
+			}	
+			.single-page-block {
+				padding-right: 10px !important;
+			}	
+		}
+		@media only screen and (max-width: 321px) {
+			.single-page-block-inner {
+				padding-right: 20px !important;
+			}
 		}
 	</style>
 
@@ -71,17 +104,15 @@
 
 @section('content')
 <section class="page-content">
-<div class="page-content-inner single-page-login-alpha" style="background-image: url(assets/common/img/temp/login/5.jpg)">
+<div class="page-content-inner single-page-login-alpha">
 	<!-- Login Page -->
 	<div class="single-page-block">
 		<div class="row">
 			<div class="col-xl-4">
-			</div>
-			<div class="col-xl-4">
 				<div class="single-page-block-inner">
 					<div class="logo" style="text-align: center; margin-top: 10px;">
 						<a href="javascript: history.back();">
-							<img src="img/logoh.png" alt="Hand Free" width="250" />
+							<img src="img/logoh.png" alt="Hand Free" width="250"/>
 						</a>
 					</div>
 					<div class="single-page-block-form">
@@ -89,7 +120,7 @@
 							<div class="form-group">
 								<div class="social-login">
 									<div class="social-container row">
-										<div>
+										<div style="margin-bottom: 2em;">
 											<p>Đăng nhập nhanh</p>
 										</div>
 										<div class="col-xs-6">
@@ -97,7 +128,7 @@
 												<img src="img/ic-fb.svg" width="18">&nbsp;&nbsp; Facebook
 											</a>
 										</div>
-										<div class="col-xs-6">
+										<div class="col-xs-6" style="padding-right: 14px;">
 											<a href="{{ route('redirect_gg') }}" class="btn btn-icon" style="width: 100%">
 												<img src="img/ic-gg.png" width="18">&nbsp;&nbsp; Google
 											</a>
@@ -131,7 +162,7 @@
 							</div>
 							<a href="javascript: void(0);" class="pull-right link-blue" style="font-size: 12px">Quên mật khẩu?</a>
 							<br>
-							<div class="form-group" style="text-align: center;">
+							<div class="form-group" style="text-align: center; margin-top: 1em;">
 								<button id="btnLogin" type="submit" class="btn btn-primary width-150">ĐĂNG NHẬP</button>
 								<br>
 								<a href="{{ route('signup_page') }}" type="button" class="btn btn-link margin-inline" style="color: #02B3E4 !important;">Chưa có tài khoản, Đăng ký!</a>
