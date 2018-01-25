@@ -8,6 +8,7 @@ return [
 	'LOGIN_PAGE' => 'login',
 	'SIGNUP_PAGE' => 'signup',
 	'SURVEY_PAGE' => 'survey',
+	'COMPLETE_PAGE' => 'complete',
 
 	'PRO_PROFILE_PAGE' => 'pro.profile',
 	'PRO_ORDER_LIST_PAGE' => 'pro.orders',
@@ -38,4 +39,7 @@ return [
 	'ORD_PROCESSING' => '1',
 	'ORD_COMPLETE' => '2',
 	'ORD_CANCEL' => '3',
+	
+	'KEY_CITY' => 'CITY',
+	'KEY_DIST' => 'DIST',
 ];

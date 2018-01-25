@@ -8,22 +8,27 @@ use App\Survey;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Http\Request;
 use App\Order;
+use App\Common;
 
 class SurveyController extends Controller
 {
 	public function view($serviceId, Request $request) {
-		$survey = new Survey();
-		$questions = $survey->getByService($serviceId);
+		$surveyModel = new Survey();
+		$commonModel = new Common();
 		
+		$questions = $surveyModel->getByService($serviceId);
 		if (!count($questions)) {
 			throw new NotFoundHttpException();
 		}
+		
+		$cities = $commonModel->getCityList();
 		
 		// put service to session
 		$request->session()->put('service', $serviceId);
 		
 		return view(Config::get('constants.SURVEY_PAGE'), array(
-				'questions' => $questions
+				'questions' => $questions,
+				'cities' => $cities,
 		));
 	}
 
@@ -68,10 +73,10 @@ class SurveyController extends Controller
 			}
 			
 			$requirements[] = [
-							'q_i' => $qId,
-							'q_c' => $question->short_content,
-							'a_i' => $a,
-							'a_c' => $answers
+				'q_i' => $qId,
+				'q_c' => $question->short_content,
+				'a_i' => $a,
+				'a_c' => $answers
 			];
 		}
 		
@@ -84,27 +89,39 @@ class SurveyController extends Controller
 		$order->requirements = json_encode($requirements);
 		$order->short_requirements = implode(', ', $short_requirements);
 		$order->address = $request->address;
+		$order->city = $request->city;
+		$order->district = $request->dist;
 		$order->time_state = $request->time;
+		if ($request->time == 2) {
+			$estExcuteDate = CommonController::convertStringToDateTime(substr($request->estTime, -16));
+			if ($estExcuteDate) {
+				$order->est_excute_at = $estExcuteDate;
+				$order->est_excute_at_string = $request->estTime;
+			}
+		}
 		
 		$order->save();
 		response()->json('', 200);
 	}
 	
-	public function getLocation(Request $request) {
-		$latitude = trim($request->latitude);
-		$longitude = trim($request->longitude);
-		
-		$url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng='.$latitude.','.$longitude.'&sensor=false';
-		$json = @file_get_contents($url);
-		$data = json_decode($json);
-		$status = $data->status;
-		if ($status == 'OK'){
-			//Get address from json data
-			$location = $data->results[0]->formatted_address;
-		} else {
-			$location =  '';
-		}
-		//Print address
-		echo $location;
+	public function complete() {
+		return view(Config::get('constants.COMPLETE_PAGE'));
 	}
+// 	public function getLocation(Request $request) {
+// 		$latitude = trim($request->latitude);
+// 		$longitude = trim($request->longitude);
+		
+// 		$url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng='.$latitude.','.$longitude.'&sensor=false';
+// 		$json = @file_get_contents($url);
+// 		$data = json_decode($json);
+// 		$status = $data->status;
+// 		if ($status == 'OK'){
+// 			//Get address from json data
+// 			$location = $data->results[0]->formatted_address;
+// 		} else {
+// 			$location =  '';
+// 		}
+// 		//Print address
+// 		echo $location;
+// 	}
 }

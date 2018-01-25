@@ -56,6 +56,8 @@ Route::get('/survey/{serviceId}', 'SurveyController@view')
 	->name('survey_page');
 Route::post('/order/details', 'SurveyController@submitOrderDetails')
 	->name('submit_order_details');
+Route::get('/order/complete', 'SurveyController@complete')
+	->name('complete_order');
 
 /** Survey - Order - END **/
 
@@ -81,9 +83,9 @@ Route::get('/pro/order/{orderId}', 'Pro\ProOrderController@viewOrder')
 Route::post('/pro/order/quote', 'Pro\ProOrderController@quotePrice')
 	->name('quote_price');
 Route::get('/pro/orders/{style?}', 'Pro\ProOrderController@viewOrders')
-	->name('view_pro_orders');	
+	->name('view_pro_orders');
 
-	Route::get('/location', 'SurveyController@getLocation')
+Route::get('/location', 'SurveyController@getLocation')
 	->name('get_location');
 	
 
@@ -92,7 +94,11 @@ Route::post('/password/change', 'Pro\ProProfileController@changePassword')
 
 /** Pro - END **/
 
+/** Common - STA **/
+Route::get('/city/{code}/dist', 'CommonController@getDistByCity')
+	->name('get_dist_by_city');
+
+/** Common - END **/
 
 
-
-	Route::get('/test', function () { return view('pro.order_temp'); });
+	Route::get('/test', function () { return view('complete'); });

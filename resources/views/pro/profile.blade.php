@@ -314,7 +314,7 @@
 				name="name"
 				type="text"
 				data-validation-message="Họ tên chưa được nhập"
-				data-validation="[L>=0]"
+				data-validation="[NOTEMPTY]"
 				value="{{ auth()->user()->name }}">
 		</div>
 		<div class="form-group">

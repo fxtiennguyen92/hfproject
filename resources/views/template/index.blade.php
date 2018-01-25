@@ -74,6 +74,7 @@
 	<script src="assets/vendors/autosize/dist/autosize.min.js"></script>
 	<script src="assets/vendors/bootstrap-show-password/bootstrap-show-password.min.js"></script>
 	<script src="assets/vendors/moment/min/moment.min.js"></script>
+	<script src="assets/vendors/moment/locale/vi.js"></script>
 	<script src="assets/vendors/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 	<script src="assets/vendors/fullcalendar/dist/fullcalendar.min.js"></script>
 	<script src="assets/vendors/cleanhtmlaudioplayer/src/jquery.cleanaudioplayer.js"></script>
@@ -128,7 +129,6 @@
             } 
         }
     </style>
-	
 	<!-- Page Scripts -->
 	@stack('stylesheets')
 	<!-- End Page Scripts -->

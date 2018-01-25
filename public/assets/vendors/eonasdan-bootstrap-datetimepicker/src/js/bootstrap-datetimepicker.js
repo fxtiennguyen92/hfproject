@@ -2456,7 +2456,7 @@
         maxDate: false,
         useCurrent: true,
         collapse: true,
-        locale: moment.locale(),
+        locale: moment.locale('vi.js'),
         defaultDate: false,
         disabledDates: false,
         enabledDates: false,
