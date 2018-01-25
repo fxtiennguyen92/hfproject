@@ -1,7 +1,7 @@
 /* CSS Document */
 
 .margin-bottom-50 {
-    margin-bottom: 0px;
+    margin-bottom: 0px; 
     height: 100%;
 }
 .wizard > .steps {
@@ -43,8 +43,8 @@
     border-radius: 0px;
 }
 .cui-wizard .actions li a:hover, .cui-wizard .actions li a:active {
-    background-color: #02b3e4; 
-    color: #fff;
+    background-color: #02b3e4 ; 
+    color: #fff ;
     border-radius: 0px;
 }
 @media screen and (min-width: 981px) {
@@ -132,15 +132,15 @@
     .icon {
         padding-right: 20px;
     }
-    .wizard > .content {
-        margin-top: -25px;
+    .wizard > .content {     
+        margin-top: -25px;   
     }
     .question {
         font-size: 16px;
         padding-top: 10px;
         margin-bottom: 0px;
         display: flex;
-        align-items: center;
+        align-items: center;      
     }
     .actions >ul >li {
         border-right: 1px #fff solid;
@@ -150,7 +150,7 @@
         bottom: 0px;
         left: 0px;
     }
-    .wizard > .actions > ul > li {
+    .wizard > .actions > ul > li{
         width: 50%;
         margin: 0em;
     }
@@ -159,7 +159,7 @@
         height: 33px;
     }
     .actions>ul {
-        line-height: 2.5rem;
+        line-height: 2.5rem;     
     }
     .wizard > .actions > ul {
         display: block;
