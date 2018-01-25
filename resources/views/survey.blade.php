@@ -19,9 +19,11 @@
 			headerTag: 'h3',
 			bodyTag: 'section',
 			transitionEffect: 'slideLeft',
-			autoFocus: true
+			autoFocus: true,
+			onStepChanged: function() {
+				fixScreen();
+			},
 		});
-
 		$('a[href=#finish]').on('click', function() {
 			$('#frmMain').submit();
 		});
@@ -57,6 +59,21 @@
 			});
 		}
 	});
+
+	function fixScreen() {
+		if ($('.content').outerHeight() > 490) {
+			$('.page-content').css('position', 'relative');
+			$('.actions').css('position', 'absolute');
+			$('.actions').css('bottom', '0px');
+			$('.page-content').css('height', '100vh');			
+		}
+		else {	
+			$('.page-content').css('position', 'fixed');
+			$('.page-content').css('height', '86vh');
+			$('.page-content').css('bottom', '0px');
+			$('.actions').css('position', 'fixed');
+	   	}		
+	};
 	</script>
 @endpush
 
@@ -65,15 +82,15 @@
 @endsection
 
 @section('content')
-<section class="page-content">
+<section class="page-content" style="position: fixed; height: 86vh; bottom: 0px;">
 	<form id="frmMain" method="POST" action="{{ route('submit_order_details') }}">
 	<div id="surveyList" class="cui-wizard cui-wizard__numbers">
 		@foreach ($questions as $q)
 			<h3><span class="cui-wizard--steps--title"></span></h3>
 			<section>
-				<div class="question col-md-12">
-					<label>{{ $q->order_dsp.'/'.count($questions) }}</label>
-					<label>{{ $q->content }}</label>
+				<div class="question col-md-12">	
+					<label>{{ $q->order_dsp.'/'.count($questions) }}
+					{{ $q->content }}</label>
 				</div>
 				<div class="answwer col-md-12 col-sm-12 col-xs-12">
 				@if ($q->answer_type == '0')
