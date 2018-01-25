@@ -18,7 +18,23 @@ class Common extends Model
 		return $this->where('code', $code)->available()->get();
 	}
 
+	public function getByKeyAndValue($key, $value) {
+		return $this
+			->where('key', $key)
+			->where('value', $value)
+			->available()
+			->get();
+	}
+
 	public function scopeAvailable($query) {
 		return $query->where('delete_flg', '=', Config::get('constants.FLG_OFF'));
+	}
+
+	public function getCityList() {
+		return $this->getByKey(Config::get('constants.KEY_CITY'));
+	}
+
+	public function getDistList($cityCode) {
+		return $this->getByKeyAndValue(Config::get('constants.KEY_DIST'), $cityCode);
 	}
 }

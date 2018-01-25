@@ -1,92 +1,177 @@
 /* CSS Document */
 
 .margin-bottom-50 {
-     margin-bottom: 0px; 
-     height:100%;
+    margin-bottom: 0px;
+    height: 100%;
 }
-
+.wizard > .steps {
+    display: none;
+}
 .btn-default-outline {
-    font-size:24px;
-    margin-left:15px;
-    margin-right:15px;
+    font-size: 24px;
+    margin-left: 15px;
+    margin-right: 15px;
 }
 .btn-group {
-    float:left; 
-    margin-top:25px; 
-    padding:10px;
+    float: left; 
+    margin-top: 25px; 
+    padding: 10px;
 }
 .wizard > .content > .body {
-    position:relative;
-    margin:2.5%;
+    position: relative;
+    margin: 2.5%;
 }
-.question{background-color:#f4f4f4;font-size:20px;color:#000;}
-
-.btn.btn-default-outline.active{
-    background-color:#02b3e4;
-    }
-.btn.btn-default-outline:hover{}
+.question {
+    background-color: #dfe4ed;
+    font-size: 20px;
+    color: #fff;
+    min-height: 60px;
+}
+.btn.btn-default-outline.active {
+    background-color: #02b3e4;
+}
+.btn.btn-default-outline {
+    color: #000;
+}
+.cui-wizard .actions li.disabled a {
+    background-color: #dfe4ed !important; 
+    color: #fff !important;
+}
+.cui-wizard .actions li a {
+    background-color: #02b3e4;
+    color: #fff;
+    border-radius: 0px;
+}
+.cui-wizard .actions li a:hover, .cui-wizard .actions li a:active {
+    background-color: #02b3e4; 
+    color: #fff;
+    border-radius: 0px;
+}
 @media screen and (min-width: 981px) {
-    .btn-group{padding-left:9em;}
+    .btn-group {
+        padding-left: 9em;
+    }
 }
 @media screen and (max-width: 980px) {
-    .btn-group{padding-left:6em;}
-    .wizard > .content > .body{
-        position:relative;
-        margin:0%;
-        width:100%;
+    .btn-group {
+        padding-left: 6em;
     }
-    .question{
-        font-size:16px;
-        
+    .wizard > .content > .body {
+        position: relative;
+        margin: 0%;
+        width: 100%;
     }
-    .btn-default-outline{
-    font-size:20px;
-    margin:5px;
-    text-align:left;
+    .question {
+        font-size: 16px;
     }
-    
-    .wizard > .content{ 
-        margin-top:-15px;
+    .btn-default-outline {
+    font-size: 20px; 
+    text-align: left;
+    }
+    .wizard > .content { 
+        margin-top: -15px;
     }
 }
 @media screen and (max-width: 543px) {
-    .btn-group{
-        padding-left:0em;
-        margin-top:5px;
-        padding:0px;
-        margin-left:0px;
+    .btn-group {
+        padding-left: 0em;
+        margin-top: 0px;
+        padding: 0px;
+        margin-left: 0px;
     }
-    #example-numbers{height:100%}
-    .answwer {padding-left:0px;padding-right:0px;}
-    .btn-default-outline{
-        border:#FFF;
-        
-        
+    .question >label {
+        font-style: 22px;
+        color: #000;
     }
-    .cui-wizard .number {line-height:29px;}
-    .icon{
-        padding-right:20px;
+    .page-content {
+        width: 100%;
     }
-    .wizard > .content{     
-        margin-top:-25px;
+    .form-control {
+        margin-top: 15px;
     }
-    .btn-default-outline{
-    font-size:16px;
-    
+    #example-numbers {
+        height: 100%
     }
-    .question{
-        font-size:14px;
+    #frmMain {
+    height: 100%;
+    }
+    #surveyList {
+        height: 100%;
+    }
+    .answwer {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .btn.btn-default-outline {
+        padding: 16px;
+        margin-bottom: 0px;
+        margin-left: 0px;
+        color: #000;
+        word-wrap: break-word;
+    }
+    .btn-group > label.btn.btn-default-outline {
+        margin-left: 0px;
+        word-wrap: break-word;
+    }
+    .btn.btn-default-outline.active {
+        color: #fff;
+    }
+    .btn.btn-default-outline:hover {
+        color: #fff;
+    }
+    .answwer>.btn-group>label.btn-default-outline {
+        margin-bottom: 0em;
+    }
+    .btn-default-outline {
+        font-size: 16px;
+        border: #FFF;   
+    }
+    .cui-wizard .number {
+        line-height: 29px;
+    }
+    .icon {
+        padding-right: 20px;
+    }
+    .wizard > .content {
+        margin-top: -25px;
+    }
+    .question {
+        font-size: 16px;
         padding-top: 10px;
+        margin-bottom: 0px;
+        display: flex;
+        align-items: center;
     }
-    .cui-wizard__numbers .number{
-        width:33px;
-        height:33px;
+    .actions >ul >li {
+        border-right: 1px #fff solid;
+    } 
+    .wizard > .actions > ul {
+        width: 100%;
+        bottom: 0px;
+        left: 0px;
     }
-    .cui-wizard .actions {
-        border-top:1px #999999 solid;
-        padding-top:7px;
-        position:fixed;
-        bottom:0px;
-        
+    .wizard > .actions > ul > li {
+        width: 50%;
+        margin: 0em;
+    }
+    .cui-wizard__numbers .number {
+        width: 33px;
+        height: 33px;
+    }
+    .actions>ul {
+        line-height: 2.5rem;
+    }
+    .wizard > .actions > ul {
+        display: block;
+    }
+    input.input-other {
+        border: 0px !important;
+    }
+    .wizard > .actions {
+        position: fixed;
+        bottom: 0px;
+   }
+    ::-webkit-input-placeholder {
+       color: #000;
     }
 }
