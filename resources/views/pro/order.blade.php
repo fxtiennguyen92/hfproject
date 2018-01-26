@@ -1,6 +1,7 @@
 @extends('template.index')
 
 @push('stylesheets')
+	<link rel="stylesheet" type="text/css" href="css/order.css">
 	<script>
 		$(document).ready(function() {
 			$('.quoted-price').number({
@@ -72,23 +73,24 @@
 				<div class="order-req">
 					{{ $order->short_requirements }}
 				</div>
-				<p><span class="icmn-location"></span> {{ $order->address }}</p>
 			</div>
+			<p><span class="icmn-location"></span> {{ $order->address }}</p>
 		</div>
-		
-		@if ($quotedPrice)
-		<button id="btnSubmit" type="submit" class="btn btn-danger width-150">
-			Xóa báo giá
-		</button>
-		@endif
-		<button id="btnSubmit" type="submit" class="btn btn-primary width-150">
+		<div class="row row-baogia">
 			@if ($quotedPrice)
-			Báo giá lại
-			@else
-			Báo giá
+			<button id="btnSubmit" type="submit" class="btn btn-danger width-150">
+				Xóa báo giá
+			</button>
 			@endif
-		</button>
-		<input type="hidden" name="_token" value="{{ csrf_token() }}" />
+			<button id="btnSubmit" type="submit" class="btn btn-primary width-150">
+				@if ($quotedPrice)
+				Báo giá lại
+				@else
+				Báo giá
+				@endif
+			</button>
+			<input type="hidden" name="_token" value="{{ csrf_token() }}" />
+		</div>
 	</form>
 </section>
 @endsection

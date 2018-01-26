@@ -1,0 +1,62 @@
+/* CSS Document */
+@media screen and (max-width: 543px) {
+	.number-style {
+		padding-top: 20pt;
+		padding-bottom: 30pt;
+		text-align: center;
+	}
+	.quoted-price {
+		width: 70%;
+		font-weight: normal !important;
+	}
+	.order-info>label {
+		font-size: 15pt;
+		color: #000;
+	}
+	.order-info+p {
+		padding-left: 12px;
+		padding-right: 12px;	
+	}
+	.order-info>img {
+		border-radius: 50%;
+		text-align: center;
+		margin-right: 10px;
+		margin-left: 25px;
+		vertical-align: -12px;
+	}
+	.order-req {
+		padding-top: 30pt;
+		padding-left: 13pt;
+		padding-right: 13pt;
+		line-height: 1.75em;
+    	font-size: 11pt;
+	}
+	.row-baogia {
+		position: absolute;
+		bottom: 0px;
+		width: 100%;
+		margin: 0px;
+	}
+	.number-style span.disabled::after,
+	.number-style span.disabled::before{
+    	background-color: #01a8fe;
+	}
+	.number-style span.number-plus::before {
+		margin: -10px 0 0 -1px;
+    	width: 3px;
+    	height: 20px;
+	}
+	.number-style span.number-plus::after {
+		margin: -1px 0 0 -10px;
+    	width: 20px;
+    	height: 3px;
+	}
+	.number-style span.number-minus::after {	
+		width: 20px;
+    	height: 3px;
+	}
+	.number-style input {
+		font-size: 30px;
+	}
+}
+
