@@ -75,6 +75,12 @@
 				<p><span class="icmn-location"></span> {{ $order->address }}</p>
 			</div>
 		</div>
+		
+		@if ($quotedPrice)
+		<button id="btnSubmit" type="submit" class="btn btn-danger width-150">
+			Xóa báo giá
+		</button>
+		@endif
 		<button id="btnSubmit" type="submit" class="btn btn-primary width-150">
 			@if ($quotedPrice)
 			Báo giá lại

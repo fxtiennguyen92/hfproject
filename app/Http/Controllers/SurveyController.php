@@ -89,10 +89,16 @@ class SurveyController extends Controller
 		$order->requirements = json_encode($requirements);
 		$order->short_requirements = implode(', ', $short_requirements);
 		$order->address = $request->address;
+		
 		$order->city = $request->city;
 		$order->district = $request->dist;
+		$common = new Common();
+		$order->address = $request->address
+			.', '.$common->getByCode($order->district)->name
+			.', '.$common->getByCode($order->city)->name;
+		
 		$order->time_state = $request->time;
-		if ($request->time == 2) {
+		if ($request->time == 1) {
 			$estExcuteDate = CommonController::convertStringToDateTime(substr($request->estTime, -16));
 			if ($estExcuteDate) {
 				$order->est_excute_at = $estExcuteDate;

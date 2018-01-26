@@ -15,7 +15,7 @@ class Common extends Model
 	}
 
 	public function getByCode($code) {
-		return $this->where('code', $code)->available()->get();
+		return $this->where('code', $code)->available()->first();
 	}
 
 	public function getByKeyAndValue($key, $value) {
@@ -27,7 +27,7 @@ class Common extends Model
 	}
 
 	public function scopeAvailable($query) {
-		return $query->where('delete_flg', '=', Config::get('constants.FLG_OFF'));
+		return $query->where('delete_flg', Config::get('constants.FLG_OFF'));
 	}
 
 	public function getCityList() {

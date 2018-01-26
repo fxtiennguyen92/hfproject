@@ -39,7 +39,7 @@ class ProOrderController extends Controller
 			throw new NotFoundHttpException();
 		}
 		// avatar of customer
-		$order['user_avatar'] = User::getAvatar($order->user_id);
+		$order->user_avatar = User::getAvatar($order->user_id)->avatar;
 		
 		// put orderId to session
 		$request->session()->put('quoted_order', $orderId);

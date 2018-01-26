@@ -11,7 +11,16 @@ class Order extends Model
 	protected $table = 'orders';
 
 	public function getById($id) {
-		return $this->where('id', $id)->first();
+		$order = $this->where('id', $id)->first();
+		if ($order) {
+			$common = new Common();
+			$order->city_string = $common->getByCode($order->city)->name;
+			$order->dist_string = $common->getByCode($order->district)->name;
+			
+			return $order;
+		}
+		
+		return null;
 	}
 
 	public function getByUser($id) {

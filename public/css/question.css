@@ -35,7 +35,7 @@
 }
 .cui-wizard .actions li.disabled a {
     background-color: #dfe4ed !important; 
-    color: #fff !important;
+    color: #000 !important;
 }
 .cui-wizard .actions li a {
     background-color: #02b3e4;
@@ -80,7 +80,7 @@
         margin-left: 0px;
     }
     .question >label {
-        font-style: 22px;
+       font-size: 11pt;
         color: #000;
     }
     .page-content {
@@ -98,7 +98,7 @@
     #surveyList {
         height: 100%;
     }
-    .answwer {
+    .answer {
         padding-left: 0px;
         padding-right: 0px;
     }
@@ -107,11 +107,16 @@
         margin-bottom: 0px;
         margin-left: 0px;
         color: #000;
-        word-wrap: break-word;
+        margin-bottom: 0px;
+        width: 100%;
+        font-size: 11pt;
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
     }
     .btn-group > label.btn.btn-default-outline {
         margin-left: 0px;
-        word-wrap: break-word;
     }
     .btn.btn-default-outline.active {
         color: #fff;
@@ -119,18 +124,19 @@
     .btn.btn-default-outline:hover {
         color: #fff;
     }
-    .answwer>.btn-group>label.btn-default-outline {
+    .answer>.btn-group>label.btn-default-outline {
         margin-bottom: 0em;
     }
     .btn-default-outline {
         font-size: 16px;
-        border: #FFF;   
+        border: #FFF;
+        white-space: normal;   
     }
     .cui-wizard .number {
         line-height: 29px;
     }
     .icon {
-        padding-right: 20px;
+        padding-right: 10px;
     }
     .wizard > .content {
         margin-top: -25px;
@@ -141,6 +147,33 @@
         margin-bottom: 0px;
         display: flex;
         align-items: center;
+    }
+    .row-complete {
+        bottom: 0px;
+        position: absolute;
+        width: 100%;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+    #lbTime {
+        padding-left: 8px;
+    }
+    #btnBack {
+        width: 50%;
+        border: 0px;
+        font-size: 16px;
+        line-height: 2.5rem;
+        border-radius: 0px;
+        background-color: #02b3e4;
+        border-right: 1px #fff solid;
+    }
+    #btnSubmit {
+        width: 50%;
+        border: 0px;
+        float: right;
+        font-size: 16px;
+        line-height: 2.5rem;
+        border-radius: 0px;
     }
     .actions >ul >li {
         border-right: 1px #fff solid;
@@ -173,5 +206,15 @@
    }
     ::-webkit-input-placeholder {
        color: #000;
+    }
+    .row-address {
+        padding-left: 5px;
+        padding-right: 5px;
+        margin-right: 0px !important;
+        margin-left: 0px !important;
+    }
+    .row-address > div {
+        padding-left: 0px;
+        padding-right: 0px;
     }
 }

@@ -1,7 +1,7 @@
 @extends('template.index')
 
 @push('stylesheets')
-	<link rel="stylesheet" type="text/css" href="css/donhang.css">
+	<link rel="stylesheet" type="text/css" href="css/orders.css">
 @endpush
 
 @section('title')
@@ -36,10 +36,10 @@
 								<p><span class="icmn-location"></span> {{ $order->address }}</p>
 							</div>
 							<div class="order-state col-md-2 col-sm-2 col-sx-2">
-								@if ($order->time_state == '0')
+								@if ($order->est_excute_at_string)
 								<span class="state-now">Ngay lập tức</span>
 								@else
-								<span class="state-confirm">Hẹn thời gian</span>
+								<span class="state-est-time">{{ $order->est_excute_at_string }}</span>
 								@endif
 							</div>
 						</div>

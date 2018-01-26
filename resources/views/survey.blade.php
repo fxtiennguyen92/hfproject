@@ -35,7 +35,6 @@
 								.attr('name');
 					if ($('input[name="' + name + '"]:checked').length == 0) {
 						$.notify({
-							title: '<strong>Không thể tiếp tục! </strong>',
 							message: 'Hãy trả lời câu hỏi bên dưới.'
 						},{
 							type: 'danger',
@@ -241,10 +240,10 @@
 	<div id="positionAndTime" style="display: none">
 		<div class="row">
 			<div class="question col-md-12">
-				<label>Địa điểm</label>
+				<label style="padding-left: 8px;">Địa điểm</label>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row row-address">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<input type="text" class="form-control"
 					placeholder="Địa chỉ"
@@ -253,7 +252,7 @@
 					data-validation="[NOTEMPTY]">
 			</div>
 		</div>
-		<div class="row">
+		<div class="row row-address">
 			<div class="answer col-md-6 col-sm-6 col-xs-6">
 				<select id="ddCity" class="form-control"
 						name="city">
@@ -263,7 +262,7 @@
 					@endforeach
 				</select>
 			</div>
-			<div class="answer col-md-6 col-sm-6 col-xs-6">
+			<div class="answer col-md-6 col-sm-6 col-xs-6" style="padding-left: 5px;">
 				<select id="ddDist" class="form-control"
 						name="dist"
 						data-validation-message="Chưa chọn Quận / Huyện"
@@ -273,7 +272,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="question form-group col-md-12 col-sm-12 col-xs-12">
+			<div class="question form-group col-md-12 col-sm-12 col-xs-12" style="margin-top: 15px;">
 				<label id="lbTime">Thời gian</label>
 			</div>
 		</div>
@@ -286,23 +285,17 @@
 				<span class="icon icmn-radio-unchecked"></span>
 					Càng sớm càng tốt
 			</label>
-			<label class="btn btn-default-outline row">
+			<label class="label-other btn btn-default-outline row">
 				<input type="radio" name="time" value="1"
 					data-validation-group="lbTime">
 				<span class="icon icmn-radio-unchecked"></span>
-					Theo đề xuất của thợ
-			</label>
-			<label class="label-other btn btn-default-outline row">
-				<input type="radio" name="time" value="2"
-					data-validation-group="lbTime">
-				<span class="icon icmn-radio-unchecked"></span>
-				<input class="datetimepicker input-other"
+				<input class="datetimepicker input-other" style="min-width: 80%"
 						placeholder="Ấn định thời gian"
 						type="text"
 						name="estTime">
 			</label>
 		</div>
-		<div class="row">
+		<div class="row row-complete">
 			<button id="btnBack" type="button" class="btn btn-secondary width-150">Quay lại</button>
 			<button id="btnSubmit" type="submit" class="btn btn-primary width-150">Hoàn tất & Tìm thợ</button>
 			<input type="hidden" name="_token" value="{{ csrf_token() }}" />
