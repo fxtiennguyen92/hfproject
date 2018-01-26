@@ -241,10 +241,10 @@
 	<div id="positionAndTime" style="display: none">
 		<div class="row">
 			<div class="question col-md-12">
-				<label>Địa điểm</label>
+				<label style="padding-left: 8px;">Địa điểm</label>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" style="padding-left: 5px; padding-right:  5px;">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<input type="text" class="form-control"
 					placeholder="Địa chỉ"
@@ -253,7 +253,7 @@
 					data-validation="[NOTEMPTY]">
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" style="padding-left: 14px; padding-right:  7px;">
 			<div class="answer col-md-6 col-sm-6 col-xs-6">
 				<select id="ddCity" class="form-control"
 						name="city">
@@ -263,7 +263,7 @@
 					@endforeach
 				</select>
 			</div>
-			<div class="answer col-md-6 col-sm-6 col-xs-6">
+			<div class="answer col-md-6 col-sm-6 col-xs-6" style="padding-left:  5px; padding-right:  5px;">
 				<select id="ddDist" class="form-control"
 						name="dist"
 						data-validation-message="Chưa chọn Quận / Huyện"
@@ -273,7 +273,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="question form-group col-md-12 col-sm-12 col-xs-12">
+			<div class="question form-group col-md-12 col-sm-12 col-xs-12" style="margin-top: 15px;">
 				<label id="lbTime">Thời gian</label>
 			</div>
 		</div>
@@ -302,7 +302,7 @@
 						name="estTime">
 			</label>
 		</div>
-		<div class="row">
+		<div class="row button-hoantat">
 			<button id="btnBack" type="button" class="btn btn-secondary width-150">Quay lại</button>
 			<button id="btnSubmit" type="submit" class="btn btn-primary width-150">Hoàn tất & Tìm thợ</button>
 			<input type="hidden" name="_token" value="{{ csrf_token() }}" />
