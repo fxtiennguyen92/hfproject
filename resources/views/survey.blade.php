@@ -1,21 +1,10 @@
 @extends('template.index')
 
 @push('stylesheets')
-	<link rel="stylesheet" type="text/css" href="css/question.css">
-	<style>
-		input.input-other {
-			display: inline !important;
-			background: transparent !important;
-		}
-		input.input-other:focus {
-			outline: none;
-		}
-	</style>
-
+	<link rel="stylesheet" type="text/css" href="css/survey.css">
 	<!-- Page Scripts -->
 	<script>
 	$(document).ready(function() {
-		autosize($('.autosize'));
 		$('#surveyList').steps({
 			headerTag: 'h3',
 			bodyTag: 'section',
@@ -28,6 +17,7 @@
 				previous: "Quay lại",
 			},
 			onStepChanging: function(e, currentIndex, newIndex) {
+				var validReturn = true;
 				if (currentIndex < newIndex) {
 					var name = $('section[id=surveyList-p-' + currentIndex +']')
 								.find('input:not([type=text],[type=button],[type=submit])')
@@ -40,20 +30,48 @@
 							type: 'danger',
 							delay: 1500,
 						});
-						return false;
+						
+						validReturn = false;
 					};
 
-					$('.input-other').on('blur', function() {
-						if ($(this).parent().hasClass('active') && $.trim($(this).val()) == '') {
-							$(this).focus();
-						}
-					});
+					var inpOther = $('section[id=surveyList-p-' + currentIndex +']')
+									.find('input.input-other');
+					if ($.trim(inpOther.val()) == '' && inpOther.parent().hasClass('active')) {
+						$.notify({
+							message: 'Chưa điền thông tin vào câu trả lời.'
+						},{
+							type: 'danger',
+							delay: 1500,
+						});
+						inpOther.focus();
+						validReturn = false;
+					}
 				}
-				return true;
+				
+				return validReturn;
 			},
 			onStepChanged: function() {
 				fixScreen();
 			},
+		});
+		$('label').on('click', function() {
+			var span = $(this).find('span');
+			if (span.hasClass('icmn-radio-unchecked')) {
+				$(this).parent().find('span').each(function() {
+					$(this).addClass('icmn-radio-unchecked').removeClass('icmn-checkmark-circle');
+				});
+				span.addClass('icmn-checkmark-circle').removeClass('icmn-radio-unchecked');
+				
+			} else if (span.hasClass('icmn-checkbox-unchecked2')) {
+				span.addClass('icmn-checkbox-checked2').removeClass('icmn-checkbox-unchecked2');
+			} else if (span.hasClass('icmn-checkbox-checked2')) {
+				span.addClass('icmn-checkbox-unchecked2').removeClass('icmn-checkbox-checked2');
+			}
+		});
+		$('.label-other').on('click', function() {
+			if (!$(this).hasClass('active')) {
+				$(this).find('.input-other').focus();
+			}
 		});
 		$('a[href=#finish]').on('click', function() {
 			$('#positionAndTime').show();
@@ -67,6 +85,7 @@
 			minDate: moment(),
 			locale: moment.locale('vi'),
 			format: 'dddd, DD/MM/YYYY HH:ss',
+			showClose: true,
 			widgetPositioning: {
 				horizontal: 'auto',
 				vertical: 'top'
@@ -80,8 +99,8 @@
 				next: 'fa fa-chevron-right',
 				today: 'fa fa-screenshot',
 				clear: 'fa fa-trash',
-				close: 'fa fa-remove'
-			}
+				close: 'fa fa-check'
+			},
 		});
 		$('#ddCity').on('change', function() {
 			$('#ddDist').children('option').remove();
@@ -99,11 +118,6 @@
 					$('#ddDist').focus();
 				}
 			});
-		});
-		$('.label-other').on('click', function() {
-			if (!$(this).hasClass('active')) {
-				$(this).find('.input-other').focus();
-			}
 		});
 		$('#frmMain').validate({
 			submit: {
@@ -179,20 +193,20 @@
 @endsection
 
 @section('content')
-<section class="page-content" style="position: fixed; height: 86vh; bottom: 0px;">
+<section class="page-content" style="position: fixed; height: 86vh;">
 	<form id="frmMain" name="form-validation" method="post" enctype="multipart/form-data" action="{{ route('submit_order_details') }}">
 	<div id="surveyList" class="cui-wizard cui-wizard__numbers">
 		@foreach ($questions as $q)
 			<h3><span class="cui-wizard--steps--title"></span></h3>
 			<section>
 				<div class="question col-md-12">
-					<label>{{ $q->order_dsp.'/'.count($questions) }} {{ $q->content }}</label>
+					<label>{{ $q->content }}</label>
 				</div>
 				<div class="answer col-md-12 col-sm-12 col-xs-12">
 				@if ($q->answer_type == '0')
-					<div class="form-group">
-						<textarea class="form-control autosize"
-							name="q[{{ $q->id }}]"></textarea>
+					<div class="form-group" style="margin: 5px;">
+						<textarea class="no-newlines form-control"
+							name="q[{{ $q->id }}]" rows="4" maxlength="100"></textarea>
 					</div>
 				@elseif ($q->answer_type == '1')
 					<div class="btn-group col-md-12 col-sm-12 col-xs-12" data-toggle="buttons">
@@ -244,15 +258,6 @@
 			</div>
 		</div>
 		<div class="row row-address">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<input type="text" class="form-control"
-					placeholder="Địa chỉ"
-					name="address"
-					data-validation-message="Chưa nhập Địa chỉ"
-					data-validation="[NOTEMPTY]">
-			</div>
-		</div>
-		<div class="row row-address">
 			<div class="answer col-md-6 col-sm-6 col-xs-6">
 				<select id="ddCity" class="form-control"
 						name="city">
@@ -269,6 +274,15 @@
 						data-validation="[NOTEMPTY]">
 					<option value="" selected>Quận / Huyện</option>
 				</select>
+			</div>
+		</div>
+		<div class="row row-address">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<input type="text" class="form-control"
+					placeholder="Địa chỉ"
+					name="address"
+					data-validation-message="Chưa nhập Địa chỉ"
+					data-validation="[NOTEMPTY]">
 			</div>
 		</div>
 		<div class="row">
@@ -296,8 +310,8 @@
 			</label>
 		</div>
 		<div class="row row-complete">
-			<button id="btnBack" type="button" class="btn btn-secondary width-150">Quay lại</button>
-			<button id="btnSubmit" type="submit" class="btn btn-primary width-150">Hoàn tất & Tìm thợ</button>
+			<button id="btnBack" type="button" class="btn">Quay lại</button>
+			<button id="btnSubmit" type="submit" class="btn btn-primary">Tìm Chuyên gia</button>
 			<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 		</div>
 	</div>

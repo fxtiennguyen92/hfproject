@@ -37,9 +37,9 @@
 							</div>
 							<div class="order-state col-md-2 col-sm-2 col-sx-2">
 								@if ($order->est_excute_at_string)
-								<span class="state-now">Ngay lập tức</span>
-								@else
 								<span class="state-est-time">{{ $order->est_excute_at_string }}</span>
+								@else
+								<span class="state-now">Ngay lập tức</span>
 								@endif
 							</div>
 						</div>
