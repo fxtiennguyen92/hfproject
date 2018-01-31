@@ -120,15 +120,15 @@
 	<script src="assets/common/js/demo.temp.js"></script>
 	<script src="assets/common/js/hf.js"></script>
 	<style type="text/css">
-        .single-page-block-inner {
-            margin-top: 0px;
-        }
-        @media only screen and (min-width: 540px) {
-            .single-page-block-inner {
-                margin-top: 100px;
-            } 
-        }
-    </style>
+		.single-page-block-inner {
+			margin-top: 0px;
+		}
+		@media only screen and (min-width: 540px) {
+			.single-page-block-inner {
+				margin-top: 100px;
+			}
+		}
+	</style>
 	<!-- Page Scripts -->
 	@stack('stylesheets')
 	<!-- End Page Scripts -->
@@ -141,5 +141,28 @@
 			@include('template.nav_guest')
 		@endif
 		@yield('content')
+
+	<!-- scroll to top -->
+		<div class="scrolltotop">
+			<span class="icon icmn-shift"></span>
+		</div>
 </body>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.scrolltotop').fadeOut();
+	$(window).scroll(function(){ 
+		if ($(this).scrollTop() > 3) { 
+			$('.scrolltotop').fadeIn(); 
+		} else { 
+			$('.scrolltotop').fadeOut(); 
+		} 
+	}); 
+
+	//Click event to scroll to top 
+		$('.scrolltotop').click(function(){ 
+			$('html, body').animate({scrollTop : 0},800); 
+			return false; 
+		});
+	});
+</script>
 </html>

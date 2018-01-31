@@ -1,81 +1,102 @@
 body {
-    font-family: Roboto;
-    font-size: 16px;
-    background-color: #fff;
+	font-family: Roboto;
+	font-size: 16px;
+	background-color: #fff;
 }
 /*Login Page*/
 .single-page-login-alpha .single-page-block .single-page-block-inner {
-    border-radius: 10px;
-    margin-top: 30px;
-    padding: 20px;
+	border-radius: 10px;
+	margin-top: 30px;
+	padding: 20px;
 }
 .single-page-login-alpha .single-page-block .single-page-block-inner .social-login {
-    border-top: none !important;
+	border-top: none !important;
 }
 body.single-page .single-page-block a {
-    color: #757575;
+	color: #757575;
 }
 /*Navbar*/
 nav.top-menu {
-    border-bottom: none;
+	border-bottom: none;
 }
 .navbar-logo {
-    width: 150px;
+	width: 150px;
 }
 @media only screen and (min-width: 540px) {
-    .navbar-logo {
-        width: 180px;
-    }
+	.navbar-logo {
+		width: 180px;
+	}
 }
 @media only screen and (min-width: 769px) {
-    .navbar-logo {
-        width: 240px;
-    }
+	.navbar-logo {
+		width: 240px;
+	}
 }
 /*Home*/
 #carousel-example-generic-2 {
-    margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 .card_udacity_jumbo_left {
-    box-shadow: 5px 5px 25px 0px rgba(46,61,73,0.2);
-    padding: 0px;
-    border-radius: 10px;
-    height: 340px !important;
-    width: 100%;
-    background-color: #fff;
-    background-image: url(../img/jumbo.jpg);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    background-origin: content-box;
+	box-shadow: 5px 5px 25px 0px rgba(46,61,73,0.2);
+	padding: 0px;
+	border-radius: 10px;
+	height: 340px !important;
+	width: 100%;
+	background-color: #fff;
+	background-image: url(../img/jumbo.jpg);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	background-origin: content-box;
 }
 .carousel-control.left {
-    background-image: none !important;
-    background-color: transparent;
+	background-image: none !important;
+	background-color: transparent;
 }
 .carousel-control.right {
-    background-image: none !important;
-    background-color: transparent;
+	background-image: none !important;
+	background-color: transparent;
 }
 .card_jumbo_right {
-    width: 100%; 
-    height: 100px; 
-    background-color: #fff;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    box-shadow: 5px 5px 25px 0px rgba(46,61,73,0.2);
-    border: none;
+	width: 100%; 
+	height: 100px; 
+	background-color: #fff;
+	margin-bottom: 20px;
+	border-radius: 10px;
+	box-shadow: 5px 5px 25px 0px rgba(46,61,73,0.2);
+	border: none;
 }
 .carousel-item {
-    border-radius: 10px;
-    background-color: transparent;
+	border-radius: 10px;
+	background-color: transparent;
 }
-
+/*  scroll to top  */
+.scrolltotop {
+	width: 50px;
+	height: 50px;
+	right: 20px;
+	bottom: 45px;
+	position: fixed;
+	background-color: #02b3e4;
+}
+.icmn-shift {
+	color: #fff;
+	font-size: 50px;
+}
 @media screen and (max-width: 540px) {
-    /* For mobile phones: */
-    .dropdown-avatar.file
-    {
-       display:none;
-    }
-    
+	/* For mobile phones: */
+	.dropdown-avatar.file
+	{
+	   display:none;
+	}
+	/*  scroll to top phones  */
+	.scrolltotop {
+		right: 10px;
+		bottom: 55px;
+		width: 40px;
+		height: 40px;
+	}
+	.icmn-shift {
+		font-size: 40px;
+	}
 }
