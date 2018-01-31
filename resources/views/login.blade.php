@@ -7,6 +7,9 @@
 		.single-page-login-alpha{
 			background-image: url(assets/common/img/temp/login/5.jpg);
 		}
+		.page-content {
+			width: 100%;
+		}
 		@media only screen and (min-width: 540px) {
 			.single-page-block-inner {
 				margin-top: 100px;
@@ -108,7 +111,7 @@
 	<!-- Login Page -->
 	<div class="single-page-block">
 		<div class="row">
-			<div class="col-xl-4">
+			<div class="col-xl-4" style="width: 100%;">
 				<div class="single-page-block-inner">
 					<div class="logo" style="text-align: center; margin-top: 10px;">
 						<a href="javascript: history.back();">

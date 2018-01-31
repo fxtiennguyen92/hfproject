@@ -158,14 +158,14 @@
 	});
 
 	function fixScreen() {
-		if ($('.content').outerHeight() > 490) {
+		if ($('.content').outerHeight() > 500) {
 			$('.page-content').css('position', 'relative');
-			$('.actions').css('position', 'absolute');
+			$('.actions').css('position', 'fixed');
 			$('.actions').css('bottom', '0px');
 			$('.page-content').css('height', '100vh');
 		}
 		else {	
-			$('.page-content').css('position', 'fixed');
+			$('.page-content').css('position', 'relative');
 			$('.page-content').css('height', '86vh');
 			$('.page-content').css('bottom', '0px');
 			$('.actions').css('position', 'fixed');
@@ -179,7 +179,7 @@
 @endsection
 
 @section('content')
-<section class="page-content" style="position: fixed; height: 86vh; bottom: 0px;">
+<section class="page-content" style="bottom: 0px; position: relative; height: 86vh;">
 	<form id="frmMain" name="form-validation" method="post" enctype="multipart/form-data" action="{{ route('submit_order_details') }}">
 	<div id="surveyList" class="cui-wizard cui-wizard__numbers">
 		@foreach ($questions as $q)
@@ -242,16 +242,7 @@
 			<div class="question col-md-12">
 				<label style="padding-left: 8px;">Địa điểm</label>
 			</div>
-		</div>
-		<div class="row row-address">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<input type="text" class="form-control"
-					placeholder="Địa chỉ"
-					name="address"
-					data-validation-message="Chưa nhập Địa chỉ"
-					data-validation="[NOTEMPTY]">
-			</div>
-		</div>
+		</div>	
 		<div class="row row-address">
 			<div class="answer col-md-6 col-sm-6 col-xs-6">
 				<select id="ddCity" class="form-control"
@@ -269,6 +260,15 @@
 						data-validation="[NOTEMPTY]">
 					<option value="" selected>Quận / Huyện</option>
 				</select>
+			</div>
+		</div>
+		<div class="row row-address">
+			<div class="col-md-12 col-sm-12 col-xs-12">
+				<input type="text" class="form-control"
+					placeholder="Địa chỉ"
+					name="address"
+					data-validation-message="Chưa nhập Địa chỉ"
+					data-validation="[NOTEMPTY]">
 			</div>
 		</div>
 		<div class="row">

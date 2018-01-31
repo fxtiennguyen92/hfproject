@@ -38,14 +38,17 @@
     color: #000 !important;
 }
 .cui-wizard .actions li a {
-    background-color: #02b3e4;
-    color: #fff;
+    background-color: #dfe4ed;
+    color: #000;
     border-radius: 0px;
 }
 .cui-wizard .actions li a:hover, .cui-wizard .actions li a:active {
     background-color: #02b3e4; 
     color: #fff;
     border-radius: 0px;
+}
+.top-menu {
+    position: relative !important;
 }
 @media screen and (min-width: 981px) {
     .btn-group {
@@ -85,6 +88,7 @@
     }
     .page-content {
         width: 100%;
+        margin-top: 0px !important;
     }
     .form-control {
         margin-top: 15px;
@@ -150,7 +154,7 @@
     }
     .row-complete {
         bottom: 0px;
-        position: absolute;
+        position: fixed;
         width: 100%;
         margin-left: 0px;
         margin-right: 0px;
@@ -164,7 +168,7 @@
         font-size: 16px;
         line-height: 2.5rem;
         border-radius: 0px;
-        background-color: #02b3e4;
+        background-color: #dfe4ed;
         border-right: 1px #fff solid;
     }
     #btnSubmit {

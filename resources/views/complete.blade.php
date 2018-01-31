@@ -10,7 +10,7 @@
 	<title> | Hand Free</title>
 	<base href="{{ asset('') }}">
 </head> 
-<body style="background-color: #02b3e4; color: #FFF; padding-top: 60%;">
+<body style="background-color: #02b3e4; color: #FFF; padding-top: 60%; font-family: Roboto;">
 	<div style="text-align: center;">
 		<img src="img/logo2.png" width="100px"><br/>
 		<label style="font-size: 30px;">Hoàn tất</label>

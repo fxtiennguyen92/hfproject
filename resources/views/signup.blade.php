@@ -102,12 +102,12 @@
 @endsection
 
 @section('content')
-<section class="page-content">
+<section class="page-content" style="width: 100%">
 <div class="page-content-inner single-page-login-alpha">
 	<!-- SignUp Page -->
 	<div class="single-page-block">
 		<div class="row">
-			<div class="col-xl-4">				
+			<div class="col-xl-4" style="width: 100%;" >				
 				<div class="single-page-block-inner">
 					<div class="logo" style="text-align: center; margin-top: 10px;">
 						<a href="javascript: history.back();">
