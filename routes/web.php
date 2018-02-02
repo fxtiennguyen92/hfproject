@@ -33,7 +33,6 @@ Route::get('/redirect/google', 'Auth\SocialAuthController@redirectGG')
 	->name('redirect_gg');
 Route::get('/callback/google', 'Auth\SocialAuthController@callbackGG')
 	->name('callback_gg');
-
 /** Login and Logout - END **/
 
 /** Sign Up - STA **/
@@ -44,6 +43,8 @@ Route::post('/signup', 'Auth\RegisterController@authenticate')
 Route::get('/verify/{confirmCode}', 'Auth\RegisterController@verify')
 	->name('verify');
 
+Route::get('/pro/signup', 'SignUpProController@view')
+	->name('signup_pro');
 /** Sign Up - END **/
 
 /** Survey - Order - STA **/
@@ -58,7 +59,6 @@ Route::post('/order/details', 'SurveyController@submitOrderDetails')
 	->name('submit_order_details');
 Route::get('/order/complete', 'SurveyController@complete')
 	->name('complete_order');
-
 /** Survey - Order - END **/
 
 /** Pro - STA **/
@@ -85,14 +85,12 @@ Route::post('/pro/order/quote', 'Pro\ProOrderController@quotePrice')
 Route::get('/pro/orders/{style?}', 'Pro\ProOrderController@viewOrders')
 	->name('view_pro_orders');
 
-Route::get('/location', 'SurveyController@getLocation')
-	->name('get_location');
-	
-
 Route::post('/password/change', 'Pro\ProProfileController@changePassword')
 	->name('change_password');
-
 /** Pro - END **/
+
+Route::get('/location', 'SurveyController@getLocation')
+	->name('get_location');
 
 /** Common - STA **/
 Route::get('/city/{code}/dist', 'CommonController@getDistByCity')

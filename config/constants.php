@@ -14,6 +14,8 @@ return [
 	'PRO_ORDER_LIST_PAGE' => 'pro.orders',
 	'PRO_ORDER_PAGE' => 'pro.order',
 	
+	'SIGN_UP_PRO_PAGE' => 'signup_pro',
+	
 	/** ERROR PAGE **/
 	'404_PAGE' => 'error.404',
 	
