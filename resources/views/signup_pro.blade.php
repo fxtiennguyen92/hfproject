@@ -1,6 +1,18 @@
 @extends('template.index')
 
 @push('stylesheets')
+	<style>
+	nav.top-menu {
+		display: none;
+	}
+	body {
+		background: #f4f4f4;
+	}
+	nav.top-menu+.page-content {
+		margin-top: 0;
+	}
+	</style>
+
 	<!-- Page Scripts -->
 	<script>
 	$(document).ready(function() {
@@ -174,11 +186,20 @@
 @endsection
 
 @section('content')
-<section class="page-content">
+<section class="page-content signup-pro">
+	<div class="header-logo">
+		<div class="row">
+			<div class="col-md-2"></div>
+			<div class="col-md-8">
+				<a href="#"><img src="img/hf-logo.png" /></a>
+			</div>
+		</div>
+	</div>
 	<div class="col-md-2">
 	</div>
 	<div class="col-md-8">
-	<form id="frmMain" name="form-validation" method="post" enctype="multipart/form-data" action="{{ route('change_pro_profile') }}">
+	<form id="frmMain" class="form-wrapper hf-card" name="form-validation" method="post" enctype="multipart/form-data" action="{{ route('change_pro_profile') }}">
+		<h1 class="page-title text-left">Thông tin Đối Tác</h1>
 		<div class="form-group">
 			<label>Họ tên</label>
 			<input maxlength="200"
