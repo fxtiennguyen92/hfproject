@@ -1,107 +1,28 @@
 @extends('template.index')
 
 @push('stylesheets')
-	<script src="assets/vendors/angular/angular.min.js"></script>
-	<script src="assets/vendors/img-crop/ng-img-crop.js"></script>
-	<style>
-		.cropArea {
-			height: 200px;
-		}
-		
-		.top-submenu .avatar {
-			position: relative;
-		}
-		
-		.top-submenu .avatar:before {
-			position: absolute;
-			font-family: FontAwesome;
-			content: '\f030  Avatar';
-			width: 100%;
-			height: 100%;
-			line-height: 120px;
-			background: rgba(0, 0, 0, .2);
-			color: #ffffff;
-			font-weight: bold;
-			display: none;
-		}
-		
-		.top-submenu .avatar:hover:before {
-			display: block;
-		}
-		
-		.image_avatar {
-			-webkit-border-radius: 100%;
-			-moz-border-radius: 100%;
-			border-radius: 100%;
-		}
-		
-		img-crop {
-			width: 100%;
-			height: 100%;
-			display: block;
-			position: relative;
-			overflow: hidden
-		}
-		
-		img-crop canvas {
-			display: block;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			outline: 0;
-			-webkit-tap-highlight-color: transparent
-		}
-		#image_avatar {
-			max-height: 200px;
-			border-radius: 100%;
-		}
-		.btn-file {
-			position: relative;
-			overflow: hidden;
-		}
-		.btn-file input[type=file] {
-			position: absolute;
-			top: 0;
-			right: 0;
-			min-width: 100%;
-			min-height: 100%;
-			font-size: 100px;
-			text-align: right;
-			filter: alpha(opacity=0);
-			opacity: 0;
-			outline: none;
-			background: white;
-			cursor: inherit;
-			display: block;
-		}
-		ul.dropdown-menu {
-			width: 100% !important
-		}
-	</style>
-
 	<!-- Page Scripts -->
 	<script>
 	$(document).ready(function() {
-		<!-- Initial - STA -->
-		@if (isset($profile))
-		$('input[name=dateOfBirth]').val("{{ Carbon\Carbon::parse($profile->date_of_birth)->format('d-m-Y') }}");
-		$('select[name=gender]').val("{{ $profile->gender }}");
-		@endif
-		
-		<!-- Avatar - STA -->
-		$('#fileInput').on('change', function() {
-			$('#btnSaveImage').show();
+		$('.datepicker-only-init').datetimepicker({
+			maxDate: moment().subtract(10, 'year'),
+			minDate: moment().subtract(100, 'year'),
+			locale: moment.locale('vi'),
+			format: 'DD/MM/YYYY',
+			defaultDate: '',
+			icons: {
+				time: 'fa fa-clock-o',
+				date: 'fa fa-calendar',
+				up: 'fa fa-chevron-up',
+				down: 'fa fa-chevron-down',
+				previous: 'fa fa-chevron-left',
+				next: 'fa fa-chevron-right',
+				today: 'fa fa-screenshot',
+				clear: 'fa fa-trash',
+				close: 'fa fa-check'
+			},
 		});
-		$('#btnSaveImage').on('click', function() {
-			$('#avatar').val($('#image_avatar').attr('ng-src'));
-		});
-		<!-- Avatar - END -->
-
-		$('#dpDateOfBirth').datetimepicker({
-			format: 'DD/MM/YYYY'
-		});
-		$('#dpDateOfBirth input').mask('00/00/0000');
-		$('#inpPhone').mask('0000000000000');
+		$('.phone').mask('0000000000000');
 
 		<!-- Autocomplete Companies - STA -->
 		var path = "{{ route('get_companies') }}";
@@ -244,27 +165,6 @@
 			}
 		});
 	});
-
-	angular.module('app', ['ngImgCrop'])
-	.config(['$interpolateProvider', function ($interpolateProvider) {
-		$interpolateProvider.startSymbol('[[');
-		$interpolateProvider.endSymbol(']]');
-	}])
-	.controller('Ctrl', function($scope) {
-		$scope.myImage='';
-		$scope.myCroppedImage='';
-		var handleFileSelect=function(evt) {
-			var file=evt.currentTarget.files[0];
-			var reader = new FileReader();
-			reader.onload = function (evt) {
-				$scope.$apply(function($scope){
-					$scope.myImage=evt.target.result;
-				});
-			};
-			reader.readAsDataURL(file);
-		};
-		angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
-	});
 	</script>
 
 @endpush
@@ -274,34 +174,7 @@
 @endsection
 
 @section('content')
-<section class="page-content" ng-app="app" ng-controller="Ctrl">
-	<nav class="top-submenu">
-		<div class="row" style="max-width: 500px;margin: auto">
-			<div class="col-md-4 text-center">
-				<a class="avatar" style="width:120px;height:120px" href="javascript:void(0);" data-toggle="modal" data-target="#avatar-modal">
-					<img id="userAvatar" src="../storage/app/u/{{ auth()->user()->id }}/{{ auth()->user()->avatar }}">
-				</a>
-			</div>
-			<div class="col-md-8">
-				<div class="profile-title">
-					<h2>{{ auth()->user()->name }}</h2>
-					<small>Nhân viên</small>
-					<p>Công ty TNHH Một thành viên</p>
-					<div class="skill_rating" title="2.3">
-						<select id="rating" class="rating" data-current-rating="2.3">
-							<option value=""></option>
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-						</select>
-					</div>
-				</div>
-			</div>
-		</div>
-	</nav>
-	
+<section class="page-content">
 	<div class="col-md-2">
 	</div>
 	<div class="col-md-8">
@@ -313,55 +186,87 @@
 				placeholder="Họ và Tên"
 				name="name"
 				type="text"
-				data-validation-message="Họ tên chưa được nhập"
-				data-validation="[NOTEMPTY]"
-				value="{{ auth()->user()->name }}">
+				data-validation-message="Chưa nhập thông tin này"
+				data-validation="[NOTEMPTY]">
 		</div>
 		<div class="form-group">
 			<label>Ngày tháng năm sinh</label>
-			<div class='input-group date' id='dpDateOfBirth'>
-				<input type='text' class="form-control"
-					name="dateOfBirth"/>
-				<span class="input-group-addon">
-					<span class="icmn-calendar5"></span>
-				</span>
-			</div>
+			<input type="text"
+				class="form-control datepicker-only-init"
+				name="dateOfBirth"
+				data-validation-message="Chưa nhập thông tin này"
+				data-validation="[NOTEMPTY]"/>
 		</div>
 		<div class="form-group">
 			<label>Giới tính</label>
-			<select class="form-control" name="gender">
-				<option value="" disabled selected></option>
+			<select class="form-control"
+					name="gender"
+					data-validation-message="Chưa nhập thông tin này"
+					data-validation="[NOTEMPTY]">
+				<option value="" disabled selected>Giới tính</option>
 				<option value="1">Nam</option>
 				<option value="2">Nữ</option>
 				<option value="0">Khác</option>
 			</select>
 		</div>
 		<div class="form-group">
+			<label>Số CMND</label>
+			<input type="text" class="form-control" name="govId">
+		</div>
+		<div class="form-group">
+			<label>Hộ khẩu</label>
+			<input type="text" class="form-control" name="familyRegister">
+		</div>
+		<div class="form-group">
+			<label>Thành phố/Tỉnh</label>
+			<select class="form-control" name="familyRegister_city">
+				<option value="" selected disabled>Thành phố / Tỉnh</option>
+				@foreach ($cities as $city)
+					<option value="{{ $city->code }}">{{ $city->name }}</option>
+				@endforeach
+			</select>
+		</div>
+		<div class="form-group">
+			<label>Quận/Huyện</label>
+			<select class="form-control" name="familyRegister_dist"
+					data-validation-message="Chưa nhập thông tin này"
+					data-validation="[NOTEMPTY]">
+				<option value="" selected>Quận / Huyện</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label>Chỗ ở hiện nay</label>
+			<input type="text" class="form-control" name="address">
+		</div>
+		<div class="form-group">
+			<label>Thành phố/Tỉnh</label>
+			<select class="form-control" name="city">
+				<option value="" selected disabled>Thành phố / Tỉnh</option>
+				@foreach ($cities as $city)
+					<option value="{{ $city->code }}">{{ $city->name }}</option>
+				@endforeach
+			</select>
+		</div>
+		<div class="form-group">
+			<label>Quận/Huyện</label>
+			<select class="form-control" name="dist"
+					data-validation-message="Chưa nhập thông tin này"
+					data-validation="[NOTEMPTY]">
+				<option value="" selected>Quận / Huyện</option>
+			</select>
+		</div>
+		<div class="form-group">
 			<label>Email</label>
-			<div class="input-group">
-				<input type="text" class="form-control" disabled
-					value="{{ auth()->user()->email }}"
-					name="email">
-				<a class="input-group-addon" title="Thay đổi Email"><i class="icmn-envelop5"></i></a>
-			</div>
+			<input type="text" class="form-control" name="email">
 		</div>
 		<div class="form-group">
 			<label>Số điện thoại</label>
 			<input type="text" maxlength="25"
-				class="form-control"
-				value="{{ auth()->user()->phone }}"
-				id="inpPhone"
+				class="form-control phone"
 				name="phone"
 				placeholder="Số điện thoại">
 		</div>
-		<div class="form-group">
-			<label>Mật khẩu</label>
-			<div class="input-group">
-				<input type="password" class="form-control" value="*********" disabled>
-				<a class="input-group-addon" data-toggle="modal"
-					data-target="#password-modal" title="Thay đổi Mật khẩu"><i class="icmn-cogs"></i></a>
-			</div>
-		</div>
+		
 		<div class="form-group">
 			<label>Công ty</label>
 			<div class="typeahead__container">
@@ -376,18 +281,22 @@
 				</div>
 			</div>
 		</div>
+		<div class="form-group">
+			<label>Địa chỉ công ty</label>
+			<input type="text" class="form-control" name="address" disabled>
+		</div>
 		<div class="form-group" style="text-align: center;">
-			<button id="btnSubmit" type="submit" class="btn btn-primary width-150">Lưu lại</button>
+			<button id="btnSubmit" type="submit" class="btn btn-primary width-150">Đăng ký</button>
 			<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 		</div>
 	</form>
 	</div>
 	
 	<!-- MODAL -->
-	<div id="avatar-modal" class="modal fade" role="dialog">
+	<div id="comp-modal" class="modal fade" role="dialog">
 		<div class="modal-dialog">
 			<!-- Modal content-->
-			<form id="frmImage" method="post" enctype="multipart/form-data" action="{{ route('change_pro_avatar') }}">
+			<form id="frmImage" method="post" enctype="multipart/form-data" action="{{ route('add_company') }}">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>

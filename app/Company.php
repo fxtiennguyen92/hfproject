@@ -19,7 +19,7 @@ class Company extends Model
 		return $this
 			->where('name','LIKE', '%'.$input.'%')
 			->orWhere('id', 'LIKE', '%'.$input.'%')
-			->available()->select('id', 'name')
+			->available()->select('id', 'name', 'address')
 			->get();
 	}
 	

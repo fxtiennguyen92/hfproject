@@ -9,7 +9,6 @@ use App\Http\Controllers\FileController;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use App\Company;
 use App\ProProfile;
 use App\Http\Controllers\CommonController;
 
@@ -94,26 +93,6 @@ class ProProfileController extends Controller
 		]);
 		
 		return response()->json('', 200);
-	}
-
-	/**
-	 * Get companies for autocomplete fields
-	 * 
-	 * @param Request $request
-	 * @return \Illuminate\Http\JsonResponse
-	 */
-	public function getCompanies(Request $request) {
-		$term= $request->get('term','');
-		
-		$comp = new Company();
-		$companies = $comp->autocompleteByName($term);
-		
-		$results = array();
-		foreach ($companies as $company) {
-			$results[] = ['id' => $company->id,'value' => sprintf("#%04d", $company->id).' - '.$company->name];
-		}
-		
-		return response()->json($results);
 	}
 
 	/**

@@ -71,9 +71,13 @@ Route::middleware('pro')->group(function() {
 		->name('change_pro_profile');
 	Route::post('/pro/avatar/change', 'Pro\ProProfileController@changeAvatar')
 		->name('change_pro_avatar');
-	Route::get('/pro/companies', 'Pro\ProProfileController@getCompanies')
-		->name('get_companies');
 });
+
+Route::get('/companies', 'CommonController@getCompanies')
+	->name('get_companies');
+Route::post('/company/add', 'CommonController@addCompany')
+	->name('add_company');
+	
 
 // 	Route::get('/pro/companies', 'Pro\ProProfileController@getCompanies')
 // 	->name('get_companies');
