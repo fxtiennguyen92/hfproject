@@ -45,6 +45,8 @@ Route::get('/verify/{confirmCode}', 'Auth\RegisterController@verify')
 
 Route::get('/pro/signup', 'SignUpProController@view')
 	->name('signup_pro');
+Route::post('/pro/signup', 'SignUpProController@view')
+	->name('signup_pro');
 /** Sign Up - END **/
 
 /** Survey - Order - STA **/
@@ -103,4 +105,4 @@ Route::get('/city/{code}/dist', 'CommonController@getDistByCity')
 /** Common - END **/
 
 
-	Route::get('/test', function () { return view('complete'); });
+	Route::get('/test', function () { return view('home'); });
