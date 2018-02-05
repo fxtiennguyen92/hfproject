@@ -45,7 +45,7 @@ Route::get('/verify/{confirmCode}', 'Auth\RegisterController@verify')
 
 Route::get('/pro/signup', 'SignUpProController@view')
 	->name('signup_pro');
-Route::post('/pro/signup', 'SignUpProController@view')
+Route::post('/pro/signup', 'SignUpProController@signup')
 	->name('signup_pro');
 /** Sign Up - END **/
 

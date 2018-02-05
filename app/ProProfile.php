@@ -9,10 +9,6 @@ class ProProfile extends Model
 	// table name
 	protected $table = 'pro_profiles';
 	
-	protected $fillable = [
-		'id', 'date_of_birth', 'gender'
-	];
-	
 	/**
 	 * Get profile by id
 	 * 

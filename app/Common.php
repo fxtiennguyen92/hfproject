@@ -11,7 +11,11 @@ class Common extends Model
 	protected $table = 'commons';
 
 	public function getByKey($key) {
-		return $this->where('key', $key)->available()->get();
+		return $this->where('key', $key)
+			->available()
+			->orderBy('order_dsp')
+			->orderBy('name')
+			->get();
 	}
 
 	public function getByCode($code) {
@@ -23,6 +27,8 @@ class Common extends Model
 			->where('key', $key)
 			->where('value', $value)
 			->available()
+			->orderBy('order_dsp')
+			->orderBy('name')
 			->get();
 	}
 

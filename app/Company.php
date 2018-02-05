@@ -22,7 +22,11 @@ class Company extends Model
 			->available()->select('id', 'name', 'address')
 			->get();
 	}
-	
+
+	public function getAll() {
+		return $this->available()->get();
+	}
+
 	public function scopeAvailable($query) {
 		return $query->where('delete_flg', Config::get('constants.FLG_OFF'));
 	}

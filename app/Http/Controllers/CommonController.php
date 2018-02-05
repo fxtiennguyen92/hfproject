@@ -48,7 +48,6 @@ class CommonController
 		$comp->address = $request->address;
 		
 		$comp->save;
-		
 		return response()->json('', 200);
 	}
 }
