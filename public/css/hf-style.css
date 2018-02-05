@@ -70,8 +70,16 @@
  .signup-pro .form-wrapper {
    padding: 50px;
    border-radius: 10px;
+   border-top-left-radius: 0;
+   border-bottom-left-radius: 0;
    background: #fff;
    margin-bottom: 50px;
+   border-left: solid 25px #02b3e8;
+ }
+
+ .signup-pro .form-control:disabled,
+ .signup-pro .form-control[readonly] {
+   background: none;
  }
 
  .signup-pro .page-title {
