@@ -15,4 +15,13 @@ $(document).ready(function () {
     autoplaySpeed: 3000,
   });
 
+  $('.rating').each(function () {
+    $(this).barrating({
+      theme: 'fontawesome-stars-o',
+      readonly: true,
+      initialRating: $(this).data('current-rating'),
+      allowEmpty: null,
+    });
+  });
+
 });

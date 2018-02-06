@@ -197,7 +197,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3">
-        <img src="img/logoh.png" width="180">
+        <img src="img/logow.png" width="180">
         <p class="intro margin-top-20">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
         <ul class="social list-inline margin-top-20">
           <li>
@@ -260,7 +260,15 @@
     </div>
   </div>
 </footer>
+<div class="copyright">
+  <div class="container">
+    <p><b>© 2018 Bản quyền của Hand Free, JSC.</b></p>
+    <p>Địa chỉ: Phòng 104, Số 4/2 Đinh Bộ Lĩnh, Phường 24, Quận Bình Thạnh, TP.HCM.</p>
+    <p>Giấy chứng nhận Đăng ký Kinh doanh số 123456789 do Sở Kế hoạch và Đầu tư Thành phố Hồ Chí Minh cấp ngày 01/01/2018.
 
+    </p>
+  </div>
+</div>
 <!-- FOOTER -->
 <!--
 <footer>
