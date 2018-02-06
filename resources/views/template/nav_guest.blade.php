@@ -12,8 +12,6 @@
       <div class="left">
         <div class="">
           <a href="https://handfree.co"><img src="img/logoh.png" class="navbar-logo"></a>
-          <a href="/blog" class="btn btn-icon btn-rounded hidden-md-down"><i class="fa fa-facebook"></i></a>
-          <a href="/blog" class="btn btn-link hidden-md-down">Blog</a>
         </div>
       </div>
       <div class="right example-buy-btn hidden-xs-down">

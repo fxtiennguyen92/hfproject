@@ -37,7 +37,6 @@
         padding-right: 20px !important;
       }
     }
-
 </style>
 <script>
   $(document).bind('keypress', function(e) {
@@ -94,7 +93,6 @@
       eyeCloseClass: 'icmn-eye-blocked'
     });
   });
-
 </script>
 <!-- End Page Scripts -->
 @endpush @section('title') Đăng ký @endsection @section('content')
