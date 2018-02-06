@@ -14,6 +14,7 @@ return [
 	'PRO_ORDER_LIST_PAGE' => 'pro.orders',
 	'PRO_ORDER_PAGE' => 'pro.order',
 	
+	'PRO_LIST_PAGE' => 'mng.pros',
 	'COMPANY_PAGE' => 'mng.company',
 	'COMPANY_LIST_PAGE' => 'mng.companies',
 	
@@ -28,6 +29,9 @@ return [
 	/** ENUM **/
 	'ROLE_MEM' => '0',
 	'ROLE_PRO' => '1',
+	'ROLE_SRV' => '2',
+	'ROLE_MNG' => '3',
+	'ROLE_ADM' => '9',
 	
 	'FLG_OFF' => '0',
 	'FLG_ON' => '1',

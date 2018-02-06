@@ -24,7 +24,7 @@ class CompanyController extends Controller
 	public function viewList() {
 		$compModel = new Company();
 		$companies = $compModel->getAll();
-		
+
 		return view(Config::get('constants.COMPANY_LIST_PAGE'), array(
 						'companies' => $companies,
 		));

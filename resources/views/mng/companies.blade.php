@@ -1,16 +1,8 @@
 @extends('template.index')
 @push('stylesheets')
 <style>
-	nav.top-menu {
-		display: none;
-	}
-
 	body {
 		background: #f4f4f4;
-	}
-
-	nav.top-menu+.page-content {
-		margin-top: 0;
 	}
 
 	.dropdown-menu {
@@ -55,14 +47,6 @@
 
 @section('content')
 <section class="page-content signup-pro">
-	<div class="header-logo">
-		<div class="row">
-			<div class="col-md-2"></div>
-			<div class="col-md-8">
-				<a href="#"><img src="img/hf-logo.png" /></a>
-			</div>
-		</div>
-	</div>
 	<div class="col-md-2">
 	</div>
 	<div class="col-md-8">

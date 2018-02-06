@@ -42,11 +42,6 @@ Route::post('/signup', 'Auth\RegisterController@authenticate')
 	->name('signup');
 Route::get('/verify/{confirmCode}', 'Auth\RegisterController@verify')
 	->name('verify');
-
-Route::get('/pro/signup', 'SignUpProController@view')
-	->name('signup_pro');
-Route::post('/pro/signup', 'SignUpProController@signup')
-	->name('signup_pro');
 /** Sign Up - END **/
 
 /** Survey - Order - STA **/
@@ -94,12 +89,24 @@ Route::get('/companies', 'CommonController@getCompanies')
 /** Common - END **/
 
 /** Management - STA **/
-Route::get('/companies', 'Mng\CompanyController@viewList')
+Route::get('/mng/pros', 'Mng\ProController@viewList')
+	->name('pro_list_page');
+Route::post('/mng/pro/{id?}', 'Mng\ProController@modify')
+	->name('modify_pro');
+
+Route::get('/mng/companies', 'Mng\CompanyController@viewList')
 	->name('company_list_page');
-Route::get('/company/{id?}', 'Mng\CompanyController@view')
+Route::get('/mng/company/{id?}', 'Mng\CompanyController@view')
 	->name('company_page');
-Route::post('/company/{id?}', 'Mng\CompanyController@modify')
+Route::post('/mng/company/{id?}', 'Mng\CompanyController@modify')
 	->name('modify_company');
 /** Management - END **/
+	
+/** Alpha - STA **/
+Route::get('/pro/signup', 'SignUpProController@view')
+	->name('signup_pro');
+Route::post('/pro/signup', 'SignUpProController@signup')
+	->name('signup_pro');
+/** Alpha - END **/
 
 Route::get('/test', function () { return view('home'); });
