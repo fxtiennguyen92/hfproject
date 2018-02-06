@@ -42,9 +42,13 @@
 			$(this).val('');
 		});
 		$('.phone').mask('0000000000000');
-		$('.ddServices').select2();
+		$('.ddServices').select2({ closeOnSelect: false });
 		$('.selectpicker').selectpicker();
 		$('.ddCity').on('change', function() {
+			if ($(this).val() == '') {
+				return false;
+			}
+			
 			var ddDist = $(this).parent().parent().parent().parent().find('select.ddDist');
 			ddDist.children('option').remove();
 			
@@ -64,8 +68,14 @@
 			});
 			
 		});
-
-		$('#frmMain2').validate({
+		$('input[name=email]').on('change', function() {
+			if ($(this).val() !== '') {
+				$(this).addValidation('EMAIL');
+			} else {
+				$(this).removeValidation('EMAIL');
+			}
+		});
+		$('#frmMain').validate({
 			submit: {
 				settings: {
 					inputContainer: '.form-group',
@@ -160,13 +170,13 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Họ tên</label>
-								<input maxlength="200" class="form-control" name="name" type="text" data-validation-message="Chưa nhập thông tin này" data-validation="[NOTEMPTY]">
+								<input type="text" maxlength="225" class="form-control" name="name" data-validation="[NOTEMPTY]">
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
 								<label>Ngày tháng năm sinh</label>
-								<input type="text" class="form-control datepicker-only-init" name="dateOfBirth"/>
+								<input type="text" maxlength="10" class="form-control datepicker-only-init" name="dateOfBirth" data-validation="[NOTEMPTY]"/>
 							</div>
 						</div>
 						<div class="col-md-3">
@@ -184,19 +194,19 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Số CMND</label>
-								<input type="text" class="form-control" name="govId">
+								<input type="text" maxlength="12" class="form-control" name="govId">
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
 								<label>Ngày cấp</label>
-								<input type="text" class="form-control datepicker-only-init" name="govDate">
+								<input type="text" maxlength="10" class="form-control datepicker-only-init" name="govDate">
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
 								<label>Nơi cấp</label>
-								<input type="text" class="form-control" name="govPlace">
+								<input type="text" maxlength="50" class="form-control" name="govPlace">
 							</div>
 						</div>
 					</div>
@@ -204,7 +214,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Hộ khẩu</label>
-								<input type="text" class="form-control" name="familyRegAddress" data-validation-message="Chưa nhập thông tin này" data-validation="[NOTEMPTY]">
+								<input type="text" maxlength="150" class="form-control" name="familyRegAddress" data-validation-message="Chưa nhập thông tin này" data-validation="[NOTEMPTY]">
 							</div>
 						</div>
 						<div class="col-md-3">
@@ -232,7 +242,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Chỗ ở hiện nay</label>
-								<input type="text" class="form-control" name="address">
+								<input type="text" maxlength="150" class="form-control" name="address">
 							</div>
 						</div>
 						<div class="col-md-3">
@@ -260,7 +270,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Email</label>
-								<input type="text" class="form-control" name="email">
+								<input type="text" maxlength="100" class="form-control" name="email">
 							</div>
 						</div>
 						<div class="col-md-6">

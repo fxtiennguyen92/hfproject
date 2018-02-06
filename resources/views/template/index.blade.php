@@ -121,7 +121,6 @@
   <!-- Clean UI Scripts -->
   <script src="assets/common/js/common.js"></script>
   <script src="assets/common/js/demo.temp.js"></script>
-  <script src="assets/common/js/hf.js"></script>
   <script src="js/hf-script.js"></script>
   <style type="text/css">
     .single-page-block-inner {

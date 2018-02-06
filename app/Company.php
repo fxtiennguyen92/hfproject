@@ -23,6 +23,13 @@ class Company extends Model
 			->get();
 	}
 
+	public function get($id) {
+		return $this
+			->where('id', $id)
+			->available()
+			->first();
+	}
+	
 	public function getAll() {
 		return $this->available()->get();
 	}

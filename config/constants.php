@@ -14,6 +14,9 @@ return [
 	'PRO_ORDER_LIST_PAGE' => 'pro.orders',
 	'PRO_ORDER_PAGE' => 'pro.order',
 	
+	'COMPANY_PAGE' => 'mng.company',
+	'COMPANY_LIST_PAGE' => 'mng.companies',
+	
 	'SIGN_UP_PRO_PAGE' => 'signup_pro',
 	
 	/** ERROR PAGE **/
@@ -44,4 +47,11 @@ return [
 	
 	'KEY_CITY' => 'CITY',
 	'KEY_DIST' => 'DIST',
+	
+	'STS_INFO' => '0',
+	'STS_READY' => '1',
+	'STS_PENDING' => '2',
+	'STS_WARNING' => '3',
+	'STS_LOCKED' => '4',
+	'STS_BANNED' => '5',
 ];

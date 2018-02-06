@@ -75,34 +75,31 @@ Route::middleware('pro')->group(function() {
 		->name('change_pro_avatar');
 });
 
-Route::get('/companies', 'CommonController@getCompanies')
-	->name('get_companies');
-Route::post('/company/add', 'CommonController@addCompany')
-	->name('add_company');
-	
-
-// 	Route::get('/pro/companies', 'Pro\ProProfileController@getCompanies')
-// 	->name('get_companies');
-
-Route::get('/pro/order/{orderId}', 'Pro\ProOrderController@viewOrder')
-	->name('view_pro_order');
+Route::get('/pro/orders/{style?}', 'Pro\ProOrderController@viewList')
+	->name('pro_order_list_page');
+Route::get('/pro/order/{orderId}', 'Pro\ProOrderController@view')
+	->name('pro_order_page');
 Route::post('/pro/order/quote', 'Pro\ProOrderController@quotePrice')
 	->name('quote_price');
-Route::get('/pro/orders/{style?}', 'Pro\ProOrderController@viewOrders')
-	->name('view_pro_orders');
 
 Route::post('/password/change', 'Pro\ProProfileController@changePassword')
 	->name('change_password');
 /** Pro - END **/
 
-Route::get('/location', 'SurveyController@getLocation')
-	->name('get_location');
-
 /** Common - STA **/
 Route::get('/city/{code}/dist', 'CommonController@getDistByCity')
 	->name('get_dist_by_city');
-
+Route::get('/companies', 'CommonController@getCompanies')
+	->name('get_companies');
 /** Common - END **/
 
+/** Management - STA **/
+Route::get('/companies', 'Mng\CompanyController@viewList')
+	->name('company_list_page');
+Route::get('/company/{id?}', 'Mng\CompanyController@view')
+	->name('company_page');
+Route::post('/company/{id?}', 'Mng\CompanyController@modify')
+	->name('modify_company');
+/** Management - END **/
 
-	Route::get('/test', function () { return view('home'); });
+Route::get('/test', function () { return view('home'); });

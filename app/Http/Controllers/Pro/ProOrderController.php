@@ -17,7 +17,7 @@ class ProOrderController extends Controller
 //		$this->middleware('pro');
 	}
 
-	public function viewOrders($style = null) {
+	public function viewList($style = null) {
 		$order = new Order();
 		//$orders = $order->getByPro(auth()->user()->id);
 		$newOrders = $order->getNewByPro(auth()->user()->id);
@@ -32,7 +32,7 @@ class ProOrderController extends Controller
 		));
 	}
 
-	public function viewOrder($orderId, Request $request) {
+	public function view($orderId, Request $request) {
 		$order = new Order();
 		$order = $order->getById($orderId);
 		if (!$order) {

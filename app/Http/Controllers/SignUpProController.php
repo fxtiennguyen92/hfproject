@@ -44,8 +44,7 @@ class SignUpProController extends Controller
 	}
 
 	public function signup(Request $request) {
-		// check email and phone
-		$validator = $this->validator($req);
+		$validator = $this->validator($request->all());
 		if ($validator->fails()) {
 			return response()->json('', 409);
 		}
