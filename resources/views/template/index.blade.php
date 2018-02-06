@@ -43,6 +43,7 @@
   <link rel="stylesheet" type="text/css" href="assets/vendors/barrating/bars-reversed.css">
   <link rel="stylesheet" type="text/css" href="assets/vendors/barrating/fontawesome-stars.css">
   <link rel="stylesheet" type="text/css" href="assets/vendors/barrating/fontawesome-stars-o.css">
+  <link rel="stylesheet" type="text/css" href="assets/vendors/slick/slick.css">
   <!-- v1.4.0 -->
   <link rel="stylesheet" type="text/css" href="assets/vendors/nprogress/nprogress.css">
   <link rel="stylesheet" type="text/css" href="assets/vendors/jquery-steps/demo/css/jquery.steps.css">
@@ -116,10 +117,12 @@
   <script src="assets/vendors/number/number.js"></script>
   <script src="assets/vendors/number/accounting.js"></script>
 
+  <script src="assets/vendors/slick/slick.min.js"></script>
   <!-- Clean UI Scripts -->
   <script src="assets/common/js/common.js"></script>
   <script src="assets/common/js/demo.temp.js"></script>
   <script src="assets/common/js/hf.js"></script>
+  <script src="js/hf-script.js"></script>
   <style type="text/css">
     .single-page-block-inner {
       margin-top: 0px;
