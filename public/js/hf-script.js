@@ -13,6 +13,7 @@ $(document).ready(function () {
     dots: true,
     autoplay: true,
     autoplaySpeed: 3000,
+    adaptiveHeight: true
   });
 
   $('.rating').each(function () {

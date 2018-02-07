@@ -6,60 +6,60 @@
     <div class="content">
       <h1 class="text-center">Đặt việc nhà trong 60 giây <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small></h1>
     </div>
-    <div class="service">
-      <div class="row">
-        <div class="col-xs-6 col-sm-4 col-lg-2 center">
-          <a href="/sua-dien">
-            <div class="shadow btn-services">
-              <img class="btn-services-img" src="img/services/group/1.png">
-              <p class="btn-services-text">SỬA ĐIỆN</p>
-            </div>
-          </a>
-        </div>
-        <div class="col-xs-6 col-sm-4 col-lg-2">
-          <a href="/sua-dien">
-            <div class="shadow btn-services">
-              <img class="btn-services-img" src="img/services/group/2.png">
-              <p class="btn-services-text">SỬA NƯỚC</p>
-            </div>
-          </a>
-        </div>
-        <div class="col-xs-6 col-sm-4 col-lg-2">
-          <a href="/sua-dien">
-            <div class="shadow btn-services">
-              <img class="btn-services-img" src="img/services/group/3.png">
-              <p class="btn-services-text">ĐIỆN LẠNH</p>
-            </div>
-          </a>
-        </div>
-        <div class="col-xs-6 col-sm-4 col-lg-2">
-          <a href="/sua-dien">
-            <div class="shadow btn-services">
-              <img class="btn-services-img" src="img/services/group/4.png">
-              <p class="btn-services-text">KHÓA - CỬA</p>
-            </div>
-          </a>
-        </div>
-        <div class="col-xs-6 col-sm-4 col-lg-2">
-          <a href="/sua-dien">
-            <div class="shadow btn-services">
-              <img class="btn-services-img" src="img/services/group/5.png">
-              <p class="btn-services-text">CHỤP ẢNH</p>
-            </div>
-          </a>
-        </div>
-        <div class="col-xs-6 col-sm-4 col-lg-2">
-          <a href="/sua-dien">
-            <div class="shadow btn-services">
-              <img class="btn-services-img" src="img/services/group/6.png">
-              <p class="btn-services-text">SỰ KIỆN</p>
-            </div>
-          </a>
-        </div>
+
+  </div>
+  <div class="service">
+    <div class="row">
+      <div class="col-xs-6 col-sm-4 col-lg-2 center">
+        <a href="/sua-dien">
+          <div class="shadow btn-services">
+            <img class="btn-services-img" src="img/services/group/1.png">
+            <p class="btn-services-text">SỬA ĐIỆN</p>
+          </div>
+        </a>
+      </div>
+      <div class="col-xs-6 col-sm-4 col-lg-2">
+        <a href="/sua-dien">
+          <div class="shadow btn-services">
+            <img class="btn-services-img" src="img/services/group/2.png">
+            <p class="btn-services-text">SỬA NƯỚC</p>
+          </div>
+        </a>
+      </div>
+      <div class="col-xs-6 col-sm-4 col-lg-2">
+        <a href="/sua-dien">
+          <div class="shadow btn-services">
+            <img class="btn-services-img" src="img/services/group/3.png">
+            <p class="btn-services-text">ĐIỆN LẠNH</p>
+          </div>
+        </a>
+      </div>
+      <div class="col-xs-6 col-sm-4 col-lg-2">
+        <a href="/sua-dien">
+          <div class="shadow btn-services">
+            <img class="btn-services-img" src="img/services/group/4.png">
+            <p class="btn-services-text">KHÓA - CỬA</p>
+          </div>
+        </a>
+      </div>
+      <div class="col-xs-6 col-sm-4 col-lg-2">
+        <a href="/sua-dien">
+          <div class="shadow btn-services">
+            <img class="btn-services-img" src="img/services/group/5.png">
+            <p class="btn-services-text">CHỤP ẢNH</p>
+          </div>
+        </a>
+      </div>
+      <div class="col-xs-6 col-sm-4 col-lg-2">
+        <a href="/sua-dien">
+          <div class="shadow btn-services">
+            <img class="btn-services-img" src="img/services/group/6.png">
+            <p class="btn-services-text">SỰ KIỆN</p>
+          </div>
+        </a>
       </div>
     </div>
   </div>
-
 </section>
 
 <!-- SECTION SERVICES -->
@@ -188,11 +188,65 @@
   </div>
 </section>
 
-<!-- SECTION BECOME A PRO -->
-<section id="section_become_pro">
-
+<div id="section-form">
+  <div class="container">
+    <div class="heading text-center">Đăng ký tài khoản MIỄN PHÍ ngay bây giờ</div>
+    <div class="sub-heading text-center margin-bottom-50">Để khám phá đầy đủ tính năng của Hand Free</div>
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="row hf-card">
+          <div class="col-md-7">
+            <div class="signin">
+              <h3 class="title">Đăng ký</h3>
+              <div class="signin-social">
+                <h4 class="sub-title">Đăng ký bằng mạng xã hội</h4>
+                <div class="sigin-button-group">
+                  <a class="button btn  facebook" href="">Facebook</a>
+                  <a class="button btn google" href="">Google+</a>
+                </div>
+              </div>
+              <div class="signin-form">
+                <h4 class="sub-title">Hoặc điền thông tin</h4>
+                <form>
+                  <div class="form-input-icon">
+                    <i class="material-icons">&#xE7FD;</i>
+                    <input type="text" class="form-control" placeholder="Địa chỉ email" id="">
+                  </div>
+                  <div class="form-input-icon">
+                    <i class="material-icons">&#xE899;</i>
+                    <input type="password" class="form-control" placeholder="Mật khẩu từ 6 đến 32 ký tự" id="">
+                  </div>
+                  <div class="form-input-icon">
+                    <i class="material-icons">&#xE899;</i>
+                    <input type="password" class="form-control" placeholder="Gõ lại mật khẩu" id="">
+                  </div>
+                  <div class="margin-top-20">
+                    <button type="button" class="btn btn-primary width-150">Đăng ký</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="login text-center">
+              <img src="img/logow.png" />
+              <h4 class="sub-title">Bạn đã có tài khoản?</h4>
+              <div class="margin-top-20">
+                <button type="button" class="btn btn-white width-150">Đăng nhập</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<section class="lets-work" style="background-image:url(img/lest-work.jpg)">
+  <div class="wrapper">
+    <div class="headline text-center">Tham gia Hand Free<br> để có thu nhập ổn định mỗi tháng !</div>
+    <div class="text-center"><a class="btn edt-btn1 text-uppercase" href="#">Đăng ký ngay</a></div>
+  </div>
 </section>
-
 <footer class="hf-footer">
   <div class="container">
     <div class="row">
@@ -243,17 +297,14 @@
       </div>
       <div class="col-md-3">
         <div class="title">
-          Contact Us
+          Đăng ký nhận thông báo
         </div>
         <form>
           <div class="form-group">
             <input type="text" class="form-control" placeholder="Email Address" id="l30">
           </div>
           <div class="form-group">
-            <textarea class="form-control" rows="3" id="l38"></textarea>
-          </div>
-          <div class="form-group">
-            <button type="button" class="btn btn-primary width-150">Submit</button>
+            <button type="button" class="btn btn-primary width-150">Đăng ký</button>
           </div>
         </form>
       </div>

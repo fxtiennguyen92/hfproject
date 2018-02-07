@@ -326,7 +326,7 @@
    background-size: cover;
  }
 
- .top-banner .hero {
+ .top-banner {
    position: relative;
  }
 
@@ -359,7 +359,7 @@
 
  }
 
- .top-banner .hero .service {
+ .top-banner .service {
    position: absolute;
    bottom: 20px;
    left: 0;
@@ -392,7 +392,8 @@
  }
 
  .hiw-slider .img img {
-   max-width: 450px;
+   max-width: 100%;
+   width: 450px;
    margin: auto;
  }
 
@@ -570,6 +571,74 @@
    margin: 5px 0;
  }
 
+ #section-form {
+   background: #F4F3F0;
+   padding: 100px 0;
+ }
+
+ #section-form .hf-card {
+   background: #02b3e4;
+   border-top-left-radius: 0;
+   border-bottom-left-radius: 0;
+ }
+
+ #section-form .signin {
+   padding: 50px;
+   text-align: center;
+   background: #fff;
+ }
+
+ #section-form .signin .signin-social {
+   margin-bottom: 20px;
+ }
+
+ #section-form .sub-title {
+   font-size: 15px;
+   font-weight: lighter;
+   color: #424242;
+ }
+
+ #section-form .signin .signin-social .facebook {
+   background-color: #2151B2;
+   color: #fff;
+ }
+
+ #section-form .signin .signin-social .google {
+   background-color: #D41701;
+   color: #fff;
+ }
+
+ #section-form .login .sub-title {
+   color: #fff;
+   margin-top: 20px;
+ }
+
+ #section-form .login {
+   padding: 50px 0;
+ }
+
+ #section-form .login img {
+   max-width: 250px;
+   margin-top: 50px;
+   margin-bottom: 30px;
+ }
+
+ .lets-work {
+   padding: 70px 0;
+   background-size: cover;
+   background-repeat: no-repeat;
+   /* background-attachment: fixed; */
+   background-position: center center;
+ }
+
+ .lets-work .headline {
+   font-size: 30px;
+   margin-bottom: 30px;
+   font-weight: 500;
+   line-height: 1.4;
+   color: #Fff;
+ }
+
  /*
 * RESPONSIVE
 */
@@ -585,3 +654,44 @@
      margin-top: 10px;
    }
  }
+
+ @media only screen and (max-width: 1024px) {
+   .top-banner .hero h1,
+   .top-banner .service {
+     position: static;
+   }
+   .top-banner .hero h1 {
+     padding: 20px;
+     font-size: 30px;
+     -webkit-transform: translate(0);
+     -ms-transform: translate(0);
+     transform: translate(0)
+   }
+   .top-banner .btn-services {
+     width: 140px;
+     height: 140px;
+     margin-bottom: 20px;
+   }
+   .top-banner .service {
+     padding: 20px 10px;
+   }
+   .top-banner .hero,
+   #section_value {
+     height: auto!important;
+   }
+   #section_value .flex {
+     display: block;
+   }
+   .hiw-slider .slick-dots {
+     display: block;
+     position: static;
+     padding: 0;
+     text-align: center;
+     margin-top: 20px;
+   }
+   .hiw-slider .text {
+     padding-top: 20px;
+   }
+ }
+
+ @media only screen and (max-width: 1024px) {}
