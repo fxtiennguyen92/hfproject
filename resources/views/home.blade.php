@@ -2,9 +2,9 @@
 <link rel="stylesheet" type="text/css" href="css/home.css"> @endpush @section('title') @endsection @section('content')
 <!-- SECTION BANNER -->
 <section class="top-banner">
-  <div class="hero">
+  <div class="hero" style="background-image: url(img/banner/5.png);">
     <div class="content">
-      <h1 class="text-center">Đặt việc nhà trong 60 giây <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small></h1>
+<!--       <h1 class="text-center">Đặt việc nhà trong 60 giây <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small></h1> -->
     </div>
 
   </div>
@@ -13,7 +13,7 @@
       <div class="col-xs-6 col-sm-4 col-lg-2 center">
         <a href="/sua-dien">
           <div class="shadow btn-services">
-            <img class="btn-services-img" src="img/services/group/1.png">
+            <img class="btn-services-img" src="img/service/1.svg">
             <p class="btn-services-text">SỬA ĐIỆN</p>
           </div>
         </a>
@@ -21,7 +21,7 @@
       <div class="col-xs-6 col-sm-4 col-lg-2">
         <a href="/sua-dien">
           <div class="shadow btn-services">
-            <img class="btn-services-img" src="img/services/group/2.png">
+            <img class="btn-services-img" src="img/service/2.svg">
             <p class="btn-services-text">SỬA NƯỚC</p>
           </div>
         </a>
@@ -29,7 +29,7 @@
       <div class="col-xs-6 col-sm-4 col-lg-2">
         <a href="/sua-dien">
           <div class="shadow btn-services">
-            <img class="btn-services-img" src="img/services/group/3.png">
+            <img class="btn-services-img" src="img/service/3.svg">
             <p class="btn-services-text">ĐIỆN LẠNH</p>
           </div>
         </a>
@@ -37,7 +37,7 @@
       <div class="col-xs-6 col-sm-4 col-lg-2">
         <a href="/sua-dien">
           <div class="shadow btn-services">
-            <img class="btn-services-img" src="img/services/group/4.png">
+            <img class="btn-services-img" src="img/service/4.svg">
             <p class="btn-services-text">KHÓA - CỬA</p>
           </div>
         </a>
@@ -45,7 +45,7 @@
       <div class="col-xs-6 col-sm-4 col-lg-2">
         <a href="/sua-dien">
           <div class="shadow btn-services">
-            <img class="btn-services-img" src="img/services/group/5.png">
+            <img class="btn-services-img" src="img/service/5.svg">
             <p class="btn-services-text">CHỤP ẢNH</p>
           </div>
         </a>
@@ -53,7 +53,7 @@
       <div class="col-xs-6 col-sm-4 col-lg-2">
         <a href="/sua-dien">
           <div class="shadow btn-services">
-            <img class="btn-services-img" src="img/services/group/6.png">
+            <img class="btn-services-img" src="img/service/6.svg">
             <p class="btn-services-text">SỰ KIỆN</p>
           </div>
         </a>
@@ -137,7 +137,7 @@
 </section>
 
 <!-- SECTION TESTINOMIAL -->
-<section id="testinomial">
+<section id="testinomial" style="background-image:url(img/banner/6.png)">
   <div class="container">
     <div class="heading text-center">Testimonials</div>
     <div class="sub-heading text-center margin-bottom-50">Lorem Ipsum is simply dummy text of the printing and typesetting industry</div>
@@ -161,7 +161,6 @@
           <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</p>
           <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</p>
         </blockquote>
-
       </div>
       <div class="quote">
         <div class="item-info text-center">
@@ -180,9 +179,7 @@
         </div>
         <blockquote class="testimonials-text">
           <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book</p>
-
         </blockquote>
-
       </div>
     </div>
   </div>
@@ -210,15 +207,15 @@
                 <form>
                   <div class="form-input-icon">
                     <i class="material-icons">&#xE7FD;</i>
-                    <input type="text" class="form-control" placeholder="Địa chỉ email" id="">
+                    <input type="text" class="form-control" placeholder="Địa chỉ email">
                   </div>
                   <div class="form-input-icon">
                     <i class="material-icons">&#xE899;</i>
-                    <input type="password" class="form-control" placeholder="Mật khẩu từ 6 đến 32 ký tự" id="">
+                    <input type="password" class="form-control" placeholder="Mật khẩu từ 6 đến 32 ký tự">
                   </div>
                   <div class="form-input-icon">
                     <i class="material-icons">&#xE899;</i>
-                    <input type="password" class="form-control" placeholder="Gõ lại mật khẩu" id="">
+                    <input type="password" class="form-control" placeholder="Gõ lại mật khẩu">
                   </div>
                   <div class="margin-top-20">
                     <button type="button" class="btn btn-primary width-150">Đăng ký</button>
@@ -232,7 +229,7 @@
               <img src="img/logow.png" />
               <h4 class="sub-title">Bạn đã có tài khoản?</h4>
               <div class="margin-top-20">
-                <button type="button" class="btn btn-white width-150">Đăng nhập</button>
+                <div class="text-center"><a class="btn text-uppercase" href="#">Đăng nhập</a></div>
               </div>
             </div>
           </div>
@@ -241,10 +238,10 @@
     </div>
   </div>
 </div>
-<section class="lets-work" style="background-image:url(img/lest-work.jpg)">
+<section class="lets-work" style="background-image:url(img/banner/1.png)">
   <div class="wrapper">
-    <div class="headline text-center">Tham gia Hand Free<br> để có thu nhập ổn định mỗi tháng !</div>
-    <div class="text-center"><a class="btn edt-btn1 text-uppercase" href="#">Đăng ký ngay</a></div>
+    <div class="headline text-center">Trở thành Đối Tác của Hand Free<br> để có thu nhập ổn định mỗi tháng !</div>
+    <div class="text-center"><button type="button" class="btn btn-primary width-150">Tham gia ngay</button></div>
   </div>
 </section>
 <footer class="hf-footer">

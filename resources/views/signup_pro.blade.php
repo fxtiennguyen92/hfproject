@@ -182,7 +182,7 @@
 						<div class="col-md-3">
 							<div class="form-group">
 								<label>Giới tính</label>
-								<select class="form-control selectpicker" name="gender">
+								<select class="form-control selectpicker hf-select" name="gender">
 									<option value="1">Nam</option>
 									<option value="2">Nữ</option>
 									<option value="0">Khác</option>
@@ -220,7 +220,7 @@
 						<div class="col-md-3">
 							<div class="form-group">
 								<label>Quận/Huyện</label>
-								<select class="form-control selectpicker ddDist" data-live-search="true" name="familyRegDist" data-validation-message="Chưa nhập thông tin này" data-validation="[NOTEMPTY]">
+								<select class="form-control selectpicker ddDist hf-select" data-live-search="true" name="familyRegDist" data-validation-message="Chưa nhập thông tin này" data-validation="[NOTEMPTY]">
 									@foreach($districts as $dist)
 									<option value="{{ $dist->code }}">{{ $dist->name }}</option>
 									@endforeach
@@ -230,7 +230,7 @@
 						<div class="col-md-3">
 							<div class="form-group">
 								<label>Thành phố/Tỉnh</label>
-								<select class="form-control selectpicker ddCity" data-live-search="true" name="familyRegCity" data-validation-message="Chưa nhập thông tin này" data-validation="[NOTEMPTY]">
+								<select class="form-control selectpicker ddCity hf-select" data-live-search="true" name="familyRegCity" data-validation-message="Chưa nhập thông tin này" data-validation="[NOTEMPTY]">
 									@foreach($cities as $city)
 									<option value="{{ $city->code }}">{{ $city->name }}</option>
 									@endforeach
@@ -242,13 +242,13 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Chỗ ở hiện nay</label>
-								<input type="text" maxlength="150" class="form-control" name="address">
+								<input type="text" maxlength="150" class="form-control" name="address" data-validation="[NOTEMPTY]">
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
 								<label>Quận/Huyện</label>
-								<select class="form-control selectpicker ddDist" data-live-search="true" name="dist" data-validation-message="Chưa nhập thông tin này" data-validation="[NOTEMPTY]">
+								<select class="form-control selectpicker ddDist hf-select" data-live-search="true" name="dist" data-validation="[NOTEMPTY]">
 									@foreach($districts as $dist)
 									<option value="{{ $dist->code }}">{{ $dist->name }}</option>
 									@endforeach
@@ -258,7 +258,7 @@
 						<div class="col-md-3">
 							<div class="form-group">
 								<label>Thành phố/Tỉnh</label>
-								<select class="form-control selectpicker ddCity" data-live-search="true" name="city" data-validation-message="Chưa nhập thông tin này" data-validation="[NOTEMPTY]">
+								<select class="form-control selectpicker ddCity hf-select" data-live-search="true" name="city" data-validation="[NOTEMPTY]">
 									@foreach($cities as $city)
 									<option value="{{ $city->code }}">{{ $city->name }}</option>
 									@endforeach
@@ -276,7 +276,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Số điện thoại</label>
-								<input type="text" maxlength="25" class="form-control phone" name="phone">
+								<input type="text" maxlength="25" class="form-control phone" name="phone" data-validation="[NOTEMPTY]">
 							</div>
 						</div>
 					</div>
@@ -284,7 +284,7 @@
 						<div class="col-md-12">
 							<div class="form-group">
 								<label>Mô hình kinh doanh</label>
-								<select class="form-control selectpicker" data-live-search="true" name="company">
+								<select class="form-control selectpicker hf-select" data-live-search="true" name="company">
 									<option value="" disable selected>&nbsp;</option>
 									<optgroup label="Cá nhân">
 										<option value="">Kinh doanh cá nhân</option>
@@ -302,7 +302,7 @@
 						<div class="col-md-12">
 							<div class="form-group">
 								<label>Dịch vụ tham gia</label>
-								<select class="form-control ddServices" multiple name="services[]">
+								<select class="form-control ddServices hf-select" multiple name="services[]">
 									@foreach($services as $service)
 									<option value="{{ $service->id }}">{{ $service->name }}</option>
 									@endforeach
