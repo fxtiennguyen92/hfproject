@@ -637,6 +637,26 @@
  }
 
  /*
+   signup pro select - Truc-TT
+ */
+ .hf-select > button ,
+ .hf-select + span > .selection > span {
+   border:none;
+   border-radius: 0px;
+   border-bottom: 1px solid #e1e1e1;
+ }
+
+ .hf-select > button {
+   padding-bottom: 10px;
+   padding-top: 10px;
+ }
+
+ .hf-select + span > .selection > span > ul >li.select2-selection__choice {
+   color: #fff;
+   background-color: #02b3e4;
+ }
+
+ /*
 * RESPONSIVE
 */
 
