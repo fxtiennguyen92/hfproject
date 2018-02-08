@@ -7,7 +7,7 @@
    -o-transition: all 0.3s ease;
    transition: all 0.3s ease;
  }
-
+ 
  .login-form-wrapper,
  .signup-form-wrapper {
    max-width: 500px;

@@ -29,7 +29,7 @@
 	.select2-container .select2-results__option[aria-selected=true].select2-results__option--highlighted {
 		color: #fff !important;
 		background-color: #02b3e4 !important;
- 	}
+ 	} 
 </style>
 
 <!-- Page Scripts -->
