@@ -14,7 +14,7 @@
 Route::get('/', 'InitPageController@viewIndexPage')
 	->name('index_page');
 
-Route::get('/redirect', 'LoginController@redirectPath')
+Route::get('/redirect', 'Auth\LoginController@redirectPath')
 	->name('redirect');
 
 /** Login and Logout - STA **/

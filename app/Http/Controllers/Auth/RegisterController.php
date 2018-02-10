@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use App\Http\Controllers\MailController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class RegisterController extends Controller
 {
@@ -46,7 +47,7 @@ class RegisterController extends Controller
 			'name' => 'required|string|max:255',
 			'email' => 'required|string|email|max:255|unique:users',
 			'phone' => 'required|numeric|unique:users',
-			'password' => 'required|string|min:10',
+			'password' => 'required|string|min:6',
 		]);
 	}
 
@@ -83,8 +84,18 @@ class RegisterController extends Controller
 	 * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
 	 */
 	public function authenticate(Request $request) {
-		$req = $request->all();
+		// check reCaptcha
+		$reCaptcha = new ReCaptcha();
+		$chkCaptcha = $reCaptcha->verifyResponse(
+			$_SERVER['REMOTE_ADDR'],
+			$_POST['g-recaptcha-response']
+		);
+		if ($chkCaptcha == null || !$chkCaptcha->success) {
+			return response()->json('', 400);
+		}
 		
+		// validate
+		$req = $request->all();
 		$validator = $this->validator($req);
 		if ($validator->fails()) {
 			$errors = $validator->errors()->getMessages();
@@ -94,19 +105,19 @@ class RegisterController extends Controller
 		
 		// registration
 		$user = $this->create($request->all());
-		
+		// send mail to confirm
 		$mail = new MailController();
 		$mail->sendVerifyMail($user->name, $user->email, $user->confirm_code);
 		
-		// go to confirm email page
-		dd('Confirm email to active'); die;
+		return response()->json('', 200);
 	}
 
 	public function verify($confirmCode) {
 		$user = User::where('confirm_code', $confirmCode)->first();
 		
+		// wrong url / confirm code
 		if (!$user) {
-			dd('verify_error');die;
+			throw new NotFoundHttpException();
 		}
 		
 		$user->confirm_flg = Config::get('constants.FLG_ON');

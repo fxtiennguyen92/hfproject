@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function() {
 
   $(window).on('load resize', function () {
     $('.hero').css('height', $(window).height() - 80);
@@ -24,5 +24,4 @@ $(document).ready(function () {
       allowEmpty: null,
     });
   });
-
 });

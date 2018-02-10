@@ -26,7 +26,16 @@
             url: '{{ route("quote_price") }}',
             data: $('#frmMain').serialize(),
             success: function(response) {
+            	 $.notify({
+                     title: '<strong>Thành công! </strong>',
+                     message: 'Bạn đã báo giá thành công.'
+                   }, {
+                     type: 'success',
+                   });
 
+            	setTimeout(function() {
+            		 location.href = "{{ route('pro_order_list_page') }}"
+				}, 1500);
             },
             error: function(xhr) {
               if (xhr.status == 400) {

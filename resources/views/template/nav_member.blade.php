@@ -23,6 +23,7 @@
 					</span>
 				</a>
 				<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
+					@if (auth()->user()->role == 2)
 					<a class="dropdown-item" href="{{ route('signup_pro') }}"><i class="dropdown-icon material-icons">face</i> Đăng ký Đối Tác</a>
 					<a class="dropdown-item" href="{{ route('pro_list_page') }}"><i class="dropdown-icon material-icons">list</i> Danh sách Đối Tác</a>
 					<div class="dropdown-divider"></div>
@@ -30,6 +31,7 @@
 					<a class="dropdown-item" href="{{ route('company_list_page') }}"><i class="dropdown-icon material-icons">list</i> Danh sách Doanh Nghiệp</a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="{{ route('logout') }}"><i class="dropdown-icon material-icons">power_settings_new</i> Đăng Xuất</a>
+					@endif
 				</ul>
 			</div>
 		</div>

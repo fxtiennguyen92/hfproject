@@ -28,13 +28,13 @@
               @foreach ($newOrders as $order)
               <div class="col-md-4 col-sm-6">
                 <div class="item-wrapper">
-                  <div class="row order-row" onclick="location.href='{{ route('view_pro_order', ['orderId' => $order->id]) }}'">
+                  <div class="row order-row" onclick="location.href='{{ route('pro_order_page', ['orderId' => $order->id]) }}'">
                     <div class="order-info">
                       <label><img class="avt" src="http://innovatik.payo-themes.com/wp-content/uploads/2017/11/lawn-team03.jpg"/> {{ $order->user_name }}</label>
+                      <div class="order-address"><i class="material-icons">&#xE0C8;</i> {{ $order->address }}</div>
                       <div class="order-req">
                         {{ $order->short_requirements }}
                       </div>
-                      <div class="order-address"><i class="material-icons">&#xE0C8;</i> {{ $order->address }}</div>
                     </div>
                     <div class="order-state">
                       @if ($order->est_excute_at_string)
@@ -48,7 +48,7 @@
             </div>
             <div class="tab-pane" id="tabQuoted" role="tabpanel">
               @foreach ($quotedOrders as $order)
-              <div class="row order-row" onclick="location.href='{{ route('view_pro_order', ['orderId' => $order->id]) }}'">
+              <div class="row order-row" onclick="location.href='{{ route('pro_order_page', ['orderId' => $order->id]) }}'">
                 <div class="order-info col-md-10 col-sm-10 col-sx-10">
                   <label>{{ $order->user_name }}</label>
                   <div class="order-req">
@@ -66,7 +66,7 @@
             </div>
             <div class="tab-pane" id="tabComplete" role="tabpanel">
               @foreach ($newOrders as $order)
-              <div class="row order-row" onclick="location.href='{{ route('view_pro_order', ['orderId' => $order->id]) }}'">
+              <div class="row order-row" onclick="location.href='{{ route('pro_order_page', ['orderId' => $order->id]) }}'">
                 <div class="order-info col-md-10 col-sm-10 col-sx-10">
                   <label>{{ $order->user_name }}</label>
                   <div class="order-req">
@@ -87,6 +87,5 @@
       </div>
     </div>
   </div>
-
 </section>
 @endsection

@@ -706,6 +706,9 @@
    line-height: 1.4;
    color: #Fff;
  }
+ .g-recaptcha > div {
+   margin: auto;
+ }
 
  /*
 * RESPONSIVE

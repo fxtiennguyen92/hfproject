@@ -28,7 +28,6 @@
 							message: 'Hãy trả lời câu hỏi bên dưới.'
 						},{
 							type: 'danger',
-							delay: 1500,
 						});
 						
 						validReturn = false;
@@ -41,7 +40,6 @@
 							message: 'Chưa điền thông tin vào câu trả lời.'
 						},{
 							type: 'danger',
-							delay: 1500,
 						});
 						inpOther.focus();
 						validReturn = false;
