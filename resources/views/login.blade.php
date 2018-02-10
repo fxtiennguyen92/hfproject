@@ -1,52 +1,6 @@
 @extends('template.index_no_nav') @push('stylesheets')
 <style type="text/css">
-  .single-page-block-inner {
-    margin-top: 0px;
-  }
 
-  .single-page-login-alpha {
-    background-image: url(assets/common/img/temp/login/5.jpg);
-  }
-
-  @media only screen and (min-width: 540px) {
-    .single-page-block-inner {
-      margin-top: 100px;
-    }
-    /*
-			.page-content {
-				margin-top: -30px;
-				position: fixed;
-			}
-*/
-  }
-
-  @media only screen and (max-width: 425px) {
-    .page-content {
-      margin-top: -40px;
-      position: fixed;
-    }
-    .title {
-      padding-bottom: 5px;
-    }
-    .single-page-login-alpha {
-      background-image: none;
-      position: fixed;
-    }
-    .single-page-block-inner {
-      box-shadow: none !important;
-      padding-left: 0px !important;
-      padding-right: 0px !important;
-    }
-    .single-page-block {
-      padding-right: 10px !important;
-    }
-  }
-
-  @media only screen and (max-width: 321px) {
-    .single-page-block-inner {
-      padding-right: 20px !important;
-    }
-  }
 
 </style>
 
@@ -105,19 +59,19 @@
 <!-- End Page Scripts -->
 @endpush @section('title') Đăng nhập @endsection @section('content')
 <section class="page-content">
-  <div class="page-content-inner single-page-login-alpha">
+  <div class="page-content-inner single-page-login-alpha" style="background-image:url(img/banner/7.png);">
     <!-- Login Page -->
     <div class="single-page-block">
-      <div class="row">
+      <div class="">
         <div class="login-form-wrapper">
           <div class="single-page-block-inner">
-            <!--
-					<div class="logo" style="text-align: center; margin-top: 10px;">
-						<a href="javascript: history.back();">
-							<img src="img/logoh.png" alt="Hand Free" width="250"/>
+
+            <div class="logo" style="margin-bottom: 30px;">
+              <a href="javascript: history.back();">
+							<img src="img/logoh.png" alt="Hand Free" width="150"/>
 						</a>
-					</div>
--->
+            </div>
+
             <h1 class="page-title">
               Đăng nhập
             </h1>
@@ -129,14 +83,15 @@
                     <div class="row">
 
                       <div class="col-xs-6">
-                        <a href="{{ route('redirect_fb') }}" class="btn btn-icon" style="width: 100%">
-												<img src="img/ic-fb.svg" width="18">&nbsp;&nbsp; Facebook
+                        <a href="{{ route('redirect_fb') }}" class="btn btn-icon" style="width: 100%;background:#2151B2;color:#fff!important">
+												<img src="img/social/facebook-logo.png" width="18">&nbsp;&nbsp; Facebook
 											</a>
                       </div>
                       <div class="col-xs-6" style="padding-right: 14px;">
-                        <a href="{{ route('redirect_gg') }}" class="btn btn-icon" style="width: 100%">
-												<img src="img/ic-gg.png" width="18">&nbsp;&nbsp; Google
+                        <a href="{{ route('redirect_gg') }}" class="btn btn-icon" style="width: 100%;background:#D41701;color:#fff!important">
+												<img src="img/social/google-logo.png" width="18">&nbsp;&nbsp; Google
 											</a>
+
                       </div>
                     </div>
                   </div>

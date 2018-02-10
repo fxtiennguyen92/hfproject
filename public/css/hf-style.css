@@ -139,6 +139,20 @@
  .signup-form-wrapper {
    max-width: 500px;
    margin: auto;
+   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+ }
+
+ .login-form-wrapper .page-title,
+ .signup-form-wrapper .page-title {
+   margin-top: 0;
+ }
+
+ .single-page-login-alpha .single-page-block .single-page-block-inner,
+ .page-title .signup-form-wrapper .single-page-block-inner,
+ .login-form-wrapper .single-page-block-inner {
+   padding: 40px!important;
+   border-radius: 2px!important;
  }
 
  .page-title {
@@ -152,6 +166,7 @@
 
  .text-label {
    font-size: 15px;
+   color: #969696;
  }
 
  .form-control {
@@ -312,33 +327,51 @@
  nav.top-menu .menu .menu-info-block {
    margin-right: 0;
  }
+
  /*
     select multiple - Truc-TT 
  */
+
  .select2-selection__choice__remove {
-    color: #fff !important;
+   color: #fff !important;
  }
+
  .select2-container .select2-results__option--highlighted {
-    background-color: #fff !important;
+   background-color: #fff !important;
  }
+
  .select2-container .select2-results__option[aria-selected=true] {
-    color: #fff;
-    background-color: #02b3e4 !important;
+   color: #fff;
+   background-color: #02b3e4 !important;
  }
+
  .select2-container .select2-results__option[aria-selected=true].select2-results__option--highlighted {
-    color: #fff !important;
-    background-color: #02b3e4 !important;
+   color: #fff !important;
+   background-color: #02b3e4 !important;
  }
- .hf-select > button ,
+
+ .single-page-login-alpha .single-page-block .single-page-block-inner {
+   border-radius: 0!important;
+ }
+
+ .single-page-login-alpha .single-page-block .single-page-block-inner .single-page-block-form .input-group-addon {
+   background: none;
+   border: none;
+   border-bottom: solid 1px;
+ }
+
+ .hf-select > button,
  .hf-select span > .selection > span {
-   border:none;
+   border: none;
    border-radius: 0px;
    border-bottom: 1px solid #e1e1e1;
  }
+
  .hf-select > button {
    padding-bottom: 10px;
    padding-top: 10px;
  }
+
  .selection > span > ul > li.select2-selection__choice {
    color: #fff !important;
    background-color: #02b3e4 !important;
@@ -507,12 +540,15 @@
    font-size: 18px;
 
  }
+
  #testinomial .heading {
    color: #fff;
  }
+
  #testinomial .sub-heading {
    color: #fff;
  }
+
  #testinomial blockquote {
    border: 0;
    background-color: transparent;
@@ -679,9 +715,9 @@
    .hf-wrapper .nav-tabs {
      font-size: 13px;
    }
- }
-
- @media only screen and (max-width: 500px) {
+   body.single-page .single-page-block {
+     padding: 30px 0!important;
+   }
    nav.top-menu + .page-content {
      margin-top: 10px;
    }
@@ -727,3 +763,49 @@
  }
 
  @media only screen and (max-width: 1024px) {}
+
+ .single-page-block-inner {
+   margin-top: 0px;
+ }
+
+ @media only screen and (min-width: 540px) {
+   .single-page-block-inner {
+     margin-top: 100px;
+   }
+   /*
+			.page-content {
+				margin-top: -30px;
+				position: fixed;
+			}
+*/
+ }
+
+ @media only screen and (max-width: 425px) {
+   .page-content {
+     margin-top: -40px;
+     position: fixed;
+   }
+   .title {
+     padding-bottom: 5px;
+   }
+   .single-page-login-alpha {
+     background-image: none;
+     position: fixed;
+   }
+   .single-page-block-inner {
+     -webkit-box-shadow: none !important;
+     box-shadow: none !important;
+     padding-left: 0px !important;
+     padding-right: 0px !important;
+   }
+   .single-page-block {
+     padding-right: 10px !important;
+   }
+
+ }
+
+ @media only screen and (max-width: 321px) {
+   .single-page-block-inner {
+     padding-right: 20px !important;
+   }
+ }

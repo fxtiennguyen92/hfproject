@@ -37,6 +37,7 @@
         padding-right: 20px !important;
       }
     }
+
 </style>
 <script>
   $(document).bind('keypress', function(e) {
@@ -93,23 +94,22 @@
       eyeCloseClass: 'icmn-eye-blocked'
     });
   });
+
 </script>
 <!-- End Page Scripts -->
 @endpush @section('title') Đăng ký @endsection @section('content')
 <section class="page-content">
-  <div class="page-content-inner single-page-login-alpha">
+  <div class="page-content-inner single-page-login-alpha" style="background-image:url(img/banner/7.png);">
     <!-- SignUp Page -->
     <div class="single-page-block">
-      <div class="row">
+      <div class="">
         <div class="signup-form-wrapper">
           <div class="single-page-block-inner">
-            <!--
-            <div class="logo" style="text-align: center; margin-top: 10px;">
+            <div class="logo" style="margin-bottom: 30px;">
               <a href="javascript: history.back();">
-							<img src="img/logoh.png" alt="Hand Free" width="250"/>
+							<img src="img/logoh.png" alt="Hand Free" width="150"/>
 						</a>
             </div>
--->
             <h1 class="page-title">
               Đăng ký
             </h1>
@@ -121,13 +121,13 @@
                     <p class="text-left text-label">Đăng ký với tài khoản mạng xã hội:</p>
                     <div class=" row">
                       <div class="col-xs-6">
-                        <a href="{{ route('redirect_fb') }}" class="btn btn-icon" style="width: 100%">
-												<img src="img/ic-fb.svg" width="20">&nbsp;&nbsp; Facebook
+                        <a href="{{ route('redirect_fb') }}" class="btn btn-icon" style="width: 100%;background:#2151B2;color:#fff!important">
+												<img src="img/social/facebook-logo.png" width="18">&nbsp;&nbsp; Facebook
 											</a>
                       </div>
                       <div class="col-xs-6" style="padding-right: 14px;">
-                        <a href="{{ route('redirect_gg') }}" class="btn btn-icon" style="width: 100%;">
-												<img src="img/ic-gg.png" width="20">&nbsp;&nbsp; Google
+                        <a href="{{ route('redirect_gg') }}" class="btn btn-icon" style="width: 100%;background:#D41701;color:#fff!important">
+												<img src="img/social/google-logo.png" width="18">&nbsp;&nbsp; Google
 											</a>
                       </div>
                     </div>
