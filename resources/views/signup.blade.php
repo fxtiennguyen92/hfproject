@@ -14,10 +14,7 @@
   }
 
   @media only screen and (max-width: 425px) {
-    .page-content {
-      margin-top: -60px;
-      position: fixed;
-    }
+
     .title {
       margin-top: -30px;
     }
