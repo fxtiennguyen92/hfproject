@@ -1,245 +1,266 @@
-/* CSS Document */
-input.input-other {
-    display: inline !important;
-    background: transparent !important;
-}
-input.input-other:focus {
-    outline: none;
-}
-div.animated {
-    top: 10px !important;
-    right: 10px !important;
-}
-.form-control {
-    border-radius: 0px;
-}
-.margin-bottom-50 {
-    margin-bottom: 0px;
-    height: 100%;
-}
-.wizard > .steps {
-    display: none;
-}
-.btn-default-outline {
-    font-size: 24px;
-    margin-left: 15px;
-    margin-right: 15px;
-}
-.btn-group {
-    float: left; 
-    margin-top: 25px; 
-    padding: 10px;
-}
-.wizard > .content > .body {
-    position: relative;
-    margin: 2.5%;
-}
-.question {
-    background-color: #dfe4ed;
-    font-size: 20px;
-    color: #fff;
-    min-height: 60px;
-}
-.btn.btn-default-outline.active {
-    background-color: #02b3e4;
-}
-.btn.btn-default-outline {
-    color: #000;
-}
-.cui-wizard .actions li.disabled a {
-    background-color: #dfe4ed !important; 
-    color: #000 !important;
-}
-.cui-wizard .actions li a {
-    background-color: #02b3e4;
-    color: #fff;
-    border-radius: 0px;
-}
-.cui-wizard .actions li a:hover, .cui-wizard .actions li a:active {
-    background-color: #02b3e4; 
-    color: #fff;
-    border-radius: 0px;
-}
-.cui-wizard .actions li a[href='#previous'] {
-    background-color: #acb7bf;
-    color: #fff;
-    border-radius: 0px;
-}
-.cui-wizard .actions li a[href='#previous']:hover, .cui-wizard .actions li a[href='#previous']:active {
-    background-color: #acb7bf; 
-    color: #fff;
-    border-radius: 0px;
-}
+/*
+ CSS Document input.input-other {
+   display: inline !important;
+   background: transparent !important;
+ }
 
-@media screen and (min-width: 981px) {
-    .btn-group {
-        padding-left: 9em;
-    }
-}
-@media screen and (max-width: 980px) {
-    .btn-group {
-        padding-left: 6em;
-    }
-    .wizard > .content > .body {
-        position: relative;
-        margin: 0%;
-        width: 100%;
-    }
-    .question {
-        font-size: 16px;
-    }
-    .btn-default-outline {
-    font-size: 20px; 
-    text-align: left;
-    }
-    .wizard > .content { 
-        margin-top: -15px;
-    }
-}
-@media screen and (max-width: 543px) {
-    .btn-group {
-        padding-left: 0em;
-        margin-top: 0px;
-        padding: 0px;
-        margin-left: 0px;
-    }
-    .question >label {
-       font-size: 11pt;
-        color: #000;
-    }
-    .page-content {
-        width: 100%;
-    }
-    .form-control {
-        margin-top: 15px;
-    }
-    #example-numbers {
-        height: 100%
-    }
-    #frmMain {
-        height: 100%;
-    }
-    #surveyList {
-        height: 100%;
-    }
-    .answer {
-        padding-left: 0px;
-        padding-right: 0px;
-    }
-    .btn.btn-default-outline {
-        padding: 16px;
-        margin-bottom: 0px;
-        margin-left: 0px;
-        color: #000;
-        margin-bottom: 0px;
-        width: 100%;
-        font-size: 11pt;
-        border-top-right-radius: 0 !important;
-        border-bottom-right-radius: 0 !important;
-        border-top-left-radius: 0 !important;
-        border-bottom-left-radius: 0 !important;
-    }
-    .btn-group > label.btn.btn-default-outline {
-        margin-left: 0px;
-    }
-    .btn.btn-default-outline.active {
-        color: #fff;
-    }
-    .btn.btn-default-outline:hover {
-        color: #fff;
-    }
-    .answer>.btn-group>label.btn-default-outline {
-        margin-bottom: 0em;
-    }
-    .btn-default-outline {
-        font-size: 16px;
-        border: #FFF;
-        white-space: normal;   
-    }
-    .cui-wizard .number {
-        line-height: 29px;
-    }
-    .icon {
-        padding-right: 10px;
-    }
-    .wizard > .content {
-        margin-top: -25px;
-    }
-    .question {
-        font-size: 16px;
-        padding-top: 10px;
-        margin-bottom: 0px;
-        display: flex;
-        align-items: center;
-    }
-    .row-complete {
-        bottom: 0px;
-        position: absolute;
-        width: 100%;
-        margin-left: 0px;
-        margin-right: 0px;
-    }
-    #lbTime {
-        padding-left: 8px;
-    }
-    #btnBack {
-        width: 50%;
-        border: 0px;
-        font-size: 16px;
-        line-height: 2.5rem;
-        border-radius: 0px;
-        background-color: #acb7bf;
-        color: #fff;
-        border-right: 1px #fff solid;
-    }
-    #btnSubmit {
-        width: 50%;
-        border: 0px;
-        float: right;
-        font-size: 16px;
-        line-height: 2.5rem;
-        border-radius: 0px;
-    }
-    .actions >ul >li {
-        border-right: 1px #fff solid;
-    } 
-    .wizard > .actions > ul {
-        width: 100%;
-        bottom: 0px;
-        left: 0px;
-    }
-    .wizard > .actions > ul > li {
-        width: 50%;
-        margin: 0em;
-    }
-    .cui-wizard__numbers .number {
-        width: 33px;
-        height: 33px;
-    }
-    .actions>ul {
-        line-height: 2.5rem;
-    }
-    .wizard > .actions > ul {
-        display: block;
-    }
-    input.input-other {
-        border: 0px !important;
-    }
-    .wizard > .actions {
-        position: fixed;
-        bottom: 0px;
+ input.input-other:focus {
+   outline: none;
+ }
+
+ div.animated {
+   top: 10px !important;
+   right: 10px !important;
+ }
+
+ .form-control {
+   border-radius: 0px;
+ }
+
+ .margin-bottom-50 {
+   margin-bottom: 0px;
+   height: 100%;
+ }
+
+ .wizard > .steps {
+   display: none;
+ }
+
+ .btn-default-outline {
+   font-size: 24px;
+   margin-left: 15px;
+   margin-right: 15px;
+ }
+
+ .btn-group {
+   float: left;
+   margin-top: 25px;
+   padding: 10px;
+ }
+
+ .wizard > .content > .body {
+   position: relative;
+   margin: 2.5%;
+ }
+
+ .question {
+   background-color: #dfe4ed;
+   font-size: 20px;
+   color: #fff;
+   min-height: 60px;
+ }
+
+ .btn.btn-default-outline.active {
+   background-color: #02b3e4;
+ }
+
+ .btn.btn-default-outline {
+   color: #000;
+ }
+
+ .cui-wizard .actions li.disabled a {
+   background-color: #dfe4ed !important;
+   color: #000 !important;
+ }
+
+ .cui-wizard .actions li a {
+   background-color: #02b3e4;
+   color: #fff;
+   border-radius: 0px;
+ }
+
+ .cui-wizard .actions li a:hover,
+ .cui-wizard .actions li a:active {
+   background-color: #02b3e4;
+   color: #fff;
+   border-radius: 0px;
+ }
+
+ .cui-wizard .actions li a[href='#previous'] {
+   background-color: #acb7bf;
+   color: #fff;
+   border-radius: 0px;
+ }
+
+ .cui-wizard .actions li a[href='#previous']:hover,
+ .cui-wizard .actions li a[href='#previous']:active {
+   background-color: #acb7bf;
+   color: #fff;
+   border-radius: 0px;
+ }
+
+ @media screen and (min-width: 981px) {
+   .btn-group {
+     padding-left: 9em;
    }
-    ::-webkit-input-placeholder {
-       color: #000;
-    }
-    .row-address {
-        padding-left: 5px;
-        padding-right: 5px;
-        margin-right: 0px !important;
-        margin-left: 0px !important;
-    }
-    .row-address > div {
-        padding-left: 0px;
-        padding-right: 0px;
-    }
-}
+ }
+
+ @media screen and (max-width: 980px) {
+   .btn-group {
+     padding-left: 6em;
+   }
+   .wizard > .content > .body {
+     position: relative;
+     margin: 0%;
+     width: 100%;
+   }
+   .question {
+     font-size: 16px;
+   }
+   .btn-default-outline {
+     font-size: 20px;
+     text-align: left;
+   }
+   .wizard > .content {
+     margin-top: -15px;
+   }
+ }
+
+ @media screen and (max-width: 543px) {
+   .btn-group {
+     padding-left: 0em;
+     margin-top: 0px;
+     padding: 0px;
+     margin-left: 0px;
+   }
+   .question > label {
+     font-size: 11pt;
+     color: #000;
+   }
+   .page-content {
+     width: 100%;
+   }
+   .form-control {
+     margin-top: 15px;
+   }
+   #example-numbers {
+     height: 100%
+   }
+   #frmMain {
+     height: 100%;
+   }
+   #surveyList {
+     height: 100%;
+   }
+   .answer {
+     padding-left: 0px;
+     padding-right: 0px;
+   }
+   .btn.btn-default-outline {
+     padding: 16px;
+     margin-bottom: 0px;
+     margin-left: 0px;
+     color: #000;
+     margin-bottom: 0px;
+     width: 100%;
+     font-size: 11pt;
+     border-top-right-radius: 0 !important;
+     border-bottom-right-radius: 0 !important;
+     border-top-left-radius: 0 !important;
+     border-bottom-left-radius: 0 !important;
+   }
+   .btn-group > label.btn.btn-default-outline {
+     margin-left: 0px;
+   }
+   .btn.btn-default-outline.active {
+     color: #fff;
+   }
+   .btn.btn-default-outline:hover {
+     color: #fff;
+   }
+   .answer > .btn-group > label.btn-default-outline {
+     margin-bottom: 0em;
+   }
+   .btn-default-outline {
+     font-size: 16px;
+     border: #FFF;
+     white-space: normal;
+   }
+   .cui-wizard .number {
+     line-height: 29px;
+   }
+   .icon {
+     padding-right: 10px;
+   }
+   .wizard > .content {
+     margin-top: -25px;
+   }
+   .question {
+     font-size: 16px;
+     padding-top: 10px;
+     margin-bottom: 0px;
+     display: flex;
+     align-items: center;
+   }
+   .row-complete {
+     bottom: 0px;
+     position: absolute;
+     width: 100%;
+     margin-left: 0px;
+     margin-right: 0px;
+   }
+   #lbTime {
+     padding-left: 8px;
+   }
+   #btnBack {
+     width: 50%;
+     border: 0px;
+     font-size: 16px;
+     line-height: 2.5rem;
+     border-radius: 0px;
+     background-color: #acb7bf;
+     color: #fff;
+     border-right: 1px #fff solid;
+   }
+   #btnSubmit {
+     width: 50%;
+     border: 0px;
+     float: right;
+     font-size: 16px;
+     line-height: 2.5rem;
+     border-radius: 0px;
+   }
+   .actions > ul > li {
+     border-right: 1px #fff solid;
+   }
+   .wizard > .actions > ul {
+     width: 100%;
+     bottom: 0px;
+     left: 0px;
+   }
+   .wizard > .actions > ul > li {
+     width: 50%;
+     margin: 0em;
+   }
+   .cui-wizard__numbers .number {
+     width: 33px;
+     height: 33px;
+   }
+   .actions > ul {
+     line-height: 2.5rem;
+   }
+   .wizard > .actions > ul {
+     display: block;
+   }
+   input.input-other {
+     border: 0px !important;
+   }
+   .wizard > .actions {
+     position: fixed;
+     bottom: 0px;
+   }
+   ::-webkit-input-placeholder {
+     color: #000;
+   }
+   .row-address {
+     padding-left: 5px;
+     padding-right: 5px;
+     margin-right: 0px !important;
+     margin-left: 0px !important;
+   }
+   .row-address > div {
+     padding-left: 0px;
+     padding-right: 0px;
+   }
+ }
+*/
