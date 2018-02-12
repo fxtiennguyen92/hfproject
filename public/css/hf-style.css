@@ -258,80 +258,58 @@
    max-width: 200px;
  }
 
- .item-wrapper {
-   margin-bottom: 18px;
-   overflow: hidden;
+  .order-item {
    -webkit-transition: all .5s ease-out;
    -o-transition: all .5s ease-out;
    transition: all .5s ease-out;
    -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, .1);
    box-shadow: 0 1px 5px rgba(0, 0, 0, .1);
    background-color: #fff;
-   height: 300px;
-   max-height: 300px;
-   font-size: 15px;
-   position: relative;
-   border-bottom: solid 5px #01a8fe;
- }
-
- .item-wrapper .order-info > label {
-   border-bottom: solid 1px #e1e1e1;
-   padding: 15px 20px;
-   display: block;
-   background: #01a8fe;
-   color: #fff;
-   text-transform: uppercase;
- }
-
- .item-wrapper .order-req {
-   padding: 15px 20px;
- }
-
- .item-wrapper .order-address {
-   font-size: 13px;
-   color: #46be8a;
-   position: absolute;
-   bottom: 40px;
-   border-top: solid 1px #fafafa;
-   display: block;
-   width: 100%;
-   left: 0;
-   padding: 15px;
-   display: inline-block;
-   width: 100%;
-   white-space: nowrap;
-   overflow: hidden !important;
-   -o-text-overflow: ellipsis;
-   text-overflow: ellipsis;
- }
-
- .item-wrapper .order-state {
-   position: absolute;
-   bottom: 15px;
-   color: #01a8fe;
-   left: 15px;
-   font-size: 13px;
- }
-
- .item-wrapper .material-icons {
-   font-size: 20px;
- }
-
- .item-wrapper .state-now {
-   color: #f39834;
- }
-
- .item-wrapper .avt {
-   border-radius: 100%;
-   width: 50px;
-   height: 50px;
-   margin-right: 10px;
-   border: solid 2px #fff;
- }
-
- .material-icons {
-   vertical-align: middle;
- }
+   border-bottom: solid 2px #01a8fe;
+   padding: 10px 10px;
+  }
+  .order-item .avt {
+     border-radius: 100%;
+     width: 70px;
+     height: 70px;
+     margin: auto;
+     border: solid 1px #01a8fe;
+     display: block;
+   }
+   .order-user {
+       font-weight: bold;
+   }
+   .order-address, .order-address i,
+   .order-time, .order-time i {
+       font-size: 13px;
+   }
+   .order-address {
+       white-space: nowrap; 
+       width: 100%; 
+       overflow: hidden;
+       color: #969696;
+       text-overflow: ellipsis;
+   }
+   .order-time {
+      color: #01a8fe;
+   }
+   .state-now {
+     color: #f39834;
+   }
+   .order-req {
+       padding-top: 10px;
+       width: 100%;
+       font-size: 11px;
+       padding: 20px;
+       height: 75px;
+       text-align: justify;
+   }
+   .order-request-date {
+       font-size: 9px;
+       text-align: right;
+       padding-right: 20px;
+       color: #969696;
+   }
 
  .nav-tabs .nav-item.open .nav-link,
  .nav-tabs .nav-item.open .nav-link:focus,

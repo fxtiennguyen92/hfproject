@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -32,6 +33,7 @@
   <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
   <script src="assets/vendors/html5-form-validation/dist/jquery.validation.min.js"></script>
   <script src="assets/vendors/bootstrap-sweetalert/dist/sweetalert.min.js"></script>
+  <script src="assets/vendors/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js"></script>
 
   <!-- Clean UI Scripts -->
   <script src="assets/common/js/common.js"></script>

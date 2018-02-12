@@ -1,4 +1,3 @@
-@extends('template.index') @push('stylesheets')
 <script>
   $(document).ready(function() {
     $('.quoted-price').number({
@@ -32,10 +31,9 @@
                    }, {
                      type: 'success',
                    });
-
-            	setTimeout(function() {
-            		 location.href = "{{ route('pro_order_list_page') }}"
-				}, 1500);
+                setTimeout(function() {
+                  location.href = "{{ route('pro_order_list_page') }}"
+                }, 1500);
             },
             error: function(xhr) {
               if (xhr.status == 400) {
@@ -60,7 +58,6 @@
     }
   });
 </script>
-@endpush @section('title') @endsection @section('content')
 <section class="page-content">
   <form id="frmMain" method="POST" action="{{ route('quote_price') }}">
     <input name="inpPrice" class="quoted-price" value="10000" step="10000" min="10000" max="">
@@ -91,4 +88,3 @@
     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
   </form>
 </section>
-@endsection
