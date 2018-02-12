@@ -258,7 +258,7 @@
    max-width: 200px;
  }
 
-  .order-item {
+ .order-item {
    -webkit-transition: all .5s ease-out;
    -o-transition: all .5s ease-out;
    transition: all .5s ease-out;
@@ -267,49 +267,59 @@
    background-color: #fff;
    border-bottom: solid 2px #01a8fe;
    padding: 10px 10px;
-  }
-  .order-item .avt {
-     border-radius: 100%;
-     width: 70px;
-     height: 70px;
-     margin: auto;
-     border: solid 1px #01a8fe;
-     display: block;
-   }
-   .order-user {
-       font-weight: bold;
-   }
-   .order-address, .order-address i,
-   .order-time, .order-time i {
-       font-size: 13px;
-   }
-   .order-address {
-       white-space: nowrap; 
-       width: 100%; 
-       overflow: hidden;
-       color: #969696;
-       text-overflow: ellipsis;
-   }
-   .order-time {
-      color: #01a8fe;
-   }
-   .state-now {
-     color: #f39834;
-   }
-   .order-req {
-       padding-top: 10px;
-       width: 100%;
-       font-size: 11px;
-       padding: 20px;
-       height: 75px;
-       text-align: justify;
-   }
-   .order-request-date {
-       font-size: 9px;
-       text-align: right;
-       padding-right: 20px;
-       color: #969696;
-   }
+ }
+
+ .order-item .avt {
+   border-radius: 100%;
+   width: 70px;
+   height: 70px;
+   margin: auto;
+   border: solid 1px #01a8fe;
+   display: block;
+ }
+
+ .order-user {
+   font-weight: bold;
+ }
+
+ .order-address,
+ .order-address i,
+ .order-time,
+ .order-time i {
+   font-size: 13px;
+ }
+
+ .order-address {
+   white-space: nowrap;
+   width: 100%;
+   overflow: hidden;
+   color: #969696;
+   text-overflow: ellipsis;
+ }
+
+ .order-time {
+   color: #01a8fe;
+ }
+
+ .state-now {
+   color: #f39834;
+ }
+
+ .order-req {
+   padding-top: 10px;
+   width: 100%;
+   font-size: 11px;
+   padding: 20px;
+   height: 75px;
+   text-align: justify;
+ }
+
+ .order-request-date {
+   font-size: 9px;
+   text-align: right;
+   padding-right: 20px;
+   color: #969696;
+ }
 
  .nav-tabs .nav-item.open .nav-link,
  .nav-tabs .nav-item.open .nav-link:focus,
@@ -767,8 +777,8 @@
 
 
  .survey-form .cui-wizard .actions li a {
-   background-color: #fff;
-   border: solid 1px #02b3e4;
+   background-color: #eee;
+   /* border: solid 1px #02b3e4; */
    color: #424242;
  }
 
@@ -779,12 +789,12 @@
  }
 
  .survey-form .question {
-   background: #f4f3f0;
+   background: #02b3e4;
    font-size: 15px;
    line-height: 1.4;
    padding: 10px;
    min-height: auto;
-   color: #424242;
+   color: #fff;
  }
 
  .survey-form .answer {
@@ -850,8 +860,13 @@
    width: 50%;
    float: left;
    border-radius: 0;
-   border: solid 1px #01a8fe;
    .
+ }
+
+ .row-complete #btnBack {
+   background: #ccc;
+   color: #424242;
+   border-color: #ccc;
  }
 
  .survey-form .service-title {
@@ -959,6 +974,17 @@
    }
    .survey-form {
      margin-top: 0;
+     margin-bottom: 40px;
+     background: none;
+     box-shadow: none;
+   }
+   .survey-page {
+     background: #fff;
+   }
+   .survey-form .actions {
+     position: fixed;
+     bottom: 0;
+     box-shadow: 0 0 8px 1px #00000055;
    }
  }
 
