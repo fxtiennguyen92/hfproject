@@ -4,6 +4,12 @@
 
 <!-- Page Scripts -->
 <script>
+  $(document).bind('keypress', function(e) {
+    if (e.keyCode == 13) {
+      $('#btnLogin').trigger('click');
+    }
+  });
+
   $(document).ready(function() {
     // Form Validation
     $('#frmMain').validate({
