@@ -179,6 +179,9 @@
         70%
       </div>
     </div>
+    <div class="service-title">
+      Dịch vụ sửa điện
+    </div>
     <div id="surveyList" class="cui-wizard cui-wizard__numbers">
       @foreach ($questions as $q)
       <h3><span class="cui-wizard--steps--title"></span></h3>
@@ -199,7 +202,7 @@
 									name="q[{{ $q->id }}][]"
 									value="{{ $a->order_dsp }}">
 							<span class="icon icmn-checkbox-unchecked2"></span>
-							Other
+							
 							<input class="input-other" type="text"
 									placeholder="{{ $a->content }}"
 									name="{{ $q->id.'_'.$a->order_dsp }}_text"
