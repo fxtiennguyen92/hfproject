@@ -221,6 +221,12 @@
    max-width: 1140px;
  }
 
+ .dropdown-avatar .user-name {
+   display: inline-block;
+   position: relative;
+   top: -10px;
+ }
+
  .hf-wrapper {
    max-width: 1140px;
    margin: 0 auto;
@@ -960,6 +966,10 @@
    .page-order .quoted-price {
      max-width: 200px;
    }
+   .dropdown-avatar .user-name {
+     display: none;
+   }
+
  }
 
  @media only screen and (max-width: 1024px) {
@@ -999,13 +1009,30 @@
    .hiw-slider .text {
      padding-top: 20px;
    }
+   .single-page-block-inner {
+     margin-top: 0px;
+   }
  }
 
- @media only screen and (max-width: 1024px) {}
+ @media only screen and (max-width: 768px) {
+   nav.top-menu .menu-icon-container + .menu {
+     margin-left: 0;
+   }
 
- .single-page-block-inner {
-   margin-top: 0px;
+   .navbar-logo {
+     width: 190px;
+   }
+
+   .hf-logo {
+     height: 37px;
+   }
+
+   .hf-logo > a {
+     line-height: 37px;
+   }
  }
+
+
 
  @media only screen and (min-width: 540px) {
    .single-page-block-inner {
