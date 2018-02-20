@@ -891,6 +891,36 @@
    height: auto!important;
  }
 
+ .page-order {
+   padding-top: 40px!important;
+   margin-top: 0!important;
+   height: auto!important;
+ }
+
+ .page-order .order-item {
+   min-height: 350px;
+ }
+
+ .page-order .order-form {
+   max-width: 500px;
+   margin: auto;
+   background: #fff;
+   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+ }
+
+ .page-order .number-style {
+   text-align: center;
+   padding-top: 32px;
+   padding-bottom: 16px;
+ }
+
+ .page-order #btnSubmit {
+   width: 100%;
+   border-radius: 0;
+ }
+
  /*
 * RESPONSIVE
 */
@@ -918,10 +948,17 @@
    .page-orders .order-item {
      margin: 0;
    }
+   .page-order {
+     padding-top: 0!important;
+   }
+   .page-order .order-user,
    .page-orders .order-user {
      display: block;
      text-align: center;
      margin-top: 5px;
+   }
+   .page-order .quoted-price {
+     max-width: 200px;
    }
  }
 
@@ -1011,6 +1048,7 @@
    .survey-page {
      background: #fff;
    }
+   .page-order #btnSubmit,
    .row-complete.clearfix,
    .survey-form .actions {
      position: fixed;
