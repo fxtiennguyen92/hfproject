@@ -223,7 +223,8 @@
 
  .hf-wrapper {
    max-width: 1140px;
-   margin: auto;
+   margin: 0 auto;
+   width: 100%;
  }
 
  .signup-pro .form-wrapper {
@@ -267,6 +268,7 @@
    background-color: #fff;
    border-bottom: solid 2px #01a8fe;
    padding: 10px 10px;
+   margin-top: 16px;
  }
 
  .order-item .avt {
@@ -308,7 +310,7 @@
  .order-req {
    padding-top: 10px;
    width: 100%;
-   font-size: 11px;
+   font-size: 13px;
    padding: 20px;
    height: 75px;
    text-align: justify;
@@ -731,13 +733,12 @@
 
  .survey-page .page-content {
    margin-top: 0!important;
-
+   padding-top: 40px!important;
  }
 
  .survey-form {
    max-width: 500px;
    margin: auto;
-   margin-top: 40px;
    background: #fff;
    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
@@ -754,6 +755,7 @@
  .survey-form .cui-wizard > .content {
    border-radius: 0;
    margin: 0;
+   min-height: 400px;
 
  }
 
@@ -876,6 +878,19 @@
    text-transform: uppercase;
  }
 
+ #positionAndTime .content {
+   min-height: 400px;
+ }
+
+ /*
+*page-orders
+*/
+
+ .page-orders {
+   margin-top: 0!important;
+   height: auto!important;
+ }
+
  /*
 * RESPONSIVE
 */
@@ -892,6 +907,21 @@
    }
    .single-page-login-alpha .single-page-block .single-page-block-inner {
      margin-bottom: 0;
+   }
+   .survey-page .page-content {
+     padding-top: 0px!important;
+   }
+   .page-orders .orders,
+   .page-orders .order-item-wrapper {
+     padding: 0!important;
+   }
+   .page-orders .order-item {
+     margin: 0;
+   }
+   .page-orders .order-user {
+     display: block;
+     text-align: center;
+     margin-top: 5px;
    }
  }
 
@@ -981,10 +1011,12 @@
    .survey-page {
      background: #fff;
    }
+   .row-complete.clearfix,
    .survey-form .actions {
      position: fixed;
      bottom: 0;
      box-shadow: 0 0 8px 1px #00000055;
+     width: 100%;
    }
  }
 

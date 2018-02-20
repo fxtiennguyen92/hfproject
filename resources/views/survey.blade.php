@@ -234,53 +234,55 @@
     </div>
 
     <div id="positionAndTime" style="display: none">
-      <div class="question">
-        Địa điểm
-      </div>
-      <div class="address-wrapper">
-        <div class="row row-address">
-          <div class="col-md-6 col-sm-6 col-xs-6">
-            <select id="ddCity" class="form-control" name="city">
-					<option value="" selected disabled>Thành phố / Tỉnh</option>
-					@foreach ($cities as $city)
-						<option value="{{ $city->code }}">{{ $city->name }}</option>
-					@endforeach
-				</select>
-          </div>
-          <div class="col-md-6 col-sm-6 col-xs-6" style="padding-left: 5px;">
-            <select id="ddDist" class="form-control" name="dist" data-validation-message="Chưa chọn Quận / Huyện" data-validation="[NOTEMPTY]">
-					<option value="" selected>Quận / Huyện</option>
-				</select>
-          </div>
+      <div class="content clearfix">
+        <div class="question">
+          Địa điểm
         </div>
-        <div class="row row-address">
-          <div class="col-md-12 col-sm-12 col-xs-12">
-            <input type="text" class="form-control" placeholder="Địa chỉ" name="address" data-validation-message="Chưa nhập Địa chỉ" data-validation="[NOTEMPTY]">
+        <div class="address-wrapper">
+          <div class="row row-address">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+              <select id="ddCity" class="form-control" name="city">
+                      <option value="" selected disabled>Thành phố / Tỉnh</option>
+                      @foreach ($cities as $city)
+                          <option value="{{ $city->code }}">{{ $city->name }}</option>
+                      @endforeach
+                  </select>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6" style="padding-left: 5px;">
+              <select id="ddDist" class="form-control" name="dist" data-validation-message="Chưa chọn Quận / Huyện" data-validation="[NOTEMPTY]">
+                      <option value="" selected>Quận / Huyện</option>
+                  </select>
+            </div>
           </div>
-        </div>
+          <div class="row row-address">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <input type="text" class="form-control" placeholder="Địa chỉ" name="address" data-validation-message="Chưa nhập Địa chỉ" data-validation="[NOTEMPTY]">
+            </div>
+          </div>
 
-      </div>
-      <div class="question">
-        Thời gian
-      </div>
-      <div class="btn-group time-wrapper" data-toggle="buttons">
-        <label class="btn">
-				<input type="radio" name="time" value="0"
-					data-validation="[NOTEMPTY]"
-					data-validation-group="lbTime"
-					data-validation-message="Chưa chọn thời gian">
-				<span class="icon icmn-radio-unchecked"></span>
-					Càng sớm càng tốt
-			</label>
-        <label class="label-other btn">
-				<input type="radio" name="time" value="1"
-					data-validation-group="lbTime">
-				<span class="icon icmn-radio-unchecked"></span>
-				<input class="datetimepicker input-other" style="min-width: 80%"
-						placeholder="Ấn định thời gian"
-						type="text"
-						name="estTime">
-			</label>
+        </div>
+        <div class="question">
+          Thời gian
+        </div>
+        <div class="btn-group time-wrapper" data-toggle="buttons">
+          <label class="btn">
+                  <input type="radio" name="time" value="0"
+                      data-validation="[NOTEMPTY]"
+                      data-validation-group="lbTime"
+                      data-validation-message="Chưa chọn thời gian">
+                  <span class="icon icmn-radio-unchecked"></span>
+                      Càng sớm càng tốt
+              </label>
+          <label class="label-other btn">
+                  <input type="radio" name="time" value="1"
+                      data-validation-group="lbTime">
+                  <span class="icon icmn-radio-unchecked"></span>
+                  <input class="datetimepicker input-other" style="min-width: 80%"
+                          placeholder="Ấn định thời gian"
+                          type="text"
+                          name="estTime">
+              </label>
+        </div>
       </div>
       <div class="row-complete clearfix">
         <button id="btnBack" type="button" class="btn">Quay lại</button>
