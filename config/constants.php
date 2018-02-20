@@ -49,6 +49,10 @@ return [
 	'ORD_COMPLETE' => '2',
 	'ORD_CANCEL' => '3',
 	
+	'QPRICE_NEW' => '0',
+	'QPRICE_SUCCESS' => '1',
+	'QPRICE_FAILED' => '2',
+	
 	'KEY_CITY' => 'CITY',
 	'KEY_DIST' => 'DIST',
 	

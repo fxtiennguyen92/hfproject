@@ -18,13 +18,11 @@ class ProOrderController extends Controller
 	}
 
 	public function viewList($style = null) {
-		$order = new Order();
+		$orderModel = new Order();
+		$quotedPriceModel = new QuotedPrice();
 		//$orders = $order->getByPro(auth()->user()->id);
-		$newOrders = $order->getNewByPro(auth()->user()->id);
-		$quotedOrders = $order->getQuotedByPro(auth()->user()->id);
-		//$completeOrders = $order->getCompleteByPro(auth()->user()->id);
-		
-// 		dd($quotedOrders);
+		$newOrders = $orderModel->getNewByPro(auth()->user()->id);
+		$quotedOrders = $quotedPriceModel->getNewByPro(auth()->user()->id);
 		
 		return view(Config::get('constants.PRO_ORDER_LIST_PAGE'), array(
 						'newOrders' => $newOrders,

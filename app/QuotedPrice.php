@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Config;
 
 class QuotedPrice extends Model
 {
@@ -21,7 +22,33 @@ class QuotedPrice extends Model
 		return $this->where('order_id', $id)->get();
 	}
 	
-	public static function getListQuotedOrderIdByPro($id) {
-		return QuotedPrice::where('pro_id', $id)->pluck('order_id')->toArray();
+	public function getNewByPro($id) {
+		return $this::with('order')
+			->where('pro_id', $id)
+			->new()
+			->get();
+	}
+	
+	public static function getListNewQuotedOrderIdByPro($id) {
+		return QuotedPrice::where('pro_id', $id)
+				->new()
+				->pluck('order_id')
+				->toArray();
+	}
+	
+	public function order() {
+		return $this->hasOne('App\Order', 'id', 'order_id');
+	}
+	
+	public function scopeNew($query) {
+		return $query->where('state', Config::get('constants.QPRICE_NEW'));
+	}
+	
+	public function scopeSuccess($query) {
+		return $query->where('state', Config::get('constants.QPRICE_SUCCESS'));
+	}
+	
+	public function scopeFailed($query) {
+		return $query->where('state', Config::get('constants.QPRICE_FAILED'));
 	}
 }

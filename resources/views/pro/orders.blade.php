@@ -58,7 +58,7 @@
               @endforeach
             </div>
             <div class="tab-pane" id="tabQuoted" role="tabpanel">
-              @foreach ($quotedOrders as $order)
+              @foreach ($quotedOrders as $q) @php $order = $q->order @endphp
               <div class="col-md-6 col-sm-6">
                 <div class="order-item">
 	              <div class="row order-row" onclick="location.href='{{ route('pro_order_page', ['orderId' => $order->id]) }}'">

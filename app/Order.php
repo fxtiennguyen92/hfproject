@@ -34,14 +34,14 @@ class Order extends Model
 	public function getNewByPro($id) {
 		return $this
 			->new()
-			->whereNotIn('id', QuotedPrice::getListQuotedOrderIdByPro($id))
+			->whereNotIn('id', QuotedPrice::getListNewQuotedOrderIdByPro($id))
 			->get();
 	}
 
 	public function getQuotedByPro($id) {
 		return $this
 			->new()
-			->whereIn('id', QuotedPrice::getListQuotedOrderIdByPro($id))
+			->whereIn('id', QuotedPrice::getListNewQuotedOrderIdByPro($id))
 			->get();
 	}
 
