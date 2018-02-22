@@ -1,5 +1,15 @@
 @extends('template.index') @push('stylesheets')
-<link rel="stylesheet" type="text/css" href="css/home.css"> @endpush @section('title') @endsection @section('content')
+<link rel="stylesheet" type="text/css" href="css/home.css">
+
+<script>
+$(document).ready(function() {
+  $('.left-menu').hide();
+});
+
+</script>
+
+@endpush
+@section('title') @endsection @section('content')
 <!-- SECTION BANNER -->
 <section class="top-banner">
   <div class="hero" style="background-image: url(img/banner/5.png);">

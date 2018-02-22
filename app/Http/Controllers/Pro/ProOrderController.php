@@ -63,7 +63,7 @@ class ProOrderController extends Controller
 		$orderId = $request->session()->get('quoted_order');
 		
 		QuotedPrice::updateOrCreate([
-						'id' => $orderId.'#'.auth()->user()->id
+						'qp_id' => $orderId.'#'.auth()->user()->id
 		],[
 						'order_id' => $orderId,
 						'pro_id' => auth()->user()->id,

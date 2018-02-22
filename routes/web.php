@@ -44,18 +44,24 @@ Route::get('/verify/{confirmCode}', 'Auth\RegisterController@verify')
 	->name('verify');
 /** Sign Up - END **/
 
-/** Survey - Order - STA **/
+
 Route::middleware('auth')->group(function() {
 	Route::get('/home', 'InitPageController@viewHomePage')
 		->name('home_page');
 });
-
+/** Survey - Order - STA **/
 Route::get('/survey/{serviceId}', 'SurveyController@view')
 	->name('survey_page');
 Route::post('/order/details', 'SurveyController@submitOrderDetails')
 	->name('submit_order_details');
 Route::get('/order/complete', 'SurveyController@complete')
 	->name('complete_order');
+Route::get('/orders', 'OrderController@viewList')
+	->name('order_list_page');
+Route::get('/order/{orderId}', 'OrderController@view')
+	->name('order_page');
+Route::post('/order/{orderId}/{qpId}', 'OrderController@accept')
+	->name('accept_quoted_price');
 /** Survey - Order - END **/
 
 /** Pro - STA **/

@@ -73,7 +73,7 @@
     <input name="inpPrice" class="quoted-price" value="10000" step="10000" min="10000" max="">
     <input name="price" class="basic-quoted-price" value="0" type="hidden" />
     <div class="order-item">
-      <div class="row order-row" onclick="location.href='{{ route('pro_order_page', ['orderId' => $order->id]) }}'">
+      <div class="row order-row">
         <div class="col-md-3 col-sm-4 col-sx-4">
           <img class="avt" src="http://innovatik.payo-themes.com/wp-content/uploads/2017/11/lawn-team03.jpg" />
         </div>
@@ -91,25 +91,12 @@
             <span>{{ $order->short_requirements }}</span>
           </div>
         </div>
-        <div class="row">
-          <div class="order-request-date col-md-12 col-sm-12 col-sx-12">
-            <span>Đã yêu cầu lúc {{ Carbon\Carbon::parse($order->created_at)->format('d-m-Y H:i') }}</span>
-          </div>
-        </div>
       </div>
     </div>
 
-    @if ($quotedPrice)
-    <button id="btnSubmit" type="submit" class="btn btn-danger width-150">
-			Xóa báo giá
-		</button> @endif
-    <button id="btnSubmit" type="submit" class="btn btn-primary width-150">
-			@if ($quotedPrice)
-			Báo giá lại
-			@else
-			Báo giá
-			@endif
-		</button>
+    @if (!$quotedPrice)
+    <button id="btnSubmit" type="submit" class="btn btn-primary width-150">Báo giá</button>
+    @endif
     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
   </form>
 </section>

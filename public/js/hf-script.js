@@ -24,4 +24,15 @@ $(document).ready(function() {
       allowEmpty: null,
     });
   });
+  $('.cui-wizard').each(function () {
+    var idx = $(this).attr('start-step');
+    $(this).steps({
+      headerTag:'h3',
+      bodyTag: '',
+      enableKeyNavigation: false,
+      enablePagination: false,
+      autoFocus: false,
+      startIndex: idx,
+    })
+  });
 });

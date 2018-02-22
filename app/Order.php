@@ -45,6 +45,53 @@ class Order extends Model
 			->get();
 	}
 
+	public function getNewByMember($id) {
+		return $this::with('service')
+			->new()
+			->get();
+	}
+
+	public function getNewAndNoQuotedPriceByMember($id) {
+		return $this
+			->new()
+			->where('quoted_price_count', 0)
+			->get();
+	}
+
+	public function getNewAndQuotedPriceByMember($id) {
+		return $this
+			->new()
+			->where('quoted_price_count','>', 0)
+			->get();
+	}
+
+	public function getProcessingByMember($id) {
+		return $this::with('pro', 'pro_profile')
+			->processing()
+			->get();
+	}
+
+	public static function acceptQuotedPrice($order) {
+		return Order::where('id', $order->id)
+			->update([
+					  'est_excute_at' => $order->est_excute_at
+					, 'total_price' => $order->total_price
+					, 'state' => $order->state
+			]);
+	}
+
+	public function service() {
+		return $this->hasOne('App\Service', 'id', 'service_id');
+	}
+
+	public function pro() {
+		return $this->hasOne('App\User', 'id', 'pro_id');
+	}
+
+	public function pro_profile() {
+		return $this->hasOne('App\ProProfile', 'id', 'pro_id');
+	}
+
 	public function scopeNew($query) {
 		return $query->where('state', Config::get('constants.ORD_NEW'));
 	}

@@ -141,7 +141,9 @@
 
 <body class="theme-default single-page">
   <!-- Check user login -->
-  @if(Auth::check()) @include('template.nav_member') @else @include('template.nav_guest') @endif @yield('content')
+  @if(Auth::check()) @include('template.nav_member') @else @include('template.nav_guest') @endif
+  @include('template.left_menu')
+  @yield('content')
 </body>
 
 </html>

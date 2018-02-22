@@ -17,4 +17,8 @@ class ProProfile extends Model
 	public function getById($id) {
 		return $this->where('id', $id)->first();
 	}
+	
+	public function user() {
+		return $this->hasOne('App\User', 'id', 'id');
+	}
 }

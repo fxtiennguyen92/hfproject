@@ -1,10 +1,5 @@
-@extends('template.index') @push('stylesheets')
-<!--<link rel="stylesheet" type="text/css" href="css/orders.css">-->
-<style>
-
-
-</style>
-@endpush @section('title') @endsection @section('content')
+@extends('template.index') @push('stylesheets') @endpush
+@section('title') @endsection @section('content')
 <section class="page-content page-orders">
   <div class="page-content-inner">
     <div class="hf-wrapper">
@@ -39,8 +34,8 @@
                       </div>
                       <div class="row">
                         <div class="order-req col-md-12 col-sm-12 col-sx-12">
-                          @if (strlen($order->short_requirements) > 175)
-                          <span>{{ substr($order->short_requirements, 0, 150).'...' }}</span> @else
+                          @if (strlen($order->short_requirements) > 100)
+                          <span>{{ substr($order->short_requirements, 0, 100).'...' }}</span> @else
                           <span>{{ $order->short_requirements }}</span> @endif
                         </div>
                       </div>
@@ -93,8 +88,6 @@
         </div>
       </div>
     </div>
-
   </div>
-
 </section>
 @endsection

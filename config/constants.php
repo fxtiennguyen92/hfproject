@@ -9,6 +9,8 @@ return [
 	'SIGNUP_PAGE' => 'signup',
 	'SURVEY_PAGE' => 'survey',
 	'COMPLETE_PAGE' => 'complete',
+	'ORDER_LIST_PAGE' => 'orders',
+	'ORDER_PAGE' => 'order',
 
 	'PRO_PROFILE_PAGE' => 'pro.profile',
 	'PRO_ORDER_LIST_PAGE' => 'pro.orders',

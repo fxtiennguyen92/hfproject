@@ -11,15 +11,17 @@ class QuotedPrice extends Model
 	protected $table = 'quoted_prices';
 	
 	protected $fillable = [
-		'id','order_id', 'pro_id', 'price',
+		'qp_id', 'order_id', 'pro_id', 'price'
 	];
 	
 	public function getById($id) {
-		return $this->where('id', $id)->first();
+		return $this->where('qp_id', $id)->first();
 	}
 
 	public function getByOrder($id) {
-		return $this->where('order_id', $id)->get();
+		return $this::with('pro', 'user')
+			->where('order_id', $id)
+			->get();
 	}
 	
 	public function getNewByPro($id) {
@@ -36,8 +38,21 @@ class QuotedPrice extends Model
 				->toArray();
 	}
 	
+	public static function updateState($qpId, $state) {
+		return QuotedPrice::where('qp_id', $qpId)
+			->update(['state' => $state]);
+	}
+	
 	public function order() {
 		return $this->hasOne('App\Order', 'id', 'order_id');
+	}
+	
+	public function pro() {
+		return $this->hasOne('App\ProProfile', 'id', 'pro_id');
+	}
+	
+	public function user() {
+		return $this->hasOne('App\User', 'id', 'pro_id');
 	}
 	
 	public function scopeNew($query) {
