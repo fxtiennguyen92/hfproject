@@ -1,6 +1,8 @@
 @extends('template.index_no_nav') @push('stylesheets')
 <script src='https://www.google.com/recaptcha/api.js?hl=vi'></script>
 <style>
+
+
 </style>
 <script>
   $(document).bind('keypress', function(e) {
@@ -26,15 +28,15 @@
               data: $('#frmMain').serialize(),
               success: function(response) {
                 swal({
-                  title: 'Đăng ký thành công',
-                  text: 'Xác nhận email để kích hoạt tài khoản',
-                  type: 'success',
-                  confirmButtonClass: 'btn-primary',
-                  confirmButtonText: 'Quay về Trang chủ',
-                },
-                function() {
-                  location.href = "{{ route('redirect') }}";
-                });
+                    title: 'Đăng ký thành công',
+                    text: 'Xác nhận email để kích hoạt tài khoản',
+                    type: 'success',
+                    confirmButtonClass: 'btn-primary',
+                    confirmButtonText: 'Quay về Trang chủ',
+                  },
+                  function() {
+                    location.href = "{{ route('redirect') }}";
+                  });
               },
               error: function(xhr) {
                 if (xhr.status == 409) {
@@ -70,7 +72,7 @@
 </script>
 <!-- End Page Scripts -->
 @endpush @section('title') Đăng ký @endsection @section('content')
-<section class="page-content">
+<section class="page-content" style="margin:0">
   <div class="page-content-inner single-page-login-alpha" style="background-image:url(img/banner/7.png);">
     <!-- SignUp Page -->
     <div class="single-page-block">

@@ -1,5 +1,7 @@
 @extends('template.index_no_nav') @push('stylesheets')
 <style type="text/css">
+
+
 </style>
 
 <!-- Page Scripts -->
@@ -28,9 +30,9 @@
               success: function(response) {
                 $.notify({
                   title: '<strong>Xin chào! </strong>',
-                    message: 'Bạn đã đăng nhập thành công.'
-                  }, {
-                    type: 'success',
+                  message: 'Bạn đã đăng nhập thành công.'
+                }, {
+                  type: 'success',
                 });
                 location.href = "{{ route('redirect') }}";
               },
@@ -67,7 +69,7 @@
 </script>
 <!-- End Page Scripts -->
 @endpush @section('title') Đăng nhập @endsection @section('content')
-<section class="page-content">
+<section class="page-content" style="margin:0">
   <div class="page-content-inner single-page-login-alpha" style="background-image:url(img/banner/7.png);">
     <!-- Login Page -->
     <div class="single-page-block">
