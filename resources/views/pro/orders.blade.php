@@ -30,17 +30,18 @@
                         <span class="order-time state-now"><i class="material-icons">&#xE3E7;</i> Ngay lập tức</span> @endif
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="order-req col-md-12 col-sm-12 col-sx-12">
-                        @if (strlen($order->short_requirements) > 100)
-                        <span>{{ substr($order->short_requirements, 0, 100).'...' }}</span> @else
-                        <span>{{ $order->short_requirements }}</span> @endif
-                      </div>
+
+                  </div>
+                  <div class="row">
+                    <div class="order-req col-md-12 col-sm-12 col-sx-12">
+                      @if (strlen($order->short_requirements) > 100)
+                      <span>{{ substr($order->short_requirements, 0, 100).'...' }}</span> @else
+                      <span>{{ $order->short_requirements }}</span> @endif
                     </div>
-                    <div class="row">
-                      <div class="order-request-date col-md-12 col-sm-12 col-sx-12">
-                        <span>Đã yêu cầu lúc {{ Carbon\Carbon::parse($order->created_at)->format('d-m-Y H:i') }}</span>
-                      </div>
+                  </div>
+                  <div class="row">
+                    <div class="order-request-date col-md-12 col-sm-12 col-sx-12">
+                      <span>Đã yêu cầu lúc {{ Carbon\Carbon::parse($order->created_at)->format('d-m-Y H:i') }}</span>
                     </div>
                   </div>
                 </div>
@@ -64,17 +65,18 @@
                         <span class="order-time state-now"><i class="material-icons">&#xE3E7;</i> Ngay lập tức</span> @endif
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="order-req col-md-12 col-sm-12 col-sx-12">
-                        @if (strlen($order->short_requirements) > 175)
-                        <span>{{ substr($order->short_requirements, 0, 150).'...' }}</span> @else
-                        <span>{{ $order->short_requirements }}</span> @endif
-                      </div>
+
+                  </div>
+                  <div class="row">
+                    <div class="order-req col-md-12 col-sm-12 col-sx-12">
+                      @if (strlen($order->short_requirements) > 175)
+                      <span>{{ substr($order->short_requirements, 0, 150).'...' }}</span> @else
+                      <span>{{ $order->short_requirements }}</span> @endif
                     </div>
-                    <div class="row">
-                      <div class="order-request-date col-md-12 col-sm-12 col-sx-12">
-                        <span>Đã yêu cầu lúc {{ Carbon\Carbon::parse($order->created_at)->format('d-m-Y H:i') }}</span>
-                      </div>
+                  </div>
+                  <div class="row">
+                    <div class="order-request-date col-md-12 col-sm-12 col-sx-12">
+                      <span>Đã yêu cầu lúc {{ Carbon\Carbon::parse($order->created_at)->format('d-m-Y H:i') }}</span>
                     </div>
                   </div>
                 </div>
