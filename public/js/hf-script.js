@@ -24,7 +24,7 @@ $(document).ready(function() {
       allowEmpty: null,
     });
   });
-  $('.cui-wizard').each(function () {
+  $('.cui-wizard-order').each(function () {
     var idx = $(this).attr('start-step');
     $(this).steps({
       headerTag:'h3',

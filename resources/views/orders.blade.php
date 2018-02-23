@@ -26,7 +26,7 @@
                 <div>Tổng tiền: {{ $order->total_price }}</div>
               </div>
               <div class="col-md-12 col-sm-12 col-sx-12">
-                <div class="cui-wizard" start-step="2">
+                <div class="cui-wizard-order cui-wizard" start-step="2">
                   <h3><i class="material-icons cui-wizard--steps--icon">&#xE24D;</i> <span class="cui-wizard--steps--title">Đơn hàng</span></h3>
                   <h3><i class="material-icons cui-wizard--steps--icon">&#xE91F;</i> <span class="cui-wizard--steps--title">Báo giá</span></h3>
                   <h3><i class="material-icons cui-wizard--steps--icon">&#xE913;</i> <span class="cui-wizard--steps--title">Thực hiện</span></h3>
