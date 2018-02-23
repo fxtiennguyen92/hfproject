@@ -359,6 +359,8 @@ nav.top-menu .menu {
 .order-cancel,
 .order-cancel i {
   font-size: 14px;
+  vertical-align: bottom;
+  line-height: 14px;
 }
 
 .order-address {
@@ -1259,6 +1261,14 @@ nav.left-menu .left-menu-list li .left-menu-link .material-icons {
   }
   .page-content-inner {
     margin: 0!important;
+    display: block!important;
+  }
+  .pro-order .pro-content {
+    padding: 0px;
+    margin-top: 20px;
+  }
+  .order-item {
+    margin: 5px 0!important;
   }
 }
 
