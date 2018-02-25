@@ -1,18 +1,12 @@
 @extends('template.index_no_nav') @push('stylesheets')
 <style type="text/css">
-
-
 </style>
 
 <!-- Page Scripts -->
 <script>
-  $(document).bind('keypress', function(e) {
-    if (e.keyCode == 13) {
-      $('#btnLogin').trigger('click');
-    }
-  });
-
   $(document).ready(function() {
+    $('#inpEmail').focus();
+
     // Form Validation
     $('#frmMain').validate({
       submit: {
@@ -71,7 +65,6 @@
 @endpush @section('title') Đăng nhập @endsection @section('content')
 <section class="page-content" style="margin:0">
   <div class="page-content-inner single-page-login-alpha" style="background-image:url(img/banner/7.png);">
-    <!-- Login Page -->
     <div class="single-page-block">
       <div class="">
         <div class="login-form-wrapper">
@@ -113,7 +106,7 @@
                 <div class="form-group">
                   <input id="inpPassword" class="form-control password" placeholder="Mật khẩu" name="password" type="password" data-validation="[L>=6]">
                 </div>
-                <a href="javascript: void(0);" class="pull-right link-blue" style="font-size: 12px">Quên mật khẩu?</a>
+<!--                <a href="javascript: void(0);" class="pull-right link-blue" style="font-size: 12px">Quên mật khẩu?</a>  -->
                 <br>
                 <div class="form-group" style="text-align: center; margin-top: 10px; margin-bottom: 0">
                   <button id="btnLogin" type="submit" class="btn btn-primary width-150">ĐĂNG NHẬP</button>
@@ -127,7 +120,6 @@
         </div>
       </div>
     </div>
-    <!-- End Login Page -->
   </div>
 </section>
 @endsection

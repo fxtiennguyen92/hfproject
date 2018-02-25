@@ -1,9 +1,5 @@
-@extends('template.index') @push('stylesheets')
-<script>
-  $(document).ready(function() {});
-
-</script>
-@endpush @section('title') @endsection @section('content')
+@extends('template.index') @push('stylesheets') @endpush
+@section('title') @endsection @section('content')
 <section class="page-content page-orders">
 
   <div class="page-content-inner">
@@ -14,7 +10,16 @@
           <div class="row order-row text-center">
             <img class="avt pro-avt" src="http://innovatik.payo-themes.com/wp-content/uploads/2017/11/lawn-team03.jpg" />
             <label class="order-user">{{ $order->pro->name }}</label>
-
+            <div>
+                <select class="rating" data-current-rating="{{ $order->pro_profile->rating }}">
+                  <option value=""></option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
           </div>
           <div class="row pro-des">
             <div class="order-address"><i class="material-icons">&#xE0C8;</i> {{ $order->address }}</div>
@@ -27,7 +32,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12 detail">
               <div class="row">
                 <div class="col-md-4">
-                  <span><i class="fa fa-map-marker" aria-hidden="true"></i> Địa chỉ:</span>
+                  <span>Địa chỉ:</span>
                 </div>
                 <div class="col-md-8">
                   <div class="under-line">{{ $order->address }}</div>
@@ -35,7 +40,7 @@
               </div>
               <div class="row">
                 <div class="col-md-4">
-                  <span><i class="fa fa-clock-o" aria-hidden="true"></i> Thời gian dự kiến:</span>
+                  <span>Thời gian dự kiến:</span>
                 </div>
                 <div class="col-md-8">
                   <div class="under-line">{{ $order->est_excute_at }}</div>
@@ -43,7 +48,7 @@
               </div>
               <div class="row">
                 <div class="col-md-4">
-                  <span><i class="fa fa-money" aria-hidden="true"></i> Tổng tiền:</span>
+                  <span>Tổng tiền:</span>
                 </div>
                 <div class="col-md-8">
                   <div class="under-line">{{ $order->total_price }}</div>
@@ -51,7 +56,7 @@
               </div>
             </div>
             <div class="col-md-12 col-sm-12 col-xs-12">
-              <div class="cui-wizard" start-step="2">
+              <div class="cui-wizard-order cui-wizard" start-step="2">
                 <h3><i class="material-icons cui-wizard--steps--icon">&#xE24D;</i> <span class="cui-wizard--steps--title">Đơn hàng</span></h3>
                 <h3><i class="material-icons cui-wizard--steps--icon">&#xE91F;</i> <span class="cui-wizard--steps--title">Báo giá</span></h3>
                 <h3><i class="material-icons cui-wizard--steps--icon">&#xE913;</i> <span class="cui-wizard--steps--title">Thực hiện</span></h3>

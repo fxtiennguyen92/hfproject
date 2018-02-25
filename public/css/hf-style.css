@@ -12,7 +12,7 @@ body.single-page {
 }
 
 .progress {
-  height: 15px;
+  height: 5px;
   margin: 0;
   overflow: hidden;
   background-color: #f5f5f5;
@@ -347,7 +347,6 @@ nav.top-menu .menu {
 
 .order-user {
   font-weight: bold;
-  margin-bottom: 35px;
 }
 
 .order-address,

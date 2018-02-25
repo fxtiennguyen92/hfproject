@@ -13,7 +13,6 @@
 
 Route::get('/', 'InitPageController@viewIndexPage')
 	->name('index_page');
-
 Route::get('/redirect', 'Auth\LoginController@redirectPath')
 	->name('redirect');
 
@@ -46,15 +45,15 @@ Route::get('/verify/{confirmCode}', 'Auth\RegisterController@verify')
 
 
 Route::middleware('auth')->group(function() {
-	Route::get('/home', 'InitPageController@viewHomePage')
+	Route::get('/trang-chu', 'InitPageController@viewHomePage')
 		->name('home_page');
 });
-/** Survey - Order - STA **/
-Route::get('/survey/{serviceId}', 'SurveyController@view')
-	->name('survey_page');
-Route::post('/order/details', 'SurveyController@submitOrderDetails')
+/** Service - Order - STA **/
+Route::get('/dich-vu/{serviceUrlName}', 'ServiceController@view')
+	->name('service_page');
+Route::post('/order/details', 'ServiceController@submitOrderDetails')
 	->name('submit_order_details');
-Route::get('/order/complete', 'SurveyController@complete')
+Route::get('/order/complete', 'ServiceController@complete')
 	->name('complete_order');
 Route::get('/orders', 'OrderController@viewList')
 	->name('order_list_page');
@@ -62,7 +61,7 @@ Route::get('/order/{orderId}', 'OrderController@view')
 	->name('order_page');
 Route::post('/order/{orderId}/{qpId}', 'OrderController@accept')
 	->name('accept_quoted_price');
-/** Survey - Order - END **/
+/** Service - Order - END **/
 
 /** Pro - STA **/
 Route::middleware('pro')->group(function() {

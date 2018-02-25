@@ -24,15 +24,16 @@
             url: url,
             data: $('#frmMain').serialize(),
             success: function(response) {
-              $.notify({
-                title: '<strong>Chúc mừng! </strong>',
-                message: 'Bạn đã chọn báo giá thành công.'
-              }, {
-                type: 'success',
-              });
-              setTimeout(function() {
-                location.href = "{{ route('order_list_page') }}";
-              }, 1500);
+                  swal({
+                    title: 'Chúc mừng',
+                    text: 'Bạn đã chọn được chuyên gia cho mình!',
+                    type: 'success',
+                    confirmButtonClass: 'btn-primary',
+                    confirmButtonText: 'Kết thúc',
+                  },
+                  function() {
+                    location.href = '{{ route("order_list_page") }}';
+                  });
             },
             error: function(xhr) {
               if (xhr.status == 400) {
@@ -94,9 +95,9 @@
                <img class="avt" src="http://innovatik.payo-themes.com/wp-content/uploads/2017/11/lawn-team03.jpg">
             </div>
             <div class="col-md-4 col-sm-4 col-sx-4">
-              <label class="pro-name">{{ $q->user->name }}</label>
+              <label class="pro-name">{{ $q->pro->name }}</label>
               <div>
-                <select class="rating" data-current-rating="{{ $q->pro->rating }}">
+                <select class="rating" data-current-rating="{{ $q->pro_profile->rating }}">
                   <option value=""></option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -107,7 +108,7 @@
               </div>
             </div>
             <div class="col-md-3 col-sm-3 col-sx-3 excute-date">
-              {{ $q->est_excute_at }}22/10/2018 11:18
+              {{ $q->est_excute_at_string }}
             </div>
             <div class="col-md-3 col-sm-3 col-sx-3 price">
               {{ $q->price }}

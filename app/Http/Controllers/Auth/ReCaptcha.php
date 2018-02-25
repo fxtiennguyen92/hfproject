@@ -6,7 +6,6 @@ class ReCaptcha {
 
 	private static $_signupUrl = "https://www.google.com/recaptcha/admin";
 	private static $_siteVerifyUrl = "https://www.google.com/recaptcha/api/siteverify?";
-	private $_secret = "6Ledl0UUAAAAAN00yzGGndJBP912y_wEx652KJwh";
 	private static $_version = "php_1.0";
 
 	/**
@@ -74,7 +73,7 @@ class ReCaptcha {
 		$getResponse = $this->_submitHttpGet(
 			self::$_siteVerifyUrl,
 			array (
-				'secret' => $this->_secret,
+				'secret' => env('CAPTCHA_SECRETKEY'),
 				'remoteip' => $remoteIp,
 				'v' => self::$_version,
 				'response' => $response

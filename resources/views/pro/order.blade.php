@@ -1,9 +1,5 @@
 @extends('template.index') @push('stylesheets')
 <style>
-  body {
-    background: #F4F3F0;
-  }
-
 </style>
 <script>
   $(document).ready(function() {
@@ -14,33 +10,58 @@
       'containerTag': 'div',
       'btnTag': 'span'
     });
-
+    $('.datetimepicker').datetimepicker({
+        minDate: moment(),
+        locale: moment.locale('vi'),
+        format: 'dddd, DD/MM/YYYY HH:ss',
+        showClose: true,
+        widgetPositioning: {
+          horizontal: 'auto',
+          vertical: 'top'
+        },
+        icons: {
+          time: 'fa fa-clock-o',
+          date: 'fa fa-calendar',
+          up: 'fa fa-chevron-up',
+          down: 'fa fa-chevron-down',
+          previous: 'fa fa-chevron-left',
+          next: 'fa fa-chevron-right',
+          today: 'fa fa-screenshot',
+          clear: 'fa fa-trash',
+          close: 'fa fa-check'
+        },
+    });
     @if($quotedPrice)
     $('input[name=price]').val('{{ $quotedPrice->price }}');
     @else
-    $('input[name=price]').val('0');
+    $('input[name=price]').val('10000');
     @endif
     $('.quoted-price').val(accounting.formatMoney($('input[name=price]').val()));
-  });
 
-  $('#frmMain').validate({
-    submit: {
-      callback: {
-        onSubmit: function() {
-          $.ajax({
-            type: 'POST',
-            url: '{{ route("quote_price") }}',
-            data: $('#frmMain').serialize(),
-            success: function(response) {
-              $.notify({
-                title: '<strong>Thành công! </strong>',
-                message: 'Bạn đã báo giá thành công.'
-              }, {
-                type: 'success',
-              });
-              setTimeout(function() {
-                location.href = "{{ route('pro_order_list_page') }}"
-              }, 1500);
+    $('#frmMain').validate({
+      submit: {
+        settings: {
+            inputContainer: '.form-group',
+            errorListClass: 'form-control-error',
+            errorClass: 'has-danger',
+        },
+        callback: {
+          onSubmit: function() {
+            $.ajax({
+              type: 'POST',
+              url: '{{ route("quote_price") }}',
+              data: $('#frmMain').serialize(),
+              success: function(response) {
+                  swal({
+                    title: 'Thành công',
+                    text: 'Hoàn tất báo giá, chờ khách hàng đồng ý !',
+                    type: 'success',
+                    confirmButtonClass: 'btn-primary',
+                    confirmButtonText: 'Kết thúc',
+                  },
+                  function() {
+                    location.href = '{{ route("pro_order_list_page") }}';
+                  });
             },
             error: function(xhr) {
               if (xhr.status == 400) {
@@ -60,18 +81,18 @@
               };
             }
           });
+          }
         }
       }
-    }
+    });
   });
-
 </script>
 
 @endpush @section('title') @endsection @section('content')
 <section class="page-content page-order">
-  <form class="order-form" id="frmMain" method="POST" action="{{ route('quote_price') }}">
-    <input name="inpPrice" class="quoted-price" value="10000" step="10000" min="10000" max="">
-    <input name="price" class="basic-quoted-price" value="0" type="hidden" />
+  <form class="order-form" id="frmMain" name="form-validation" method="POST" action="{{ route('quote_price') }}">
+    <input name="inpPrice" class="quoted-price" value="10000" step="5000" min="10000" max="">
+    <input name="price" class="basic-quoted-price" value="10000" type="hidden"/>
     <div class="order-item">
       <div class="row order-row">
         <div class="col-md-3 col-sm-4 col-sx-4">
@@ -82,8 +103,13 @@
           <div class="order-address"><i class="material-icons">&#xE0C8;</i> {{ $order->address }}</div>
           <div class="order-state">
             @if ($order->est_excute_at_string)
-            <span class="order-time state-est-time"><i class="material-icons">&#xE855;</i> {{ $order->est_excute_at_string }}</span> @else
-            <span class="order-time state-now"><i class="material-icons">&#xE3E7;</i> Ngay lập tức</span> @endif
+            <span class="order-time state-est-time"><i class="material-icons">&#xE855;</i> {{ $order->est_excute_at_string }}</span>
+            @else
+            <span class="order-time state-now"><i class="material-icons">&#xE855;</i></span>
+            <input class="datetimepicker" type="text"
+                placeholder="Chưa xác định thời gian"
+                name="estTime" data-validation="[NOTEMPTY]">
+            @endif
           </div>
         </div>
         <div class="row">

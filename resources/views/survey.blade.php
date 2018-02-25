@@ -1,9 +1,8 @@
 @extends('template.index') @push('stylesheets')
-<link rel="stylesheet" type="text/css" href="css/survey.css">
 <!-- Page Scripts -->
 <script>
   $(document).ready(function() {
-    $('body').addClass('survey-page')
+    $('body').addClass('survey-page');
     $('#surveyList').steps({
       headerTag: 'h3',
       bodyTag: 'section',
@@ -24,7 +23,7 @@
             .attr('name');
           if ($('input[name="' + name + '"]:checked').length == 0) {
             $.notify({
-              message: 'Hãy trả lời câu hỏi bên dưới.'
+              message: 'Hãy chọn một nội dung bên dưới.'
             }, {
               type: 'danger',
             });
@@ -36,7 +35,7 @@
             .find('input.input-other');
           if ($.trim(inpOther.val()) == '' && inpOther.parent().hasClass('active')) {
             $.notify({
-              message: 'Chưa điền thông tin vào câu trả lời.'
+              message: 'Vui lòng cung cấp thông tin.'
             }, {
               type: 'danger',
             });
@@ -47,8 +46,10 @@
 
         return validReturn;
       },
-      onStepChanged: function() {
-        //fixScreen();
+      onStepChanged: function(e, currentIndex, priorIndex) {
+        var total = {{ sizeof($questions) }};
+        var percent = (currentIndex) / total * 100;
+        $('.progress-bar').css('width', percent + '%');
       },
     });
     $('label').on('click', function() {
@@ -73,6 +74,7 @@
     $('a[href=#finish]').on('click', function() {
       $('#positionAndTime').show();
       $('#surveyList').hide();
+      $('.progress-bar').css('width', '100%');
     });
     $('#btnBack').on('click', function() {
       $('#positionAndTime').hide();
@@ -99,20 +101,25 @@
         close: 'fa fa-check'
       },
     });
-    $('#ddCity').on('change', function() {
-      $('#ddDist').children('option').remove();
+    $('.ddCity').on('change', function() {
+      if ($(this).val() == '') {
+        return false;
+      }
+
+      var ddDist = $('select.ddDist');
+      ddDist.children('option').remove();
 
       var url = '{{ route("get_dist_by_city", ["code" => "cityCode"]) }}';
       url = url.replace('cityCode', $(this).val());
       $.ajax({
         url: url,
-        success: function(data) {
+        success: function (data) {
           $.each(data, function(key, value) {
-            $('#ddDist').append($('<option></option>')
-              .attr('value', value.code)
-              .text(value.name));
+            ddDist.append($('<option></option>')
+                .attr('value', value.code)
+                .text(value.name));
           });
-          $('#ddDist').focus();
+          ddDist.selectpicker('refresh');
         }
       });
     });
@@ -130,7 +137,16 @@
               url: '{{ route("submit_order_details") }}',
               data: $('#frmMain').serialize(),
               success: function(response) {
-                location.href = '{{ route("complete_order") }}';
+                swal({
+                  title: 'Thành công',
+                  text: 'Hoàn tất đơn hàng, vui lòng chờ báo giá !',
+                  type: 'success',
+                  confirmButtonClass: 'btn-primary',
+                  confirmButtonText: 'Tiếp tục',
+                },
+                function() {
+                  location.href = '{{ route("order_list_page") }}';
+                });
               },
               error: function(xhr) {
                 if (xhr.status == 400) {
@@ -141,7 +157,6 @@
                     type: 'danger',
                     z_index: 1051,
                   });
-
                   setTimeout(function() {
                     location.reload();
                   }, 1500);
@@ -150,7 +165,7 @@
                 } else {
                   $.notify({
                     title: '<strong>Thất bại! </strong>',
-                    message: 'Không thể thực hiện đăng tin.'
+                    message: 'Không thể thực hiện đặt đơn hàng.'
                   }, {
                     type: 'danger',
                     z_index: 1051,
@@ -168,19 +183,15 @@
     });
   });
 
-  //  function fixScreen() { // if ($('.content').outerHeight() > 490) { // $('.page-content').css('position', 'relative'); // $('.actions').css('position', 'absolute'); // $('.actions').css('bottom', '0px'); // $('.page-content').css('height', '100vh'); // } else { // $('.page-content').css('position', 'fixed'); // $('.page-content').css('height', '86vh'); // $('.page-content').css('bottom', '0px'); // $('.actions').css('position', 'fixed'); // } // };
-
 </script>
-@endpush @section('title') Thông Tin Sự Cố @endsection @section('content')
+@endpush @section('title') Thông tin đơn hàng @endsection @section('content')
 <section class="page-content">
   <form id="frmMain" class="survey-form" name="form-validation" method="post" enctype="multipart/form-data" action="{{ route('submit_order_details') }}">
     <div class="progress">
-      <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%">
-        70%
-      </div>
+      <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:10%"></div>
     </div>
     <div class="service-title">
-      Dịch vụ sửa điện
+      {{ $service->name }}
     </div>
     <div id="surveyList" class="cui-wizard cui-wizard__numbers">
       @foreach ($questions as $q)
@@ -192,40 +203,40 @@
         <div class="answer">
           @if ($q->answer_type == '0')
           <div>
-            <textarea style="margin:0;background:#fafafa;padding:10px;" class="no-newlines form-control" name="q[{{ $q->id }}]" rows="4" maxlength="100" placeholder="Nhập văn bản"></textarea>
+            <textarea style="margin:0;background:#fafafa;padding:10px;" class="no-newlines form-control" name="q[{{ $q->id }}]" rows="6" maxlength="100" placeholder="Ghi chú"></textarea>
           </div>
           @elseif ($q->answer_type == '1')
           <div data-toggle="buttons">
             @foreach ($q->answers as $a) @if ($a->init_flg == 2)
             <label class="label-other btn">
-							<input type="checkbox"
-									name="q[{{ $q->id }}][]"
-									value="{{ $a->order_dsp }}">
-							<span class="icon icmn-checkbox-unchecked2"></span>
-							
-							<input class="input-other" type="text"
-									placeholder="{{ $a->content }}"
-									name="{{ $q->id.'_'.$a->order_dsp }}_text"
-									value="">
-						</label> @else
+              <input type="checkbox"
+                  name="q[{{ $q->id }}][]"
+                  value="{{ $a->order_dsp }}">
+              <span class="icon icmn-checkbox-unchecked2"></span>
+              
+              <input class="input-other" type="text"
+                  placeholder="{{ $a->content }}"
+                  name="{{ $q->id.'_'.$a->order_dsp }}_text"
+                  value="">
+            </label> @else
             <label class="btn">
-							<input type="checkbox"
-									name="q[{{ $q->id }}][]"
-									value="{{ $a->order_dsp }}">
-							<span class="icon icmn-checkbox-unchecked2"></span>
-								{{ $a->content }}
-						</label> @endif @endforeach
+              <input type="checkbox"
+                  name="q[{{ $q->id }}][]"
+                  value="{{ $a->order_dsp }}">
+              <span class="icon icmn-checkbox-unchecked2"></span>
+                {{ $a->content }}
+            </label> @endif @endforeach
           </div>
           @elseif ($q->answer_type == '2')
           <div class="btn-group" data-toggle="buttons">
             @foreach ($q->answers as $a)
             <label class="btn">
-							<input type="radio"
-									name="q[{{ $q->id }}]"
-									value="{{ $a->order_dsp }}">
-							<span class="icon icmn-radio-unchecked"></span>
-								{{ $a->content }}
-						</label> @endforeach
+              <input type="radio"
+                  name="q[{{ $q->id }}]"
+                  value="{{ $a->order_dsp }}">
+              <span class="icon icmn-radio-unchecked"></span>
+                {{ $a->content }}
+            </label> @endforeach
           </div>
           @endif
         </div>
@@ -240,26 +251,27 @@
         </div>
         <div class="address-wrapper">
           <div class="row row-address">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-              <select id="ddCity" class="form-control" name="city">
-                      <option value="" selected disabled>Thành phố / Tỉnh</option>
-                      @foreach ($cities as $city)
-                          <option value="{{ $city->code }}">{{ $city->name }}</option>
-                      @endforeach
-                  </select>
+            <div class="row row-address">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <input type="text" class="form-control" placeholder="Địa chỉ" name="address" data-validation="[NOTEMPTY]">
+              </div>
             </div>
             <div class="col-md-6 col-sm-6 col-xs-6" style="padding-left: 5px;">
-              <select id="ddDist" class="form-control" name="dist" data-validation-message="Chưa chọn Quận / Huyện" data-validation="[NOTEMPTY]">
-                      <option value="" selected>Quận / Huyện</option>
-                  </select>
+              <select class="form-control selectpicker ddDist hf-select" data-live-search="true" name="dist" data-validation="[NOTEMPTY]">
+                @foreach($districts as $dist)
+                <option value="{{ $dist->code }}">{{ $dist->name }}</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+              <select class="form-control selectpicker ddCity hf-select" data-live-search="true" name="city" data-validation="[NOTEMPTY]">
+                @foreach($cities as $city)
+                <option value="{{ $city->code }}">{{ $city->name }}</option>
+                @endforeach
+              </select>
             </div>
           </div>
-          <div class="row row-address">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-              <input type="text" class="form-control" placeholder="Địa chỉ" name="address" data-validation-message="Chưa nhập Địa chỉ" data-validation="[NOTEMPTY]">
-            </div>
-          </div>
-
+          
         </div>
         <div class="question">
           Thời gian
@@ -286,7 +298,7 @@
       </div>
       <div class="row-complete clearfix">
         <button id="btnBack" type="button" class="btn">Quay lại</button>
-        <button id="btnSubmit" type="submit" class="btn btn-primary">Tìm Chuyên gia</button>
+        <button id="btnSubmit" type="submit" class="btn btn-primary">Hoàn tất</button>
         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
       </div>
     </div>

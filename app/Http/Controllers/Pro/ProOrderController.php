@@ -9,6 +9,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Http\Request;
 use App\QuotedPrice;
 use App\User;
+use App\Http\Controllers\CommonController;
 
 class ProOrderController extends Controller
 {
@@ -20,7 +21,6 @@ class ProOrderController extends Controller
 	public function viewList($style = null) {
 		$orderModel = new Order();
 		$quotedPriceModel = new QuotedPrice();
-		//$orders = $order->getByPro(auth()->user()->id);
 		$newOrders = $orderModel->getNewByPro(auth()->user()->id);
 		$quotedOrders = $quotedPriceModel->getNewByPro(auth()->user()->id);
 		
@@ -36,15 +36,13 @@ class ProOrderController extends Controller
 		if (!$order) {
 			throw new NotFoundHttpException();
 		}
-		// avatar of customer
-		$order->user_avatar = User::getAvatar($order->user_id)->avatar;
 		
 		// put orderId to session
-		$request->session()->put('quoted_order', $orderId);
+		$request->session()->put('order', $orderId);
 		
 		// get qouted price
 		$quotedPrice = new QuotedPrice();
-		$quotedPrice = $quotedPrice->getById($orderId.'#'.auth()->user()->id);
+		$quotedPrice = $quotedPrice->getById($orderId.'-'.auth()->user()->id);
 		
 		return view(Config::get('constants.PRO_ORDER_PAGE'), array(
 						'order' => $order,
@@ -53,23 +51,36 @@ class ProOrderController extends Controller
 	}
 
 	public function quotePrice(Request $request) {
-		// session
-		if (!$request->session()->has('quoted_order')) {
+		// get orderId from session
+		if (!$request->session()->has('order')) {
 			response()->json('', 400);
 		}
-		
-		// TODO check state of order - ERROR 417
-		
 		$orderId = $request->session()->get('quoted_order');
 		
+		$orderModel = new Order();
+		$order = $orderModel->getById($orderId);
+		
+		$estDate = null;
+		$estDateStr = null;
+		if (!$order->est_excute_at_string) {
+			$date = CommonController::convertStringToDateTime(substr($request->estTime, -16));
+			if ($date) {
+				$estDate = $date;
+				$estDateStr = $request->estTime;
+			}
+		}
+		
 		QuotedPrice::updateOrCreate([
-						'qp_id' => $orderId.'#'.auth()->user()->id
+						'qp_id' => $orderId.'-'.auth()->user()->id
 		],[
 						'order_id' => $orderId,
 						'pro_id' => auth()->user()->id,
-						'price' => $request->price
+						'price' => $request->price,
+						'est_excute_at' => $estDate,
+						'est_excute_at_string' => $estDateStr,
 		]);
 		
 		response()->json('', 200);
 	}
+	
 }

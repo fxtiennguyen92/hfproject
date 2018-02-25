@@ -1,16 +1,9 @@
 @extends('template.index_no_nav') @push('stylesheets')
 <script src='https://www.google.com/recaptcha/api.js?hl=vi'></script>
 <style>
-
-
 </style>
-<script>
-  $(document).bind('keypress', function(e) {
-    if (e.keyCode == 13) {
-      $('#btnSignup').trigger('click');
-    }
-  });
 
+<script>
   $(document).ready(function() {
     // Form Validation
     $('#frmMain').validate({
@@ -43,6 +36,13 @@
                   $.notify({
                     title: '<strong>Thất bại! </strong>',
                     message: 'Email hoặc số điện thoại đã được sử dụng.'
+                  }, {
+                    type: 'danger'
+                  });
+                } else if (xhr.status == 400) {
+                  $.notify({
+                    title: '<strong>Thất bại! </strong>',
+                    message: 'CAPTCHA chưa xác nhận hoặc không đúng.'
                   }, {
                     type: 'danger'
                   });
@@ -122,7 +122,7 @@
                   <input id="inpPassword" class="form-control password" placeholder="Mật khẩu" name="password" type="password" data-validation="[L>=6]">
                 </div>
                 <div class="form-group" style="text-align: center; margin-bottom: 0">
-                  <div class="g-recaptcha" data-sitekey="6Ledl0UUAAAAAOontOsbnoz7lEF2zkMwMtowlC33"></div>
+                  <div class="g-recaptcha" data-sitekey="{{ env('CAPTCHA_SITEKEY') }}"></div>
                   <button type="submit" class="btn btn-primary width-200" style="margin-bottom: 10px; margin-top: 10px;">ĐĂNG KÝ</button>
                   <br>
                   <a href="{{ route('login_page') }}" type="button" class="btn btn-link" style="color: #02B3E4 !important; margin-top: -10px;">Đã có tài khoản, Đăng nhập!</a>

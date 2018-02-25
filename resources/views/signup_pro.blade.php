@@ -214,13 +214,13 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Hộ khẩu</label>
-								<input type="text" maxlength="150" class="form-control" name="familyRegAddress" data-validation-message="Chưa nhập thông tin này" data-validation="[NOTEMPTY]">
+								<input type="text" maxlength="150" class="form-control" name="familyRegAddress" data-validation="[NOTEMPTY]">
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
 								<label>Quận/Huyện</label>
-								<select class="form-control selectpicker ddDist hf-select" data-live-search="true" name="familyRegDist" data-validation-message="Chưa nhập thông tin này" data-validation="[NOTEMPTY]">
+								<select class="form-control selectpicker ddDist hf-select" data-live-search="true" name="familyRegDist" data-validation="[NOTEMPTY]">
 									@foreach($districts as $dist)
 									<option value="{{ $dist->code }}">{{ $dist->name }}</option>
 									@endforeach
@@ -230,7 +230,7 @@
 						<div class="col-md-3">
 							<div class="form-group">
 								<label>Thành phố/Tỉnh</label>
-								<select class="form-control selectpicker ddCity hf-select" data-live-search="true" name="familyRegCity" data-validation-message="Chưa nhập thông tin này" data-validation="[NOTEMPTY]">
+								<select class="form-control selectpicker ddCity hf-select" data-live-search="true" name="familyRegCity" data-validation="[NOTEMPTY]">
 									@foreach($cities as $city)
 									<option value="{{ $city->code }}">{{ $city->name }}</option>
 									@endforeach

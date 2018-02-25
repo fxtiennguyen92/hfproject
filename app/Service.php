@@ -15,6 +15,13 @@ class Service extends Model
 			->first();
 	}
 	
+	public function getByIdOrUrlName($string) {
+		return $this->where('id', $string)
+			->orWhere('url_name', $string)
+			->available()
+			->first();
+	}
+	
 	public function getAll() {
 		return $this->available()->get();
 	}

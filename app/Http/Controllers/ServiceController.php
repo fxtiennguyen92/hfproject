@@ -9,31 +9,47 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Http\Request;
 use App\Order;
 use App\Common;
+use App\Service;
 
-class SurveyController extends Controller
+class ServiceController extends Controller
 {
-	public function view($serviceId, Request $request) {
+	public function view($serviceUrlName, Request $request) {
+		// redirect to login page if not member
+		if (!auth()->check()) {
+			return redirect()->route('login_page');
+		}
+		
+		
 		$surveyModel = new Survey();
 		$commonModel = new Common();
+		$serviceModel = new Service();
 		
-		$questions = $surveyModel->getByService($serviceId);
-		if (!count($questions)) {
+		$service = $serviceModel->getByIdOrUrlName($serviceUrlName);
+		
+		$questions = $surveyModel->getByService($service->id);
+		if (sizeof($questions) == 0) {
 			throw new NotFoundHttpException();
 		}
 		
 		$cities = $commonModel->getCityList();
+		$districts = null;
+		if ($cities) {
+			$districts = $commonModel->getDistList($cities->first()->code);
+		}
 		
 		// put service to session
-		$request->session()->put('service', $serviceId);
+		$request->session()->put('service', $service->id);
 		
 		return view(Config::get('constants.SURVEY_PAGE'), array(
+				'service' => $service,
 				'questions' => $questions,
 				'cities' => $cities,
+				'districts' => $districts,
 		));
 	}
 
 	public function submitOrderDetails(Request $request) {
-		// session
+		// get service from session
 		if (!$request->session()->has('service')) {
 			response()->json('', 400);
 		}
@@ -109,25 +125,4 @@ class SurveyController extends Controller
 		$order->save();
 		response()->json('', 200);
 	}
-	
-	public function complete() {
-		return view(Config::get('constants.COMPLETE_PAGE'));
-	}
-// 	public function getLocation(Request $request) {
-// 		$latitude = trim($request->latitude);
-// 		$longitude = trim($request->longitude);
-		
-// 		$url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng='.$latitude.','.$longitude.'&sensor=false';
-// 		$json = @file_get_contents($url);
-// 		$data = json_decode($json);
-// 		$status = $data->status;
-// 		if ($status == 'OK'){
-// 			//Get address from json data
-// 			$location = $data->results[0]->formatted_address;
-// 		} else {
-// 			$location =  '';
-// 		}
-// 		//Print address
-// 		echo $location;
-// 	}
 }

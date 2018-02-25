@@ -11,7 +11,7 @@ class QuotedPrice extends Model
 	protected $table = 'quoted_prices';
 	
 	protected $fillable = [
-		'qp_id', 'order_id', 'pro_id', 'price'
+		'qp_id', 'order_id', 'pro_id', 'price', 'est_excute_at', 'est_excute_at_string',
 	];
 	
 	public function getById($id) {
@@ -19,7 +19,7 @@ class QuotedPrice extends Model
 	}
 
 	public function getByOrder($id) {
-		return $this::with('pro', 'user')
+		return $this::with('pro', 'pro_profile')
 			->where('order_id', $id)
 			->get();
 	}
@@ -47,11 +47,11 @@ class QuotedPrice extends Model
 		return $this->hasOne('App\Order', 'id', 'order_id');
 	}
 	
-	public function pro() {
+	public function pro_profile() {
 		return $this->hasOne('App\ProProfile', 'id', 'pro_id');
 	}
 	
-	public function user() {
+	public function pro() {
 		return $this->hasOne('App\User', 'id', 'pro_id');
 	}
 	

@@ -11,7 +11,7 @@ class Order extends Model
 	protected $table = 'orders';
 
 	public function getById($id) {
-		$order = $this->where('id', $id)->first();
+		$order = $this::with('user')->where('id', $id)->first();
 		if ($order) {
 			$common = new Common();
 			$order->city_string = $common->getByCode($order->city)->name;
@@ -84,6 +84,10 @@ class Order extends Model
 		return $this->hasOne('App\Service', 'id', 'service_id');
 	}
 
+	public function user() {
+		return $this->hasOne('App\User', 'id', 'user_id');
+	}
+
 	public function pro() {
 		return $this->hasOne('App\User', 'id', 'pro_id');
 	}
@@ -93,7 +97,7 @@ class Order extends Model
 	}
 
 	public function scopeNew($query) {
-		return $query->where('state', Config::get('constants.ORD_NEW'));
+		return $query->where('state', Config::get('constants.ORD_NEW'))->orderBy('created_at', 'desc');
 	}
 
 	public function scopeProcessing($query) {
