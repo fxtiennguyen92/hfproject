@@ -51,16 +51,18 @@ Route::middleware('auth')->group(function() {
 /** Service - Order - STA **/
 Route::get('/dich-vu/{serviceUrlName}', 'ServiceController@view')
 	->name('service_page');
-Route::post('/order/details', 'ServiceController@submitOrderDetails')
-	->name('submit_order_details');
+Route::post('/order/details', 'ServiceController@submitOrder')
+	->name('submit_order');
 Route::get('/order/complete', 'ServiceController@complete')
 	->name('complete_order');
 Route::get('/orders', 'OrderController@viewList')
 	->name('order_list_page');
 Route::get('/order/{orderId}', 'OrderController@view')
 	->name('order_page');
-Route::post('/order/{orderId}/{qpId}', 'OrderController@accept')
+Route::post('/order/qprice/{qpId}', 'OrderController@accept')
 	->name('accept_quoted_price');
+Route::post('/order/{orderId}/cancel', 'OrderController@cancel')
+	->name('cancel_order');
 /** Service - Order - END **/
 
 /** Pro - STA **/

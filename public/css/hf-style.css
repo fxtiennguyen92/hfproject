@@ -349,19 +349,27 @@ nav.top-menu .menu {
   font-weight: bold;
 }
 
+.order-service {
+  font-weight: bold;
+}
+
 .order-address,
 .order-address i,
 .order-time,
 .order-time i,
 .order-quoted-price,
-.order-quoted-price i,
-.order-cancel,
-.order-cancel i {
+.order-quoted-price i {
   font-size: 14px;
   vertical-align: bottom;
   line-height: 14px;
 }
-
+.order-cancel,
+.order-cancel i {
+  font-size: 12px;
+  vertical-align: bottom;
+  line-height: 12px;
+  text-align: right;
+}
 .order-address {
   white-space: nowrap;
   width: 100%;
@@ -378,7 +386,7 @@ nav.top-menu .menu {
 }
 
 .state-now .material-icons {
-  line-height: 26px;
+  line-height: 14px;
 }
 
 .order-req {
@@ -398,12 +406,20 @@ nav.top-menu .menu {
   color: #969696;
 }
 
+.order-quoted-date {
+  font-size: 9px;
+  text-align: left;
+  padding-left: 20px;
+  color: #969696;
+}
+
 .order-quoted-price {
   color: #f39834;
 }
 
 .order-quoted-price .quoted {
   color: #d9534f;
+  font-weight: bold;
 }
 
 .order-cancel a {
@@ -417,16 +433,17 @@ nav.top-menu .menu {
 .badge[data-badge]:after {
   content: attr(data-badge);
   position: absolute;
-  top: 0px;
-  right: -10px;
+  top: -9px;
+  right: 3px;
   font-size: .7em;
   background: #d9534f;
   color: #fff;
   width: 18px;
   height: 18px;
   text-align: center;
-  line-height: 18px;
+  line-height: 16px;
   border-radius: 50%;
+  border: 1px solid #fff;
 }
 
 .qprice-item {
@@ -446,11 +463,13 @@ nav.top-menu .menu {
 
 .qprice-item .pro-name {
   font-size: 15px;
+  font-weight: bold;
 }
 
 .qprice-item .excute-date {
   text-align: center;
   color: #01a8fe;
+  font-size: 14px;
 }
 
 .qprice-item .price {
@@ -1059,7 +1078,19 @@ body.single-page .single-page-block .single-page-block-inner {
   font-size: 13px;
   -webkit-box-shadow: -1px 3px 10px #55555540;
   box-shadow: -1px 3px 10px #55555540;
-  text-transform: uppercase;
+}
+
+.order-item .top-btn-quoted-order {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px 20px 5px 10px;
+  background: #01a8fe;
+  color: #fff;
+  border-bottom-left-radius: 15px;
+  font-size: 13px;
+  -webkit-box-shadow: -1px 3px 10px #55555540;
+  box-shadow: -1px 3px 10px #55555540;
 }
 
 
@@ -1095,6 +1126,16 @@ body.single-page .single-page-block .single-page-block-inner {
 
 .order-state input.datetimepicker {
   border: none;
+  font-size: 14px;
+  width: 80%;
+  color: #f39834;
+  outline: none;
+  line-height: 15px;
+  vertical-align: bottom;
+}
+.order-state input.datetimepicker::placeholder {
+    color: #f39834;
+    opacity: 1;
 }
 
 .order-info {
@@ -1114,6 +1155,15 @@ body.single-page .single-page-block .single-page-block-inner {
 .service-info {
   padding: 20px;
   border-bottom: solid 1px #fafafa;
+}
+
+.common-text {
+  width: 100%;
+  font-size: 13px;
+  padding: 10px;
+  text-align: center;
+  margin: 10px 0;
+  background: #fafafa;
 }
 
 /*

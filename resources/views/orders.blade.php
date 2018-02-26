@@ -1,6 +1,47 @@
-@extends('template.index') @push('stylesheets') @endpush @section('title') @endsection @section('content')
-<section class="page-content page-orders">
+@extends('template.index') @push('stylesheets')
+<script>
 
+function cancel(orderId) {
+    swal({
+        title: 'Hủy đơn hàng',
+        text: 'Bạn muốn hủy đơn hàng này',
+        type: 'warning',
+        showCancelButton: true,
+        cancelButtonClass: 'btn-default',
+        cancelButtonText: 'Quay lại',
+        confirmButtonClass: 'btn-danger',
+        confirmButtonText: 'Hủy',
+    },
+    function() {
+      var url = "{{ route('cancel_order', ['orderId' => 'cancelOrderId']) }}";
+      url = url.replace('cancelOrderId', orderId);
+      
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data: $('#frmMain').serialize(),
+        success: function(response) {
+            location.href = '{{ route("order_list_page") }}';
+        },
+        error: function(xhr) {
+            $.notify({
+              title: '<strong>Thất bại! </strong>',
+              message: 'Có lỗi phát sinh, xin thử lại.'
+            }, {
+              type: 'danger',
+            });
+            setTimeout(function() {
+              location.reload();
+            }, 2500);
+        }
+      });
+    });
+}
+</script>
+@endpush
+@section('title') Đơn hàng @endsection
+@section('content')
+<section class="page-content page-orders">
   <div class="page-content-inner">
     @foreach ($processingOrders as $order)
     <div class="col-md-12 col-sm-12 col-xs-12 order-item-wrapper pro-order">
@@ -71,7 +112,6 @@
 
   <div class="page-content-inner">
     <div class="hf-wrapper">
-
       <div class="orders col-md-12 col-sm-12 col-xs-12">
         <div class="margin-bottom-50">
           <div class="nav-tabs-horizontal">
@@ -82,19 +122,28 @@
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="tabNew" role="tabpanel">
+                @if (sizeof($newOrders) == 0)
+                <div class="common-text">Không có đơn hàng nào</div>
+                @endif
+
                 @foreach ($newOrders as $order)
                 <div class="col-md-4 col-sm-6 order-item-wrapper">
                   <div class="order-item">
+                    @if ($order->quoted_price_count == 0)
                     <div class="top-btn-order">
-                      Báo giá ngay
+                      Chờ báo giá
                     </div>
+                    @else
+                    <div class="top-btn-quoted-order badge" data-badge="{{ $order->quoted_price_count }}">
+                      Có báo giá
+                    </div>
+                    @endif
                     <div class="row order-row" onclick="location.href='{{ route('order_page', ['orderId' => $order->id]) }}'">
                       <div class="col-md-3 col-sm-4">
                         <img class="avt" src="img/service/{{ $order->service_id }}.svg" />
                       </div>
                       <div class="col-md-9 col-sm-8">
-
-                        <label class="order-user">{{ $order->service->name }}</label>
+                        <label class="order-service">{{ $order->service->name }}</label>
                         <div class="order-address"><i class="material-icons">&#xE0C8;</i> {{ $order->address }}</div>
                         <div class="order-state">
                           @if ($order->est_excute_at_string)
@@ -102,7 +151,6 @@
                           <span class="order-time state-now"><i class="material-icons">&#xE3E7;</i> Ngay lập tức</span> @endif
                         </div>
                       </div>
-
                     </div>
                     <div class="row">
                       <div class="order-req col-md-12 col-sm-12 col-xs-12">
@@ -112,13 +160,10 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-8 col-sm-8 col-xs-8 order-quoted-price">
-                        @if ($order->quoted_price_count > 0)
-                        <span class="quoted"><i class="material-icons">&#xE91F;</i> Đang có {{ $order->quoted_price_count }} báo giá</span> @else
-                        <span><i class="material-icons">&#xE91F;</i> Chưa có báo giá</span> @endif
+                      <div class="col-md-8 col-sm-8 col-xs-8">
                       </div>
                       <div class="col-md-4 col-sm-4 col-xs-4 order-cancel">
-                        <a><i class="material-icons">&#xE14C;</i> Hủy đơn</a>
+                        <a href="javascript: void(0);" onclick="cancel({{ $order->id }})"><i class="material-icons">&#xE14C;</i> Hủy</a>
                       </div>
                     </div>
                   </div>
@@ -131,5 +176,8 @@
       </div>
     </div>
   </div>
+  <form id="frmMain" method="POST">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+  </form>
 </section>
 @endsection

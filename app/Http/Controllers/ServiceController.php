@@ -19,7 +19,6 @@ class ServiceController extends Controller
 			return redirect()->route('login_page');
 		}
 		
-		
 		$surveyModel = new Survey();
 		$commonModel = new Common();
 		$serviceModel = new Service();
@@ -48,7 +47,7 @@ class ServiceController extends Controller
 		));
 	}
 
-	public function submitOrderDetails(Request $request) {
+	public function submitOrder(Request $request) {
 		// get service from session
 		if (!$request->session()->has('service')) {
 			response()->json('', 400);

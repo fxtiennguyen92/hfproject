@@ -10,13 +10,15 @@
       $('.modal-pro-name').html($(this).find('.pro-name').html());
       $('.modal-rating').barrating('set', $(this).find('.rating').attr('data-current-rating'));
       $('.modal-price').html($(this).find('.price').html());
-      $('#qpriceId').val($(this).find('.qprice-id').val());
+      $('#qpriceId').val($(this).attr('qprice-id'));
 
       $('#detailModal').modal('show');
     });
 
     $('#btnAccept').on('click', function() {
-      var url = "{{ route('accept_quoted_price', ['orderId' => $order->id, 'qpId' => 'quotedPriceId']) }}";
+      $('#detailModal').modal('hide');
+    
+      var url = "{{ route('accept_quoted_price', ['qpId' => 'quotedPriceId']) }}";
       url = url.replace('quotedPriceId', $('#qpriceId').val());
 
       $.ajax({
@@ -45,7 +47,7 @@
             });
             setTimeout(function() {
               location.reload();
-            }, 1500);
+            }, 2500);
           };
         }
       });
@@ -87,36 +89,41 @@
         <div class="nav-tabs-horizontal">
           <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active badge" href="javascript: void(0);" data-toggle="tab" data-target="#tabQPrice" role="tab" data-badge="{{ sizeof($order->quoted_price) }}">
+              <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#tabQPrice" role="tab">
                Danh sách báo giá</a>
             </li>
           </ul>
         </div>
-        @foreach ($order->quoted_price as $q)
-        <div class="qprice-item flex ">
-          <div class="col-md-4 col-sm-4 text-center">
-            <div class="row">
-              <div class="col-md-6 col-sm-6">
-                <img class="avt" src="http://innovatik.payo-themes.com/wp-content/uploads/2017/11/lawn-team03.jpg">
 
+        @if (sizeof($order->quoted_price) == 0)
+        <div class="common-text">Không có báo giá nào</div>
+        @endif
+
+        @foreach ($order->quoted_price as $q)
+        <div class="qprice-item flex" qprice-id="{{ $q->qp_id }}">
+          <div class="col-md-5 col-sm-5 text-center">
+            <div class="row">
+              <div class="col-md-4 col-sm-4">
+                <img class="pro-avt avt" src="http://innovatik.payo-themes.com/wp-content/uploads/2017/11/lawn-team03.jpg">
               </div>
-              <div class="col-md-6 col-sm-6">
+              <div class="col-md-7 col-sm-7 text-left">
                 <label class="pro-name margin-top-10">{{ $q->pro->name }}</label>
                 <div>
                   <select class="rating" data-current-rating="{{ $q->pro_profile->rating }}">
-                  <option value=""></option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                </select>
+                    <option value=""></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
                 </div>
               </div>
             </div>
           </div>
-          <div class="col-md-4 col-sm-4 excute-date">
-            {{ $q->est_excute_at_string }}
+          <div class="col-md-4 col-sm-4 excute-date text-right">
+            @if ($q->est_excute_at_string) {{ $q->est_excute_at_string }}
+            @else {{ $order->est_excute_at_string }} @endif
           </div>
           <div class="col-md-3 col-sm-3 price">
             {{ $q->price }}

@@ -1,4 +1,14 @@
-@extends('template.index') @push('stylesheets') @endpush @section('title') @endsection @section('content')
+@extends('template.index') @push('stylesheets')
+<script>
+  $(document).ready(function() {
+    $('.price').each(function() {
+      $(this).html(accounting.formatMoney($(this).html()));
+    });
+  });
+</script>
+@endpush
+@section('title') Danh sách đơn hàng @endsection
+@section('content')
 <section class="page-content page-orders">
   <div class="page-content-inner">
     <div class="orders col-md-12 col-sm-12 col-sx-12">
@@ -14,6 +24,10 @@
           </ul>
           <div class="tab-content">
             <div class="tab-pane active" id="tabNew" role="tabpanel">
+              @if (sizeof($newOrders) == 0)
+              <div class="common-text">Chưa có đơn hàng nào</div>
+              @endif
+              
               @foreach ($newOrders as $order)
               <div class="col-md-6 col-sm-6 order-item-wrapper">
                 <div class="order-item">
@@ -49,10 +63,14 @@
               @endforeach
             </div>
             <div class="tab-pane" id="tabQuoted" role="tabpanel">
+              @if (sizeof($quotedOrders) == 0)
+              <div class="common-text">Không có báo giá nào</div>
+              @endif
+              
               @foreach ($quotedOrders as $q) @php $order = $q->order @endphp
               <div class="col-md-6 col-sm-6 order-item-wrapper">
                 <div class="order-item">
-                  <div class="row order-row" onclick="location.href='{{ route('pro_order_page', ['orderId' => $order->id]) }}'">
+                  <div class="row order-row">
                     <div class="col-md-3 col-sm-4 col-sx-4">
                       <img class="avt" src="http://innovatik.payo-themes.com/wp-content/uploads/2017/11/lawn-team03.jpg" />
                     </div>
@@ -62,21 +80,24 @@
                       <div class="order-state">
                         @if ($order->est_excute_at_string)
                         <span class="order-time state-est-time"><i class="material-icons">&#xE855;</i> {{ $order->est_excute_at_string }}</span> @else
-                        <span class="order-time state-now"><i class="material-icons">&#xE3E7;</i> Ngay lập tức</span> @endif
+                        <span class="order-time state-now"><i class="material-icons">&#xE855;</i> {{ $q->est_excute_at_string }}</span> @endif
                       </div>
                     </div>
 
                   </div>
                   <div class="row">
                     <div class="order-req col-md-12 col-sm-12 col-sx-12">
-                      @if (strlen($order->short_requirements) > 175)
-                      <span>{{ substr($order->short_requirements, 0, 150).'...' }}</span> @else
+                      @if (strlen($order->short_requirements) > 100)
+                      <span>{{ substr($order->short_requirements, 0, 100).'...' }}</span> @else
                       <span>{{ $order->short_requirements }}</span> @endif
                     </div>
                   </div>
                   <div class="row">
-                    <div class="order-request-date col-md-12 col-sm-12 col-sx-12">
-                      <span>Đã yêu cầu lúc {{ Carbon\Carbon::parse($order->created_at)->format('d-m-Y H:i') }}</span>
+                    <div class="order-quoted-date col-md-6 col-sm-6 col-sx-6">
+                      <span>Báo giá lúc {{ Carbon\Carbon::parse($q->created_at)->format('d-m-Y H:i') }}</span>
+                    </div>
+                    <div class="order-quoted-price col-md-6 col-sm-6 col-sx-6 text-right">
+                      <span class="price quoted">{{ $q->price }}</span>
                     </div>
                   </div>
                 </div>

@@ -55,11 +55,14 @@ class ProOrderController extends Controller
 		if (!$request->session()->has('order')) {
 			response()->json('', 400);
 		}
-		$orderId = $request->session()->get('quoted_order');
+		$orderId = $request->session()->get('order');
 		
 		$orderModel = new Order();
 		$order = $orderModel->getById($orderId);
-		
+		if (!$order) {
+			response()->json('', 400);
+		}
+
 		$estDate = null;
 		$estDateStr = null;
 		if (!$order->est_excute_at_string) {

@@ -134,7 +134,7 @@
           onSubmit: function() {
             $.ajax({
               type: 'POST',
-              url: '{{ route("submit_order_details") }}',
+              url: '{{ route("submit_order") }}',
               data: $('#frmMain').serialize(),
               success: function(response) {
                 swal({
@@ -186,7 +186,7 @@
 </script>
 @endpush @section('title') Thông tin đơn hàng @endsection @section('content')
 <section class="page-content">
-  <form id="frmMain" class="survey-form" name="form-validation" method="post" enctype="multipart/form-data" action="{{ route('submit_order_details') }}">
+  <form id="frmMain" class="survey-form" name="form-validation" method="post" enctype="multipart/form-data">
     <div class="progress">
       <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:10%"></div>
     </div>

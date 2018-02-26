@@ -74,10 +74,17 @@ class Order extends Model
 	public static function acceptQuotedPrice($order) {
 		return Order::where('id', $order->id)
 			->update([
-					  'est_excute_at' => $order->est_excute_at
+					  'pro_id' => $order->pro_id
+					, 'est_excute_at' => $order->est_excute_at
+					, 'est_excute_at_string' => $order->est_excute_at_string
 					, 'total_price' => $order->total_price
 					, 'state' => $order->state
 			]);
+	}
+
+	public static function updateState($orderId, $state) {
+		return Order::where('id', $orderId)
+			->update(['state' => $state]);
 	}
 
 	public function service() {

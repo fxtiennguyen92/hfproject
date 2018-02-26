@@ -21,6 +21,7 @@ class QuotedPrice extends Model
 	public function getByOrder($id) {
 		return $this::with('pro', 'pro_profile')
 			->where('order_id', $id)
+			->new()
 			->get();
 	}
 	
