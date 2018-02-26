@@ -1,5 +1,4 @@
-@extends('template.index') @push('stylesheets') @endpush
-@section('title') @endsection @section('content')
+@extends('template.index') @push('stylesheets') @endpush @section('title') @endsection @section('content')
 <section class="page-content page-orders">
 
   <div class="page-content-inner">
@@ -11,7 +10,7 @@
             <img class="avt pro-avt" src="http://innovatik.payo-themes.com/wp-content/uploads/2017/11/lawn-team03.jpg" />
             <label class="order-user">{{ $order->pro->name }}</label>
             <div>
-                <select class="rating" data-current-rating="{{ $order->pro_profile->rating }}">
+              <select class="rating" data-current-rating="{{ $order->pro_profile->rating }}">
                   <option value=""></option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -19,7 +18,7 @@
                   <option value="4">4</option>
                   <option value="5">5</option>
                 </select>
-              </div>
+            </div>
           </div>
           <div class="row pro-des">
             <div class="order-address"><i class="material-icons">&#xE0C8;</i> {{ $order->address }}</div>
@@ -86,11 +85,15 @@
                 @foreach ($newOrders as $order)
                 <div class="col-md-4 col-sm-6 order-item-wrapper">
                   <div class="order-item">
+                    <div class="top-btn-order">
+                      Báo giá ngay
+                    </div>
                     <div class="row order-row" onclick="location.href='{{ route('order_page', ['orderId' => $order->id]) }}'">
                       <div class="col-md-3 col-sm-4">
                         <img class="avt" src="img/service/{{ $order->service_id }}.svg" />
                       </div>
                       <div class="col-md-9 col-sm-8">
+
                         <label class="order-user">{{ $order->service->name }}</label>
                         <div class="order-address"><i class="material-icons">&#xE0C8;</i> {{ $order->address }}</div>
                         <div class="order-state">

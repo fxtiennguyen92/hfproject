@@ -377,6 +377,10 @@ nav.top-menu .menu {
   color: #f39834;
 }
 
+.state-now .material-icons {
+  line-height: 26px;
+}
+
 .order-req {
   width: 100%;
   font-size: 13px;
@@ -425,10 +429,16 @@ nav.top-menu .menu {
   border-radius: 50%;
 }
 
+.qprice-item {
+  margin-top: 10px;
+  background: #fafafa;
+  padding: 10px;
+}
+
 .qprice-item .avt {
   border-radius: 100%;
-  width: 40px;
-  height: 40px;
+  width: 70px;
+  height: 70px;
   margin: auto;
   border: solid 1px #01a8fe;
   display: block;
@@ -1034,6 +1044,25 @@ body.single-page .single-page-block .single-page-block-inner {
   padding-bottom: 14px;
 }
 
+.order-item {
+  position: relative;
+}
+
+.order-item .top-btn-order {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px 10px;
+  background: #f39834;
+  color: #fff;
+  border-bottom-left-radius: 15px;
+  font-size: 13px;
+  -webkit-box-shadow: -1px 3px 10px #55555540;
+  box-shadow: -1px 3px 10px #55555540;
+  text-transform: uppercase;
+}
+
+
 .page-order {
   padding-top: 40px!important;
   margin-top: 0!important;
@@ -1064,6 +1093,14 @@ body.single-page .single-page-block .single-page-block-inner {
   border-radius: 0;
 }
 
+.order-state input.datetimepicker {
+  border: none;
+}
+
+.order-info {
+  background: #fff;
+}
+
 .service-info .avt {
   border-radius: 100%;
   width: 50px;
@@ -1075,7 +1112,8 @@ body.single-page .single-page-block .single-page-block-inner {
 }
 
 .service-info {
-  margin-bottom: 10px;
+  padding: 20px;
+  border-bottom: solid 1px #fafafa;
 }
 
 /*
@@ -1138,6 +1176,13 @@ nav.left-menu .left-menu-list li .left-menu-link .material-icons {
   }
   .dropdown-avatar .user-name {
     display: none;
+  }
+  .qprice-item {
+    display: block;
+    text-align: center;
+  }
+  .qprice-item .price {
+    text-align: center;
   }
 
 }
@@ -1268,6 +1313,9 @@ nav.left-menu .left-menu-list li .left-menu-link .material-icons {
   }
   .order-item {
     margin: 5px 0!important;
+  }
+  .survey-page {
+    background: #fff!important;
   }
 }
 
