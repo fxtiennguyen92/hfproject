@@ -1,5 +1,5 @@
 body.single-page {
-  background: #eceff4;
+  background: ##fafbfc;
 }
 
 .hf-card {
@@ -598,7 +598,7 @@ body.single-page .single-page-block .single-page-block-inner {
 }
 
 .top-banner .btn-services {
-  background: #ffffff95;
+  background: #ffffff;
   margin: 0;
   margin: auto;
   border-radius: 5px;
@@ -616,7 +616,7 @@ body.single-page .single-page-block .single-page-block-inner {
 }
 
 #hiw {
-  background: #fafafa;
+  background: #fafbfc;
   padding: 100px 0;
 }
 
@@ -760,6 +760,8 @@ body.single-page .single-page-block .single-page-block-inner {
 
 .hf-footer {
   background: #002046;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .hf-footer .intro {
@@ -783,7 +785,7 @@ body.single-page .single-page-block .single-page-block-inner {
   margin-bottom: 10px;
 }
 
-.hf-footer ul li a {
+.hf-footer ul li, .hf-footer ul li a {
   color: #e1e1e1;
 }
 

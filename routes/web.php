@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'InitPageController@viewIndexPage')
+Route::get('/', 'InitPageController@viewHomePage')
 	->name('index_page');
 Route::get('/redirect', 'Auth\LoginController@redirectPath')
 	->name('redirect');
