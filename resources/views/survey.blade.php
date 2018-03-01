@@ -248,7 +248,7 @@
     <div id="positionAndTime" style="display: none">
       <div class="content clearfix">
         <div class="address">
-          Địa chỉ
+          Địa điểm
         </div>
         <div class="address-wrapper">
           <div class="row row-address">
@@ -295,7 +295,7 @@
           </div>
         </div>
         <div class="time">
-          Vào lúc
+          Thời gian
         </div>
         <div class="btn-group time-wrapper" data-toggle="buttons">
           <label class="btn">

@@ -1018,6 +1018,7 @@ body.single-page .single-page-block .single-page-block-inner {
   border-radius: 0;
   padding: 20px;
   line-height: 1;
+  opacity: 1;
 }
 
 .cui-wizard .actions li.disabled a {
@@ -1129,6 +1130,7 @@ body.single-page .single-page-block .single-page-block-inner {
 #positionAndTime .address,
 #positionAndTime .time {
   padding: 20px 20px 0 20px;
+  color: #02b3e4;
 }
 
 #positionAndTime .address-history {
@@ -1142,6 +1144,8 @@ body.single-page .single-page-block .single-page-block-inner {
   padding: 10px 0;
   border-bottom: solid 1px #e1e1e1;
   border-top: solid 1px #e1e1e1;
+
+
 }
 
 #positionAndTime .address-history .item:last-child {
@@ -1490,6 +1494,7 @@ nav.left-menu .left-menu-list li .left-menu-link .material-icons {
     -webkit-box-shadow: 0 0 8px 1px #00000055;
     box-shadow: 0 0 8px 1px #00000055;
     width: 100%;
+    z-index: 9999;
   }
   .page-content-inner {
     margin: 0!important;
