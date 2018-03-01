@@ -90,11 +90,46 @@ nav.top-menu {
   border-radius: 10px;
   background-color: transparent;
 }
+/* header Truc-TT*/
+.menu-info-block >.right>.btn { 
+  display: none; 
+}
 
+.material-icons {
+	font-size: 42px;
+}
+.right {
+	width: 55%;
+}
+.icon-menu {
+	list-style-type: none;
+
+}
+.icon-menu>li {
+	width: 42px;
+	float: left;
+}
+.icon-menu>li>a {
+  	padding-left: 0px;
+  	color: #000;
+}
+.icon-menu>li :hover {
+	padding-bottom: 13px;
+  	border-bottom: 3px #02b3e4 solid ;
+}
+/*End*/
 @media screen and (max-width: 540px) {
   /* For mobile phones: */
   .dropdown-avatar.file {
     display: none;
   }
-
+  .material-icons {
+	font-size: 35px;
+  }
+  .icon-menu {
+  	padding-left: 0px;
+  }
+  .right {
+	width: 43%;
+}
 }

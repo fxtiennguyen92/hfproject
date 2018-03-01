@@ -9,9 +9,24 @@
           <a href="{{ route('home_page') }}"><img src="img/logoh.png" class="navbar-logo"></a>
         </div>
       </div>
-      <div class="right example-buy-btn hidden-xs-down">
-        <a href="{{ route('login') }}" class="btn btn-info-outline margin-left-20">Đăng Nhập</a>
-        <a href="{{ route('signup_pro') }}" class="btn btn-info margin-left-20">Trở Thành Đối Tác</a>
+      <div class="right">
+        <ul class="icon-menu" >
+          <li >
+            <a href="#" >
+              <span><i class="material-icons">&#xE80B;</i></span>
+            </a>
+          </li>
+          <li>
+          <a href="#" >
+            <span><i class="material-icons">&#xE8B0;</i></span>
+          </a>
+        </li>
+        <li style="float: right;">
+          <a href="#">
+            <span><i class="material-icons">&#xE85E;</i></span>
+          </a>
+        </li>
+        </ul>
       </div>
     </div>
   </div>
