@@ -10,9 +10,9 @@
       autoFocus: true,
       enableAllSteps: true,
       labels: {
-        finish: "Bước cuối cùng",
-        next: "Tiếp theo",
-        previous: "Quay lại",
+        finish: "<i class='material-icons'>&#xE5CA;</i>",
+        next: "<i class='material-icons'>&#xE315;</i>",
+        previous: "<i class='material-icons'>&#xE314;</i>",
       },
       onStepChanging: function(e, currentIndex, newIndex) {
         var validReturn = true;
@@ -47,7 +47,7 @@
         return validReturn;
       },
       onStepChanged: function(e, currentIndex, priorIndex) {
-        var total = {{ sizeof($questions) }};
+        var total = '{{ sizeof($questions) }}';
         var percent = (currentIndex) / total * 100;
         $('.progress-bar').css('width', percent + '%');
       },
@@ -113,11 +113,11 @@
       url = url.replace('cityCode', $(this).val());
       $.ajax({
         url: url,
-        success: function (data) {
+        success: function(data) {
           $.each(data, function(key, value) {
             ddDist.append($('<option></option>')
-                .attr('value', value.code)
-                .text(value.name));
+              .attr('value', value.code)
+              .text(value.name));
           });
           ddDist.selectpicker('refresh');
         }
@@ -138,15 +138,15 @@
               data: $('#frmMain').serialize(),
               success: function(response) {
                 swal({
-                  title: 'Thành công',
-                  text: 'Hoàn tất đơn hàng, vui lòng chờ báo giá !',
-                  type: 'success',
-                  confirmButtonClass: 'btn-primary',
-                  confirmButtonText: 'Tiếp tục',
-                },
-                function() {
-                  location.href = '{{ route("order_list_page") }}';
-                });
+                    title: 'Thành công',
+                    text: 'Hoàn tất đơn hàng, vui lòng chờ báo giá !',
+                    type: 'success',
+                    confirmButtonClass: 'btn-primary',
+                    confirmButtonText: 'Tiếp tục',
+                  },
+                  function() {
+                    location.href = '{{ route("order_list_page") }}';
+                  });
               },
               error: function(xhr) {
                 if (xhr.status == 400) {
@@ -185,13 +185,14 @@
 
 </script>
 @endpush @section('title') Thông tin đơn hàng @endsection @section('content')
-<section class="page-content">
+<section class="">
   <form id="frmMain" class="survey-form" name="form-validation" method="post" enctype="multipart/form-data">
+
+    <div class="service-title" style="background-image:url('img/banner/6.png')">
+      <span class="title"><img class="service-icon" src="img/icons/idea.png" /> {{ $service->name }}</span>
+    </div>
     <div class="progress">
       <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:10%"></div>
-    </div>
-    <div class="service-title">
-      {{ $service->name }}
     </div>
     <div id="surveyList" class="cui-wizard cui-wizard__numbers">
       @foreach ($questions as $q)
@@ -246,35 +247,55 @@
 
     <div id="positionAndTime" style="display: none">
       <div class="content clearfix">
-        <div class="question">
-          Địa điểm
+        <div class="address">
+          Địa chỉ
         </div>
         <div class="address-wrapper">
           <div class="row row-address">
-            <div class="row row-address">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <input type="text" class="form-control" placeholder="Địa chỉ" name="address" data-validation="[NOTEMPTY]">
-              </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <input type="text" class="form-control" placeholder="Nhập Số Nhà. VD: 205 Cách Mạng Tháng 8" name="address" data-validation="[NOTEMPTY]">
             </div>
-            <div class="col-md-6 col-sm-6 col-xs-6" style="padding-left: 5px;">
-              <select class="form-control selectpicker ddDist hf-select" data-live-search="true" name="dist" data-validation="[NOTEMPTY]">
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xs-6" style="padding-left: 5px;">
+                <select class="form-control selectpicker ddDist hf-select" data-live-search="true" name="dist" data-validation="[NOTEMPTY]">
                 @foreach($districts as $dist)
                 <option value="{{ $dist->code }}">{{ $dist->name }}</option>
                 @endforeach
               </select>
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6">
-              <select class="form-control selectpicker ddCity hf-select" data-live-search="true" name="city" data-validation="[NOTEMPTY]">
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <select class="form-control selectpicker ddCity hf-select" data-live-search="true" name="city" data-validation="[NOTEMPTY]">
                 @foreach($cities as $city)
                 <option value="{{ $city->code }}">{{ $city->name }}</option>
                 @endforeach
               </select>
+              </div>
             </div>
           </div>
-          
+
         </div>
-        <div class="question">
-          Thời gian
+        <div class="address-history">
+          <div class="item">
+            <div class="icon">
+              <i class="material-icons">&#xE422;</i>
+            </div>
+            <div class="right-content">
+              <div>68 Bạch Đằng</div>
+              <div>Phường 24, Bình Thạnh, Hồ Chí Minh</div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="icon">
+              <i class="material-icons">&#xE422;</i>
+            </div>
+            <div class="right-content">
+              <div>68 Bạch Đằng</div>
+              <div>Phường 24, Bình Thạnh, Hồ Chí Minh</div>
+            </div>
+          </div>
+        </div>
+        <div class="time">
+          Vào lúc
         </div>
         <div class="btn-group time-wrapper" data-toggle="buttons">
           <label class="btn">
@@ -297,8 +318,8 @@
         </div>
       </div>
       <div class="row-complete clearfix">
-        <button id="btnBack" type="button" class="btn">Quay lại</button>
-        <button id="btnSubmit" type="submit" class="btn btn-primary">Hoàn tất</button>
+        <button id="btnBack" type="button" class="btn"><i class="material-icons">&#xE314;</i></button>
+        <button id="btnSubmit" type="submit" class="btn btn-primary"><i class="material-icons">&#xE876;</i></button>
         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
       </div>
     </div>
