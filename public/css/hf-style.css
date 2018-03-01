@@ -2,6 +2,30 @@ body.single-page {
   background: ##fafbfc;
 }
 
+.top-menu .icon-menu-wrapper {
+  float: right;
+  width: 55%;
+}
+.top-menu .icon-menu {
+  list-style-type: none;
+}
+.top-menu .icon-menu .icon-menu-notification,
+.top-menu .icon-menu .icon-menu-order {
+  float: left;
+}
+.top-menu .icon-menu .icon-menu-user {
+  float: right;
+}
+.top-menu .icon-menu i {
+  font-size: 30px;
+  padding: 6px 5px 20px 5px;
+  color: #000;
+}
+.top-menu .icon-menu i:hover {
+  padding-bottom: 20px;
+  border-bottom: 3px #000 solid ;
+}
+
 .hf-card {
   background: #fff;
   -webkit-box-shadow: 5px 5px 25px 0px rgba(46, 61, 73, 0.2);
