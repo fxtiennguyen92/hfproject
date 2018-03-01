@@ -378,10 +378,11 @@ nav.top-menu .menu {
   overflow: hidden;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
+  color: #02b3e4;
 }
 
 .order-time {
-  color: #01a8fe;
+  color: #000;
 }
 
 .state-now {
@@ -451,8 +452,20 @@ nav.top-menu .menu {
 
 .qprice-item {
   margin-top: 10px;
-  background: #fafafa;
+  background: #fff;
   padding: 10px;
+  font-size: 14px;
+}
+
+.qprice-item .btn-profile {
+  padding: 10px;
+  margin-top: 10px;
+  border-top: solid 1px #e1e1e1;
+}
+
+.qprice-item .btn-profile a {
+
+  color: #02b3e4;
 }
 
 .qprice-item .avt {
@@ -476,7 +489,6 @@ nav.top-menu .menu {
 }
 
 .qprice-item .price {
-  text-align: right;
   font-weight: bold;
   color: #d9534f;
 }
@@ -1280,21 +1292,35 @@ body.single-page .single-page-block .single-page-block-inner {
 
 .order-info {
   background: #fff;
+  padding: 20px;
+  margin-right: 20px;
+}
+
+.order-info .order-code {
+  font-size: 15px;
+  color: #ccc;
+  margin: 20px 0;
+}
+
+.noti-btn {
+  text-transform: uppercase;
+  color: #01a8fe;
+  display: inline-block;
+  padding: 5px 20px;
+  text-align: center;
+  border: solid 1px #01a8fe;
+  margin: 20px auto;
 }
 
 .service-info .avt {
-  border-radius: 100%;
-  width: 50px;
-  height: 50px;
-  margin-right: 5px;
-  margin-left: auto;
-  border: solid 1px #01a8fe;
+  width: 100px;
+  height: 100px;
   display: block;
+  margin: auto;
 }
 
-.service-info {
-  padding: 20px;
-  border-bottom: solid 1px #fafafa;
+.service-info label {
+  text-transform: uppercase
 }
 
 .common-text {
@@ -1369,11 +1395,8 @@ nav.left-menu .left-menu-list li .left-menu-link .material-icons {
   }
   .qprice-item {
     display: block;
-    text-align: center;
   }
-  .qprice-item .price {
-    text-align: center;
-  }
+  .qprice-item .price {}
 
 }
 
@@ -1438,6 +1461,9 @@ nav.left-menu .left-menu-list li .left-menu-link .material-icons {
 
   .page-orders {
     margin-left: 0px!important;
+  }
+  .order-info {
+    margin-right: -8px;
   }
 }
 
