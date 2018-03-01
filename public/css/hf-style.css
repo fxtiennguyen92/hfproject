@@ -1163,10 +1163,16 @@ body.single-page .single-page-block .single-page-block-inner {
   min-height: 400px;
 }
 
-#positionAndTime .address,
+#positionAndTime .address {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background: #02b3e4;
+  color: #fff;
+  text-align: center;
+}
+
 #positionAndTime .time {
-  padding: 20px 20px 0 20px;
-  color: #02b3e4;
+  padding-left: 20px;
 }
 
 #positionAndTime .address-history {
@@ -1563,6 +1569,17 @@ nav.left-menu .left-menu-list li .left-menu-link .material-icons {
   .navbar-logo {
     width: 150px;
     padding-top: 5px;
+  }
+  .top-menu .icon-menu-wrapper {
+    float: right;
+    width: auto;
+  }
+  .top-menu .icon-menu {
+    list-style-type: none;
+  }
+  .top-menu .icon-menu .icon-menu-notification,
+  .top-menu .icon-menu .icon-menu-order {
+    float: right;
   }
 }
 

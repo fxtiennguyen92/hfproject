@@ -10,7 +10,7 @@
       autoFocus: true,
       enableAllSteps: true,
       labels: {
-        finish: "<i class='material-icons'>&#xE5CA;</i>",
+        finish: "<i class='material-icons'>&#xE315;</i>",
         next: "<i class='material-icons'>&#xE315;</i>",
         previous: "<i class='material-icons'>&#xE314;</i>",
       },
@@ -204,7 +204,7 @@
         <div class="answer">
           @if ($q->answer_type == '0')
           <div>
-            <textarea style="margin:0;background:#fafafa;padding:10px;" class="no-newlines form-control" name="q[{{ $q->id }}]" rows="6" maxlength="100" placeholder="Ghi chú"></textarea>
+            <textarea style="margin:0;padding:10px;" class="no-newlines form-control" name="q[{{ $q->id }}]" rows="6" maxlength="100" placeholder="Ghi chú"></textarea>
           </div>
           @elseif ($q->answer_type == '1')
           <div data-toggle="buttons">
@@ -248,12 +248,12 @@
     <div id="positionAndTime" style="display: none">
       <div class="content clearfix">
         <div class="address">
-          Địa điểm
+          Địa điểm và Thời gian
         </div>
         <div class="address-wrapper">
           <div class="row row-address">
             <div class="col-md-12 col-sm-12 col-xs-12">
-              <input type="text" class="form-control" placeholder="Nhập Số Nhà. VD: 205 Cách Mạng Tháng 8" name="address" data-validation="[NOTEMPTY]">
+              <input type="text" class="form-control" placeholder="Nhập Số Nhà. VD: 20/7 Hai Bà Trưng" name="address" data-validation="[NOTEMPTY]">
             </div>
             <div class="row">
               <div class="col-md-6 col-sm-6 col-xs-6" style="padding-left: 5px;">
@@ -272,30 +272,29 @@
               </div>
             </div>
           </div>
-
         </div>
-        <div class="address-history">
-          <div class="item">
-            <div class="icon">
-              <i class="material-icons">&#xE422;</i>
-            </div>
-            <div class="right-content">
-              <div>68 Bạch Đằng</div>
-              <div>Phường 24, Bình Thạnh, Hồ Chí Minh</div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="icon">
-              <i class="material-icons">&#xE422;</i>
-            </div>
-            <div class="right-content">
-              <div>68 Bạch Đằng</div>
-              <div>Phường 24, Bình Thạnh, Hồ Chí Minh</div>
-            </div>
-          </div>
-        </div>
+<!--         <div class="address-history"> -->
+<!--           <div class="item"> -->
+<!--             <div class="icon"> -->
+<!--               <i class="material-icons">&#xE422;</i> -->
+<!--             </div> -->
+<!--             <div class="right-content"> -->
+<!--               <div>68 Bạch Đằng</div> -->
+<!--               <div>Phường 24, Bình Thạnh, Hồ Chí Minh</div> -->
+<!--             </div> -->
+<!--           </div> -->
+<!--           <div class="item"> -->
+<!--             <div class="icon"> -->
+<!--               <i class="material-icons">&#xE422;</i> -->
+<!--             </div> -->
+<!--             <div class="right-content"> -->
+<!--               <div>68 Bạch Đằng</div> -->
+<!--               <div>Phường 24, Bình Thạnh, Hồ Chí Minh</div> -->
+<!--             </div> -->
+<!--           </div> -->
+<!--         </div> -->
         <div class="time">
-          Thời gian
+          Vào lúc
         </div>
         <div class="btn-group time-wrapper" data-toggle="buttons">
           <label class="btn">
