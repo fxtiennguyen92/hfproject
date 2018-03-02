@@ -661,7 +661,7 @@ body.single-page .single-page-block .single-page-block-inner {
 
 .hiw-slider .img img {
   max-width: 100%;
-  width: 450px;
+  height: 250px;
   margin: auto;
 }
 
@@ -911,7 +911,7 @@ body.single-page .single-page-block .single-page-block-inner {
 }
 
 .lets-work .headline {
-  font-size: 30px;
+  font-size: 24px;
   margin-bottom: 30px;
   font-weight: 500;
   line-height: 1.4;
@@ -924,10 +924,6 @@ body.single-page .single-page-block .single-page-block-inner {
 
 .survey-page {
   background: #F4F3F0;
-}
-
-.survey-page .top-menu {
-  display: none;
 }
 
 .survey-page .page-content {
@@ -1576,10 +1572,6 @@ nav.left-menu .left-menu-list li .left-menu-link .material-icons {
   }
   .top-menu .icon-menu {
     list-style-type: none;
-  }
-  .top-menu .icon-menu .icon-menu-notification,
-  .top-menu .icon-menu .icon-menu-order {
-    float: right;
   }
 }
 

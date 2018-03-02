@@ -81,7 +81,7 @@ class LoginController extends Controller
 	 */
 	public static function redirectPath() {
 		if (!Auth::check()) {
-			return redirect()->route('index_page');
+			return redirect()->route('home_page');
 		}
 		
 		if (Auth::user()->role === Config::get('constants.ROLE_PRO')) {

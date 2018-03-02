@@ -70,7 +70,7 @@
         <div class="login-form-wrapper">
           <div class="single-page-block-inner">
 
-            <div class="logo" style="margin-bottom: 30px;">
+            <div class="logo text-center" style="margin-bottom: 30px;">
               <a href="javascript: history.back();">
                 <img src="img/logoh.png" alt="Hand Free" width="150"/>
               </a>
@@ -83,16 +83,15 @@
               <form id="frmMain" name="form-validation" method="POST">
                 <div class="form-group">
                   <div class="social-login">
-                    <p class="text-center text-label">Đăng nhập bằng mạng xã hội</p>
                     <div class="row" style="padding-top: 10px">
                       <div class="col-xs-6">
-                        <a href="{{ route('redirect_fb') }}" class="btn btn-icon" style="width: 100%; background:#2151B2; color:#fff!important">
-                        <img src="img/social/facebook-logo.png" width="18">&nbsp;&nbsp; Facebook
+                        <a href="{{ route('redirect_fb') }}" class="btn btn-icon" style="width: 100%; background:#fff; color:#424242!important">
+                        <img src="https://auth.udacity.com/images/facebook_logo-adc2f.svg" width="18">&nbsp;&nbsp; Facebook
                       </a>
                       </div>
                       <div class="col-xs-6" style="padding-right: 14px;">
-                        <a href="{{ route('redirect_gg') }}" class="btn btn-icon" style="width: 100%; background:#D41701; color:#fff!important">
-                        <img src="img/social/google-logo.png" width="18">&nbsp;&nbsp; Google
+                        <a href="{{ route('redirect_gg') }}" class="btn btn-icon" style="width: 100%; background:#fff; color:#424242!important">
+                        <img src="https://auth.udacity.com/images/google_logo-12018.svg" width="18">&nbsp;&nbsp; Google
                       </a>
                       </div>
                     </div>
@@ -100,7 +99,7 @@
                 </div>
                 <div class="form-group">
                   <br/>
-                  <p class="text-center text-label">Đăng nhập với Email</p>
+                  <p class="text-center text-label">Hoặc</p>
                   <input id="inpEmail" maxlength="100" class="form-control" placeholder="Email" name="email" type="text" data-validation="[EMAIL]">
                 </div>
                 <div class="form-group">

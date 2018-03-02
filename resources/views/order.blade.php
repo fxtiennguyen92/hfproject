@@ -93,13 +93,15 @@
   </ul>
 </div>
 -->
-        <div class="text-center">
-          <div class="noti-btn">
-            có 3 báo giá
-          </div>
-        </div>
+        
         @if (sizeof($order->quoted_price) == 0)
         <div class="common-text">Không có báo giá nào</div>
+        @else
+        <div class="text-center">
+          <div class="noti-btn">
+            có {{ sizeof($order->quoted_price) }} báo giá
+          </div>
+        </div>
         @endif @foreach ($order->quoted_price as $q)
         <div class="qprice-item row hf-card" qprice-id="{{ $q->qp_id }}">
           <div class="col-md-5 col-sm-5 text-center">

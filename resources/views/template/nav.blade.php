@@ -10,6 +10,16 @@
       </div>
       <div class="icon-menu-wrapper">
         <ul class="icon-menu" >
+          <li class="icon-menu-user">
+            @if(Auth::check())
+            <a href="javascript:void(0)">
+            @else
+            <a href="{{ route('login') }}">
+            @endif
+              <span><i class="material-icons">person</i></span>
+            </a>
+          </li>
+          
           <li class="icon-menu-notification">
             <a href="javascript:void(0)" >
               <span><i class="material-icons">&#xE80B;</i></span>
@@ -18,15 +28,6 @@
           <li class="icon-menu-order">
             <a href="{{ route('order_list_page') }}" >
               <span><i class="material-icons">&#xE8B0;</i></span>
-            </a>
-          </li>
-          <li class="icon-menu-user">
-            @if(Auth::check())
-            <a href="javascript:void(0)">
-            @else
-            <a href="{{ route('login') }}">
-            @endif
-              <span><i class="material-icons">&#xE85E;</i></span>
             </a>
           </li>
         </ul>
