@@ -185,7 +185,7 @@
 
 </script>
 @endpush @section('title') Thông tin đơn hàng @endsection @section('content')
-<section class="">
+<section class="content-body">
   <form id="frmMain" class="survey-form" name="form-validation" method="post" enctype="multipart/form-data">
 
     <div class="service-title" style="background-image:url('img/banner/6.png')">
