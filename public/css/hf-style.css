@@ -1409,6 +1409,58 @@ section.user-menu .list-menu a > i {
 .orders-page li.nav-item {
   width: 50%;
   text-align: center;
+  margin-left: 0!important;
+}
+
+.orders-page .tab-content {
+  background: #fafbfc;
+}
+
+.orders-item {
+  padding: 15px 0;
+  margin-bottom: 15px;
+}
+
+.orders-item .author-avt {
+  display: block;
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  overflow: hidden;
+  border: solid 2px #189eff;
+  margin: auto;
+}
+
+.orders-item .author-avt img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.orders-item .author-name {
+  font-weight: bold;
+}
+
+.orders-item .author-rating {
+  color: #189eff;
+}
+
+.orders-item .entry-date {
+  font-size: 13px;
+}
+
+.orders-item .code-item {
+  color: #ccc;
+  font-size: 13px;
+}
+
+.orders-item .map-address {
+  font-size: 13px;
+}
+
+.orders-item .map-address > span {
+  display: block;
+  color: #189eff;
 }
 
 /*
