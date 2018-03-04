@@ -6,24 +6,29 @@ body.single-page {
   float: right;
   width: 55%;
 }
+
 .top-menu .icon-menu {
   list-style-type: none;
 }
+
 .top-menu .icon-menu .icon-menu-notification,
 .top-menu .icon-menu .icon-menu-order {
   float: left;
 }
+
 .top-menu .icon-menu .icon-menu-user {
   float: right;
 }
+
 .top-menu .icon-menu i {
   font-size: 30px;
   padding: 6px 5px 20px 5px;
   color: #000;
 }
+
 .top-menu .icon-menu i:hover {
   padding-bottom: 20px;
-  border-bottom: 3px #000 solid ;
+  border-bottom: 3px #000 solid;
 }
 
 .content-body {
@@ -1129,12 +1134,12 @@ body.single-page .single-page-block .single-page-block-inner {
 }
 
 .survey-form .service-title {
-  height: 100px;
+  height: 60px;
   line-height: 32px;
   color: #000000;
   text-transform: uppercase;
   position: relative;
-  margin-bottom: 72px;
+  margin-bottom: 40px;
   background-color: #fafafa;
   background-repeat: no-repeat;
   background-size: cover;
@@ -1379,6 +1384,33 @@ nav.left-menu .left-menu-list li .left-menu-link .material-icons {
   vertical-align: middle;
 }
 
+section.user-menu .list-menu {
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+}
+
+section.user-menu .list-menu li {
+  padding: 10px;
+}
+
+section.user-menu .list-menu a {
+  font-size: 18px;
+  color: #000;
+  text-transform: uppercase;
+}
+
+section.user-menu .list-menu a > i {
+  vertical-align: middle;
+  margin-bottom: 5px;
+}
+
+
+.orders-page li.nav-item {
+  width: 50%;
+  text-align: center;
+}
+
 /*
 * RESPONSIVE
 */
@@ -1577,6 +1609,23 @@ nav.left-menu .left-menu-list li .left-menu-link .material-icons {
   }
   .top-menu .icon-menu {
     list-style-type: none;
+  }
+  section.user-menu .list-menu {
+    text-align: left;
+  }
+  section.user-menu .list-menu a {
+    font-size: 15px;
+  }
+  section.user-menu .list-menu a > i {
+    margin-bottom: 3px;
+    font-size: 15px;
+    margin-right: 10px;
+  }
+  section.user-menu .list-menu {
+    padding: 0 10px;
+  }
+  section.user-menu .list-menu li {
+    padding: 15px;
   }
 }
 
