@@ -27,7 +27,11 @@ class InitPageController extends Controller
 		));
 	}
 	
-	public function test() {
-		
+	public function control() {
+		if (!auth()->check()) {
+			return view(Config::get('constants.LOGIN_PAGE'));
+		} else {
+			return view(Config::get('constants.CONTROL_PAGE'));
+		}
 	}
 }

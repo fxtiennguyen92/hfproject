@@ -11,11 +11,7 @@
       <div class="icon-menu-wrapper">
         <ul class="icon-menu" >
           <li class="icon-menu-user">
-            @if(Auth::check())
-            <a href="javascript:void(0)">
-            @else
-            <a href="{{ route('login') }}">
-            @endif
+            <a href="{{ route('control') }}">
               <span><i class="material-icons">person</i></span>
             </a>
           </li>

@@ -2,8 +2,8 @@
 
 return [
 	/** PAGE NAME **/
-	'INDEX_PAGE' => 'home',
 	'HOME_PAGE' => 'home',
+	'CONTROL_PAGE' => 'control',
 	'DASHBOARD_PAGE' => 'home',
 	'LOGIN_PAGE' => 'login',
 	'SIGNUP_PAGE' => 'signup',

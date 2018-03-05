@@ -12,9 +12,11 @@
 */
 
 Route::get('/', 'InitPageController@viewHomePage')
-	->name('index_page');
+	->name('home_page');
 Route::get('/redirect', 'Auth\LoginController@redirectPath')
 	->name('redirect');
+Route::get('/control', 'InitPageController@control')
+	->name('control');
 
 /** Login and Logout - STA **/
 Route::get('/login', 'Auth\LoginController@view')
@@ -45,8 +47,7 @@ Route::get('/verify/{confirmCode}', 'Auth\RegisterController@verify')
 
 
 Route::middleware('auth')->group(function() {
-	Route::get('/trang-chu', 'InitPageController@viewHomePage')
-		->name('home_page');
+
 });
 /** Service - Order - STA **/
 Route::get('/dich-vu/{serviceUrlName}', 'ServiceController@view')
@@ -111,7 +112,7 @@ Route::post('/mng/company/{id?}', 'Mng\CompanyController@modify')
 	
 /** Alpha - STA **/
 Route::get('/pro/signup', 'SignUpProController@view')
-	->name('signup_pro');
+	->name('pro_signup_page');
 Route::post('/pro/signup', 'SignUpProController@signup')
 	->name('signup_pro');
 /** Alpha - END **/

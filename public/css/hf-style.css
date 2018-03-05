@@ -1,5 +1,5 @@
 body.single-page {
-  background: ##fafbfc;
+  background: #fafbfc;
 }
 
 .top-menu .icon-menu-wrapper {
@@ -23,17 +23,22 @@ body.single-page {
 .top-menu .icon-menu i {
   font-size: 30px;
   padding: 6px 5px 20px 5px;
-  color: #000;
+  color: #242424;
 }
 
 .top-menu .icon-menu i:hover {
   padding-bottom: 20px;
-  border-bottom: 3px #000 solid;
+  border-bottom: 3px #242424 solid;
 }
 
 .content-body {
-  padding-top: 20px;
-  max-height: 500px;
+  max-width: 500px;
+  min-height: 560px;
+  margin: auto;
+  background: #fff;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  margin-top: 20px;
 }
 
 .hf-card {
@@ -416,7 +421,7 @@ nav.top-menu .menu {
 }
 
 .order-time {
-  color: #000;
+  color: #242424;
 }
 
 .state-now {
@@ -662,6 +667,8 @@ body.single-page .single-page-block .single-page-block-inner {
 
 .top-banner .btn-services p {
   margin-top: 0px;
+  text-transform: uppercase;
+  font-weight: normal;
 }
 
 #hiw {
@@ -960,7 +967,7 @@ body.single-page .single-page-block .single-page-block-inner {
 .survey-form .cui-wizard > .content {
   border-radius: 0;
   margin: 0;
-  min-height: 400px;
+  min-height: 372px;
 
 }
 
@@ -1001,7 +1008,7 @@ body.single-page .single-page-block .single-page-block-inner {
   line-height: 1.4;
   padding: 18px;
   min-height: auto;
-  color: #000000;
+  color: #242424;
   border-bottom: solid 1px #e1e1e1;
 }
 
@@ -1009,7 +1016,7 @@ body.single-page .single-page-block .single-page-block-inner {
   padding: 20px!important;
   border-bottom: solid 1px #e1e1e1!important;
   border-radius: 0;
-  color: #000000;
+  color: #242424;
 }
 
 .survey-form .label-other:hover,
@@ -1058,7 +1065,7 @@ body.single-page .single-page-block .single-page-block-inner {
 
 .survey-form .wizard > .actions > ul li a {
   border-radius: 0;
-  padding: 20px;
+  padding: 18px;
   line-height: 1;
   opacity: 1;
 }
@@ -1100,12 +1107,12 @@ body.single-page .single-page-block .single-page-block-inner {
 
 .survey-form .time-wrapper span.icon {
   font-size: 18px;
-  color: #000;
+  color: #242424;
   vertical-align: middle;
 }
 
 .survey-form .time-wrapper label.btn {
-  color: #000;
+  color: #242424;
 }
 
 .row-complete {
@@ -1136,10 +1143,10 @@ body.single-page .single-page-block .single-page-block-inner {
 .survey-form .service-title {
   height: 60px;
   line-height: 32px;
-  color: #000000;
+  color: #242424;
   text-transform: uppercase;
   position: relative;
-  margin-bottom: 40px;
+  margin-bottom: 55px;
   background-color: #fafafa;
   background-repeat: no-repeat;
   background-size: cover;
@@ -1387,17 +1394,18 @@ nav.left-menu .left-menu-list li .left-menu-link .material-icons {
 section.user-menu .list-menu {
   list-style-type: none;
   padding: 0;
-  text-align: center;
 }
 
 section.user-menu .list-menu li {
-  padding: 10px;
+  border-top: solid 1px #e1e1e1!important;
 }
 
 section.user-menu .list-menu a {
   font-size: 18px;
-  color: #000;
+  color: #242424;
   text-transform: uppercase;
+  display: block;
+  padding: 20px;
 }
 
 section.user-menu .list-menu a > i {
@@ -1468,6 +1476,9 @@ section.user-menu .list-menu a > i {
 */
 
 @media only screen and (max-width: 500px) {
+  body.single-page {
+    background: #fff;
+  }
   .page-content {
     margin-left: 0px;
   }
@@ -1511,8 +1522,17 @@ section.user-menu .list-menu a > i {
   .qprice-item {
     display: block;
   }
-  .qprice-item .price {}
-
+  .top-menu .icon-menu-wrapper {
+    float: right;
+    width: auto;
+  }
+  .content-body {
+    margin-top: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: none;
+    min-height: 0;
+  }
 }
 
 @media only screen and (max-width: 1024px) {
@@ -1655,13 +1675,6 @@ section.user-menu .list-menu a > i {
     width: 150px;
     padding-top: 5px;
   }
-  .top-menu .icon-menu-wrapper {
-    float: right;
-    width: auto;
-  }
-  .top-menu .icon-menu {
-    list-style-type: none;
-  }
   section.user-menu .list-menu {
     text-align: left;
   }
@@ -1672,12 +1685,6 @@ section.user-menu .list-menu a > i {
     margin-bottom: 3px;
     font-size: 15px;
     margin-right: 10px;
-  }
-  section.user-menu .list-menu {
-    padding: 0 10px;
-  }
-  section.user-menu .list-menu li {
-    padding: 15px;
   }
 }
 
