@@ -61,7 +61,12 @@ class SignUpProController extends Controller
 			$user->name = $request->name;
 			$user->email = $request->email;
 			$user->phone = $request->phone;
+			
 			$user->role = Config::get('constants.ROLE_PRO');
+			if ($request->operationMode == 1) {
+				$user->role = Config::get('constants.ROLE_PRO_MNG');
+			}
+			
 			$user->created_by = $excuter;
 			$user->save();
 			
@@ -70,9 +75,9 @@ class SignUpProController extends Controller
 			$pro->date_of_birth = CommonController::convertStringToDate($request->dateOfBirth);
 			$pro->gender = $request->gender;
 			$govId = array(
-							'id' => $request->govId,
-							'date' => $request->govDate,
-							'place' => $request->govPlace
+				'id' => $request->govId,
+				'date' => $request->govDate,
+				'place' => $request->govPlace
 			);
 			$pro->gov_id = json_encode($govId);
 			$pro->fg_address = $request->familyRegAddress;
@@ -85,6 +90,16 @@ class SignUpProController extends Controller
 			$pro->services = json_encode($request->services);
 			$pro->created_by = $excuter;
 			$pro->save();
+			
+			if ($request->operationMode == 1) {
+				$comp = new Company();
+				$comp->name = $request->nameComp;
+				$comp->address = $request->addressComp;
+				$comp->district = $request->distComp;
+				$comp->city = $request->cityComp;
+				$comp->services = json_encode($request->services);
+				$comp->save();
+			}
 			
 			DB::commit();
 			return response()->json('', 200);

@@ -31,9 +31,10 @@ return [
 	/** ENUM **/
 	'ROLE_MEM' => '0',
 	'ROLE_PRO' => '1',
-	'ROLE_SRV' => '2',
-	'ROLE_MNG' => '3',
-	'ROLE_ADM' => '9',
+	'ROLE_PRO_MNG' => '2', // Pro Manager
+
+	'ROLE_CSO' => '90', // Customer Service
+	'ROLE_ADM' => '99',
 	
 	'FLG_OFF' => '0',
 	'FLG_ON' => '1',

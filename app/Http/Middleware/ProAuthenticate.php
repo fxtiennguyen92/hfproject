@@ -22,7 +22,7 @@ class ProAuthenticate
 			if (auth()->user()->role == Config::get('constants.ROLE_PRO'));
 			return $next($request);
 		} else {
-			return redirect()->route('login_page');;
+			return redirect()->route('login_page');
 		}
 		
 		throw new NotFoundHttpException();

@@ -1,18 +1,6 @@
 @extends('template.index')
 @push('stylesheets')
 <style>
-	nav.top-menu {
-		display: none;
-	}
-
-	body {
-		background: #f4f4f4;
-	}
-
-	nav.top-menu+.page-content {
-		margin-top: 0;
-	}
-
 	.dropdown-menu {
 		z-index: 3000;
 	}
@@ -68,6 +56,29 @@
 			});
 			
 		});
+
+		$('.row-company-info').hide();
+		$('div[data-toggle="buttons"]').on('change', function() {
+			var mode = $('input[name="operationMode"]:checked').val();
+			if (mode == 0) {
+				$('.row-company-info').hide();
+				$('.comp-name').removeValidation('NOTEMPTY');
+				$('.comp-addr').removeValidation('NOTEMPTY');
+			} else {
+				$('.row-company-info').show();
+				$('.comp-name').addValidation('NOTEMPTY')
+				$('.comp-addr').addValidation('NOTEMPTY')
+			}
+
+			$(this).find('span').each(function() {
+				if ($(this).hasClass('icmn-radio-unchecked')) {
+					$(this).removeClass('icmn-radio-unchecked').addClass('icmn-checkmark-circle');
+				} else {
+					$(this).removeClass('icmn-checkmark-circle').addClass('icmn-radio-unchecked');
+				}
+			});
+		});
+
 		$('input[name=email]').on('change', function() {
 			if ($(this).val() !== '') {
 				$(this).addValidation('EMAIL');
@@ -83,10 +94,10 @@
 					errorClass: 'has-danger',
 				},
 				callback: {
-					onError: function () {
+					onError: function (e) {
 						$.notify({
 							title: '<strong>Thất bại! </strong>',
-							message: 'Thông tin chưa đúng hoặc chưa đầy đủ.'
+							message: 'Thông tin chưa đúng.' + e.toString()
 						}, {
 							type: 'danger',
 							z_index: 1051,
@@ -146,178 +157,200 @@
 </script>
 @endpush
 
-@section('title')
-@endsection
+@section('title') Trở thành Đối tác @endsection
 
 @section('content')
-<section class="page-content signup-pro">
-	<div class="header-logo">
+<section class="content-body signup-pro">
+	<form id="frmMain" class="form-wrapper hf-card" name="form-validation" method="post" enctype="multipart/form-data" action="{{ route('signup_pro') }}">
+		<h1 class="page-title text-left">Thông tin <span style="white-space: nowrap;">Đối Tác<span></span></h1>
 		<div class="row">
-			<div class="col-md-2"></div>
-			<div class="col-md-8">
-				<a href="#"><img src="img/hf-logo.png" /></a>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-2">
-	</div>
-	<div class="col-md-8">
-		<form id="frmMain" class="form-wrapper hf-card" name="form-validation" method="post" enctype="multipart/form-data" action="{{ route('signup_pro') }}">
-			<h1 class="page-title text-left">Thông tin Đối Tác</h1>
-			<div class="row">
-				<div class="col-md-12">
-					<div class="row">
-						<div class="col-md-6">
-							<div class="form-group">
-								<label>Họ tên</label>
-								<input type="text" maxlength="225" class="form-control" name="name" data-validation="[NOTEMPTY]">
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<label>Ngày tháng năm sinh</label>
-								<input type="text" maxlength="10" class="form-control datepicker-only-init" name="dateOfBirth" data-validation="[NOTEMPTY]"/>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<label>Giới tính</label>
-								<select class="form-control selectpicker hf-select" name="gender">
-									<option value="1">Nam</option>
-									<option value="2">Nữ</option>
-									<option value="0">Khác</option>
-								</select>
-							</div>
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>Họ tên</label>
+							<input type="text" maxlength="225" class="form-control" name="name" data-validation="[NOTEMPTY]">
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-6">
-							<div class="form-group">
-								<label>Số CMND</label>
-								<input type="text" maxlength="12" class="form-control" name="govId">
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<label>Ngày cấp</label>
-								<input type="text" maxlength="10" class="form-control datepicker-only-init" name="govDate">
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<label>Nơi cấp</label>
-								<input type="text" maxlength="50" class="form-control" name="govPlace">
-							</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Ngày tháng năm sinh</label>
+							<input type="text" maxlength="10" class="form-control datepicker-only-init" name="dateOfBirth" data-validation="[NOTEMPTY]"/>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-6">
-							<div class="form-group">
-								<label>Hộ khẩu</label>
-								<input type="text" maxlength="150" class="form-control" name="familyRegAddress" data-validation="[NOTEMPTY]">
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<label>Quận/Huyện</label>
-								<select class="form-control selectpicker ddDist hf-select" data-live-search="true" name="familyRegDist" data-validation="[NOTEMPTY]">
-									@foreach($districts as $dist)
-									<option value="{{ $dist->code }}">{{ $dist->name }}</option>
-									@endforeach
-								</select>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<label>Thành phố/Tỉnh</label>
-								<select class="form-control selectpicker ddCity hf-select" data-live-search="true" name="familyRegCity" data-validation="[NOTEMPTY]">
-									@foreach($cities as $city)
-									<option value="{{ $city->code }}">{{ $city->name }}</option>
-									@endforeach
-								</select>
-							</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Giới tính</label>
+							<select class="form-control selectpicker hf-select" name="gender">
+								<option value="1">Nam</option>
+								<option value="2">Nữ</option>
+								<option value="0">Khác</option>
+							</select>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-6">
-							<div class="form-group">
-								<label>Chỗ ở hiện nay</label>
-								<input type="text" maxlength="150" class="form-control" name="address" data-validation="[NOTEMPTY]">
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<label>Quận/Huyện</label>
-								<select class="form-control selectpicker ddDist hf-select" data-live-search="true" name="dist" data-validation="[NOTEMPTY]">
-									@foreach($districts as $dist)
-									<option value="{{ $dist->code }}">{{ $dist->name }}</option>
-									@endforeach
-								</select>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<label>Thành phố/Tỉnh</label>
-								<select class="form-control selectpicker ddCity hf-select" data-live-search="true" name="city" data-validation="[NOTEMPTY]">
-									@foreach($cities as $city)
-									<option value="{{ $city->code }}">{{ $city->name }}</option>
-									@endforeach
-								</select>
-							</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Email</label>
+							<input type="text" maxlength="100" class="form-control" name="email">
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-6">
-							<div class="form-group">
-								<label>Email</label>
-								<input type="text" maxlength="100" class="form-control" name="email">
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<label>Số điện thoại</label>
-								<input type="text" maxlength="25" class="form-control phone" name="phone" data-validation="[NOTEMPTY]">
-							</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Số điện thoại</label>
+							<input type="text" maxlength="25" class="form-control phone" name="phone" data-validation="[NOTEMPTY]">
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="form-group">
-								<label>Mô hình kinh doanh</label>
-								<select class="form-control selectpicker hf-select" data-live-search="true" name="company">
-									<option value="" disable selected>&nbsp;</option>
-									<optgroup label="Cá nhân">
-										<option value="">Kinh doanh cá nhân</option>
-									</optgroup>
-									<optgroup label="Doanh nghiệp">
-										@foreach($companies as $comp)
-										<option value="{{ $comp->id }}">{{ $comp->name .' - '. $comp->address }}</option>
-										@endforeach
-									</optgroup>
-								</select>
-							</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>Số CMND</label>
+							<input type="text" maxlength="12" class="form-control" name="govId">
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="form-group">
-								<label>Dịch vụ tham gia</label>
-								<select class="form-control ddServices hf-select" multiple name="services[]">
-									@foreach($services as $service)
-									<option value="{{ $service->id }}">{{ $service->name }}</option>
-									@endforeach
-								</select>
-							</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Ngày cấp</label>
+							<input type="text" maxlength="10" class="form-control datepicker-only-init" name="govDate">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Nơi cấp</label>
+							<input type="text" maxlength="50" class="form-control" name="govPlace">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>Hộ khẩu</label>
+							<input type="text" maxlength="150" class="form-control" name="familyRegAddress" data-validation="[NOTEMPTY]">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Quận/Huyện</label>
+							<select class="form-control selectpicker ddDist hf-select" data-live-search="true" name="familyRegDist" data-validation="[NOTEMPTY]">
+								@foreach($districts as $dist)
+								<option value="{{ $dist->code }}">{{ $dist->name }}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Thành phố/Tỉnh</label>
+							<select class="form-control selectpicker ddCity hf-select" data-live-search="true" name="familyRegCity" data-validation="[NOTEMPTY]">
+								@foreach($cities as $city)
+								<option value="{{ $city->code }}">{{ $city->name }}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>Chỗ ở hiện nay</label>
+							<input type="text" maxlength="150" class="form-control" name="address" data-validation="[NOTEMPTY]">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Quận/Huyện</label>
+							<select class="form-control selectpicker ddDist hf-select" data-live-search="true" name="dist" data-validation="[NOTEMPTY]">
+								@foreach($districts as $dist)
+								<option value="{{ $dist->code }}">{{ $dist->name }}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Thành phố/Tỉnh</label>
+							<select class="form-control selectpicker ddCity hf-select" data-live-search="true" name="city" data-validation="[NOTEMPTY]">
+								@foreach($cities as $city)
+								<option value="{{ $city->code }}">{{ $city->name }}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-md-12">
+						<label>Hình thức kinh doanh</label>
+						<div class="btn-group" data-toggle="buttons">
+							<label class="btn active">
+								<input type="radio" name="operationMode" value="0" checked="checked">
+								<span class="icon icmn-checkmark-circle"></span>Cá nhân
+							</label>
+							<label class="btn">
+								<input type="radio" name="operationMode" value="1">
+								<span class="icon icmn-radio-unchecked"></span>Doanh nghiệp
+							</label>
+						</div>
+					</div>
+				</div>
+
+<!-- =================== DOANH NGHIỆP ================================ -->
+				<div class="row-company-info row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>Tên Doanh nghiệp</label>
+							<input type="text" maxlength="150" class="comp-name form-control" name="nameComp">
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>Địa chỉ Doanh nghiệp</label>
+							<input type="text" maxlength="150" class="comp-addr form-control" name="addressComp">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Quận/Huyện</label>
+							<select class="form-control selectpicker ddDist hf-select" data-live-search="true" name="distComp">
+								@foreach($districts as $dist)
+								<option value="{{ $dist->code }}">{{ $dist->name }}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Thành phố/Tỉnh</label>
+							<select class="form-control selectpicker ddCity hf-select" data-live-search="true" name="cityComp">
+								@foreach($cities as $city)
+								<option value="{{ $city->code }}">{{ $city->name }}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+				</div>
+<!-- ========================================================================= -->
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>Dịch vụ tham gia</label>
+							<select class="form-control ddServices hf-select" multiple name="services[]">
+								@foreach($services as $service)
+								<option value="{{ $service->id }}">{{ $service->name }}</option>
+								@endforeach
+							</select>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="form-group" style="text-align: right;">
-				<button id="btnSubmit" type="submit" class="btn btn-primary width-150 margin-top-50">Đăng ký</button>
-				<input type="hidden" name="_token" value="{{ csrf_token() }}" />
-			</div>
-		</form>
-	</div>
+		</div>
+		<div class="form-group" style="text-align: right;">
+			<button id="btnSubmit" type="submit" class="btn btn-primary width-150 margin-top-50">Đăng ký</button>
+			<input type="hidden" name="_token" value="{{ csrf_token() }}" />
+		</div>
+	</form>
 	<!-- MODAL -->
 </section>
 @endsection
