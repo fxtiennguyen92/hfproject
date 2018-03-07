@@ -29,7 +29,8 @@ return [
 	'404_PAGE' => 'error.404',
 	
 	/** MAIL **/
-	'VERIFY_MAIL_SUBJECT' => '[HAND FREE APP] Confirmation',
+	'VERIFY_MAIL_SUBJECT' => '[HANDFREE APP] Confirmation',
+	'ACTIVE_PRO_ACCOUNT_MAIL_SUBJECT' => '[HANDFREE APP] Kích hoạt tài khoản Đối tác',
 	
 	/** ENUM **/
 	'ROLE_MEM' => '0',

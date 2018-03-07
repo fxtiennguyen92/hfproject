@@ -281,8 +281,8 @@
 				<div class="row">
 					<div class="form-group col-md-12">
 						<label>Hình thức kinh doanh</label>
-						@if (auth()->user()->role == 2)
-						<input type="text" class="form-control" value="{{ $company->name }}" readonly>
+						@if (auth()->check() && auth()->user()->role == 2)
+							<input type="text" class="form-control" value="{{ $company->name }}" readonly>
 						@else
 						<div class="btn-group" data-toggle="buttons">
 							<label class="btn active">
@@ -340,7 +340,7 @@
 							<label>Dịch vụ tham gia</label>
 							<select class="form-control ddServices hf-select" multiple name="services[]">
 								@foreach($services as $service)
-									@if (auth()->user()->role == 2)
+									@if (auth()->check() && auth()->user()->role == 2)
 										@if (in_array($service->id, json_decode($company->services, true)))
 										<option value="{{ $service->id }}">{{ $service->name }}</option>
 										@endif

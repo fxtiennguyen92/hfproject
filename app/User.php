@@ -36,11 +36,18 @@ class User extends Authenticatable
 			->get();
 	}
 
+	public function getProOrProManager($proId) {
+		return $this::with('profile')
+			->where('id', $proId)
+			->proAndProManager()
+			->first();
+	}
+
 	public function getPro($proId) {
 		return $this::with('profile')
 			->where('id', $proId)
 			->pro()
-			->get();
+			->first();
 	}
 
 	public function getProsByProManager($proManagerId) {
@@ -57,13 +64,23 @@ class User extends Authenticatable
 			->where('created_by', $proManagerId)
 			->pro()
 			->available()
-			->get();
+			->first();
+	}
+
+	public function activeProAccount($id) {
+		$passwordTemp = str_random(12);
+		return User::where('id', $id)->update([
+						'password_temp' => $passwordTemp,
+						'password' => bcrypt($passwordTemp),
+						'confirm_flg' => Config::get('constants.FLG_ON'),
+						'delete_flg' => Config::get('constants.FLG_OFF')
+		]);
 	}
 
 	public function updateDeleteFlg ($id, $deleteFlg) {
 		return User::where('id', $id)->update([
-				'delete_flg' => $deleteFlg
-			]);
+						'delete_flg' => $deleteFlg
+		]);
 	}
 
 	public function profile() {

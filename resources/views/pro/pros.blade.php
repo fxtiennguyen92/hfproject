@@ -31,6 +31,7 @@
 				zeroRecords: "Không có bất kỳ Nhân viên nào",
 				search: "Tìm kiếm"
 			},
+			order: [[3, 'desc']],
 			columnDefs: [ { orderable: false, targets: [1] } ]
 		});
 
@@ -40,7 +41,7 @@
 			
 			swal({
 				title: '',
-				text: 'Bạn muốn xóa Nhân viên này?',
+				text: 'Bạn muốn xóa Tài khoản này?',
 				type: 'warning',
 				showCancelButton: true,
 				cancelButtonClass: 'btn-default',
@@ -56,7 +57,7 @@
 					success: function(response) {
 						swal({
 							title: 'Đã xóa',
-							text: 'Nhân viên đã được xóa.',
+							text: 'Tài khoản đã được xóa.',
 							type: 'info',
 							confirmButtonClass: 'btn-primary',
 							confirmButtonText: 'Kết thúc',
@@ -68,7 +69,7 @@
 					error: function(xhr) {
 						$.notify({
 							title: '<strong>Thất bại! </strong>',
-							message: 'Không thể xóa Nhân viên này.'
+							message: 'Không thể xóa Tài khoản này.'
 						}, {
 							type: 'danger',
 							z_index: 1051,
@@ -84,7 +85,7 @@
 			
 			swal({
 				title: '',
-				text: 'Bạn muốn kích hoạt Nhân viên này?',
+				text: 'Bạn muốn kích hoạt Tài khoản này?',
 				type: 'info',
 				showCancelButton: true,
 				cancelButtonClass: 'btn-default',
@@ -100,13 +101,13 @@
 					success: function(response) {
 						swal({
 							title: 'Thành công',
-							text: 'Nhân viên đã được kích hoạt.',
+							text: 'Tài khoản đã được kích hoạt.',
 							type: 'info',
 							confirmButtonClass: 'btn-primary',
 							confirmButtonText: 'Kết thúc',
 						},
 						function() {
-							location.href = returnUrl;
+							//location.href = returnUrl;
 						});
 					},
 					error: function(xhr) {
@@ -140,8 +141,10 @@
 							<th class="text-center col-name">Họ tên / Tài khoản</th>
 							<th>&nbsp;</th>
 							<th class="text-center col-state">Trạng thái</th>
+							<th class="text-center">Ngày đăng ký</th>
 							<th class="text-center">Giới tính</th>
 							<th class="text-center">Ngày sinh</th>
+							
 						</tr>
 					</thead>
 					<tbody>
@@ -191,6 +194,9 @@
 								@else
 									<span class="label label-success">Chờ Duyệt</span>
 								@endif
+							</td>
+							<td class="text-center">
+								{{ Carbon\Carbon::parse($pro['created_at'])->format('d-m-Y H:i') }}
 							</td>
 							<td class="text-center">
 								@if ($pro['profile']['gender'] == '1')

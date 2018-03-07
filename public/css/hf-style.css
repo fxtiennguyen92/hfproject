@@ -378,6 +378,7 @@ nav.top-menu .menu {
 .emp-table .emp-email {
   font-style: italic;
   color: #ccc;
+  text-transform: none !important;
 }
 .emp-table .col-name {
   min-width: 200px;

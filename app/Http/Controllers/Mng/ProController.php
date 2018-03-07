@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\ProProfile;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\MailController;
 
 class ProController extends Controller
 {
@@ -24,17 +25,24 @@ class ProController extends Controller
 		$userModel = new User();
 		$profileModel = new ProProfile();
 		
-		$pro = $userModel->getPro($proId);
+		$pro = $userModel->getProOrProManager($proId);
 		if (!$pro) {
 			response()->json('', 400);
 		}
 		
 		try {
 			DB::beginTransaction();
-			$userModel->updateDeleteFlg($proId, Config::get('constants.FLG_OFF'));
+			
+			$userModel->activeProAccount($proId);
 			$profileModel->updateState($proId, Config::get('constants.STS_READY'));
 			
 			DB::commit();
+			
+			// send mail
+			$pro = $userModel->getProOrProManager($proId);
+			$mail = new MailController();
+			$mail->sendActiveProAccountMail($pro->name, $pro->email, $pro->password_temp);
+			
 			response()->json('', 200);
 		} catch (\Exception $e) {
 			DB::rollback();
