@@ -10,18 +10,18 @@
       </div>
       <div class="icon-menu-wrapper">
         <ul class="icon-menu" >
-          <li class="icon-menu-user">
+          <li class="icon-menu-user @if(isset($nav)) @if($nav == 'control') active @endif @endif">
             <a href="{{ route('control') }}">
-              <span><i class="material-icons">person</i></span>
+              <span><i class="material-icons">&#xE7FD;</i></span>
             </a>
           </li>
           
-          <li class="icon-menu-notification">
+          <li class="icon-menu-notification @if(isset($nav)) @if($nav == 'noti') active @endif @endif">
             <a href="javascript:void(0)" >
               <span><i class="material-icons">&#xE80B;</i></span>
             </a>
           </li>
-          <li class="icon-menu-order">
+          <li class="icon-menu-order @if(isset($nav)) @if($nav == 'order') active @endif @endif">
             <a href="{{ route('order_list_page') }}" >
               <span><i class="material-icons">&#xE8B0;</i></span>
             </a>

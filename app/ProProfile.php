@@ -9,13 +9,13 @@ class ProProfile extends Model
 	// table name
 	protected $table = 'pro_profiles';
 	
-	/**
-	 * Get profile by id
-	 * 
-	 * @return array
-	 */
 	public function getById($id) {
 		return $this->where('id', $id)->first();
+	}
+	
+	public static function updateState($id, $state) {
+		return ProProfile::where('id', $id)
+			->update(['state' => $state]);
 	}
 	
 	public function user() {

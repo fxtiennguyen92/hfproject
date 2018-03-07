@@ -87,6 +87,14 @@ Route::post('/pro/order/quote', 'Pro\ProOrderController@quotePrice')
 
 Route::post('/password/change', 'Pro\ProProfileController@changePassword')
 	->name('change_password');
+
+
+Route::middleware('pro.manager')->group(function() {
+	Route::get('pro/mng/pros', 'Pro\ProManagerController@viewProListPage')
+		->name('view_pro_mng_page');
+});
+Route::post('pro/mng/pro/{proId}/delete','Pro\ProManagerController@deleteByProManager')
+	->name('delete_pro_by_pro_mng');
 /** Pro - END **/
 
 /** Common - STA **/
@@ -97,11 +105,15 @@ Route::get('/companies', 'CommonController@getCompanies')
 /** Common - END **/
 
 /** Management - STA **/
-Route::get('/mng/pros', 'Mng\ProController@viewList')
-	->name('pro_list_page');
-Route::post('/mng/pro/{id?}', 'Mng\ProController@modify')
-	->name('modify_pro');
+Route::middleware('cs.officer')->group(function() {
+	Route::get('/mng/pros', 'Mng\ProController@viewList')
+		->name('pro_list_page');
+	Route::post('/mng/pro/{proId}/active', 'Mng\ProController@active')
+		->name('active_pro');
+});
+/** Management - END **/
 
+/** Management - STA **/
 Route::get('/mng/companies', 'Mng\CompanyController@viewList')
 	->name('company_list_page');
 Route::get('/mng/company/{id?}', 'Mng\CompanyController@view')
@@ -111,9 +123,9 @@ Route::post('/mng/company/{id?}', 'Mng\CompanyController@modify')
 /** Management - END **/
 	
 /** Alpha - STA **/
-Route::get('/pro/signup', 'SignUpProController@view')
+Route::get('/pro/signup', 'Pro\ProSignUpController@view')
 	->name('pro_signup_page');
-Route::post('/pro/signup', 'SignUpProController@signup')
+Route::post('/pro/signup', 'Pro\ProSignUpController@signup')
 	->name('signup_pro');
 /** Alpha - END **/
 

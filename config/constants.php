@@ -15,12 +15,15 @@ return [
 	'PRO_PROFILE_PAGE' => 'pro.profile',
 	'PRO_ORDER_LIST_PAGE' => 'pro.orders',
 	'PRO_ORDER_PAGE' => 'pro.order',
+	'PRO_SIGN_UP_PAGE' => 'pro.signup',
+	
+	'PRO_MNG_PAGE' => 'pro.pros',
 	
 	'PRO_LIST_PAGE' => 'mng.pros',
 	'COMPANY_PAGE' => 'mng.company',
 	'COMPANY_LIST_PAGE' => 'mng.companies',
 	
-	'SIGN_UP_PRO_PAGE' => 'signup_pro',
+	
 	
 	/** ERROR PAGE **/
 	'404_PAGE' => 'error.404',

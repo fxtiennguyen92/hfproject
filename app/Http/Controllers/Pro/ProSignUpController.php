@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Pro;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
@@ -12,8 +12,9 @@ use App\ProProfile;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\CommonController;
 
-class SignUpProController extends Controller
+class ProSignUpController extends Controller
 {
 	protected function validator(array $data) {
 		return Validator::make($data, [
@@ -24,7 +25,6 @@ class SignUpProController extends Controller
 
 	public function view() {
 		$commonModel = new Common();
-		$companyModel = new Company();
 		$serviceModel = new Service();
 		
 		$cities = $commonModel->getCityList();
@@ -32,13 +32,24 @@ class SignUpProController extends Controller
 		if ($cities) {
 			$districts = $commonModel->getDistList($cities->first()->code);
 		}
-		$companies = $companyModel->getAll();
 		$services = $serviceModel->getAll();
 		
-		return view(Config::get('constants.SIGN_UP_PRO_PAGE'), array(
+		// pro manager
+		$company = null;
+		if (auth()->check()) {
+			if (auth()->user()->role == Config::get('constants.ROLE_PRO_MNG')) {
+				$profileModel = new ProProfile();
+				$manager = $profileModel->getById(auth()->user()->id);
+				
+				$companyModel = new Company();
+				$company = $companyModel->get($manager->company_id);
+			}
+		}
+		
+		return view(Config::get('constants.PRO_SIGN_UP_PAGE'), array(
 						'cities' => $cities,
 						'districts' => $districts,
-						'companies' => $companies,
+						'company' => $company,
 						'services' => $services
 		));
 	}
@@ -51,12 +62,20 @@ class SignUpProController extends Controller
 		
 		// register
 		try {
-			$excuter = '';
-			if (auth()->check()) {
-				$excuter = auth()->user()->id;
+			DB::beginTransaction();
+			
+			// company
+			if ($request->operationMode == 1) {
+				$comp = new Company();
+				$comp->name = $request->nameComp;
+				$comp->address = $request->addressComp;
+				$comp->district = $request->distComp;
+				$comp->city = $request->cityComp;
+				$comp->services = json_encode($request->services);
+				$comp->save();
 			}
 			
-			DB::beginTransaction();
+			// account
 			$user = new User();
 			$user->name = $request->name;
 			$user->email = $request->email;
@@ -67,9 +86,12 @@ class SignUpProController extends Controller
 				$user->role = Config::get('constants.ROLE_PRO_MNG');
 			}
 			
-			$user->created_by = $excuter;
+			if (auth()->check()) {
+				$user->created_by = auth()->user()->id;
+			}
 			$user->save();
 			
+			// profile
 			$pro = new ProProfile();
 			$pro->id = $user->id;
 			$pro->date_of_birth = CommonController::convertStringToDate($request->dateOfBirth);
@@ -86,21 +108,29 @@ class SignUpProController extends Controller
 			$pro->address = $request->address;
 			$pro->district = $request->dist;
 			$pro->city = $request->city;
-			$pro->company_id = $request->company;
 			$pro->services = json_encode($request->services);
-			$pro->created_by = $excuter;
-			$pro->save();
 			
-			if ($request->operationMode == 1) {
-				$comp = new Company();
-				$comp->name = $request->nameComp;
-				$comp->address = $request->addressComp;
-				$comp->district = $request->distComp;
-				$comp->city = $request->cityComp;
-				$comp->services = json_encode($request->services);
-				$comp->save();
+			if (auth()->check()) {
+				if (auth()->user()->role == Config::get('constants.ROLE_PRO_MNG')) {
+					$profileModel = new ProProfile();
+					$manager = $profileModel->getById(auth()->user()->id);
+					
+					$pro->company_id = $manager->company_id;
+				} else {
+					if ($request->operationMode == 1) {
+						$pro->company_id = $comp->id;
+					}
+				}
+				
+				$pro->created_by = auth()->user()->id;
+			} else {
+				if ($request->operationMode == 1) {
+					$pro->company_id = $comp->id;
+				}
+				$pro->created_by = $user->id;
 			}
 			
+			$pro->save();
 			DB::commit();
 			return response()->json('', 200);
 		} catch(\Exception $e) {

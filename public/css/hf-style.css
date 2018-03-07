@@ -2,6 +2,12 @@ body.single-page {
   background: #fafbfc;
 }
 
+table {
+  font-size: 14px;
+}
+.label {
+  border-radius: 0;
+}
 .top-menu .icon-menu-wrapper {
   float: right;
   width: 55%;
@@ -24,6 +30,11 @@ body.single-page {
   font-size: 30px;
   padding: 6px 5px 20px 5px;
   color: #242424;
+}
+
+.top-menu .icon-menu .active i {
+  padding-bottom: 20px;
+  border-bottom: 3px #242424 solid;
 }
 
 .top-menu .icon-menu i:hover {
@@ -281,63 +292,63 @@ nav.top-menu .menu {
   width: 100%;
 }
 
-.signup-pro .form-wrapper {
-  padding: 50px;
+.content-template-1 .form-wrapper {
+  padding: 30px 20px;
   border-radius: 0px;
   background: #fff;
   margin-bottom: 10px;
 }
 
-.signup-pro .form-control {
+.content-template-1 .form-control {
   padding: 5px;
 }
 
-.signup-pro .hf-select .btn {
+.content-template-1 .hf-select .btn {
   padding: 0 5px 5px 5px;
 }
 
-.signup-pro .form-control:disabled,
-.signup-pro .form-control[readonly] {
+.content-template-1 .form-control:disabled,
+.content-template-1 .form-control[readonly] {
   background: none;
 }
 
-.signup-pro .select2-results__options li,
-.signup-pro .select2-selection__rendered li {
+.content-template-1 .select2-results__options li,
+.content-template-1 .select2-selection__rendered li {
   font-size: 14px;
 }
 
-.signup-pro .btn-group {
+.content-template-1 .btn-group {
   width: 100%;
 }
-.signup-pro .btn-group label {
+.content-template-1 .btn-group label {
   width: 50%;
   text-align: left;
   color: #242424;
 }
-.signup-pro .btn-group label > span {
+.content-template-1 .btn-group label > span {
   padding-right: 10px;
 }
-.signup-pro .btn-group .btn {
+.content-template-1 .btn-group .btn {
   border: 0;
 }
-.signup-pro .btn-group .active {
+.content-template-1 .btn-group .active {
   background: none;
   background-color: none;
   color: #02b3e4;
 }
-.signup-pro .btn-group .active > span {
+.content-template-1 .btn-group .active > span {
   color: #02b3e4;
 }
 
-.signup-pro .page-title {
+.content-template-1 .page-title {
   color: #02b3e4;
-  text-align: left;
+  text-align: center;
   margin: 0;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   text-transform: none;
 }
 
-.signup-pro .header-logo {
+.content-template-1 .header-logo {
   padding: 15px 0;
   background: #fff;
   margin-bottom: 50px;
@@ -345,8 +356,31 @@ nav.top-menu .menu {
   box-shadow: 0 0 10px 0px rgba(46, 61, 73, 0.2);
 }
 
-.signup-pro .header-logo img {
+.content-template-1 .header-logo img {
   max-width: 200px;
+}
+
+.content-template-1 .table td,
+.content-template-1 .table th {
+  padding: 5px;
+}
+.dataTables_filter label {
+  font-size: 14px;
+}
+.dataTables_filter .input-sm {
+  font-size: 14px;
+  width: 100px;
+}
+.emp-table .emp-name {
+  font-weight: bold;
+  color: #02b3e4;
+}
+.emp-table .emp-email {
+  font-style: italic;
+  color: #ccc;
+}
+.emp-table .col-name {
+  min-width: 200px;
 }
 
 .order-item {
@@ -1574,7 +1608,7 @@ section.user-menu .list-menu a > i {
     border: none;
     min-height: 0;
   }
-  .signup-pro .form-wrapper {
+  .content-template-1 .form-wrapper {
     padding: 30px;
   }
 }

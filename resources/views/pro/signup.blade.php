@@ -109,17 +109,16 @@
 							url: '{{ route("signup_pro") }}',
 							data: $('#frmMain').serialize(),
 							success: function(response) {
-								$.notify({
-									title: '<strong>Hoàn tất! </strong>',
-									message: 'Đăng ký thành công.'
-								}, {
+								swal({
+									title: 'Chúc mừng',
+									text: 'Đăng ký thành công, đội ngũ CSKH sẽ liên lạc với bạn trong thời gian nhanh nhất',
 									type: 'success',
-									z_index: 1051,
+									confirmButtonClass: 'btn-primary',
+									confirmButtonText: 'Kết thúc',
+								},
+								function() {
+									location.href = '{{ route("home_page") }}';
 								});
-
-								setTimeout(function() {
-									location.reload();
-								}, 1500);
 							},
 							error: function(xhr) {
 								if (xhr.status == 400) {
@@ -160,8 +159,8 @@
 @section('title') Trở thành Đối tác @endsection
 
 @section('content')
-<section class="content-body signup-pro">
-	<form id="frmMain" class="form-wrapper hf-card" name="form-validation" method="post" enctype="multipart/form-data" action="{{ route('signup_pro') }}">
+<section class="content-body content-template-1">
+	<form id="frmMain" class="form-wrapper" name="form-validation" method="post" enctype="multipart/form-data" action="{{ route('signup_pro') }}">
 		<h1 class="page-title text-left">Thông tin <span style="white-space: nowrap;">Đối Tác<span></span></h1>
 		<div class="row">
 			<div class="col-md-12">
@@ -282,6 +281,9 @@
 				<div class="row">
 					<div class="form-group col-md-12">
 						<label>Hình thức kinh doanh</label>
+						@if (auth()->user()->role == 2)
+						<input type="text" class="form-control" value="{{ $company->name }}" readonly>
+						@else
 						<div class="btn-group" data-toggle="buttons">
 							<label class="btn active">
 								<input type="radio" name="operationMode" value="0" checked="checked">
@@ -292,6 +294,7 @@
 								<span class="icon icmn-radio-unchecked"></span>Doanh nghiệp
 							</label>
 						</div>
+						@endif
 					</div>
 				</div>
 
@@ -331,14 +334,19 @@
 					</div>
 				</div>
 <!-- ========================================================================= -->
-
 				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group">
 							<label>Dịch vụ tham gia</label>
 							<select class="form-control ddServices hf-select" multiple name="services[]">
 								@foreach($services as $service)
-								<option value="{{ $service->id }}">{{ $service->name }}</option>
+									@if (auth()->user()->role == 2)
+										@if (in_array($service->id, json_decode($company->services, true)))
+										<option value="{{ $service->id }}">{{ $service->name }}</option>
+										@endif
+									@else
+										<option value="{{ $service->id }}">{{ $service->name }}</option>
+									@endif
 								@endforeach
 							</select>
 						</div>
