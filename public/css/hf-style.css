@@ -649,10 +649,10 @@ nav.top-menu .menu .menu-info-block {
   border-radius: 0!important;
 }
 
-.single-page-login-alpha .single-page-block .single-page-block-inner .single-page-block-form .input-group-addon {
+.input-group-addon {
   background: none;
   border: none;
-  border-bottom: solid 1px;
+  border-bottom: solid 1px #dfe4ed;
 }
 
 body.single-page .single-page-block .single-page-block-inner {

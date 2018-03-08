@@ -18,6 +18,13 @@ Route::get('/redirect', 'Auth\LoginController@redirectPath')
 Route::get('/control', 'InitPageController@control')
 	->name('control');
 
+/** Password - STA **/
+Route::get('/password', 'Auth\PasswordController@view')
+	->name('password_page');
+Route::post('/password', 'Auth\PasswordController@change')
+	->name('change_password');
+/** Password - END **/
+
 /** Login and Logout - STA **/
 Route::get('/login', 'Auth\LoginController@view')
 	->name('login_page');

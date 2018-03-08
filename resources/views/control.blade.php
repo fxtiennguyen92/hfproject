@@ -21,6 +21,7 @@
     <li><a href="javascript:void(0);"><i class="material-icons">&#xE853;</i> Tài khoản</a></li>
     <li><a href="javascript:void(0);"><i class="material-icons">&#xE8B0;</i> Đơn hàng</a></li>
     @endif
+    <li><a href="{{ route('password_page') }}"><i class="material-icons">&#xE8E8;</i> Mật khẩu</a></li>
     <li><a href="{{ route('logout') }}"><i class="material-icons">&#xE879;</i> Đăng xuất</a></li>
   @else
     <li><a href="javascript:void(0);"><i class="material-icons">&#xE887;</i> Trợ giúp</a></li>

@@ -19,7 +19,7 @@
           onSubmit: function() {
             $.ajax({
               type: 'POST',
-              url: "{{ route('login') }}",
+              url: '{{ route("login") }}',
               data: $('#frmMain').serialize(),
               success: function(response) {
                 $.notify({
@@ -28,7 +28,7 @@
                 }, {
                   type: 'success',
                 });
-                location.href = "{{ route('redirect') }}";
+                location.href = '{{ route("redirect") }}';
               },
               error: function(xhr) {
                 if (xhr.status == 401) {

@@ -7,6 +7,8 @@ return [
 	'DASHBOARD_PAGE' => 'home',
 	'LOGIN_PAGE' => 'login',
 	'SIGNUP_PAGE' => 'signup',
+	'PASSWORD_PAGE' => 'password',
+
 	'SURVEY_PAGE' => 'survey',
 	'COMPLETE_PAGE' => 'complete',
 	'ORDER_LIST_PAGE' => 'orders',
