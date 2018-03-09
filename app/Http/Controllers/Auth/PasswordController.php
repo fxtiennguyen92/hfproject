@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Http\Request;
 
 class PasswordController extends Controller
 {
@@ -24,7 +25,7 @@ class PasswordController extends Controller
 		));
 	}
 	
-	public function change($request) {
+	public function change(Request $request) {
 		// 		if (!auth()->check()) {
 		// 			throw new NotFoundHttpException();
 		// 		}
