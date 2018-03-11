@@ -92,10 +92,6 @@ Route::get('/pro/order/{orderId}', 'Pro\ProOrderController@view')
 Route::post('/pro/order/quote', 'Pro\ProOrderController@quotePrice')
 	->name('quote_price');
 
-Route::post('/password/change', 'Pro\ProProfileController@changePassword')
-	->name('change_password');
-
-
 Route::middleware('pro.manager')->group(function() {
 	Route::get('pro/mng/pros', 'Pro\ProManagerController@viewProListPage')
 		->name('view_pro_mng_page');

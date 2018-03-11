@@ -15,20 +15,36 @@ $(document).ready(function() {
 						url: '{{ route("change_password") }}',
 						data: $('#frmMain').serialize(),
 						success: function(response) {
-							
+							swal({
+								title: 'Thành công',
+								text: 'Hoàn tất cập nhật mật khẩu!',
+								type: 'success',
+								confirmButtonClass: 'btn-primary',
+								confirmButtonText: 'Quay lại',
+							},
+							function() {
+								location.href = '{{ route("control") }}';
+							});
 						},
 						error: function(xhr) {
 							if (xhr.status == 401) {
 								$.notify({
 									title: '<strong>Thất bại! </strong>',
-									message: 'Tài khoản bạn nhập chưa đúng.'
+									message: 'Mật khẩu hiện tại chưa đúng.'
 								}, {
 									type: 'danger',
+								});
+							} else if (xhr.status == 409) {
+								$.notify({
+									title: '<strong>Thất bại! </strong>',
+									message: 'Mật khẩu không đúng định dạng.'
+								}, {
+									type: 'danger'
 								});
 							} else {
 								$.notify({
 									title: '<strong>Thất bại! </strong>',
-									message: 'Đăng nhập không thành công, hãy thử lại.'
+									message: 'Có lỗi phát sinh, xin thử lại.'
 								}, {
 									type: 'danger'
 								});
@@ -58,7 +74,7 @@ $(document).ready(function() {
 			<div class="col-md-12">
 				<div class="form-group">
 					<label>Mật khẩu hiện tại</label>
-					<input type="password" maxlength="100" class="form-control password" name="currPassword" data-validation="[NOTEMPTY]">
+					<input type="password" maxlength="100" class="form-control password" name="current_password" data-validation="[NOTEMPTY]">
 				</div>
 			</div>
 			@endif

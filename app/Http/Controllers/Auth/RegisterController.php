@@ -100,7 +100,7 @@ class RegisterController extends Controller
 		if ($validator->fails()) {
 			$errors = $validator->errors()->getMessages();
 			
-			return response()->json($errors, 409);
+			return response()->json('', 409);
 		}
 		
 		// registration

@@ -83,6 +83,12 @@ class User extends Authenticatable
 		]);
 	}
 
+	public function updatePassword($id, $password) {
+		return User::where('id', $id)->update([
+						'password' => bcrypt($password)
+		]);
+	}
+
 	public function profile() {
 		return $this->hasOne('App\ProProfile', 'id');
 	}
