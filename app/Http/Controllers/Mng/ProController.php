@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Mng;
 
 use App\Http\Controllers\Controller;
@@ -9,6 +8,9 @@ use App\User;
 use App\ProProfile;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\MailController;
+use App\Common;
+use App\Service;
+use App\Http\Controllers\FileController;
 
 class ProController extends Controller
 {
@@ -19,6 +21,50 @@ class ProController extends Controller
 		return view(Config::get('constants.PRO_MNG_PAGE'), array(
 						'pros' => $pros,
 		));
+	}
+
+	public function viewProfile($proId, Request $request) {
+		$commonModel = new Common();
+		$serviceModel = new Service();
+		$userModel = new User();
+		
+		$pro = $userModel->getProOrProManager($proId);
+		
+		$cities = $commonModel->getCityList();
+		$districts = null;
+		if ($cities) {
+			$districts = $commonModel->getDistList($cities->first()->code);
+		}
+		$services = $serviceModel->getAll();
+
+		// put proId to session
+		$request->session()->put('proId', $proId);
+
+		return view(Config::get('constants.PRO_PROFILE_MNG_PAGE'), array(
+						'pro' => $pro,
+						'cities' => $cities,
+						'districts' => $districts,
+						'services' => $services
+		));
+	}
+
+	public function approveAvatar(Request $request) {
+		if (!$request->session()->has('proId')) {
+			response()->json('', 400);
+		}
+		$proId = $request->session()->get('proId');
+		
+		$image = $request->only('image');
+		$baseToPhp = explode(',', $image['image']); // remove the "data:image/png;base64,"
+		
+		try {
+			$data = base64_decode($baseToPhp[1]);
+			FileController::saveAvatar($data, $proId);
+			
+			return redirect()->back();
+		} catch (\Exception $e) {
+			return response()->json('', 400);
+		}
 	}
 
 	public function active($proId) {

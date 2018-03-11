@@ -19,7 +19,8 @@ class CusServiceOfficerAuthenticate
 	public function handle($request, Closure $next)
 	{
 		if (auth()->check()) {
-			if (auth()->user()->role == Config::get('constants.ROLE_CSO'))
+			if (auth()->user()->role == Config::get('constants.ROLE_CSO')
+				|| auth()->user()->role == Config::get('constants.ROLE_ADM'))
 			return $next($request);
 		} else {
 			return redirect()->route('login_page');

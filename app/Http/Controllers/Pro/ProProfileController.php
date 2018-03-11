@@ -31,16 +31,11 @@ class ProProfileController extends Controller
 	public function changeAvatar(Request $request) {
 		$image = $request->only('image');
 		$baseToPhp = explode(',', $image['image']); // remove the "data:image/png;base64,"
-		$isImage = $this->check_base64_image($baseToPhp[1]);
 		
-		if ($isImage) {
-			$data = base64_decode($baseToPhp[1]);
-			FileController::saveAvatar($data);
-			
-			return redirect()->back();
-		}
+		$data = base64_decode($baseToPhp[1]);
+		FileController::saveAvatar($data);
 		
-		return response()->json('', 400);
+		return redirect()->back();
 	}
 
 	/**
@@ -106,29 +101,5 @@ class ProProfileController extends Controller
 			'newPassword' => 'required|string|min:10',
 			'rePassword' => 'required|string|same:newPassword',
 		]);
-	}
-
-	/**
-	 * Check is true image.
-	 * 
-	 * @param base64 string
-	 * @return bool
-	 */
-	private function check_base64_image($base64) {
-		$img = @imagecreatefromstring(base64_decode($base64));
-		if (!$img) {
-			return false;
-		}
-		
-		@imagepng($img, '../storage/app/public/tmp.png');
-		$info = @getimagesize('../storage/app/public/tmp.png');
-		
-		@unlink('../storage/app/public/tmp.png');
-		
-		if ($info[0] > 0 && $info[1] > 0 && $info['mime']) {
-			return true;
-		}
-		
-		return false;
 	}
 }

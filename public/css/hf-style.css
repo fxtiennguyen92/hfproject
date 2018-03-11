@@ -41,7 +41,12 @@ table {
   padding-bottom: 20px;
   border-bottom: 3px #242424 solid;
 }
-
+.content-body-full-page {
+  background: #fff;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  margin: 20px;
+}
 .content-body {
   max-width: 500px;
   min-height: 560px;
@@ -321,9 +326,11 @@ nav.top-menu .menu {
   width: 100%;
 }
 .content-template-1 .btn-group label {
-  width: 50%;
   text-align: left;
   color: #242424;
+}
+.btn-group-50 label {
+  width: 50%;
 }
 .content-template-1 .btn-group label > span {
   padding-right: 10px;

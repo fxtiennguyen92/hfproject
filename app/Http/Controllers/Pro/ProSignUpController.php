@@ -67,10 +67,10 @@ class ProSignUpController extends Controller
 			// company
 			if ($request->operationMode == 1) {
 				$comp = new Company();
-				$comp->name = $request->nameComp;
-				$comp->address = $request->addressComp;
-				$comp->district = $request->distComp;
-				$comp->city = $request->cityComp;
+				$comp->name = $request->compName;
+				$comp->address = $request->compAddress;
+				$comp->district = $request->compDist;
+				$comp->city = $request->compCity;
 				$comp->services = json_encode($request->services);
 				$comp->save();
 			}
@@ -94,6 +94,7 @@ class ProSignUpController extends Controller
 			// profile
 			$pro = new ProProfile();
 			$pro->id = $user->id;
+			$pro->name = $request->name;
 			$pro->date_of_birth = CommonController::convertStringToDate($request->dateOfBirth);
 			$pro->gender = $request->gender;
 			$govId = array(

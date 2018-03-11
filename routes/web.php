@@ -83,21 +83,20 @@ Route::middleware('pro')->group(function() {
 		->name('change_pro_profile');
 	Route::post('/pro/avatar/change', 'Pro\ProProfileController@changeAvatar')
 		->name('change_pro_avatar');
+	Route::get('/pro/orders/{style?}', 'Pro\ProOrderController@viewList')
+		->name('pro_order_list_page');
+	Route::get('/pro/order/{orderId}', 'Pro\ProOrderController@view')
+		->name('pro_order_page');
+	Route::post('/pro/order/quote', 'Pro\ProOrderController@quotePrice')
+		->name('quote_price');
 });
 
-Route::get('/pro/orders/{style?}', 'Pro\ProOrderController@viewList')
-	->name('pro_order_list_page');
-Route::get('/pro/order/{orderId}', 'Pro\ProOrderController@view')
-	->name('pro_order_page');
-Route::post('/pro/order/quote', 'Pro\ProOrderController@quotePrice')
-	->name('quote_price');
 
 Route::middleware('pro.manager')->group(function() {
 	Route::get('pro/mng/pros', 'Pro\ProManagerController@viewProListPage')
 		->name('view_pro_mng_page');
 });
-Route::post('pro/mng/pro/{proId}/delete','Pro\ProManagerController@deleteByProManager')
-	->name('delete_pro_by_pro_mng');
+
 /** Pro - END **/
 
 /** Common - STA **/
@@ -113,10 +112,16 @@ Route::middleware('cs.officer')->group(function() {
 		->name('pro_list_page');
 	Route::post('/mng/pro/{proId}/active', 'Mng\ProController@active')
 		->name('active_pro');
+	Route::post('pro/mng/pro/{proId}/delete','Pro\ProManagerController@deleteByProManager')
+		->name('delete_pro_by_pro_mng');
+	
+	Route::get('/mng/pro/{proId}/profile', 'Mng\ProController@viewProfile')
+		->name('pro_profile_mng_page');
+	Route::post('/mng/pro/avatar', 'Mng\ProController@approveAvatar')
+		->name('approve_pro_avatar');
 });
-/** Management - END **/
 
-/** Management - STA **/
+
 Route::get('/mng/companies', 'Mng\CompanyController@viewList')
 	->name('company_list_page');
 Route::get('/mng/company/{id?}', 'Mng\CompanyController@view')

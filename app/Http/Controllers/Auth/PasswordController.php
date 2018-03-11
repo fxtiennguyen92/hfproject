@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PasswordController extends Controller
 {
@@ -19,13 +19,11 @@ class PasswordController extends Controller
 	}
 	
 	public function view() {
-// 		if (!auth()->check()) {
-// 			return redirect()->route('home_page');
-// 		}
+		if (!auth()->check()) {
+			return redirect()->route('home_page');
+		}
 		
-		return view(Config::get('constants.PASSWORD_PAGE'), array(
-			
-		));
+		return view(Config::get('constants.PASSWORD_PAGE'));
 	}
 	
 	public function change(Request $request) {

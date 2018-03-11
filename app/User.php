@@ -37,7 +37,7 @@ class User extends Authenticatable
 	}
 
 	public function getProOrProManager($proId) {
-		return $this::with('profile')
+		return $this::with('profile', 'profile.company')
 			->where('id', $proId)
 			->proAndProManager()
 			->first();

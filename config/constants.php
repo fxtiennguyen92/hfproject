@@ -22,6 +22,7 @@ return [
 	'PRO_MNG_PAGE' => 'pro.pros',
 	
 	'PRO_LIST_PAGE' => 'mng.pros',
+	'PRO_PROFILE_MNG_PAGE' => 'mng.pro_profile',
 	'COMPANY_PAGE' => 'mng.company',
 	'COMPANY_LIST_PAGE' => 'mng.companies',
 	

@@ -284,7 +284,7 @@
 						@if (auth()->check() && auth()->user()->role == 2)
 							<input type="text" class="form-control" value="{{ $company->name }}" readonly>
 						@else
-						<div class="btn-group" data-toggle="buttons">
+						<div class="btn-group btn-group-50" data-toggle="buttons">
 							<label class="btn active">
 								<input type="radio" name="operationMode" value="0" checked="checked">
 								<span class="icon icmn-checkmark-circle"></span>Cá nhân
@@ -303,19 +303,19 @@
 					<div class="col-md-12">
 						<div class="form-group">
 							<label>Tên Doanh nghiệp</label>
-							<input type="text" maxlength="150" class="comp-name form-control" name="nameComp">
+							<input type="text" maxlength="150" class="comp-name form-control" name="compName">
 						</div>
 					</div>
 					<div class="col-md-12">
 						<div class="form-group">
 							<label>Địa chỉ Doanh nghiệp</label>
-							<input type="text" maxlength="150" class="comp-addr form-control" name="addressComp">
+							<input type="text" maxlength="150" class="comp-addr form-control" name="compAddress">
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<label>Quận/Huyện</label>
-							<select class="form-control selectpicker ddDist hf-select" data-live-search="true" name="distComp">
+							<select class="form-control selectpicker ddDist hf-select" data-live-search="true" name="compDist">
 								@foreach($districts as $dist)
 								<option value="{{ $dist->code }}">{{ $dist->name }}</option>
 								@endforeach
@@ -325,7 +325,7 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label>Thành phố/Tỉnh</label>
-							<select class="form-control selectpicker ddCity hf-select" data-live-search="true" name="cityComp">
+							<select class="form-control selectpicker ddCity hf-select" data-live-search="true" name="compCity">
 								@foreach($cities as $city)
 								<option value="{{ $city->code }}">{{ $city->name }}</option>
 								@endforeach
