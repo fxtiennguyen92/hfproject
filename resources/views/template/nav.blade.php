@@ -12,10 +12,9 @@
         <ul class="icon-menu" >
           <li class="icon-menu-user @if(isset($nav)) @if($nav == 'control') active @endif @endif">
             <a href="{{ route('control') }}">
-              <span><i class="material-icons">&#xE7FD;</i></span>
+              <span>@if (auth()->check()) {{ auth()->user()->email }} @endif<i class="material-icons">&#xE7FD;</i></span>
             </a>
           </li>
-          
           <li class="icon-menu-notification @if(isset($nav)) @if($nav == 'noti') active @endif @endif">
             <a href="javascript:void(0)" >
               <span><i class="material-icons">&#xE80B;</i></span>
