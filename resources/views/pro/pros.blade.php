@@ -78,50 +78,6 @@
 				});
 			});
 		});
-
-		$('a.enable').on('click', function() {
-			var url = '{{ route("active_pro", ["proId" => "proIndex"]) }}';
-			url = url.replace('proIndex', $(this).attr('pro-id'));
-			
-			swal({
-				title: '',
-				text: 'Bạn muốn kích hoạt Tài khoản này?',
-				type: 'info',
-				showCancelButton: true,
-				cancelButtonClass: 'btn-default',
-				confirmButtonClass: 'btn-info',
-				cancelButtonText: 'Quay lại',
-				confirmButtonText: 'Kích hoạt',
-			},
-			function(){
-				$.ajax({
-					type: 'POST',
-					url: url,
-					data: $('#frmMain').serialize(),
-					success: function(response) {
-						swal({
-							title: 'Thành công',
-							text: 'Tài khoản đã được kích hoạt.',
-							type: 'info',
-							confirmButtonClass: 'btn-primary',
-							confirmButtonText: 'Kết thúc',
-						},
-						function() {
-							//location.href = returnUrl;
-						});
-					},
-					error: function(xhr) {
-						$.notify({
-							title: '<strong>Thất bại! </strong>',
-							message: 'Không thể xóa Nhân viên này.'
-						}, {
-							type: 'danger',
-							z_index: 1051,
-						});
-					}
-				});
-			});
-		});
 	});
 </script>
 @endpush
@@ -164,15 +120,9 @@
 									<i class="icmn-cog3"></i>
 									</span>
 									<ul class="dropdown-menu dropdown-menu-right" role="menu">
-										<a class="dropdown-item view" pro-id="{{ $pro['id'] }}" href="javascript:void(0)">
-											<i class="icmn-grid6"></i> Chi tiết
-										</a>
-										<a class="dropdown-item delete" pro-id="{{ $pro['id'] }}" href="javascript:void(0)">
-											<i class="icmn-bin"></i> Xóa
-										</a>
 										@if (auth()->user()->role == 90)
-										<a class="dropdown-item enable" pro-id="{{ $pro['id'] }}" href="javascript:void(0)">
-											<i class="icmn-checkmark4"></i> Kích hoạt
+										<a class="dropdown-item view" href="{{ route('pro_profile_mng_page', ['proId' => $pro['id']]) }}">
+											<i class="icmn-grid6"></i> Chi tiết
 										</a>
 										@endif
 									</ul>

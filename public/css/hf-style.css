@@ -1458,6 +1458,15 @@ body.single-page .single-page-block .single-page-block-inner {
   background: #fafafa;
 }
 
+.modal-content {
+  border-radius: 0;
+}
+.modal-title {
+  color: #02b3e4;
+  text-align: center;
+  margin: 0;
+  text-transform: none;
+}
 /*
 * LEFT MENU
 */

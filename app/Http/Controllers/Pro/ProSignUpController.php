@@ -94,7 +94,6 @@ class ProSignUpController extends Controller
 			// profile
 			$pro = new ProProfile();
 			$pro->id = $user->id;
-			$pro->name = $request->name;
 			$pro->date_of_birth = CommonController::convertStringToDate($request->dateOfBirth);
 			$pro->gender = $request->gender;
 			$govId = array(

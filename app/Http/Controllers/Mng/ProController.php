@@ -67,7 +67,12 @@ class ProController extends Controller
 		}
 	}
 
-	public function active($proId) {
+	public function active(Request $request) {
+		if (!$request->session()->has('proId')) {
+			response()->json('', 400);
+		}
+		$proId = $request->session()->get('proId');
+		
 		$userModel = new User();
 		$profileModel = new ProProfile();
 		
@@ -96,7 +101,15 @@ class ProController extends Controller
 		}
 	}
 
-	public function modify($id = null, Request $request) {
+	public function updateCV(Request $request) {
+		if (!$request->session()->has('proId')) {
+			response()->json('', 400);
+		}
+		$proId = $request->session()->get('proId');
 		
+		$profileModel = new ProProfile();
+		$profileModel->updateInspection($proId, json_encode($request->inspection));
+		
+		response()->json('', 200);
 	}
 }

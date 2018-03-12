@@ -18,6 +18,11 @@ class ProProfile extends Model
 			->update(['state' => $state]);
 	}
 	
+	public static function updateInspection($id, $inspection) {
+		return ProProfile::where('id', $id)
+			->update(['inspection' => $inspection]);
+	}
+	
 	public function user() {
 		return $this->hasOne('App\User', 'id', 'id');
 	}

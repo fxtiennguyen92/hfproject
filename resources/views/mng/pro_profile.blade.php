@@ -160,10 +160,12 @@
 		$('select[name=city]').val("{{ $pro->profile->city }}");
 		$('select[name=city]').selectpicker('refresh');
 
+		@if ($pro->profile->company)
 		$('select[name=compDist]').val("{{ $pro->profile->company->district }}");
 		$('select[name=compDist]').selectpicker('refresh');
 		$('select[name=compCity]').val("{{ $pro->profile->company->city }}");
 		$('select[name=compCity]').selectpicker('refresh');
+		@endif
 
 		$('#frmMain').validate({
 			submit: {
@@ -209,6 +211,80 @@
 				}
 			}
 		});
+
+		$('#btnUpdate').on('click', function() {
+			var url = '{{ route("update_pro_cv") }}';
+
+			$.ajax({
+				type: 'POST',
+				url: url,
+				data: $('#frmApprove').serialize(),
+				success: function(response) {
+					swal({
+						title: 'Thành công',
+						text: 'Đã cập nhật thành công.',
+						type: 'info',
+						confirmButtonClass: 'btn-primary',
+						confirmButtonText: 'Kết thúc',
+					},
+					function() {
+						location.reload();
+					});
+				},
+				error: function(xhr) {
+					$.notify({
+						title: '<strong>Thất bại! </strong>',
+						message: 'Có lỗi phát sinh, xin thử lại.'
+					}, {
+						type: 'danger',
+						z_index: 1051,
+					});
+				}
+			});
+		});
+
+		$('#btnActive').on('click', function() {
+			var url = '{{ route("active_pro") }}';
+			
+			swal({
+				title: '',
+				text: 'Bạn muốn kích hoạt Tài khoản này?',
+				type: 'info',
+				showCancelButton: true,
+				cancelButtonClass: 'btn-default',
+				confirmButtonClass: 'btn-info',
+				cancelButtonText: 'Quay lại',
+				confirmButtonText: 'Kích hoạt',
+			},
+			function(){
+				$.ajax({
+					type: 'POST',
+					url: url,
+					data: $('#frmApprove').serialize(),
+					success: function(response) {
+						swal({
+							title: 'Thành công',
+							text: 'Tài khoản đã được kích hoạt.',
+							type: 'info',
+							confirmButtonClass: 'btn-primary',
+							confirmButtonText: 'Kết thúc',
+						},
+						function() {
+							location.reload();
+						});
+					},
+					error: function(xhr) {
+						$.notify({
+							title: '<strong>Thất bại! </strong>',
+							message: 'Không thể kích hoạt Nhân viên này.'
+						}, {
+							type: 'danger',
+							z_index: 1051,
+						});
+					}
+				});
+			});
+		});
 	});
 	
 	angular.module('app', ['ngImgCrop'])
@@ -235,9 +311,7 @@
 
 @endpush
 
-@section('title')
-
-@endsection
+@section('title') Đối tác @endsection
 
 @section('content')
 <section class="content-body-full-page content-template-1" ng-app="app" ng-controller="Ctrl">
@@ -248,8 +322,25 @@
 					<img id="userAvatar" src="{{ env('IMAGE_HOST') }}/{{ $pro->id}}/{{ $pro->avatar }}">
 				</a>
 			</div>
-			<div class="col-md-8">
+			<div class="col-md-4">
 				<h1 class="page-title" style="text-align: left;">Thông tin Đối tác</h1>
+			</div>
+			<div class="col-md-4 text-right">
+				@if ($pro->delete_flg == 1)
+					<span class="label label-secondary">Đã xóa</span>
+				@elseif ($pro->profile->state == '1')
+					<span class="label label-primary">Sẵn Sàng</span>
+				@elseif ($pro->profile->state == '2')
+					<span class="label label-default">Treo</span>
+				@elseif ($pro->profile->state == '3')
+					<span class="label label-warning">Cảnh cáo</span>
+				@elseif ($pro->profile->state == '4')
+					<span class="label label-danger">Khóa</span>
+				@elseif ($pro->profile->state == '5')
+					<span class="label label-secondary">Cấm vĩnh viễn</span>
+				@else
+					<span class="label label-success">Chờ Duyệt</span>
+				@endif
 			</div>
 		</div>
 		<div class="row">
@@ -375,6 +466,7 @@
 				</div>
 			</div>
 			<div class="col-md-4">
+				@if ($pro->profile->company)
 				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group">
@@ -419,18 +511,27 @@
 							<label>Dịch vụ tham gia</label>
 							<select class="form-control ddServices hf-select" multiple name="services[]">
 								@foreach($services as $service)
-									@foreach (json_decode($pro->profile->company->services) as $s)
-										@if ($s == $service->id)
+									@if (!is_null($pro->profile->company->services) && in_array($service->id, json_decode($pro->profile->company->services)))
 									<option value="{{ $service->id }}" selected>{{ $service->name }}</option>
-										@else
+									@else
 									<option value="{{ $service->id }}">{{ $service->name }}</option>
-										@endif
-									@endforeach
+									@endif
 								@endforeach
 							</select>
 						</div>
 					</div>
 				</div>
+				@else
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>Hình thức kinh doanh</label>
+							<input type="text"class=" form-control"
+								value="Kinh doanh cá nhân" readonly>
+						</div>
+					</div>
+				</div>
+				@endif
 			</div>
 		</div>
 	</form>
@@ -443,7 +544,7 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">Thay đổi Hình đại diện</h4>
+						<h4 class="modal-title">Hình ảnh đại diện</h4>
 					</div>
 					<div class="modal-body">
 						<div class="row">
@@ -481,23 +582,44 @@
 			</div>
 			<div class="col-md-4">
 				<div class="btn-group" data-toggle="buttons">
+					@if (!is_null($pro->profile->inspection) && in_array('0', json_decode($pro->profile->inspection)))
+					<label class="btn active">
+						<input type="checkbox" name="inspection[]" value="0" checked="checked">
+						<span class="icon icmn-checkbox-checked2"></span>CMND
+					</label>
+					@else
 					<label class="btn">
-						<input type="checkbox" name="inspection" value="0">
+						<input type="checkbox" name="inspection[]" value="0">
 						<span class="icon icmn-checkbox-unchecked2"></span>CMND
 					</label>
+					@endif
+					@if (!is_null($pro->profile->inspection) && in_array('1', json_decode($pro->profile->inspection)))
+					<label class="btn active">
+						<input type="checkbox" name="inspection[]" value="1" checked>
+						<span class="icon icmn-checkbox-checked2"></span>Hộ khẩu
+					</label>
+					@else
 					<label class="btn">
-						<input type="checkbox" name="inspection" value="1">
+						<input type="checkbox" name="inspection[]" value="1">
 						<span class="icon icmn-checkbox-unchecked2"></span>Hộ khẩu
 					</label>
+					@endif
+					@if (!is_null($pro->profile->inspection) && in_array('2', json_decode($pro->profile->inspection)))
+					<label class="btn active">
+						<input type="checkbox" name="inspection[]" value="2" checked="checked">
+						<span class="icon icmn-checkbox-checked2"></span>Giấy phép kinh doanh
+					</label>
+					@else
 					<label class="btn">
-						<input type="checkbox" name="inspection" value="2">
+						<input type="checkbox" name="inspection[]" value="2">
 						<span class="icon icmn-checkbox-unchecked2"></span>Giấy phép kinh doanh
 					</label>
+					@endif
 				</div>
 			</div>
 			<div class="col-md-4 text-right">
-				<button id="btnSubmit" type="button" class="btn btn-warning width-150">Cập nhật</button>
-				<button id="btnSubmit" type="button" class="btn btn-primary width-150">Duyệt và kích hoạt</button>
+				<button id="btnUpdate" type="button" class="btn btn-warning width-150">Cập nhật</button>
+				<button id="btnActive" type="button" class="btn btn-primary width-150">Duyệt và kích hoạt</button>
 				<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 			</div>
 		</div>

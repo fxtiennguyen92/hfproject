@@ -110,15 +110,17 @@ Route::get('/companies', 'CommonController@getCompanies')
 Route::middleware('cs.officer')->group(function() {
 	Route::get('/mng/pros', 'Mng\ProController@viewList')
 		->name('pro_list_page');
-	Route::post('/mng/pro/{proId}/active', 'Mng\ProController@active')
-		->name('active_pro');
 	Route::post('pro/mng/pro/{proId}/delete','Pro\ProManagerController@deleteByProManager')
 		->name('delete_pro_by_pro_mng');
-	
+
 	Route::get('/mng/pro/{proId}/profile', 'Mng\ProController@viewProfile')
 		->name('pro_profile_mng_page');
 	Route::post('/mng/pro/avatar', 'Mng\ProController@approveAvatar')
 		->name('approve_pro_avatar');
+	Route::post('/mng/pro/update_cv', 'Mng\ProController@updateCV')
+		->name('update_pro_cv');
+	Route::post('/mng/pro/active', 'Mng\ProController@active')
+		->name('active_pro');
 });
 
 
