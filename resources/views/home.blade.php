@@ -4,7 +4,7 @@
   .left-menu {
     display: none;
   }
-  
+
   @media only screen and (max-width: 768px) {
     .left-menu {
       display: block;
@@ -29,7 +29,7 @@
 @section('content')
 <!-- SECTION BANNER -->
 <section class="top-banner">
-  <div class="hero" style="background-image: url(img/banner/5.png);">
+  <div class="hero"  style="background-image: url(img/banner/5.png);">
     <div class="content">
 <!--       <h1 class="text-center">Đặt việc nhà trong 60 giây <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small></h1> -->
     </div>

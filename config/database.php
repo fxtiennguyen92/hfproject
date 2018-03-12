@@ -43,18 +43,18 @@ return [
 			'driver' => 'mysql',
 			
 			/** DEV **/
-			'host' => env('DB_HOST', 'localhost'),
-			'port' => env('DB_PORT', '3306'),
-			'database' => env('DB_DATABASE', 'hfdb'),
-			'username' => env('DB_USERNAME', 'root'),
-			'password' => env('DB_PASSWORD', ''),
+//			'host' => env('DB_HOST', 'localhost'),
+//			'port' => env('DB_PORT', '3306'),
+//			'database' => env('DB_DATABASE', 'hfdb'),
+//			'username' => env('DB_USERNAME', 'root'),
+//			'password' => env('DB_PASSWORD', ''),
 			
 			/** SERVER **/
-// 			'host' => env('DB_HOST', 'hfdb.cdjr0leaqcqd.ap-southeast-1.rds.amazonaws.com'),
-// 			'port' => env('DB_PORT', '3306'),
-// 			'database' => env('DB_DATABASE', 'hfdb'),
-// 			'username' => env('DB_USERNAME', 'hfdbco'),
-// 			'password' => env('DB_PASSWORD', 'Hand#4242'),
+ 			'host' => env('DB_HOST', 'hfdb.cdjr0leaqcqd.ap-southeast-1.rds.amazonaws.com'),
+ 			'port' => env('DB_PORT', '3306'),
+ 			'database' => env('DB_DATABASE', 'hfdb'),
+ 			'username' => env('DB_USERNAME', 'hfdbco'),
+ 			'password' => env('DB_PASSWORD', 'Hand#4242'),
 			
 			'unix_socket' => env('DB_SOCKET', ''),
 			'charset' => 'utf8mb4',

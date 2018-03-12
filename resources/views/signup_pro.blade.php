@@ -6,9 +6,13 @@
 	}
 
 	body {
-		background: #f4f4f4;
+		background-image: url(img/bgdoitac.png);
+		background-size: cover;
 	}
 
+	.page-content {
+		margin-left: 0px;
+	}
 	nav.top-menu+.page-content {
 		margin-top: 0;
 	}
@@ -16,6 +20,7 @@
 	.dropdown-menu {
 		z-index: 3000;
 	}
+
 </style>
 
 <!-- Page Scripts -->
@@ -159,10 +164,62 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-2">
+	<div class="col-md-6" style="color: #fff;">
+		<div class="cell-wrapper layout-widget-wrapper">
+			<span id="hs_cos_wrapper_module_1496142652331121" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_rich_text" style="" data-hs-cos-general-type="widget" data-hs-cos-type="rich_text">
+				<p style="text-align: center;">&nbsp;</p>
+				<p style="text-align: center;">&nbsp;</p>
+				<p style="text-align: center;"><span style="background-color: transparent; font-size: 24px;"><strong>TRỞ THÀNH ĐỐI TÁC VỚI HANDFREE<br><br></strong></span></p>
+				<p style="text-align: center;"><span style="background-color: transparent; letter-spacing: 0.72px; font-size: 20px;">&nbsp; &nbsp; &nbsp;Tận dụng thời gian rảnh - Kiếm thêm thu nhập với chính kỹ năng của bạn<br>&nbsp;&nbsp;<br></span>&nbsp; &nbsp; &nbsp;<strong style="font-size: 20px; text-align: center; background-color: transparent; letter-spacing: 0.06em;">ĐĂNG KÝ NGAY ĐỂ NHẬN CÁC ĐẶC QUYỀN HẤP DẪN</strong></p>
+				<p style="font-size: 20px; line-height: 1px; text-align: center;"><span style="font-size: 18px; line-height: 1.15em;">(Ưu tiên các đối tác khu vực nội thành <strong>Hồ Chí Minh</strong>)</span></p>
+				<p style="font-size: 20px; line-height: 1px; text-align: center;">&nbsp;</p>
+				<table style="margin-left: auto; margin-right: auto;">
+					<tbody>
+						<tr style="height: 89px;">
+							<td style="width: 150px; height: 89px; text-align: right;">
+								<p>
+									<img src="http://v.fastcdn.co/u/d4b02ad8/16955801-0-icon-2-78.png" width="100" caption="false" data-constrained="true" style="width: 80px; display: block; margin-left: auto; margin-right: auto;">
+								</p>
+							</td>
+							<td style="height: 89px;">
+								<p><span style="font-size: 30px; color:#02b3e4;"><strong>Đào tạo miễn phí</strong></span></p>
+								<p><span style="font-size: 18px;">Không cần kinh nghiệm</span></p>
+							</td>
+						</tr>
+						<tr style="height: 89px;">
+							<td style="width: 150px; height: 89px; text-align: right;">
+								<p><span style="font-size: 18px;"><img src="http://v.fastcdn.co/u/d4b02ad8/16648396-0-icon-2-72.png" width="100" caption="false" data-constrained="true" style="width: 80px; display: block; margin-left: auto; margin-right: auto;"></span></p>
+							</td>
+							<td style="height: 89px;">
+								<p><span style="font-size: 30px; color:#02b3e4;"><strong>Thưởng khi đăng ký</strong></span></p>
+								<p><span style="font-size: 18px;">Ưu đãi hấp dẫn cho đối tác đăng ký mới</span></p>
+							</td>
+						</tr>
+						<tr style="height: 89px;">
+							<td style="width: 150px; height: 89px; text-align: right;">
+								<p><img src="https://v.fastcdn.co/u/d4b02ad8/16955666-0-icon-2-75.png" style="width: 80px; display: block; margin-left: auto; margin-right: auto;" width="100" caption="false" data-constrained="true"></p>
+							</td>
+							<td style="height: 89px;">
+								<p><span style="font-size: 30px; color:#02b3e4;"><strong>Làm việc linh động</strong></span></p>
+								<p><span style="font-size: 24px; "><span style="font-size: 20px;">Chủ động thời gian làm việc</span><strong><span>&nbsp;</span></strong></span></p>
+							</td>
+						</tr>
+						<tr style="height: 89px;">
+							<td style="width: 150px; height: 89px; text-align: right;">
+								<p><img src="https://v.fastcdn.co/u/d4b02ad8/16648391-0-icon-2-71.png" width="100" caption="false" data-constrained="true" style="width: 80px; display: block; margin-left: auto; margin-right: auto;"></p>
+							</td>
+							<td style="height: 89px;">
+								<p><span color="#f16622" style="color:#02b3e4; font-size: 30px;"><strong>Giới thiệu đối tác</strong></span></p>
+								<p><span style="font-size: 20px;">Thưởng ngay khi giới thiệu bạn bè</span></p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</span>
+		</div>
 	</div>
-	<div class="col-md-8">
-		<form id="frmMain" class="form-wrapper hf-card" name="form-validation" method="post" enctype="multipart/form-data" action="{{ route('signup_pro') }}">
+	<div class="col-md-6" style="background-color: transparent;">
+		<form id="frmMain" class="form-wrapper hf-card" style="background-color: transparent;" name="form-validation" method="post" enctype="multipart/form-data" action="{{ route('signup_pro') }}">
 			<h1 class="page-title text-left">Thông tin Đối Tác</h1>
 			<div class="row">
 				<div class="col-md-12">
@@ -173,13 +230,13 @@
 								<input type="text" maxlength="225" class="form-control" name="name" data-validation="[NOTEMPTY]">
 							</div>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-4">
 							<div class="form-group">
 								<label>Ngày tháng năm sinh</label>
-								<input type="text" maxlength="10" class="form-control datepicker-only-init" name="dateOfBirth" data-validation="[NOTEMPTY]"/>
+								<input type="text" maxlength="10" class="form-control datepicker-only-init d-sinh" name="dateOfBirth" data-validation="[NOTEMPTY]"/>
 							</div>
 						</div>
-						<div class="col-md-3">
+						<div class="col-md-2">
 							<div class="form-group">
 								<label>Giới tính</label>
 								<select class="form-control selectpicker hf-select" name="gender">
