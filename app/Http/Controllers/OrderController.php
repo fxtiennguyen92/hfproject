@@ -14,11 +14,17 @@ use Illuminate\Support\Facades\DB;
 class OrderController extends Controller
 {
 
+	
 	public function __construct() {
-//		$this->middleware('member');
+		
 	}
 
 	public function viewList($style = null) {
+		// redirect to login page if not member
+		if (!auth()->check()) {
+			return redirect()->route('login_page');
+		}
+		
 		$orderModel = new Order();
 
 		$processingOrders = $orderModel->getProcessingByMember(auth()->user()->id);

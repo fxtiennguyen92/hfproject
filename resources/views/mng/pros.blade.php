@@ -71,13 +71,7 @@
 									{{ Carbon\Carbon::parse($pro['profile']['date_of_birth'])->format('d-m-Y') }}
 								</td>
 								<td class="text-center">
-									@if ($pro['profile']['gender'] == '1')
-										Nam
-									@elseif ($pro['profile']['gender'] == '2')
-										Nữ
-									@else
-										Khác
-									@endif
+									
 								</td>
 								<td class="text-center">
 									@if ($pro['profile']['state'] == '1')

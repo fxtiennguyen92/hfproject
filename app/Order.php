@@ -48,12 +48,14 @@ class Order extends Model
 	public function getNewByMember($id) {
 		return $this::with('service')
 			->new()
+			->where('user_id', $id)
 			->get();
 	}
 
 	public function getNewAndNoQuotedPriceByMember($id) {
 		return $this
 			->new()
+			->where('user_id', $id)
 			->where('quoted_price_count', 0)
 			->get();
 	}
@@ -61,6 +63,7 @@ class Order extends Model
 	public function getNewAndQuotedPriceByMember($id) {
 		return $this
 			->new()
+			->where('user_id', $id)
 			->where('quoted_price_count','>', 0)
 			->get();
 	}
@@ -68,6 +71,7 @@ class Order extends Model
 	public function getProcessingByMember($id) {
 		return $this::with('pro', 'pro_profile')
 			->processing()
+			->where('user_id', $id)
 			->get();
 	}
 

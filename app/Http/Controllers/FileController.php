@@ -6,21 +6,26 @@ use App\User;
 
 class FileController
 {
-	public static function saveAvatar($data) {
+	public static function saveAvatar($data, $userId = null) {
+		if (!$userId) {
+			$userId = auth()->user()->id;
+		}
+		
 		$fileName = str_random(6).'.png';
 		
-		$directoryName = 'u/'. auth()->user()->id;
+		$directoryName = 'u/'. $userId;
 		$directory = \Storage::allDirectories($directoryName);
 		if(empty($directory)) {
 			\Storage::makeDirectory($directoryName);
 		}
 		
-		if (auth()->user()->avatar) {
-			\Storage::delete($directoryName.'/'.auth()->user()->avatar);
+		$user = User::where('id', $userId)->first();
+		
+		if ($user->avatar) {
+			\Storage::delete($directoryName.'/'.$userId);
 		}
 		$fileSrc = \Storage::put($directoryName.'/'. $fileName, $data);
 		
-		$user = User::where('id', auth()->user()->id)->first();
 		$user->avatar = $fileName;
 		$user->save();
 	}

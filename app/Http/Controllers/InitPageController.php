@@ -27,7 +27,9 @@ class InitPageController extends Controller
 		));
 	}
 	
-	public function test() {
-		
+	public function control() {
+		return view(Config::get('constants.CONTROL_PAGE'), array(
+			'nav' => 'control',
+		));
 	}
 }

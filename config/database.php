@@ -43,6 +43,7 @@ return [
 			'driver' => 'mysql',
 			
 			/** DEV **/
+<<<<<<< HEAD
 //			'host' => env('DB_HOST', 'localhost'),
 //			'port' => env('DB_PORT', '3306'),
 //			'database' => env('DB_DATABASE', 'hfdb'),
@@ -55,6 +56,20 @@ return [
  			'database' => env('DB_DATABASE', 'hfdb'),
  			'username' => env('DB_USERNAME', 'hfdbco'),
  			'password' => env('DB_PASSWORD', 'Hand#4242'),
+=======
+// 			'host' => env('DB_HOST', 'localhost'),
+// 			'port' => env('DB_PORT', '3306'),
+// 			'database' => env('DB_DATABASE', 'hfdb'),
+// 			'username' => env('DB_USERNAME', 'root'),
+// 			'password' => env('DB_PASSWORD', ''),
+			
+			/** SERVER **/
+			'host' => env('DB_HOST'),
+			'port' => env('DB_PORT'),
+			'database' => env('DB_DATABASE'),
+			'username' => env('DB_USERNAME'),
+			'password' => env('DB_PASSWORD'),
+>>>>>>> dev
 			
 			'unix_socket' => env('DB_SOCKET', ''),
 			'charset' => 'utf8mb4',

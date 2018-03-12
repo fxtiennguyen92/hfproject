@@ -2,11 +2,13 @@
 
 return [
 	/** PAGE NAME **/
-	'INDEX_PAGE' => 'home',
 	'HOME_PAGE' => 'home',
+	'CONTROL_PAGE' => 'control',
 	'DASHBOARD_PAGE' => 'home',
 	'LOGIN_PAGE' => 'login',
 	'SIGNUP_PAGE' => 'signup',
+	'PASSWORD_PAGE' => 'password',
+
 	'SURVEY_PAGE' => 'survey',
 	'COMPLETE_PAGE' => 'complete',
 	'ORDER_LIST_PAGE' => 'orders',
@@ -15,25 +17,31 @@ return [
 	'PRO_PROFILE_PAGE' => 'pro.profile',
 	'PRO_ORDER_LIST_PAGE' => 'pro.orders',
 	'PRO_ORDER_PAGE' => 'pro.order',
+	'PRO_SIGN_UP_PAGE' => 'pro.signup',
+	
+	'PRO_MNG_PAGE' => 'pro.pros',
 	
 	'PRO_LIST_PAGE' => 'mng.pros',
+	'PRO_PROFILE_MNG_PAGE' => 'mng.pro_profile',
 	'COMPANY_PAGE' => 'mng.company',
 	'COMPANY_LIST_PAGE' => 'mng.companies',
 	
-	'SIGN_UP_PRO_PAGE' => 'signup_pro',
+	
 	
 	/** ERROR PAGE **/
 	'404_PAGE' => 'error.404',
 	
 	/** MAIL **/
-	'VERIFY_MAIL_SUBJECT' => '[HAND FREE APP] Confirmation',
+	'VERIFY_MAIL_SUBJECT' => '[HANDFREE APP] Confirmation',
+	'ACTIVE_PRO_ACCOUNT_MAIL_SUBJECT' => '[HANDFREE APP] Kích hoạt tài khoản Đối tác',
 	
 	/** ENUM **/
 	'ROLE_MEM' => '0',
 	'ROLE_PRO' => '1',
-	'ROLE_SRV' => '2',
-	'ROLE_MNG' => '3',
-	'ROLE_ADM' => '9',
+	'ROLE_PRO_MNG' => '2', // Pro Manager
+
+	'ROLE_CSO' => '90', // Customer Service
+	'ROLE_ADM' => '99',
 	
 	'FLG_OFF' => '0',
 	'FLG_ON' => '1',

@@ -19,10 +19,10 @@ class ProAuthenticate
 	public function handle($request, Closure $next)
 	{
 		if (auth()->check()) {
-			if (auth()->user()->role == Config::get('constants.ROLE_PRO'));
+			if (auth()->user()->role == Config::get('constants.ROLE_PRO'))
 			return $next($request);
 		} else {
-			return redirect()->route('login_page');;
+			return redirect()->route('login_page');
 		}
 		
 		throw new NotFoundHttpException();

@@ -31,7 +31,62 @@ class User extends Authenticatable
 	];
 
 	public function getAllPro() {
-		return $this::with('profile')->pro()->get();
+		return $this::with('profile')
+			->proAndProManager()
+			->get();
+	}
+
+	public function getProOrProManager($proId) {
+		return $this::with('profile', 'profile.company')
+			->where('id', $proId)
+			->proAndProManager()
+			->first();
+	}
+
+	public function getPro($proId) {
+		return $this::with('profile')
+			->where('id', $proId)
+			->pro()
+			->first();
+	}
+
+	public function getProsByProManager($proManagerId) {
+		return $this::with('profile')
+			->where('created_by', $proManagerId)
+			->pro()
+			->available()
+			->get();
+	}
+	
+	public function getProByProManager($proId, $proManagerId) {
+		return $this::with('profile')
+			->where('id', $proId)
+			->where('created_by', $proManagerId)
+			->pro()
+			->available()
+			->first();
+	}
+
+	public function activeProAccount($id) {
+		$passwordTemp = str_random(12);
+		return User::where('id', $id)->update([
+						'password_temp' => $passwordTemp,
+						'password' => bcrypt($passwordTemp),
+						'confirm_flg' => Config::get('constants.FLG_ON'),
+						'delete_flg' => Config::get('constants.FLG_OFF')
+		]);
+	}
+
+	public function updateDeleteFlg ($id, $deleteFlg) {
+		return User::where('id', $id)->update([
+						'delete_flg' => $deleteFlg
+		]);
+	}
+
+	public function updatePassword($id, $password) {
+		return User::where('id', $id)->update([
+						'password' => bcrypt($password)
+		]);
 	}
 
 	public function profile() {
@@ -48,5 +103,18 @@ class User extends Authenticatable
 
 	public function scopePro($query) {
 		return $query->where('role', Config::get('constants.ROLE_PRO'));
+	}
+	
+	public function scopeProManager($query) {
+		return $query->where('role', Config::get('constants.ROLE_PRO_MNG'));
+	}
+	
+	public function scopeProAndProManager($query) {
+		return $query->where('role', Config::get('constants.ROLE_PRO_MNG'))
+					->orWhere('role', Config::get('constants.ROLE_PRO'));
+	}
+	
+	public function scopeAvailable($query) {
+		return $query->where('delete_flg', Config::get('constants.FLG_OFF'));
 	}
 }

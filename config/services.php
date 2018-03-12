@@ -35,29 +35,15 @@ return [
 		'secret' => env('STRIPE_SECRET'),
 	],
 
-	/** DEV **/
 	'facebook' => [
-		'client_id' => '136548870376149',
-		'client_secret' => 'b714acc480f1ec447708013f0934ce98',
-		'redirect' => 'http://localhost/hfproject/public/callback/facebook',
+		'client_id' => env('FB_CLIENT_ID'),
+		'client_secret' => env('FB_CLIENT_SECRET'),
+		'redirect' => env('FB_REDIRECT'),
 	],
 
 	'google' => [
-		'client_id' => '641434236169-r0jpcmvjlv0hhnenqrlfqtn6832l268i.apps.googleusercontent.com',
-		'client_secret' => 'hOjLV9pEBtop_wy-yIfus72A',
-		'redirect' => 'http://localhost/hfproject/public/callback/google'
+		'client_id' => env('GG_CLIENT_ID'),
+		'client_secret' => env('GG_CLIENT_SECRET'),
+		'redirect' => env('GG_REDIRECT'),
 	],
-
-	/** SERVER **/
-// 	'facebook' => [
-// 		'client_id' => '1600106333380695',
-// 		'client_secret' => '2b9c8d0a402672c30ab510890aa46b6e',
-// 		'redirect' => 'http://hfproject.ap-southeast-1.elasticbeanstalk.com/callback/facebook',
-// 	],
-	
-// 	'google' => [
-// 		'client_id' => '641434236169-35kjhdis4s7uqnfat4karau2tp8echb0.apps.googleusercontent.com',
-// 		'client_secret' => 'qSL-rCIbJ6eLTHaV5qS9B-iF',
-// 		'redirect' => 'http://hfproject.ap-southeast-1.elasticbeanstalk.com/callback/google'
-// 	],
 ];

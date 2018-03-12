@@ -47,7 +47,7 @@ class RegisterController extends Controller
 			'name' => 'required|string|max:255',
 			'email' => 'required|string|email|max:255|unique:users',
 			'phone' => 'required|numeric|unique:users',
-			'password' => 'required|string|min:6',
+			'password' => 'required|string|min:6|max:100',
 		]);
 	}
 
@@ -100,7 +100,7 @@ class RegisterController extends Controller
 		if ($validator->fails()) {
 			$errors = $validator->errors()->getMessages();
 			
-			return response()->json($errors, 409);
+			return response()->json('', 409);
 		}
 		
 		// registration

@@ -29,7 +29,11 @@
 @section('content')
 <!-- SECTION BANNER -->
 <section class="top-banner">
+<<<<<<< HEAD
   <div class="hero"  style="background-image: url(img/banner/5.png);">
+=======
+  <div class="hero" style="background-image: url(img/banner/main.png);">
+>>>>>>> dev
     <div class="content">
 <!--       <h1 class="text-center">Đặt việc nhà trong 60 giây <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small></h1> -->
     </div>
@@ -55,14 +59,6 @@
 @foreach ($parts as $part)
 {!! $part->text !!}
 @endforeach
-<!-- SECTION GUARANTEE -->
-
-
-<!-- SECTION STEPS -->
-
-
-<!-- SECTION TESTINOMIAL -->
-
 
 <!-- <div id="section-form"> -->
 <!--   <div class="container"> -->

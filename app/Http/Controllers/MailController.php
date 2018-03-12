@@ -16,4 +16,14 @@ class MailController extends Controller
 			$message->to($email)->subject(Config::get('constants.VERIFY_MAIL_SUBJECT'));
 		});
 	}
+	
+	public function sendActiveProAccountMail($name, $email, $password) {
+		Mail::send('mail.active', array(
+						'name' => $name,
+						'email' => $email,
+						'password' => $password
+		), function($message) use ($email) {
+			$message->to($email)->subject(Config::get('constants.ACTIVE_PRO_ACCOUNT_MAIL_SUBJECT'));
+		});
+	}
 }
