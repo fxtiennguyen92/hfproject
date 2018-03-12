@@ -133,6 +133,19 @@
     }
 
   </style>
+  
+  <script>
+    $(window).on('load', function () {
+      NProgress.start();
+    });
+
+    var interval = setInterval(function() {
+      if(document.readyState === 'complete') {
+        clearInterval(interval);
+        NProgress.done();
+      }
+    }, 500);
+  </script>
   <!-- Page Scripts -->
   @stack('stylesheets')
   <!-- End Page Scripts -->

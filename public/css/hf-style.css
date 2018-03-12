@@ -1,9 +1,23 @@
 body.single-page {
   background: #fafbfc;
 }
-
 table {
   font-size: 14px;
+}
+.spinner-wrapper {
+  display: block;
+  position: fixed;
+  opacity: 0.3;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #24222f;
+  z-index: 1030;
+}
+.spinner {
+  -webkit-border-radius: 0;
+  border-radius: 0;
 }
 .label {
   border-radius: 0;

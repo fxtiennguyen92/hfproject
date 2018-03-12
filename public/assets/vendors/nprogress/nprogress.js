@@ -28,7 +28,7 @@
     barSelector: '[role="bar"]',
     spinnerSelector: '[role="spinner"]',
     parent: 'body',
-    template: '<div class="bar" role="bar"><div class="peg"></div></div><div class="spinner" role="spinner"><div class="spinner-icon"></div></div>'
+    template : '<div class="bar" role="bar"><div class="peg"></div></div><div class="spinner-wrapper">&nbsp;</div><div class="spinner" role="spinner"><div class="spinner-icon"></div></div>'
   };
 
   /**
@@ -131,6 +131,7 @@
 
     if (Settings.trickle) work();
 
+    $('body').addClass('modal-open'); // modify by Tien-NT
     return this;
   };
 

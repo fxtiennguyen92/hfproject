@@ -12,6 +12,8 @@
   }
 </style>
 <script>
+
+  
   (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
@@ -29,7 +31,7 @@
 @section('content')
 <!-- SECTION BANNER -->
 <section class="top-banner">
-  <div class="hero" style="background-image: url(img/banner/main.png);">
+  <div class="hero" style="background-image: url(img/banner/main.png); min-height:580px">
     <div class="content">
 <!--       <h1 class="text-center">Đặt việc nhà trong 60 giây <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small></h1> -->
     </div>
