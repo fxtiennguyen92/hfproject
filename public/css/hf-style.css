@@ -693,6 +693,19 @@ body.single-page .single-page-block .single-page-block-inner {
   padding-top: 10px;
 }
 
+.hf-select-date a {
+  text-align: right;
+}
+
+.hf-select-date .filter-option {
+  text-align: center !important;
+}
+
+.hf-select-time a,
+.hf-select-time .filter-option {
+  text-align: center !important;
+}
+
 .selection > span > ul > li.select2-selection__choice {
   color: #fff !important;
   background-color: #02b3e4 !important;
@@ -1054,6 +1067,11 @@ body.single-page .single-page-block .single-page-block-inner {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
 
+.survey-form .service-icon {
+  width: 60px;
+  height: 60px;
+}
+
 .survey-form .wizard > .content > .body {
   margin: 0;
   padding: 0;
@@ -1197,11 +1215,6 @@ body.single-page .single-page-block .single-page-block-inner {
   padding: 20px;
 }
 
-.survey-form .address-wrapper .form-control,
-.survey-form .address-wrapper .dropdown-toggle {
-  border: none;
-}
-
 .survey-form .time-wrapper span.icon {
   font-size: 18px;
   color: #242424;
@@ -1210,6 +1223,10 @@ body.single-page .single-page-block .single-page-block-inner {
 
 .survey-form .time-wrapper label.btn {
   color: #242424;
+}
+
+.survey-form .excute-date-wrapper {
+  padding: 20px;
 }
 
 .row-complete {
@@ -1258,7 +1275,7 @@ body.single-page .single-page-block .single-page-block-inner {
   max-width: 200px;
   margin: auto;
   position: absolute;
-  padding: 20px;
+  padding: 10px;
   left: 0;
   right: 0;
   z-index: 1;

@@ -50,4 +50,65 @@ class CommonController
 		$comp->save;
 		return response()->json('', 200);
 	}
+
+	public static function getNext7Days() {
+		$dates = array();
+		for ($i = 0; $i <= 6; $i++) {
+			$weekday = '';
+			$date = date('d/m/Y', strtotime('today + '.$i.' day'));
+			switch ($i) {
+				case 0:
+					$weekday = 'Hôm nay';
+					break;
+				case 1:
+					$weekday = 'Ngày mai';
+					break;
+				default:
+					$weekday = CommonController::translateWeekday(date('l', strtotime('today + '.$i.' day')));
+					break;
+			}
+			
+			array_push($dates, $weekday.', '.$date);
+		}
+		
+		return $dates;
+	}
+
+	public static function getAllTimes() {
+		$times = array();
+		for ($i = 0; $i < 24; $i++) {
+			array_push($times, sprintf('%02d', $i).':00');
+			array_push($times, sprintf('%02d', $i).':30');
+		}
+		
+		return $times;
+	}
+	
+	private static function translateWeekday($en) {
+		switch ($en) {
+			case 'Monday':
+				$vi = 'Thứ hai';
+				break;
+			case 'Tuesday':
+				$vi = 'Thứ ba';
+				break;
+			case 'Wednesday':
+				$vi = 'Thứ tư';
+				break;
+			case 'Thursday':
+				$vi = 'Thứ năm';
+				break;
+			case 'Friday':
+				$vi = 'Thứ sáu';
+				break;
+			case 'Saturday':
+				$vi = 'Thứ bảy';
+				break;
+			default:
+				$vi = 'Chủ nhật';
+				break;
+		}
+		
+		return $vi;
+	}
 }

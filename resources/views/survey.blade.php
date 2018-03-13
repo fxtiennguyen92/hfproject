@@ -123,6 +123,15 @@
         }
       });
     });
+
+    $('.time-rad').on('click', function() {
+      if ($(this).find('input').val() == 1) {
+        $('#excuteDatetime').show();
+      } else {
+        $('#excuteDatetime').hide();
+      }
+    });
+    
     $('#frmMain').validate({
       submit: {
         settings: {
@@ -152,7 +161,7 @@
                 if (xhr.status == 400) {
                   $.notify({
                     title: '<strong>Thất bại! </strong>',
-                    message: 'Đã có lỗi xảy ra, mời bạn chọn lại dịch vụ.'
+                    message: 'Đã có lỗi xảy ra, mời chọn lại dịch vụ.'
                   }, {
                     type: 'danger',
                     z_index: 1051,
@@ -162,6 +171,14 @@
                   }, 1500);
 
                   location.href('{{ route("home_page") }}');
+                } else if (xhr.status == 403) {
+                  $.notify({
+                    title: '<strong>Thất bại! </strong>',
+                    message: 'Thời gian thực hiện không đúng, mời chọn lại.'
+                  }, {
+                    type: 'danger',
+                    z_index: 1051,
+                  });
                 } else {
                   $.notify({
                     title: '<strong>Thất bại! </strong>',
@@ -184,12 +201,12 @@
   });
 
 </script>
-@endpush @section('title') Thông tin đơn hàng @endsection @section('content')
+@endpush @section('title') Đơn hàng @endsection @section('content')
 <section class="content-body">
   <form id="frmMain" class="survey-form" name="form-validation" method="post" enctype="multipart/form-data">
 
     <div class="service-title" style="background-image:url('img/banner/6.png')">
-      <span class="title"><img class="service-icon" src="img/icons/idea.png" /> {{ $service->name }}</span>
+      <span class="title"><img class="service-icon" src="img/service/{{ $service->id }}.svg" /> {{ $service->name }}</span>
     </div>
     <div class="progress">
       <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:10%"></div>
@@ -251,19 +268,19 @@
           Địa điểm và Thời gian
         </div>
         <div class="address-wrapper">
-          <div class="row row-address">
+          <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
               <input type="text" class="form-control" placeholder="Nhập Số Nhà. VD: 20/7 Hai Bà Trưng" name="address" data-validation="[NOTEMPTY]">
             </div>
-            <div class="row">
-              <div class="col-md-6 col-sm-6 col-xs-6" style="padding-left: 5px;">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="col-md-6 col-sm-6 col-xs-6" style="padding-left: 0; padding-right: 0">
                 <select class="form-control selectpicker ddDist hf-select" data-live-search="true" name="dist" data-validation="[NOTEMPTY]">
                 @foreach($districts as $dist)
                 <option value="{{ $dist->code }}">{{ $dist->name }}</option>
                 @endforeach
               </select>
               </div>
-              <div class="col-md-6 col-sm-6 col-xs-6">
+              <div class="col-md-6 col-sm-6 col-xs-6" style="padding-right: 0">
                 <select class="form-control selectpicker ddCity hf-select" data-live-search="true" name="city" data-validation="[NOTEMPTY]">
                 @foreach($cities as $city)
                 <option value="{{ $city->code }}">{{ $city->name }}</option>
@@ -297,23 +314,36 @@
           Vào lúc
         </div>
         <div class="btn-group time-wrapper" data-toggle="buttons">
-          <label class="btn">
-                  <input type="radio" name="time" value="0"
+          <label class="btn time-rad">
+                  <input type="radio" name="timeState" value="0"
                       data-validation="[NOTEMPTY]"
                       data-validation-group="lbTime"
                       data-validation-message="Chưa chọn thời gian">
                   <span class="icon icmn-radio-unchecked"></span>
                       Càng sớm càng tốt
               </label>
-          <label class="label-other btn">
-                  <input type="radio" name="time" value="1"
+          <label class="btn time-rad">
+                  <input type="radio" name="timeState" value="1"
                       data-validation-group="lbTime">
                   <span class="icon icmn-radio-unchecked"></span>
-                  <input class="datetimepicker input-other" style="min-width: 80%"
-                          placeholder="Ấn định thời gian"
-                          type="text"
-                          name="estTime">
+                      Ấn định thời gian
               </label>
+        </div>
+        <div id="excuteDatetime" class="row excute-date-wrapper" style="display: none">
+              <div class="col-md-8 col-sm-8 col-xs-8" style="padding-left: 0; padding-right: 0">
+                <select class="form-control selectpicker hf-select hf-select-date" data-live-search="false" name="estDate">
+                @foreach($dates as $date)
+                <option value="{{ $date }}">{{ $date }}</option>
+                @endforeach
+              </select>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-4" style="padding-right: 0">
+                <select class="form-control selectpicker hf-select hf-select-time" data-live-search="false" name="estTime">
+                @foreach($times as $time)
+                <option value="{{ $time }}">{{ $time }}</option>
+                @endforeach
+              </select>
+              </div>
         </div>
       </div>
       <div class="row-complete clearfix">

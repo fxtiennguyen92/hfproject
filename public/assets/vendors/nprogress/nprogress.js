@@ -148,6 +148,7 @@
    */
 
   NProgress.done = function(force) {
+	$('body').removeClass('modal-open'); // modify by Tien-NT
     if (!force && !NProgress.status) return this;
 
     return NProgress.inc(0.3 + 0.5 * Math.random()).set(1);

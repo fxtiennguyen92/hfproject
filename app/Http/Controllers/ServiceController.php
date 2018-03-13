@@ -36,6 +36,9 @@ class ServiceController extends Controller
 			$districts = $commonModel->getDistList($cities->first()->code);
 		}
 		
+		$dates = CommonController::getNext7Days();
+		$times = CommonController::getAllTimes();
+		
 		// put service to session
 		$request->session()->put('service', $service->id);
 		
@@ -44,15 +47,33 @@ class ServiceController extends Controller
 				'questions' => $questions,
 				'cities' => $cities,
 				'districts' => $districts,
+				'dates' => $dates,
+				'times' => $times
 		));
 	}
 
 	public function submitOrder(Request $request) {
 		// get service from session
 		if (!$request->session()->has('service')) {
-			response()->json('', 400);
+			return response()->json('', 400);
 		}
 		$serviceId = $request->session()->get('service');
+		
+		// check excute datetime
+		$estExcuteDateString = null;
+		$estExcuteDate = null;
+		if ($request->timeState == 1) {
+			$estExcuteDateString = $request->estDate.' '.$request->estTime;
+			if (strlen($estExcuteDateString) < 16) {
+				return response()->json('', 403);
+			}
+			
+			$currDate = new \DateTime('now');
+			$estExcuteDate = CommonController::convertStringToDateTime(substr($estExcuteDateString, -16));
+			if ($estExcuteDate === null || $estExcuteDate <= $currDate) {
+				return response()->json('', 403);
+			}
+		}
 		
 		// get survey info
 		$survey = new Survey();
@@ -112,16 +133,11 @@ class ServiceController extends Controller
 			.', '.$common->getByCode($order->district)->name
 			.', '.$common->getByCode($order->city)->name;
 		
-		$order->time_state = $request->time;
-		if ($request->time == 1) {
-			$estExcuteDate = CommonController::convertStringToDateTime(substr($request->estTime, -16));
-			if ($estExcuteDate) {
-				$order->est_excute_at = $estExcuteDate;
-				$order->est_excute_at_string = $request->estTime;
-			}
-		}
+		$order->time_state = $request->timeState;
+		$order->est_excute_at = $estExcuteDate;
+		$order->est_excute_at_string = $estExcuteDateString;
 		
 		$order->save();
-		response()->json('', 200);
+		return response()->json('', 200);
 	}
 }
