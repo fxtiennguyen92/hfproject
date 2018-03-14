@@ -60,6 +60,10 @@ table {
   border-bottom: 3px #242424 solid;
 }
 
+.top-menu .icon-menu a:hover {
+  color: #242424;
+}
+
 .content-body-full-page {
   background: #fff;
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
@@ -75,6 +79,10 @@ table {
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
   margin-top: 20px;
+}
+
+.content-width-700 {
+  max-width: 700px;
 }
 
 .btn {
@@ -1535,11 +1543,14 @@ nav.left-menu .left-menu-list li .left-menu-link .material-icons {
 
 .top-menu .icon-menu .icon-menu-user span {
   display: inline-block;
-  width: 170px;
+  width: 200px;
   white-space: nowrap;
   overflow: hidden !important;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
+  font-size: 14px;
+  text-align: right;
+  color: #242424;
 }
 
 .top-menu .icon-menu .icon-menu-user .material-icons {
