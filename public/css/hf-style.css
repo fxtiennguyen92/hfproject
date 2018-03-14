@@ -1472,7 +1472,7 @@ body.single-page .single-page-block .single-page-block-inner {
 
 .order-info .order-code {
   font-size: 15px;
-  color: #ccc;
+  font-weight: bold;
   margin: 20px 0;
 }
 
@@ -1584,13 +1584,17 @@ section.user-menu .list-menu a > i {
   margin-bottom: 15px;
 }
 
+.orders-item .message {
+  font-size: 13px;
+  color: #424242;
+}
+
 .orders-item .author-avt {
   display: block;
   width: 80px;
   height: 80px;
-  border-radius: 100%;
+  border-radius: 10%;
   overflow: hidden;
-  border: solid 2px #189eff;
   margin: auto;
 }
 
@@ -1652,6 +1656,17 @@ section.user-menu .list-menu a > i {
   font-size: 14px;
   font-weight: normal;
   text-transform: uppercase;
+}
+
+.order-map {
+  position: relative;
+}
+
+.order-map .arrow-back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 999;
 }
 
 /*
