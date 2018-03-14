@@ -1626,6 +1626,34 @@ section.user-menu .list-menu a > i {
   color: #189eff;
 }
 
+.header-top-bar {
+  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, .4);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, .4);
+  background: #02b3e4;
+}
+
+.header-top-bar .arrow-back i {
+  font-size: 32px;
+  line-height: 32px;
+  vertical-align: middle;
+  color: #fff;
+}
+
+.header-top-bar {
+  display: none;
+}
+
+.header-top-bar .navbar-title {
+  color: #fff;
+  position: absolute;
+  left: 60px;
+  top: 0;
+  line-height: 46px;
+  font-size: 14px;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
 /*
 * RESPONSIVE
 */
@@ -1690,6 +1718,9 @@ section.user-menu .list-menu a > i {
   }
   .content-template-1 .form-wrapper {
     padding: 30px;
+  }
+  .header-top-bar {
+    display: block;
   }
 }
 
