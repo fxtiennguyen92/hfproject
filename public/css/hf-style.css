@@ -1480,7 +1480,7 @@ body.single-page .single-page-block .single-page-block-inner {
 
 .order-info .order-code {
   font-size: 15px;
-  color: #ccc;
+  font-weight: bold;
   margin: 20px 0;
 }
 
@@ -1595,13 +1595,17 @@ section.user-menu .list-menu a > i {
   margin-bottom: 15px;
 }
 
+.orders-item .message {
+  font-size: 13px;
+  color: #424242;
+}
+
 .orders-item .author-avt {
   display: block;
   width: 80px;
   height: 80px;
-  border-radius: 100%;
+  border-radius: 10%;
   overflow: hidden;
-  border: solid 2px #189eff;
   margin: auto;
 }
 
@@ -1635,6 +1639,45 @@ section.user-menu .list-menu a > i {
 .orders-item .map-address > span {
   display: block;
   color: #189eff;
+}
+
+.header-top-bar {
+  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, .4);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, .4);
+  background: #02b3e4;
+}
+
+.header-top-bar .arrow-back i {
+  font-size: 32px;
+  line-height: 32px;
+  vertical-align: middle;
+  color: #fff;
+}
+
+.header-top-bar {
+  display: none;
+}
+
+.header-top-bar .navbar-title {
+  color: #fff;
+  position: absolute;
+  left: 60px;
+  top: 0;
+  line-height: 46px;
+  font-size: 14px;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+.order-map {
+  position: relative;
+}
+
+.order-map .arrow-back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 999;
 }
 
 /*
@@ -1701,6 +1744,9 @@ section.user-menu .list-menu a > i {
   }
   .content-template-1 .form-wrapper {
     padding: 30px;
+  }
+  .header-top-bar {
+    display: block;
   }
 }
 
