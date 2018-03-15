@@ -9,12 +9,11 @@ table {
 .spinner-wrapper {
   display: block;
   position: fixed;
-  opacity: 0.3;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: #24222f;
+  background: rgba(36, 34, 47, 0.3);
   z-index: 1030;
 }
 
@@ -748,6 +747,8 @@ body.single-page .single-page-block .single-page-block-inner {
 
 .top-banner .hero {
   background-size: cover;
+  background-color: #fafbfc;
+  min-height:580px;
 }
 
 .top-banner {

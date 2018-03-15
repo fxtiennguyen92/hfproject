@@ -8,11 +8,11 @@
   <title>HandFree | @yield('title')</title>
 
   <base href="{{ asset('') }}">
-  <link href="img/icons/icon-144x144.png" rel="icon" type="image/png">
-  <link href="img/icons/icon-144x144.png" rel="apple-touch-icon" type="image/png" sizes="144x144">
-  <link href="img/icons/icon-128x128.png" rel="apple-touch-icon" type="image/png" sizes="128x128">
+  <link href="{{ env('CDN_HOST') }}/img/icon/icon-144x144.png" rel="icon" type="image/png">
+  <link href="{{ env('CDN_HOST') }}/img/icon/icon-144x144.png" rel="apple-touch-icon" type="image/png" sizes="144x144">
+  <link href="{{ env('CDN_HOST') }}/img/icon/icon-128x128.png" rel="apple-touch-icon" type="image/png" sizes="128x128">
 
-  <link href="img/icons/icon-144x144.png" rel="shortcut icon">
+  <link href="{{ env('CDN_HOST') }}/img/icon/icon-144x144.png" rel="shortcut icon">
 
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="assets/vendors/bootstrap/dist/css/bootstrap.min.css">

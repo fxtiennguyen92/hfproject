@@ -139,5 +139,6 @@ Route::post('/pro/signup', 'Pro\ProSignUpController@signup')
 	->name('signup_pro');
 /** Alpha - END **/
 
-Route::get('/test1', function () { return view('test1'); });
+Route::get('/ordertemp', function () { return view('order_temp'); });
+Route::get('/test', function () { return view('template.test'); });
 Route::get('/test2', function () { return view('test2'); });

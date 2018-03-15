@@ -2,6 +2,9 @@
 <!-- Page Scripts -->
 <script>
   $(document).ready(function() {
+	  $('#positionAndTime').show();
+      $('#surveyList').hide();
+	  
     $('body').addClass('survey-page');
     $('#surveyList').steps({
       headerTag: 'h3',
@@ -205,8 +208,8 @@
 <section class="content-body">
   <form id="frmMain" class="survey-form" name="form-validation" method="post" enctype="multipart/form-data">
 
-    <div class="service-title" style="background-image:url('img/banner/6.png')">
-      <span class="title"><img class="service-icon" src="img/service/{{ $service->id }}.svg" /> {{ $service->name }}</span>
+    <div class="service-title" style="background-image:url('{{ env('CDN_HOST') }}/img/banner/survey.png')">
+      <span class="title"><img class="service-icon" src="{{ env('CDN_HOST') }}/img/service/{{ $service->id }}.svg" /> {{ $service->name }}</span>
     </div>
     <div class="progress">
       <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:10%"></div>

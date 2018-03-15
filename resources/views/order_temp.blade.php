@@ -14,7 +14,7 @@
         <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#upcoming" role="tab" aria-expanded="false">Hiện tại</a>
       </li>
     </ul>
-    <div class="tab-content padding-vertical-20">
+    <div class="tab-content">
       <div class="tab-pane active" id="history" role="tabpanel" aria-expanded="true">
         <div class="row">
           <div class="col-md-6 col-sm-6">

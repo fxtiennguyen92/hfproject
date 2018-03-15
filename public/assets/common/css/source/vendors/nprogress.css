@@ -7,17 +7,11 @@
 }
 
 #nprogress .spinner {
-    padding: 8px;
-    background: #ffffff;
-    border: 1px solid #dfe4ed;
-    right: auto;
-    left: 50%;
+    background: transparent;
+    margin: 0 auto;
     top: 50%;
-}
-
-#nprogress .spinner-icon {
-    border-top-color: #01a8fe;
-    border-left-color: #01a8fe;
+    width: 100px;
+    height: 100px;
 }
 
 body.menu-top #nprogress .bar {
