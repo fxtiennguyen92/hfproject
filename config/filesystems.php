@@ -44,10 +44,10 @@ return [
     'disks' => [
         's3' => [
             'driver' => 's3',
-            'key' => 'AKIAIWAH7M3RDQNWXVWQ',
-            'secret' => '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',
-            'region' => 'ap-southeast-1',
-            'bucket' => 'handfree',
+            'key' => env('S3_KEY'),
+            'secret' => env('S3_SECRET'),
+            'region' => env('S3_REGION'),
+            'bucket' => env('S3_BUCKET'),
         ],
 
     ],
