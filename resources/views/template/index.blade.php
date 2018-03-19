@@ -158,6 +158,7 @@
 <body class="theme-default single-page">
   <!-- Check user login -->
   @include('template.nav')
+  @include('template.header-top-bar')
   @yield('content')
 </body>
 

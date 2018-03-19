@@ -1,13 +1,9 @@
 @extends('template.index') @push('stylesheets')
 <link rel="stylesheet" type="text/css" href="css/home.css">
 <style>
-  .left-menu {
-    display: none;
-  }
-  
-  @media only screen and (max-width: 768px) {
-    .left-menu {
-      display: block;
+  @media only screen and (max-width: 500px) {
+    .header-top-bar {
+      display: none;
     }
   }
 </style>

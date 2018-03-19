@@ -1,11 +1,15 @@
 @extends('template.index') @push('stylesheets')
+<style>
+  @media only screen and (max-width: 500px) {
+    .top-menu {
+      display: none;
+    }
+  }
+</style>
+
 <!-- Page Scripts -->
 <script>
   $(document).ready(function() {
-	  $('#positionAndTime').show();
-	  $('.service-title').hide();
-      $('#surveyList').hide();
-
     $('body').addClass('survey-page');
     $('#frmMain').on('keyup keypress', function(e) {
       var keyCode = e.keyCode || e.which;
@@ -91,11 +95,12 @@
     });
     $('a[href=#finish]').on('click', function() {
       $('#positionAndTime').show();
-      $('#service-title').hide();
+      $('.service-title').hide();
       $('#surveyList').hide();
     });
     $('#btnBack').on('click', function() {
       $('#positionAndTime').hide();
+      $('.service-title').show();
       $('#surveyList').show();
     });
     $('#orderAddress').on('blur', function() {
@@ -264,7 +269,7 @@
         <div class="address">
           Địa điểm và Thời gian
         </div>
-        <div id="map" style="height: 180px;"></div>
+        <div id="map" class="order-map"></div>
         <div id="infowindow-content">
 	      <span id="place-address"></span>
 	    </div>
@@ -317,7 +322,7 @@
     </div>
   </form>
 </section>
-	
+
 <script>
 function initMap() {
 	var map = new google.maps.Map(document.getElementById('map'), {

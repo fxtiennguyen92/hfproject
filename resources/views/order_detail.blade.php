@@ -1,44 +1,32 @@
 @extends('template.index') @push('stylesheets')
-<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAP_API_KEY') }}&callback=initMap">
-</script>
 <script>
 function initMap() {
-  var myLatLng = {lat: 21.0302432, lng: 105.8354};
-  var map = new google.maps.Map(document.getElementById('googleMap'), {
-    zoom: 17,
-    center: myLatLng
-  });
+	var map = new google.maps.Map(document.getElementById('map'), {
+		zoom: 17,
+		disableDefaultUI: true
+	});
+	var marker = new google.maps.Marker({
+		map: map,
+	});
+	marker.setPosition('10.80334, 106.70969500000001');
+	marker.setTitle('abc');
+	marker.setVisible(true);
 
-  numberMarkerImg = {
-	        url: 'img/logo.png',
-	        size: new google.maps.Size(16, 16),
-	        scaledSize: new google.maps.Size(32, 38),
-	        labelOrigin: new google.maps.Point(9, 9)
-	   };
-  
-  var marker = new google.maps.Marker({
-    position: myLatLng,
-    map: map,
-    icon     : numberMarkerImg,
-    labelClass: 'labels',
-    label: {
-        text: 'test abdsdfs asdf ',
-        color: 'black',
-        fontSize: '12px',
-        x: '200',
-        y: '100'
-    }
-  });
+	var infowindowContent = document.getElementById('infowindow-content');
+	infowindowContent.children['place-address'].textContent = 'abc';
 
-  var infowindow = new google.maps.InfoWindow();
-  infowindow.setContent('Test abc');
-  infowindow.open(map, marker);
+	var infowindow = new google.maps.InfoWindow();
+	infowindow.setContent(infowindowContent);
+	infowindow.open(map, marker);
 }
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ env('MAP_API_KEY') }}&callback=initMap&languages=vi&libraries=places" async defer ></script>
 
 @endpush @section('title') Trang điều khiển @endsection @section('content')
 <section class="content-body">
-  <div id="googleMap" class="order-map" style="height:170px">
+  <div id="map" class="order-map"></div>
+  <div id="infowindow-content">
+    <span id="place-address"></span>
   </div>
   <div class=" order-info hf-card flex margin-bottom-20" style="margin-right:0">
     <div class="col-md-5 col-sm-5 col-xs-5 service-info text-center">
