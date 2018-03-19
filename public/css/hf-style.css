@@ -1532,6 +1532,13 @@ body.single-page .single-page-block .single-page-block-inner {
   text-transform: none;
 }
 
+#infowindow-content {
+  display: none;
+  display: inline;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: -1px 0 #01a8fe, 0 1px #01a8fe, 1px 0 #01a8fe, 0 -1px #01a8fe;
+}
 /*
 * LEFT MENU
 */
