@@ -4,7 +4,7 @@
   $(document).ready(function() {
 	  $('#positionAndTime').show();
       $('#surveyList').hide();
-	  
+
     $('body').addClass('survey-page');
     $('#surveyList').steps({
       headerTag: 'h3',
@@ -56,6 +56,16 @@
       },
     });
     $('label').on('click', function() {
+      // control show/hide next answers
+      var questionId = $(this).attr('question-id');
+      var ansGroup = $(this).attr('ans-group');
+      $('label[prev-ans-group^='+questionId+']').each(function() {
+        if ($(this).attr('prev-ans-group') != ansGroup) {
+          $(this).hide();
+        }
+      })
+
+      // change icon
       var span = $(this).find('span');
       if (span.hasClass('icmn-radio-unchecked')) {
         $(this).parent().find('span').each(function() {
@@ -215,7 +225,7 @@
       <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:10%"></div>
     </div>
     <div id="surveyList" class="cui-wizard cui-wizard__numbers">
-      @foreach ($questions as $q)
+      @foreach ($questions as $qKey => $q)
       <h3><span class="cui-wizard--steps--title"></span></h3>
       <section>
         <div class="question">
@@ -229,7 +239,7 @@
           @elseif ($q->answer_type == '1')
           <div data-toggle="buttons">
             @foreach ($q->answers as $a) @if ($a->init_flg == 2)
-            <label class="label-other btn">
+            <label class="label-other btn" question-id="q{{ $q->id }}" ans-group="q{{ $q->id }}-a{{ $a->order_dsp }}" @if ($a->previous_answer != 0) prev-ans-group="q{{ $questions[$qKey-1]->id }}-a{{ $a->previous_answer }}" @endif>
               <input type="checkbox"
                   name="q[{{ $q->id }}][]"
                   value="{{ $a->order_dsp }}">
@@ -240,7 +250,7 @@
                   name="{{ $q->id.'_'.$a->order_dsp }}_text"
                   value="">
             </label> @else
-            <label class="btn">
+            <label class="btn" question-id="q{{ $q->id }}" ans-group="q{{ $q->id }}-a{{ $a->order_dsp }}" @if ($a->previous_answer != 0) prev-ans-group="q{{ $questions[$qKey-1]->id }}-a{{ $a->previous_answer }}" @endif>
               <input type="checkbox"
                   name="q[{{ $q->id }}][]"
                   value="{{ $a->order_dsp }}">
@@ -251,7 +261,7 @@
           @elseif ($q->answer_type == '2')
           <div class="btn-group" data-toggle="buttons">
             @foreach ($q->answers as $a)
-            <label class="btn">
+            <label class="btn" question-id="q{{ $q->id }}" ans-group="q{{ $q->id }}-a{{ $a->order_dsp }}" @if ($a->previous_answer != 0) prev-ans-group="q{{ $questions[$qKey-1]->id }}-a{{ $a->previous_answer }}" @endif>
               <input type="radio"
                   name="q[{{ $q->id }}]"
                   value="{{ $a->order_dsp }}">
