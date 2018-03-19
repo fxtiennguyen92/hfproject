@@ -161,7 +161,7 @@
                     confirmButtonText: 'Tiếp tục',
                   },
                   function() {
-                    location.href = '{{ route("order_list_page") }}';
+                    location.href = '{{ route("test") }}';
                   });
               },
               error: function(xhr) {
@@ -266,7 +266,7 @@
 
     <div id="positionAndTime" style="display: none">
       <div class="content clearfix">
-        <div class="address">
+        <div class="address" style="background-image:url('{{ env('CDN_HOST') }}/img/banner/survey.png')">
           Địa điểm và Thời gian
         </div>
         <div id="map" class="order-map"></div>
@@ -370,7 +370,7 @@ function initMap() {
 		marker.setVisible(true);
 
 		$('input[name=address]').val(place.formatted_address);
-		$('input[name=location]').val(place.geometry.location);
+		$('input[name=location]').val(place.geometry.location.lat() + ',' + place.geometry.location.lng());
 
 		infowindowContent.children['place-address'].textContent = place.name;
 		infowindow.setContent(infowindowContent);

@@ -137,6 +137,25 @@ class ServiceController extends Controller
 		$order->est_excute_at_string = $estExcuteDateString;
 		
 		$order->save();
-		return response()->json('', 200);
+		
+		$request->session()->put('order_temp', $order->id);
+		return response()->json($order, 200);
+	}
+
+	public function review(Request $request) {
+		if (!$request->session()->has('order_temp')) {
+			throw new NotFoundHttpException();
+		}
+		
+		$orderModel = new Order();
+		$orderId = $request->session()->get('order_temp');
+		$order = $orderModel->getById($orderId);
+		if (!$order) {
+			throw new NotFoundHttpException();
+		}
+		
+		return view('order_detail', array(
+						'order' => $order,
+		));
 	}
 }

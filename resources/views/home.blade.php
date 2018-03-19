@@ -38,7 +38,7 @@
       <div class="col-xs-6 col-sm-4 col-lg-2 center">
         <a href="{{ route('service_page', ['serviceUrlName' => $service->url_name]) }}">
           <div class="shadow btn-services">
-            <img class="btn-services-img" src="img/service/{{ $service->id }}.svg">
+            <img class="btn-services-img" src="{{ env('CDN_HOST') }}/img/service/{{ $service->id }}.svg">
             <p class="btn-services-text">{{ $service->name }}</p>
           </div>
         </a>

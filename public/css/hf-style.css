@@ -1319,14 +1319,14 @@ body.single-page .single-page-block .single-page-block-inner {
 }
 
 #positionAndTime .content {
-  min-height: 400px;
+  min-height: 483px;
 }
 
 #positionAndTime .address {
-  padding-top: 15px;
-  padding-bottom: 15px;
-  background: #fafbfc;
-  color: #242424;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background: #02b3e4;
+  color: #fff;
   text-align: center;
 }
 
@@ -1536,8 +1536,8 @@ body.single-page .single-page-block .single-page-block-inner {
   display: none;
   display: inline;
   font-weight: bold;
-  color: #fff;
-  text-shadow: -1px 0 #01a8fe, 0 1px #01a8fe, 1px 0 #01a8fe, 0 -1px #01a8fe;
+  color: #02b3e4;
+  /*text-shadow: -1px 0 #01a8fe, 0 1px #01a8fe, 1px 0 #01a8fe, 0 -1px #01a8fe;*/
 }
 /*
 * LEFT MENU
