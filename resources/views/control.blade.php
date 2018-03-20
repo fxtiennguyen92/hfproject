@@ -1,8 +1,7 @@
-@extends('template.index') @push('stylesheets')
-@endpush @section('title') Trang điều khiển @endsection @section('content')
+@extends('template.test') @push('stylesheets') @endpush @section('title') Trang điều khiển @endsection @section('content')
 <section class="content-body user-menu">
   <ul class="list-menu">
-  @if (auth()->user())
+    @if (auth()->user())
     <li><a href="javascript:void(0);"><i class="material-icons">&#xE887;</i> Trợ giúp</a></li>
     @if (auth()->user()->role == 0)
     <li><a href="{{ route('pro_signup_page') }}"><i class="material-icons">&#xE227;</i> Trở thành đối tác</a></li>
@@ -23,11 +22,11 @@
     @endif
     <li><a href="{{ route('password_page') }}"><i class="material-icons">&#xE8E8;</i> Mật khẩu</a></li>
     <li><a href="{{ route('logout') }}"><i class="material-icons">&#xE879;</i> Đăng xuất</a></li>
-  @else
+    @else
     <li><a href="javascript:void(0);"><i class="material-icons">&#xE887;</i> Trợ giúp</a></li>
     <li><a href="{{ route('pro_signup_page') }}"><i class="material-icons">&#xE227;</i> Trở thành đối tác</a></li>
     <li><a href="{{ route('login') }}"><i class="material-icons">&#xE8AC;</i> Đăng nhập</a></li>
-  @endif
+    @endif
   </ul>
 </section>
 @endsection

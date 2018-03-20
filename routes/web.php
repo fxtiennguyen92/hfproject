@@ -146,3 +146,4 @@ Route::get('/test', 'ServiceController@review')
 Route::get('/ordertemp', function () { return view('order_temp'); });
 
 Route::get('/test2', function () { return view('test2'); });
+Route::get('/test3', function () { return view('test3'); });

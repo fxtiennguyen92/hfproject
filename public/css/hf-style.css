@@ -6,6 +6,15 @@ table {
   font-size: 14px;
 }
 
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+
 .spinner-wrapper {
   display: block;
   position: fixed;
@@ -1695,6 +1704,84 @@ section.user-menu .list-menu a > i {
   z-index: 999;
 }
 
+.order-map .icon-cart {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 999;
+}
+
+.order-tag {
+  font-size: 14px;
+  color: #424242;
+}
+
+.hf-rounded {
+  width: 52px;
+  line-height: 50px;
+  padding: 0;
+  font-size: 18px;
+  border-radius: 100%;
+}
+
+.pro-profile .des {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.pro-profile .project img {
+  max-width: 100%;
+}
+
+.pro-profile .info-project {
+  font-size: 14px;
+}
+
+.pro-profile .info-project span {
+  color: #189eff;
+}
+
+.pro-profile .message {
+  border-bottom: solid 1px #e1e1e1;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+}
+
+.pro-profile .message .author a {
+  color: #404040;
+  font-weight: bold;
+}
+
+.pro-profile .message .author span {
+  display: block;
+  font-size: 13px;
+  line-height: 1;
+  color: #ff0000;
+}
+
+.pro-profile .message .author-rating {
+  color: #189eff;
+}
+
+.pro-profile .message .message-text {
+  padding: 20px 0;
+  font-size: 13px;
+}
+
+.cover-profile {
+  height: 200px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+
+  background-position: center;
+}
+
+.cover-profile .material-icons {
+  color: #fff;
+}
+
+
 /*
 * RESPONSIVE
 */
@@ -1839,6 +1926,14 @@ section.user-menu .list-menu a > i {
   }
   .top-menu .icon-menu .icon-menu-user span {
     display: none;
+  }
+  .skill-rating {
+    display: block;
+    padding: 20px;
+    border-bottom: solid 1px #e1e1e1;
+  }
+  .pro-profile .des {
+    margin-bottom: 20px;
   }
 }
 
