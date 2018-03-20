@@ -18,12 +18,11 @@ table {
 .spinner-wrapper {
   display: block;
   position: fixed;
-  opacity: 0.3;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: #24222f;
+  background: rgba(36, 34, 47, 0.3);
   z-index: 1030;
 }
 
@@ -757,6 +756,8 @@ body.single-page .single-page-block .single-page-block-inner {
 
 .top-banner .hero {
   background-size: cover;
+  background-color: #fafbfc;
+  min-height:580px;
 }
 
 .top-banner {
@@ -1295,7 +1296,7 @@ body.single-page .single-page-block .single-page-block-inner {
 }
 
 .survey-form .service-title {
-  height: 60px;
+  height: 64px;
   line-height: 32px;
   color: #242424;
   text-transform: uppercase;
@@ -1327,7 +1328,7 @@ body.single-page .single-page-block .single-page-block-inner {
 }
 
 #positionAndTime .content {
-  min-height: 400px;
+  min-height: 483px;
 }
 
 #positionAndTime .address {
@@ -1540,6 +1541,13 @@ body.single-page .single-page-block .single-page-block-inner {
   text-transform: none;
 }
 
+#infowindow-content {
+  display: none;
+  display: inline;
+  font-weight: bold;
+  color: #02b3e4;
+  /*text-shadow: -1px 0 #01a8fe, 0 1px #01a8fe, 1px 0 #01a8fe, 0 -1px #01a8fe;*/
+}
 /*
 * LEFT MENU
 */
@@ -1686,6 +1694,7 @@ section.user-menu .list-menu a > i {
 
 .order-map {
   position: relative;
+  height: 180px;
 }
 
 .order-map .arrow-back {
@@ -1867,7 +1876,10 @@ section.user-menu .list-menu a > i {
   .top-banner .service {
     padding: 20px 10px;
   }
-  .top-banner .hero,
+  .top-banner .hero {
+    min-height: 0;
+    height: auto!important;
+  }
   #section_value {
     height: auto!important;
   }

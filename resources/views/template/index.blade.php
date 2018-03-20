@@ -8,11 +8,11 @@
   <title>HandFree | @yield('title')</title>
 
   <base href="{{ asset('') }}">
-  <link href="img/icons/icon-144x144.png" rel="icon" type="image/png">
-  <link href="img/icons/icon-144x144.png" rel="apple-touch-icon" type="image/png" sizes="144x144">
-  <link href="img/icons/icon-128x128.png" rel="apple-touch-icon" type="image/png" sizes="128x128">
+  <link href="{{ env('CDN_HOST') }}/img/icon/icon-144x144.png" rel="icon" type="image/png">
+  <link href="{{ env('CDN_HOST') }}/img/icon/icon-144x144.png" rel="apple-touch-icon" type="image/png" sizes="144x144">
+  <link href="{{ env('CDN_HOST') }}/img/icon/icon-128x128.png" rel="apple-touch-icon" type="image/png" sizes="128x128">
 
-  <link href="img/icons/icon-144x144.png" rel="shortcut icon">
+  <link href="{{ env('CDN_HOST') }}/img/icon/icon-144x144.png" rel="shortcut icon">
 
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
@@ -132,10 +132,14 @@
       }
     }
 
+    #nprogress .spinner-icon {
+      background: url("{{ env('CDN_HOST') }}/img/loading/loading.gif") no-repeat;
+      background-size: contain;
+    }
   </style>
   
   <script>
-    $(window).on('load', function () {
+    $(window).load(function() {
       NProgress.start();
     });
 
@@ -144,7 +148,7 @@
         clearInterval(interval);
         NProgress.done();
       }
-    }, 500);
+    }, 2000);
   </script>
   <!-- Page Scripts -->
   @stack('stylesheets')
@@ -154,6 +158,7 @@
 <body class="theme-default single-page">
   <!-- Check user login -->
   @include('template.nav')
+  @include('template.header-top-bar')
   @yield('content')
 </body>
 

@@ -1,19 +1,13 @@
 @extends('template.index') @push('stylesheets')
 <link rel="stylesheet" type="text/css" href="css/home.css">
 <style>
-  .left-menu {
-    display: none;
-  }
-  
-  @media only screen and (max-width: 768px) {
-    .left-menu {
-      display: block;
+  @media only screen and (max-width: 500px) {
+    .header-top-bar {
+      display: none;
     }
   }
 </style>
 <script>
-
-  
   (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
@@ -31,7 +25,7 @@
 @section('content')
 <!-- SECTION BANNER -->
 <section class="top-banner">
-  <div class="hero" style="background-image: url(img/banner/main.png); min-height:580px">
+  <div class="hero" style="background-image: url({{ env('CDN_HOST') }}/img/banner/main.png);">
     <div class="content">
 <!--       <h1 class="text-center">Đặt việc nhà trong 60 giây <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small></h1> -->
     </div>
@@ -44,7 +38,7 @@
       <div class="col-xs-6 col-sm-4 col-lg-2 center">
         <a href="{{ route('service_page', ['serviceUrlName' => $service->url_name]) }}">
           <div class="shadow btn-services">
-            <img class="btn-services-img" src="img/service/{{ $service->id }}.svg">
+            <img class="btn-services-img" src="{{ env('CDN_HOST') }}/img/service/{{ $service->id }}.svg">
             <p class="btn-services-text">{{ $service->name }}</p>
           </div>
         </a>

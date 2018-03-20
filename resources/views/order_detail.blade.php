@@ -1,60 +1,14 @@
 @extends('template.index') @push('stylesheets')
-<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ env('MAP_API_KEY') }}&callback=initMap">
-</script>
 <script>
 function initMap() {
-  var myLatLng = {lat: 21.0302432, lng: 105.8354};
-  var map = new google.maps.Map(document.getElementById('googleMap'), {
-    zoom: 17,
-    center: myLatLng
-  });
-
-  numberMarkerImg = {
-	        url: 'img/logo.png',
-	        size: new google.maps.Size(16, 16),
-	        scaledSize: new google.maps.Size(32, 38),
-	        labelOrigin: new google.maps.Point(9, 9)
-	   };
-  
-  var marker = new google.maps.Marker({
-    position: myLatLng,
-    map: map,
-    icon     : numberMarkerImg,
-    labelClass: 'labels',
-    label: {
-        text: 'test abdsdfs asdf ',
-        color: 'black',
-        fontSize: '12px',
-        x: '200',
-        y: '100'
-    }
-  });
-
-  var infowindow = new google.maps.InfoWindow();
-  infowindow.setContent('Test abc');
-  infowindow.open(map, marker);
+	initOrderMap({{ $order->location }}, '{{ $order->address }}');
 }
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ env('MAP_API_KEY') }}&callback=initMap&languages=vi&libraries=places" async defer ></script>
 
 @endpush @section('title') Trang điều khiển @endsection @section('content')
 <section class="content-body">
-  <div id="googleMap" class="order-map" style="height:170px">
-  </div>
-  <div class=" order-info hf-card flex margin-bottom-20" style="margin-right:0">
-    <div class="col-md-5 col-sm-5 col-xs-5 service-info text-center">
-      <img class="avt" src="img/service/1.svg">
-      <label class="order-user">Sửa điện</label>
-    </div>
-    <div class="col-md-7 col-sm-7 col-xs-7">
-      <div class="order-code">Đơn #23D65</div>
-      <div class="order-address"><i class="material-icons"></i> 56, Bình Thạnh, Tp. Hồ Chí Minh</div>
-      <div class="order-state">
-        <span class="order-time state-est-time"><i class="material-icons"></i> Thứ bảy, 31/03/2018 21:16</span>
-      </div>
-      <button type="button" class="margin-top-10 btn btn-squared btn-danger-outline margin-inline text-uppercase">Có 3 báo giá</button>
-    </div>
-
-  </div>
+@include('template.order_detail_header')
 
   <div class="row">
     <div class="col-md-12">

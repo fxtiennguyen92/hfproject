@@ -11,16 +11,9 @@ class Order extends Model
 	protected $table = 'orders';
 
 	public function getById($id) {
-		$order = $this::with('user')->where('id', $id)->first();
-		if ($order) {
-			$common = new Common();
-			$order->city_string = $common->getByCode($order->city)->name;
-			$order->dist_string = $common->getByCode($order->district)->name;
-			
-			return $order;
-		}
-		
-		return null;
+		return $this::with('user', 'service')
+			->where('id', $id)
+			->first();
 	}
 
 	public function getByUser($id) {

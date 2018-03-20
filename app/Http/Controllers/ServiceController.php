@@ -39,10 +39,15 @@ class ServiceController extends Controller
 		$dates = CommonController::getNext7Days();
 		$times = CommonController::getAllTimes();
 		
+		$page = new \stdClass();
+		$page->name = 'Đơn hàng';
+		$page->back_route = 'home_page';
+		
 		// put service to session
 		$request->session()->put('service', $service->id);
 		
 		return view(Config::get('constants.SURVEY_PAGE'), array(
+				'page' => $page,
 				'service' => $service,
 				'questions' => $questions,
 				'cities' => $cities,
@@ -125,19 +130,32 @@ class ServiceController extends Controller
 		$order->requirements = json_encode($requirements);
 		$order->short_requirements = implode(', ', $short_requirements);
 		$order->address = $request->address;
-		
-		$order->city = $request->city;
-		$order->district = $request->dist;
-		$common = new Common();
-		$order->address = $request->address
-			.', '.$common->getByCode($order->district)->name
-			.', '.$common->getByCode($order->city)->name;
+		$order->location = $request->location;
 		
 		$order->time_state = $request->timeState;
 		$order->est_excute_at = $estExcuteDate;
 		$order->est_excute_at_string = $estExcuteDateString;
 		
 		$order->save();
-		return response()->json('', 200);
+		
+		$request->session()->put('order_temp', $order->id);
+		return response()->json($order, 200);
+	}
+
+	public function review(Request $request) {
+		if (!$request->session()->has('order_temp')) {
+			throw new NotFoundHttpException();
+		}
+		
+		$orderModel = new Order();
+		$orderId = $request->session()->get('order_temp');
+		$order = $orderModel->getById($orderId);
+		if (!$order) {
+			throw new NotFoundHttpException();
+		}
+		
+		return view('order_detail', array(
+						'order' => $order,
+		));
 	}
 }

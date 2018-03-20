@@ -37,3 +37,25 @@ $(document).ready(function() {
     })
   });
 });
+
+function initOrderMap(lat, lng, address) {
+	var location = new google.maps.LatLng(lat, lng);
+	var map = new google.maps.Map(document.getElementById('map'), {
+		center: location,
+		zoom: 17,
+		disableDefaultUI: true
+	});
+	var marker = new google.maps.Marker({
+		map: map,
+	});
+	marker.setPosition(location);
+	marker.setTitle(address);
+	marker.setVisible(true);
+
+	var infowindowContent = document.getElementById('infowindow-content');
+	infowindowContent.children['place-address'].textContent = address;
+
+	var infowindow = new google.maps.InfoWindow();
+	infowindow.setContent(infowindowContent);
+	infowindow.open(map, marker);
+}

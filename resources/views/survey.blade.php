@@ -1,8 +1,23 @@
 @extends('template.index') @push('stylesheets')
+<style>
+  @media only screen and (max-width: 500px) {
+    .top-menu {
+      display: none;
+    }
+  }
+</style>
+
 <!-- Page Scripts -->
 <script>
   $(document).ready(function() {
     $('body').addClass('survey-page');
+    $('#frmMain').on('keyup keypress', function(e) {
+      var keyCode = e.keyCode || e.which;
+      if (keyCode === 13) { 
+        e.preventDefault();
+        return false;
+      }
+    });
     $('#surveyList').steps({
       headerTag: 'h3',
       bodyTag: 'section',
@@ -47,12 +62,19 @@
         return validReturn;
       },
       onStepChanged: function(e, currentIndex, priorIndex) {
-        var total = '{{ sizeof($questions) }}';
-        var percent = (currentIndex) / total * 100;
-        $('.progress-bar').css('width', percent + '%');
       },
     });
     $('label').on('click', function() {
+      // control show/hide next answers
+      var questionId = $(this).attr('question-id');
+      var ansGroup = $(this).attr('ans-group');
+      $('label[prev-ans-group^='+questionId+']').each(function() {
+        if ($(this).attr('prev-ans-group') != ansGroup) {
+          $(this).hide();
+        }
+      })
+
+      // change icon
       var span = $(this).find('span');
       if (span.hasClass('icmn-radio-unchecked')) {
         $(this).parent().find('span').each(function() {
@@ -73,13 +95,18 @@
     });
     $('a[href=#finish]').on('click', function() {
       $('#positionAndTime').show();
+      $('.service-title').hide();
       $('#surveyList').hide();
-      $('.progress-bar').css('width', '100%');
     });
     $('#btnBack').on('click', function() {
       $('#positionAndTime').hide();
+      $('.service-title').show();
       $('#surveyList').show();
     });
+    $('#orderAddress').on('blur', function() {
+      $(this).val($('input[name=address]').val());
+    });
+
     $('.datetimepicker').datetimepicker({
       minDate: moment(),
       locale: moment.locale('vi'),
@@ -101,28 +128,6 @@
         close: 'fa fa-check'
       },
     });
-    $('.ddCity').on('change', function() {
-      if ($(this).val() == '') {
-        return false;
-      }
-
-      var ddDist = $('select.ddDist');
-      ddDist.children('option').remove();
-
-      var url = '{{ route("get_dist_by_city", ["code" => "cityCode"]) }}';
-      url = url.replace('cityCode', $(this).val());
-      $.ajax({
-        url: url,
-        success: function(data) {
-          $.each(data, function(key, value) {
-            ddDist.append($('<option></option>')
-              .attr('value', value.code)
-              .text(value.name));
-          });
-          ddDist.selectpicker('refresh');
-        }
-      });
-    });
 
     $('.time-rad').on('click', function() {
       if ($(this).find('input').val() == 1) {
@@ -131,16 +136,18 @@
         $('#excuteDatetime').hide();
       }
     });
-    
-    $('#frmMain').validate({
-      submit: {
-        settings: {
-          inputContainer: '.form-group',
-          errorListClass: 'form-control-error',
-          errorClass: 'has-danger',
-        },
-        callback: {
-          onSubmit: function() {
+
+    $('#btnSubmit').on('click', function() {
+      if ($('input[name=location]').val() == '') {
+        $.notify({
+          title: '<strong>Không thể tiếp tục! </strong>',
+          message: 'Chưa xác định được địa điểm.'
+        }, {
+          type: 'danger',
+          z_index: 1051,
+        });
+        $('#orderAddress').focus();
+      } else {
             $.ajax({
               type: 'POST',
               url: '{{ route("submit_order") }}',
@@ -154,7 +161,7 @@
                     confirmButtonText: 'Tiếp tục',
                   },
                   function() {
-                    location.href = '{{ route("order_list_page") }}';
+                    location.href = '{{ route("test") }}';
                   });
               },
               error: function(xhr) {
@@ -194,8 +201,6 @@
                 };
               }
             });
-          }
-        }
       }
     });
   });
@@ -203,16 +208,13 @@
 </script>
 @endpush @section('title') Đơn hàng @endsection @section('content')
 <section class="content-body">
-  <form id="frmMain" class="survey-form" name="form-validation" method="post" enctype="multipart/form-data">
+  <form id="frmMain" class="survey-form" method="get">
 
-    <div class="service-title" style="background-image:url('img/banner/6.png')">
-      <span class="title"><img class="service-icon" src="img/service/{{ $service->id }}.svg" /> {{ $service->name }}</span>
-    </div>
-    <div class="progress">
-      <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width:10%"></div>
+    <div class="service-title" style="background-image:url('{{ env('CDN_HOST') }}/img/banner/survey.png')">
+      <span class="title"><img class="service-icon" src="{{ env('CDN_HOST') }}/img/service/{{ $service->id }}.svg" /> {{ $service->name }}</span>
     </div>
     <div id="surveyList" class="cui-wizard cui-wizard__numbers">
-      @foreach ($questions as $q)
+      @foreach ($questions as $qKey => $q)
       <h3><span class="cui-wizard--steps--title"></span></h3>
       <section>
         <div class="question">
@@ -226,7 +228,7 @@
           @elseif ($q->answer_type == '1')
           <div data-toggle="buttons">
             @foreach ($q->answers as $a) @if ($a->init_flg == 2)
-            <label class="label-other btn">
+            <label class="label-other btn" question-id="q{{ $q->id }}" ans-group="q{{ $q->id }}-a{{ $a->order_dsp }}" @if ($a->previous_answer != 0) prev-ans-group="q{{ $questions[$qKey-1]->id }}-a{{ $a->previous_answer }}" @endif>
               <input type="checkbox"
                   name="q[{{ $q->id }}][]"
                   value="{{ $a->order_dsp }}">
@@ -237,7 +239,7 @@
                   name="{{ $q->id.'_'.$a->order_dsp }}_text"
                   value="">
             </label> @else
-            <label class="btn">
+            <label class="btn" question-id="q{{ $q->id }}" ans-group="q{{ $q->id }}-a{{ $a->order_dsp }}" @if ($a->previous_answer != 0) prev-ans-group="q{{ $questions[$qKey-1]->id }}-a{{ $a->previous_answer }}" @endif>
               <input type="checkbox"
                   name="q[{{ $q->id }}][]"
                   value="{{ $a->order_dsp }}">
@@ -248,7 +250,7 @@
           @elseif ($q->answer_type == '2')
           <div class="btn-group" data-toggle="buttons">
             @foreach ($q->answers as $a)
-            <label class="btn">
+            <label class="btn" question-id="q{{ $q->id }}" ans-group="q{{ $q->id }}-a{{ $a->order_dsp }}" @if ($a->previous_answer != 0) prev-ans-group="q{{ $questions[$qKey-1]->id }}-a{{ $a->previous_answer }}" @endif>
               <input type="radio"
                   name="q[{{ $q->id }}]"
                   value="{{ $a->order_dsp }}">
@@ -264,67 +266,31 @@
 
     <div id="positionAndTime" style="display: none">
       <div class="content clearfix">
-        <div class="address">
+        <div class="address" style="background-image:url('{{ env('CDN_HOST') }}/img/banner/survey.png')">
           Địa điểm và Thời gian
         </div>
+        <div id="map" class="order-map"></div>
+        <div id="infowindow-content">
+	      <span id="place-address"></span>
+	    </div>
         <div class="address-wrapper">
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
-              <input type="text" class="form-control" placeholder="Nhập Số Nhà. VD: 20/7 Hai Bà Trưng" name="address" data-validation="[NOTEMPTY]">
-            </div>
-            <div class="col-md-12 col-sm-12 col-xs-12">
-              <div class="col-md-6 col-sm-6 col-xs-6" style="padding-left: 0; padding-right: 0">
-                <select class="form-control selectpicker ddDist hf-select" data-live-search="true" name="dist" data-validation="[NOTEMPTY]">
-                @foreach($districts as $dist)
-                <option value="{{ $dist->code }}">{{ $dist->name }}</option>
-                @endforeach
-              </select>
-              </div>
-              <div class="col-md-6 col-sm-6 col-xs-6" style="padding-right: 0">
-                <select class="form-control selectpicker ddCity hf-select" data-live-search="true" name="city" data-validation="[NOTEMPTY]">
-                @foreach($cities as $city)
-                <option value="{{ $city->code }}">{{ $city->name }}</option>
-                @endforeach
-              </select>
-              </div>
+              <input type="text" id="orderAddress" class="form-control" placeholder="Địa chỉ của bạn. VD: 4/2 Đinh Bộ Lĩnh, Bình Thạnh, Hồ Chí Minh">
             </div>
           </div>
         </div>
-<!--         <div class="address-history"> -->
-<!--           <div class="item"> -->
-<!--             <div class="icon"> -->
-<!--               <i class="material-icons">&#xE422;</i> -->
-<!--             </div> -->
-<!--             <div class="right-content"> -->
-<!--               <div>68 Bạch Đằng</div> -->
-<!--               <div>Phường 24, Bình Thạnh, Hồ Chí Minh</div> -->
-<!--             </div> -->
-<!--           </div> -->
-<!--           <div class="item"> -->
-<!--             <div class="icon"> -->
-<!--               <i class="material-icons">&#xE422;</i> -->
-<!--             </div> -->
-<!--             <div class="right-content"> -->
-<!--               <div>68 Bạch Đằng</div> -->
-<!--               <div>Phường 24, Bình Thạnh, Hồ Chí Minh</div> -->
-<!--             </div> -->
-<!--           </div> -->
-<!--         </div> -->
         <div class="time">
           Vào lúc
         </div>
         <div class="btn-group time-wrapper" data-toggle="buttons">
           <label class="btn time-rad">
-                  <input type="radio" name="timeState" value="0"
-                      data-validation="[NOTEMPTY]"
-                      data-validation-group="lbTime"
-                      data-validation-message="Chưa chọn thời gian">
-                  <span class="icon icmn-radio-unchecked"></span>
+                  <input type="radio" name="timeState" value="0" checked>
+                  <span class="icon icmn-checkmark-circle"></span>
                       Càng sớm càng tốt
               </label>
           <label class="btn time-rad">
-                  <input type="radio" name="timeState" value="1"
-                      data-validation-group="lbTime">
+                  <input type="radio" name="timeState" value="1">
                   <span class="icon icmn-radio-unchecked"></span>
                       Ấn định thời gian
               </label>
@@ -348,10 +314,74 @@
       </div>
       <div class="row-complete clearfix">
         <button id="btnBack" type="button" class="btn"><i class="material-icons">&#xE314;</i></button>
-        <button id="btnSubmit" type="submit" class="btn btn-primary"><i class="material-icons">&#xE876;</i></button>
+        <button id="btnSubmit" type="button" class="btn btn-primary"><i class="material-icons">&#xE876;</i></button>
         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+        <input type="hidden" name="address" value="" />
+        <input type="hidden" name="location" value="" />
       </div>
     </div>
   </form>
 </section>
+
+<script>
+function initMap() {
+	var map = new google.maps.Map(document.getElementById('map'), {
+		center: {lat: 10.762622, lng: 106.660172},
+		zoom: 13,
+		disableDefaultUI: true
+	});
+	var infowindowContent = document.getElementById('infowindow-content');
+	var input = document.getElementById('orderAddress');
+	var autocomplete = new google.maps.places.Autocomplete(input);
+	autocomplete.bindTo('bounds', map);
+	autocomplete.setTypes(['address']);
+
+	var infowindow = new google.maps.InfoWindow();
+	infowindow.open(map);
+	var marker = new google.maps.Marker({
+		map: map,
+	});
+
+	autocomplete.addListener('place_changed', function() {
+		infowindow.close();
+		marker.setVisible(false);
+		var place = autocomplete.getPlace();
+		if (!place.geometry) {
+			$.notify({
+				message: 'Không lấy được địa điểm của bạn. Hãy thử lại!'
+			}, {
+				type: 'danger',
+			});
+
+			$('#orderAddress').focus();
+			return;
+		}
+
+		// If the place has a geometry, then present it on a map.
+		if (place.geometry.viewport) {
+			map.fitBounds(place.geometry.viewport);
+		} else {
+			map.setCenter(place.geometry.location);
+			map.setZoom(17);
+		}
+
+		marker.setPosition(place.geometry.location);
+		marker.setTitle(place.name);
+		marker.setVisible(true);
+
+		$('input[name=address]').val(place.formatted_address);
+		$('input[name=location]').val(place.geometry.location.lat() + ',' + place.geometry.location.lng());
+
+		infowindowContent.children['place-address'].textContent = place.name;
+		infowindow.setContent(infowindowContent);
+		infowindow.open(map, marker);
+
+		var wrapper = $('#infowindow-content').parent().parent().parent();
+		wrapper.find('div').first().hide();
+		wrapper.find('div').last().hide();
+		wrapper.addClass('address-content');
+	});
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ env('MAP_API_KEY') }}&callback=initMap&languages=vi&libraries=places" async defer ></script>
 @endsection

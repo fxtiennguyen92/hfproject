@@ -22,7 +22,7 @@ class FileController
 		$user = User::where('id', $userId)->first();
 		
 		if ($user->avatar) {
-			\Storage::delete($directoryName.'/'.$userId);
+			\Storage::delete($directoryName.'/'.$user->avatar);
 		}
 		$fileSrc = \Storage::put($directoryName.'/'. $fileName, $data);
 		

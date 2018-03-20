@@ -5,7 +5,7 @@
     <div class="menu-info-block">
       <div class="left">
         <div class="">
-          <a href="{{ route('home_page') }}"><img src="img/logoh.png" class="navbar-logo"></a>
+          <a href="{{ route('home_page') }}"><img src="{{ env('CDN_HOST') }}/img/logo/logoh.png" class="navbar-logo"></a>
         </div>
       </div>
       <div class="icon-menu-wrapper">
