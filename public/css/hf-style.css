@@ -757,7 +757,7 @@ body.single-page .single-page-block .single-page-block-inner {
 .top-banner .hero {
   background-size: cover;
   background-color: #fafbfc;
-  min-height:580px;
+  min-height: 580px;
 }
 
 .top-banner {
@@ -1548,6 +1548,7 @@ body.single-page .single-page-block .single-page-block-inner {
   color: #02b3e4;
   /*text-shadow: -1px 0 #01a8fe, 0 1px #01a8fe, 1px 0 #01a8fe, 0 -1px #01a8fe;*/
 }
+
 /*
 * LEFT MENU
 */
@@ -1781,6 +1782,30 @@ section.user-menu .list-menu a > i {
   color: #fff;
 }
 
+.content-detail {
+  font-size: 13px;
+  margin: 10px 0;
+  display: none;
+  -webkit-transition: all .3s;
+  -o-transition: all .3s;
+  transition: all .3s;
+}
+
+.label.label-outlined.label-default {
+  border: solid 1px #e1e1e1;
+  background: #fff;
+  color: #acb7bf;
+}
+
+label.label-outlined.label-danger {
+  color: #d9534f;
+  border: solid 1px #d9534f;
+  background: #fff;
+}
+
+.content-detail.show {
+  display: block;
+}
 
 /*
 * RESPONSIVE
@@ -1973,7 +1998,8 @@ section.user-menu .list-menu a > i {
     padding-right: 10px !important;
   }
   .survey-form {
-    margin-top: 0;
+
+    margin-top: 45px;
     margin-bottom: 65px;
     background: none;
     -webkit-box-shadow: none;

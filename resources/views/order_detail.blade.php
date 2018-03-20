@@ -1,16 +1,21 @@
 @extends('template.index') @push('stylesheets')
 <script>
-function initMap() {
-	initOrderMap({{ $order->location }}, '{{ $order->address }}');
-}
+  function initMap() {
+    initOrderMap({
+      {
+        $order - > location
+      }
+    }, '{{ $order->address }}');
+  }
+
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key={{ env('MAP_API_KEY') }}&callback=initMap&languages=vi&libraries=places" async defer ></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ env('MAP_API_KEY') }}&callback=initMap&languages=vi&libraries=places" async defer></script>
 
 @endpush @section('title') Trang điều khiển @endsection @section('content')
 <section class="content-body">
-@include('template.order_detail_header')
+  @include('template.order_detail_header')
 
-  <div class="row">
+  <div class="row margin-bottom-50 padding-bottom-15">
     <div class="col-md-12">
       <div class="orders-item hf-card">
         <div class="row flex">
@@ -67,6 +72,11 @@ function initMap() {
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="row-complete clearfix">
+    <button id="btnBack" type="button" class="btn"><i class="material-icons">&#xE14C;</i></button>
+    <button id="btnSubmit" type="button" class="btn btn-primary"><i class="material-icons">&#xE876;</i></button>
   </div>
 </section>
 @endsection
