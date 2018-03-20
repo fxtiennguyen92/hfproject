@@ -1784,11 +1784,13 @@ section.user-menu .list-menu a > i {
 
 .content-detail {
   font-size: 13px;
+  padding-top: 20px;
   margin: 10px 0;
   display: none;
   -webkit-transition: all .3s;
   -o-transition: all .3s;
   transition: all .3s;
+  border-top: solid 1px #e1e1e1;
 }
 
 .label.label-outlined.label-default {

@@ -6,7 +6,7 @@
         <label class="order-user">{{ $order->service->name }}</label>
       </div>
       <div class="col-md-7 col-sm-7 col-xs-7">
-        <div class="order-code">@if (!is_null($order->no)) Mã #{{ $order->no }} @else Đơn hàng mới @endif</div>
+        <div class="order-code">@if (!is_null($order->no)) Mã đơn hàng #{{ $order->no }} @else Đơn hàng mới @endif</div>
         <div class="order-address" title="{{ $order->address }}"><i class="material-icons">&#xE0C8;</i> {{ $order->address }}</div>
         <div class="order-state">
           @if ($order->est_excute_at_string)
@@ -22,5 +22,19 @@
   </div>
   <div class="text-center">
     <button type="button" id="toggleContent" class=" btn btn-squared btn-default btn-block ">Xem thêm Chi tiết đơn hàng</button>
+  </div>
+  <div class="flex padding-top-20" style="border-top:solid 1px #e1e1e1; min-height: 100px;">
+    
+  </div>
+  <div class="flex margin-top-20 padding-bottom-15 padding-top-20" style="border-top:solid 1px #e1e1e1; min-height: 90px;">
+    <div class="col-md-6 col-sm-6 col-xs-6 text-center">
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-6 text-right">
+      @if (is_null($order->no))
+      <button type="button" class="btn btn-squared btn-primary margin-inline text-uppercase">Xác nhận</button>
+      @else
+      <button type="button" class="btn btn-squared btn-default margin-outline text-uppercase">Hủy</button>
+      @endif
+    </div>
   </div>
 </div>

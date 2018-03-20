@@ -63,8 +63,12 @@ Route::get('/dich-vu/{serviceUrlName}', 'ServiceController@view')
 	->name('service_page');
 Route::post('/order/submit', 'ServiceController@submit')
 	->name('submit_order');
-// Route::post('/order/complete', 'ServiceController@complete')
-// 	->name('complete_order');
+Route::get('order/review', 'ServiceController@review')
+	->name('review_order');
+Route::post('order/complete', 'ServiceController@complete')
+	->name('complete_order');
+Route::post('order/delete', 'ServiceController@delete')
+	->name('delete_order');
 Route::get('/orders', 'OrderController@viewList')
 	->name('order_list_page');
 Route::get('/order/{orderId}', 'OrderController@view')
@@ -141,9 +145,6 @@ Route::post('/pro/signup', 'Pro\ProSignUpController@signup')
 	->name('signup_pro');
 /** Alpha - END **/
 
-Route::get('/complete', 'ServiceController@complete');
-Route::get('/test', 'ServiceController@review')
-	->name('test');
 
 Route::get('/ordertemp', function () { return view('order_temp'); });
 

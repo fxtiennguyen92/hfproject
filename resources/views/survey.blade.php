@@ -165,14 +165,14 @@
               data: $('#frmMain').serialize(),
               success: function(response) {
                 swal({
-                    title: 'Thành công',
-                    text: 'Hoàn tất đơn hàng, vui lòng chờ báo giá !',
+                    title: 'Đơn hàng mới',
+                    text: 'Mời kiểm tra lại thông tin đơn hàng!',
                     type: 'success',
                     confirmButtonClass: 'btn-primary',
-                    confirmButtonText: 'Tiếp tục',
+                    confirmButtonText: 'Xem đơn hàng',
                   },
                   function() {
-                    location.href = '{{ route("test") }}';
+                    location.href = '{{ route("review_order") }}';
                   });
               },
               error: function(xhr) {
@@ -184,11 +184,6 @@
                     type: 'danger',
                     z_index: 1051,
                   });
-                  setTimeout(function() {
-                    location.reload();
-                  }, 1500);
-
-                  location.href('{{ route("home_page") }}');
                 } else if (xhr.status == 403) {
                   $.notify({
                     title: '<strong>Thất bại! </strong>',
@@ -205,10 +200,6 @@
                     type: 'danger',
                     z_index: 1051,
                   });
-
-                  setTimeout(function() {
-                    location.reload();
-                  }, 1500);
                 };
               }
             });
@@ -387,10 +378,10 @@ function initMap() {
 		infowindow.setContent(infowindowContent);
 		infowindow.open(map, marker);
 
-		var wrapper = $('#infowindow-content').parent().parent().parent();
-		wrapper.find('div').first().hide();
-		wrapper.find('div').last().hide();
-		wrapper.addClass('address-content');
+// 		var wrapper = $('#infowindow-content').parent().parent().parent();
+// 		wrapper.find('div').first().hide();
+// 		wrapper.find('div').last().hide();
+// 		wrapper.addClass('address-content');
 	});
 }
 </script>

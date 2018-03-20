@@ -68,9 +68,9 @@ class Order extends Model
 			->get();
 	}
 
-	public function getProcessingByMember($id) {
-		return $this::with('pro', 'pro_profile')
-			->processing()
+	public function getCurrentByMember($id) {
+		return $this::with('pro', 'pro.profile')
+			->current()
 			->where('user_id', $id)
 			->get();
 	}
@@ -87,15 +87,19 @@ class Order extends Model
 	}
 
 	public static function updateState($orderId, $state) {
-		return Order::where('id', $orderId)
+		Order::where('id', $orderId)
 			->update(['state' => $state]);
 	}
 
 	public static function setOrderNo($orderId, $orderNo) {
-		return Order::where('id', $orderId)
+		Order::where('id', $orderId)
 			->update(['no' => $orderNo]);
 	}
-	
+
+	public static function deleteOrderTemp($orderId) {
+		$order = Order::find($orderId);
+		$order->delete();
+	}
 
 	public function service() {
 		return $this->hasOne('App\Service', 'id', 'service_id');
@@ -109,26 +113,31 @@ class Order extends Model
 		return $this->hasOne('App\User', 'id', 'pro_id');
 	}
 
-	public function pro_profile() {
-		return $this->hasOne('App\ProProfile', 'id', 'pro_id');
-	}
-
 	public function scopeTemp($query) {
 		return $query
+			->whereNull('no')
 			->where('state', Config::get('constants.ORD_NEW'))
-// 			->whereNull('no')
 			->orderBy('created_at', 'desc');
 	}
 
 	public function scopeNew($query) {
 		return $query
-			->where('state', Config::get('constants.ORD_NEW'))
 			->whereNotNull('no')
+			->where('state', Config::get('constants.ORD_NEW'))
 			->orderBy('created_at', 'desc');
 	}
 
 	public function scopeProcessing($query) {
-		return $query->where('state', Config::get('constants.ORD_PROCESSING'))->orderBy('created_at', 'desc');
+		return $query
+			->where('state', Config::get('constants.ORD_PROCESSING'))
+			->orderBy('created_at', 'desc');
+	}
+	
+	public function scopeCurrent($query) {
+		return $query
+			->where('state', Config::get('constants.ORD_NEW'))
+			->orWhere('state', Config::get('constants.ORD_PROCESSING'))
+			->orderBy('created_at', 'desc');
 	}
 	
 	public function scopeComplete($query) {

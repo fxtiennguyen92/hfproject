@@ -140,6 +140,8 @@ class ServiceController extends Controller
 		
 		$request->session()->put('order_temp', $order->id);
 		return response()->json($order, 200);
+
+		//return redirect()->route('review_order');
 	}
 
 	public function review(Request $request) {
@@ -167,12 +169,23 @@ class ServiceController extends Controller
 		$orderModel = new Order();
 		$orderId = $request->session()->get('order_temp');
 		$order = $orderModel->getTempById($orderId);
-		
 		if (!$order) {
 			throw new NotFoundHttpException();
 		}
 		
-		$orderModel = new Order();
-		$orderModel->setOrderNo($orderId, CommonController::getOrderNo($order));
+		Order::setOrderNo($orderId, CommonController::getOrderNo($order));
+		
+		return redirect()->route('order_list_page');
+	}
+
+	public function delete(Request $request) {
+		if (!$request->session()->has('order_temp')) {
+			throw new NotFoundHttpException();
+		}
+		
+		$orderId = $request->session()->get('order_temp');
+		Order::deleteOrderTemp($orderId);
+		
+		return redirect()->route('order_list_page');
 	}
 }

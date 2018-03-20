@@ -27,12 +27,12 @@ class OrderController extends Controller
 		
 		$orderModel = new Order();
 
-		$processingOrders = $orderModel->getProcessingByMember(auth()->user()->id);
-		$newOrders = $orderModel->getNewByMember(auth()->user()->id);
+		$currentOrders = $orderModel->getCurrentByMember(auth()->user()->id);
+		//$newOrders = $orderModel->getNewByMember(auth()->user()->id);
 		
 		return view(Config::get('constants.ORDER_LIST_PAGE'), array(
-						'processingOrders' => $processingOrders,
-						'newOrders' => $newOrders,
+						'currentOrders' => $currentOrders,
+						//'newOrders' => $newOrders,
 		));
 	}
 
