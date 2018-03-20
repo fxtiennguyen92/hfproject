@@ -287,7 +287,7 @@
 					<h2>{{ auth()->user()->name }}</h2>
 					<small>Nhân viên</small>
 					<p>Công ty TNHH Một thành viên</p>
-					<div class="skill_rating" title="2.3">
+					<div class="skill_rating">
 						<select id="rating" class="rating" data-current-rating="2.3">
 							<option value=""></option>
 							<option value="1">1</option>

@@ -17,6 +17,8 @@ Route::get('/redirect', 'Auth\LoginController@redirectPath')
 	->name('redirect');
 Route::get('/control', 'InitPageController@control')
 	->name('control');
+Route::get('/pro/{proId}', 'InitPageController@viewProPage')
+	->name('pro_page');
 
 /** Password - STA **/
 Route::get('/password', 'Auth\PasswordController@view')

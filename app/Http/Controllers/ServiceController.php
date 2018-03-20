@@ -155,7 +155,7 @@ class ServiceController extends Controller
 		}
 		
 		return view('order_detail', array(
-						'order' => $order,
+				'order' => $order,
 		));
 	}
 

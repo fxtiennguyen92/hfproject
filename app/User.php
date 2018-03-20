@@ -44,10 +44,19 @@ class User extends Authenticatable
 	}
 
 	public function getPro($proId) {
-		return $this::with('profile')
+		$pro = $this::with('profile')
 			->where('id', $proId)
 			->pro()
 			->first();
+		if (!$pro) {
+			return null;
+		}
+		
+		if ($pro->profile->services) {
+			$serviceModel = new Service();
+			$pro->services = $serviceModel->getFromArray(json_decode($pro->profile->services));
+		}
+		return $pro;
 	}
 
 	public function getProsByProManager($proManagerId) {
