@@ -16,6 +16,13 @@ class Order extends Model
 			->first();
 	}
 
+	public function getTempById($id) {
+		return $this::with('user', 'service')
+			->where('id', $id)
+			->temp()
+			->first();
+	}
+
 	public function getByUser($id) {
 		return $this->where('user_id', $id)->get();
 	}
@@ -84,6 +91,12 @@ class Order extends Model
 			->update(['state' => $state]);
 	}
 
+	public static function setOrderNo($orderId, $orderNo) {
+		return Order::where('id', $orderId)
+			->update(['no' => $orderNo]);
+	}
+	
+
 	public function service() {
 		return $this->hasOne('App\Service', 'id', 'service_id');
 	}
@@ -100,19 +113,29 @@ class Order extends Model
 		return $this->hasOne('App\ProProfile', 'id', 'pro_id');
 	}
 
+	public function scopeTemp($query) {
+		return $query
+			->where('state', Config::get('constants.ORD_NEW'))
+// 			->whereNull('no')
+			->orderBy('created_at', 'desc');
+	}
+
 	public function scopeNew($query) {
-		return $query->where('state', Config::get('constants.ORD_NEW'))->orderBy('created_at', 'desc');
+		return $query
+			->where('state', Config::get('constants.ORD_NEW'))
+			->whereNotNull('no')
+			->orderBy('created_at', 'desc');
 	}
 
 	public function scopeProcessing($query) {
-		return $query->where('state', Config::get('constants.ORD_PROCESSING'));
+		return $query->where('state', Config::get('constants.ORD_PROCESSING'))->orderBy('created_at', 'desc');
 	}
 	
 	public function scopeComplete($query) {
-		return $query->where('state', Config::get('constants.ORD_COMPLETE'));
+		return $query->where('state', Config::get('constants.ORD_COMPLETE'))->orderBy('created_at', 'desc');
 	}
 	
 	public function scopeCancel($query) {
-		return $query->where('state', Config::get('constants.ORD_CANCEL'));
+		return $query->where('state', Config::get('constants.ORD_CANCEL'))->orderBy('created_at', 'desc');
 	}
 }

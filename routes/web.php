@@ -59,10 +59,10 @@ Route::middleware('auth')->group(function() {
 /** Service - Order - STA **/
 Route::get('/dich-vu/{serviceUrlName}', 'ServiceController@view')
 	->name('service_page');
-Route::post('/order/details', 'ServiceController@submitOrder')
+Route::post('/order/submit', 'ServiceController@submit')
 	->name('submit_order');
-Route::get('/order/complete', 'ServiceController@complete')
-	->name('complete_order');
+// Route::post('/order/complete', 'ServiceController@complete')
+// 	->name('complete_order');
 Route::get('/orders', 'OrderController@viewList')
 	->name('order_list_page');
 Route::get('/order/{orderId}', 'OrderController@view')
@@ -139,7 +139,10 @@ Route::post('/pro/signup', 'Pro\ProSignUpController@signup')
 	->name('signup_pro');
 /** Alpha - END **/
 
-Route::get('/ordertemp', function () { return view('order_temp'); });
+Route::get('/complete', 'ServiceController@complete');
 Route::get('/test', 'ServiceController@review')
-->name('test');
+	->name('test');
+
+Route::get('/ordertemp', function () { return view('order_temp'); });
+
 Route::get('/test2', function () { return view('test2'); });

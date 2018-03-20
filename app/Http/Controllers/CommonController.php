@@ -57,17 +57,16 @@ class CommonController
 			$weekday = '';
 			$date = date('d/m/Y', strtotime('today + '.$i.' day'));
 			switch ($i) {
-				case 0:
-					$weekday = 'Hôm nay';
-					break;
-				case 1:
-					$weekday = 'Ngày mai';
-					break;
+// 				case 0:
+// 					$weekday = 'Hôm nay';
+// 					break;
+// 				case 1:
+// 					$weekday = 'Ngày mai';
+// 					break;
 				default:
 					$weekday = CommonController::translateWeekday(date('l', strtotime('today + '.$i.' day')));
 					break;
 			}
-			
 			array_push($dates, $weekday.', '.$date);
 		}
 		
@@ -83,7 +82,11 @@ class CommonController
 		
 		return $times;
 	}
-	
+
+	public static function getOrderNo($order) {
+		return $order->created_at->format('ymd').strtoupper(str_random(2)).$order->id;
+	}
+
 	private static function translateWeekday($en) {
 		switch ($en) {
 			case 'Monday':

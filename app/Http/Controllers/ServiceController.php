@@ -57,7 +57,7 @@ class ServiceController extends Controller
 		));
 	}
 
-	public function submitOrder(Request $request) {
+	public function submit(Request $request) {
 		// get service from session
 		if (!$request->session()->has('service')) {
 			return response()->json('', 400);
@@ -149,7 +149,7 @@ class ServiceController extends Controller
 		
 		$orderModel = new Order();
 		$orderId = $request->session()->get('order_temp');
-		$order = $orderModel->getById($orderId);
+		$order = $orderModel->getTempById($orderId);
 		if (!$order) {
 			throw new NotFoundHttpException();
 		}
@@ -157,5 +157,22 @@ class ServiceController extends Controller
 		return view('order_detail', array(
 						'order' => $order,
 		));
+	}
+
+	public function complete(Request $request) {
+		if (!$request->session()->has('order_temp')) {
+			throw new NotFoundHttpException();
+		}
+		
+		$orderModel = new Order();
+		$orderId = $request->session()->get('order_temp');
+		$order = $orderModel->getTempById($orderId);
+		
+		if (!$order) {
+			throw new NotFoundHttpException();
+		}
+		
+		$orderModel = new Order();
+		$orderModel->setOrderNo($orderId, CommonController::getOrderNo($order));
 	}
 }

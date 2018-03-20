@@ -69,8 +69,19 @@
       var questionId = $(this).attr('question-id');
       var ansGroup = $(this).attr('ans-group');
       $('label[prev-ans-group^='+questionId+']').each(function() {
+        $(this).removeClass('active');
+        $(this).find('input').prop('checked', false);
+        var subSpan = $(this).find('span');
+        if (subSpan.hasClass('icmn-checkmark-circle')) {
+          subSpan.addClass('icmn-radio-unchecked').removeClass('icmn-checkmark-circle');
+        } else if (subSpan.hasClass('icmn-checkbox-checked2')) {
+          subSpan.addClass('icmn-checkbox-unchecked2').removeClass('icmn-checkbox-checked2');
+        }
+        
         if ($(this).attr('prev-ans-group') != ansGroup) {
           $(this).hide();
+        } else {
+          $(this).show();
         }
       })
 
