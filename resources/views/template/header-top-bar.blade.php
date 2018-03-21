@@ -4,7 +4,7 @@
   <h3 class="navbar-title">{{ $page->name }}</h3>
 </nav>
 <script>
-  $('body').addClass('margin-top-45')
+  $('body').addClass('has-top-bar')
 
 </script>
 @endif
