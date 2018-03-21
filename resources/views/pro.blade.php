@@ -12,7 +12,7 @@
 
 </script>
 @endpush @section('title') Trang điều khiển @endsection @section('content')
-<section class="content-body content-width-700">
+<section class="content-body content-width-700 padding-bottom-50">
   <div class="padding-top-20 hf-card pro-profile" style="margin-right:0; min-height:560px;">
     <div class="row">
       <div class="col-md-6">

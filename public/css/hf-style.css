@@ -2027,6 +2027,11 @@ label.label-outlined.label-danger {
     color: #fff;
     border-top: solid 1px #02b3e4;
     border: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
   }
 }
 
