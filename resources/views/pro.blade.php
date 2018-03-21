@@ -13,7 +13,7 @@
 </script>
 @endpush @section('title') Trang điều khiển @endsection @section('content')
 <section class="content-body content-width-700">
-  <div class="padding-top-20 padding-bottom-20 hf-card pro-profile" style="margin-right:0; min-height:560px;">
+  <div class="padding-top-20 hf-card pro-profile" style="margin-right:0; min-height:560px;">
     <div class="row">
       <div class="col-md-6">
         <div class="flex row">
@@ -51,8 +51,8 @@
       </div>
     </div>
 
-    <div class="text-center padding-20">
-      <button type="button" class="btn-book btn btn-primary-outline margin-inline">Chọn đối tác này</button>
+    <div class="text-center padding-20 btn-book-border">
+      <button type="button" class="btn-book btn btn-primary-outline">Chọn đối tác này</button>
     </div>
 
     <div class="row">
@@ -112,8 +112,8 @@
         </div>
       </div>
     </div>
-    <div class="text-center padding-20">
-      <button type="button" class="mb-btn-book btn btn-primary-outline margin-inline">Chọn đối tác này</button>
+    <div class="text-center">
+      <button type="button" class="mb-btn-book">Chọn đối tác này</button>
     </div>
   </div>
 </section>
