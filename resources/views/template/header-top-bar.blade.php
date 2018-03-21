@@ -3,4 +3,8 @@
   <a class="arrow-back" href="{{ route($page->back_route) }}"><i class="material-icons">&#xE5C4;</i></a>
   <h3 class="navbar-title">{{ $page->name }}</h3>
 </nav>
+<script>
+  $('body').addClass('margin-top-45')
+
+</script>
 @endif

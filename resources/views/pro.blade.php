@@ -5,8 +5,10 @@
       display: none;
     }
   }
+
 </style>
 <script>
+
 
 </script>
 @endpush @section('title') Trang điều khiển @endsection @section('content')
@@ -28,28 +30,29 @@
         </div>
       </div>
 
-      <div class="text-center margin-top-20 col-md-6">
-        <button type="button" class="btn btn-primary-outline margin-inline">Chọn đối tác này</button>
+      <div class="text-center col-md-6">
+        <div class="row skill-rating text-center padding-20">
+          <div class="row">
+            <div class="col-md-4 col-sm-4 col-xs-4">
+              <span class="btn btn-info-outline hf-rounded">{{ $pro->profile->total_orders }}</span>
+              <div>Đơn hàng</div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4">
+              <span class="btn btn-info hf-rounded">{{ $pro->profile->rating }}</span>
+              <div>Đánh giá</div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4">
+              <span class="btn btn-info hf-rounded">{{ $pro->profile->total_review }}</span>
+              <div>Nhận xét</div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <div class="row skill-rating flex margin-top-20 text-center">
-      <div class="col-md-12">
-        <div class="row">
-          <div class="col-md-4 col-sm-4 col-xs-4">
-            <span class="btn btn-info-outline hf-rounded">{{ $pro->profile->total_orders }}</span>
-            <div>Đơn hàng</div>
-          </div>
-          <div class="col-md-4 col-sm-4 col-xs-4">
-            <span class="btn btn-info hf-rounded">{{ $pro->profile->rating }}</span>
-            <div>Đánh giá</div>
-          </div>
-          <div class="col-md-4 col-sm-4 col-xs-4">
-            <span class="btn btn-info hf-rounded">{{ $pro->profile->total_review }}</span>
-            <div>Nhận xét</div>
-          </div>
-        </div>
-      </div>
+    <div class="text-center padding-20">
+      <button type="button" class="btn-book btn btn-primary-outline margin-inline">Chọn đối tác này</button>
     </div>
 
     <div class="row">
@@ -79,9 +82,8 @@
           <div class="row">
             <div class="common-text">Chưa có nhận xét</div>
           </div>
-          @else
-            @foreach ($pro->reviews as $review)
-            <div class="message row">
+          @else @foreach ($pro->reviews as $review)
+          <div class="message row">
             <div class=" col-md-2 col-sm-2 col-xs-2 text-center">
               <img class="avatar" style="border-radius:100%" class="avt" src="{{ env('CDN_HOST') }}/u/{{ $review->user->id }}/{{ $review->user->avatar }}">
             </div>
@@ -103,14 +105,15 @@
                 {{ $review->content }}
               </div>
             </div>
-            </div>
-            @endforeach
-          @endif
-          @if ($pro->profile->total_review > 10)
+          </div>
+          @endforeach @endif @if ($pro->profile->total_review > 10)
           <div class="text-center"><a href="#">Xem tất cả</a></div>
           @endif
         </div>
       </div>
+    </div>
+    <div class="text-center padding-20">
+      <button type="button" class="mb-btn-book btn btn-primary-outline margin-inline">Chọn đối tác này</button>
     </div>
   </div>
 </section>
