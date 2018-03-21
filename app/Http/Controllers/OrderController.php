@@ -13,10 +13,7 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-
-	
 	public function __construct() {
-		
 	}
 
 	public function viewList($style = null) {

@@ -64,7 +64,7 @@
 <!-- End Page Scripts -->
 @endpush @section('title') Đăng nhập @endsection @section('content')
 <section class="page-content" style="margin:0">
-  <div class="page-content-inner single-page-login-alpha" style="background-image:url(img/banner/7.png);">
+  <div class="page-content-inner single-page-login-alpha" style="background-image:url({{ env('CDN_HOST') }}/img/banner/bg_auth_page.png);">
     <div class="single-page-block">
       <div class="">
         <div class="login-form-wrapper">
@@ -72,7 +72,7 @@
 
             <div class="logo text-center" style="margin-bottom: 30px;">
               <a href="javascript: history.back();">
-                <img src="img/logoh.png" alt="Hand Free" width="150"/>
+                <img src="{{ env('CDN_HOST') }}/img/logo/logoh.png" alt="HandFree" width="150"/>
               </a>
             </div>
 
