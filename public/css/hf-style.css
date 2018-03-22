@@ -533,10 +533,12 @@ nav.top-menu .menu {
 .order-time,
 .order-time i,
 .order-quoted-price,
-.order-quoted-price i {
+.order-quoted-price i,
+.order-service-content,
+.order-service-content i {
   font-size: 14px;
   vertical-align: bottom;
-  line-height: 14px;
+  line-height: 24px;
 }
 
 .order-cancel,
@@ -569,10 +571,6 @@ nav.top-menu .menu {
 
 .state-now {
   color: #f39834;
-}
-
-.state-now .material-icons {
-  line-height: 14px;
 }
 
 .order-req {
@@ -610,6 +608,15 @@ nav.top-menu .menu {
 
 .order-cancel a {
   color: #d9534f !important;
+}
+
+.order-service-content {
+  color: #acb7bf;
+}
+
+.order-service-content img {
+  width: 25px;
+  height: 25px;
 }
 
 .badge {
@@ -685,6 +692,11 @@ nav.top-menu .menu {
 }
 
 .nav-tabs {}
+
+.nav-page .nav-link {
+  max-width: 200px;
+  min-width: 150px;
+}
 
 nav.top-menu .menu .menu-info-block {
   margin-right: 0;
@@ -1462,6 +1474,10 @@ body.single-page .single-page-block .single-page-block-inner {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
 
+.quoted-form {
+  text-align: center;
+}
+
 .page-order .number-style {
   text-align: center;
   padding-top: 32px;
@@ -1507,7 +1523,7 @@ body.single-page .single-page-block .single-page-block-inner {
 .order-info .order-code {
   font-size: 15px;
   font-weight: bold;
-  margin: 20px 0;
+  margin-bottom: 20px;
 }
 
 .order-info .pro-avt {
@@ -1521,10 +1537,17 @@ body.single-page .single-page-block .single-page-block-inner {
   text-align: center;
   border-radius: 100%;
   background: #e1e1e1;
-  color: 424242;
+  color: #424242;
   display: inline-block;
   margin: 2.5px;
   font-size: 18px;
+}
+
+.quoted-price-content {
+  font-size: 30px;
+  font-weight: bold;
+  color: #fb434a;
+  vertical-align: top;
 }
 
 .noti-btn {

@@ -38,9 +38,9 @@ $(document).ready(function () {
   });
 
   //show less content order
-  $("#toggleContent").click(function () {
-    $('#showLessContent').toggleClass('show');
-  })
+  $("button[toggle=toggleContent]").on('click', function () {
+    $(this).parent().parent().find('div[toggle=showLessContent]').toggleClass('show');
+  });
 
 });
 

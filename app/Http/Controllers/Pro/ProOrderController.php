@@ -18,11 +18,11 @@ class ProOrderController extends Controller
 //		$this->middleware('pro');
 	}
 
-	public function viewList($style = null) {
+	public function viewList() {
 		$orderModel = new Order();
 		$quotedPriceModel = new QuotedPrice();
 		$newOrders = $orderModel->getNewByPro(auth()->user()->id);
-		$quotedOrders = $quotedPriceModel->getNewByPro(auth()->user()->id);
+		$quotedOrders = $quotedPriceModel->getByPro(auth()->user()->id);
 		
 		return view(Config::get('constants.PRO_ORDER_LIST_PAGE'), array(
 						'newOrders' => $newOrders,
@@ -37,12 +37,11 @@ class ProOrderController extends Controller
 			throw new NotFoundHttpException();
 		}
 		
-		// put orderId to session
-		$request->session()->put('order', $orderId);
-		
-		// get qouted price
 		$quotedPrice = new QuotedPrice();
 		$quotedPrice = $quotedPrice->getById($orderId.'-'.auth()->user()->id);
+		
+		// put orderId to session
+		$request->session()->put('order', $orderId);
 		
 		return view(Config::get('constants.PRO_ORDER_PAGE'), array(
 						'order' => $order,
@@ -79,6 +78,7 @@ class ProOrderController extends Controller
 						'order_id' => $orderId,
 						'pro_id' => auth()->user()->id,
 						'price' => $request->price,
+						'introduction' => $request->introduction,
 						'est_excute_at' => $estDate,
 						'est_excute_at_string' => $estDateStr,
 		]);

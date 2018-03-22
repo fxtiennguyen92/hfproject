@@ -17,7 +17,7 @@ Route::get('/redirect', 'Auth\LoginController@redirectPath')
 	->name('redirect');
 Route::get('/control', 'InitPageController@control')
 	->name('control');
-Route::get('/pro/{proId}', 'InitPageController@viewProPage')
+Route::get('/pro/{proId}/info', 'InitPageController@viewProPage')
 	->name('pro_page');
 
 /** Password - STA **/
@@ -80,7 +80,7 @@ Route::post('/order/{orderId}/cancel', 'OrderController@cancel')
 /** Service - Order - END **/
 
 /** Pro - STA **/
-Route::middleware('pro')->group(function() {
+// Route::middleware('pro')->group(function() {
 	Route::get('/dashboard', 'InitPageController@viewDashboardPage')
 		->name('dashboard_page');
 	Route::get('/pro', 'Pro\ProProfileController@view')
@@ -89,13 +89,13 @@ Route::middleware('pro')->group(function() {
 		->name('change_pro_profile');
 	Route::post('/pro/avatar/change', 'Pro\ProProfileController@changeAvatar')
 		->name('change_pro_avatar');
-	Route::get('/pro/orders/{style?}', 'Pro\ProOrderController@viewList')
+	Route::get('/pro/orders', 'Pro\ProOrderController@viewList')
 		->name('pro_order_list_page');
 	Route::get('/pro/order/{orderId}', 'Pro\ProOrderController@view')
 		->name('pro_order_page');
 	Route::post('/pro/order/quote', 'Pro\ProOrderController@quotePrice')
 		->name('quote_price');
-});
+// });
 
 
 Route::middleware('pro.manager')->group(function() {
@@ -144,9 +144,6 @@ Route::get('/pro/signup', 'Pro\ProSignUpController@view')
 Route::post('/pro/signup', 'Pro\ProSignUpController@signup')
 	->name('signup_pro');
 /** Alpha - END **/
-
-
-Route::get('/ordertemp', function () { return view('order_temp'); });
 
 Route::get('/test2', function () { return view('test2'); });
 Route::get('/test3', function () { return view('test3'); });
