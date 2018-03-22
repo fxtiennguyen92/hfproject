@@ -69,7 +69,7 @@ class Order extends Model
 	}
 
 	public function getCurrentByMember($id) {
-		return $this::with('pro', 'pro.profile')
+		return $this::with('pro', 'pro.profile', 'quotedPrice', 'quotedPrice.pro')
 			->current()
 			->where('user_id', $id)
 			->get();
@@ -111,6 +111,10 @@ class Order extends Model
 
 	public function pro() {
 		return $this->hasOne('App\User', 'id', 'pro_id');
+	}
+
+	public function quotedPrice() {
+		return $this->hasMany('App\QuotedPrice', 'order_id', 'id');
 	}
 
 	public function scopeTemp($query) {

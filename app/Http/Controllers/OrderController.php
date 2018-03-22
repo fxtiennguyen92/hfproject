@@ -23,8 +23,8 @@ class OrderController extends Controller
 		}
 		
 		$orderModel = new Order();
-
 		$currentOrders = $orderModel->getCurrentByMember(auth()->user()->id);
+		
 		//$newOrders = $orderModel->getNewByMember(auth()->user()->id);
 		
 		return view(Config::get('constants.ORDER_LIST_PAGE'), array(

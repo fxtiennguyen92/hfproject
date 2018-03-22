@@ -14,10 +14,10 @@
         <label class="margin-top-10 padding-10 label-outlined label label-danger margin-inline text-uppercase">Chờ báo giá</label>
       </div>
     </div>
-    <div id="showLessContent" class="content-detail text-center">asdlkf asdf asd i al kasdfke kasdfke avke</div>
+    <div toggle="showLessContent" class="content-detail text-center">asdlkf asdf asd i al kasdfke kasdfke avke</div>
   </div>
   <div class="text-center">
-    <button type="button" id="toggleContent" class=" btn btn-squared btn-default btn-block ">Xem thêm Chi tiết đơn hàng</button>
+    <button type="button" toggle="toggleContent" class=" btn btn-squared btn-default btn-block ">Xem thêm Chi tiết đơn hàng</button>
   </div>
 
   <div class="flex padding-bottom-15 padding-top-20" style="border-top:solid 1px #e1e1e1; min-height: 90px;">
@@ -47,10 +47,10 @@
         <label class="margin-top-10 padding-10 label-outlined label label-danger margin-inline text-uppercase">Đang thực hiện</label>
       </div>
     </div>
-    <div id="showLessContent" class="content-detail text-center">asdlkf asdf asd i al kasdfke kasdfke avke</div>
+    <div toggle="showLessContent" class="content-detail text-center">asdlkf asdf asd i al kasdfke kasdfke avke</div>
   </div>
   <div class="text-center">
-    <button type="button" id="toggleContent" class=" btn btn-squared btn-default btn-block ">Xem thêm Chi tiết đơn hàng</button>
+    <button type="button" toggle="toggleContent" class=" btn btn-squared btn-default btn-block ">Xem thêm Chi tiết đơn hàng</button>
   </div>
   <div class="orders-item hf-card">
     <div class="row flex">
@@ -99,10 +99,10 @@
         <label class="margin-top-10 padding-10 label-outlined label label-danger margin-inline text-uppercase">Có 3 báo giá</label>
       </div>
     </div>
-    <div id="showLessContent" class="content-detail text-center">asdlkf asdf asd i al kasdfke kasdfke avke</div>
+    <div toggle="showLessContent" class="content-detail text-center">asdlkf asdf asd i al kasdfke kasdfke avke</div>
   </div>
   <div class="text-center">
-    <button type="button" id="toggleContent" class=" btn btn-squared btn-default btn-block ">Xem thêm Chi tiết đơn hàng</button>
+    <button type="button" toggle="toggleContent" class=" btn btn-squared btn-default btn-block ">Xem thêm Chi tiết đơn hàng</button>
   </div>
 
   <div class="flex padding-bottom-15 padding-20" style="border-top:solid 1px #e1e1e1; min-height: 90px;">

@@ -11,7 +11,7 @@ class QuotedPrice extends Model
 	protected $table = 'quoted_prices';
 	
 	protected $fillable = [
-		'qp_id', 'order_id', 'pro_id', 'price', 'est_excute_at', 'est_excute_at_string',
+		'qp_id', 'order_id', 'pro_id', 'price', 'introduction', 'est_excute_at', 'est_excute_at_string',
 	];
 	
 	public function getById($id) {
@@ -25,10 +25,9 @@ class QuotedPrice extends Model
 			->get();
 	}
 	
-	public function getNewByPro($id) {
+	public function getByPro($id) {
 		return $this::with('order')
 			->where('pro_id', $id)
-			->new()
 			->get();
 	}
 	

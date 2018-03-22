@@ -225,7 +225,7 @@
         <div class="answer">
           @if ($q->answer_type == '0')
           <div>
-            <textarea style="margin:0;padding:10px;" class="no-newlines form-control" name="q[{{ $q->id }}]" rows="6" maxlength="100" placeholder="Ghi chú"></textarea>
+            <textarea style="margin:0;padding:10px;" class="form-control" name="q[{{ $q->id }}]" rows="6" maxlength="100" placeholder="Ghi chú"></textarea>
           </div>
           @elseif ($q->answer_type == '1')
           <div data-toggle="buttons">
