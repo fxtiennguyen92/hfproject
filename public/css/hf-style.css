@@ -2141,6 +2141,14 @@ label.label-outlined.label-danger {
     font-size: 15px;
     margin-right: 10px;
   }
+  .top-menu .icon-menu-wrapper {
+    width: 40%;
+  }
+  .top-menu .icon-menu .icon-menu-notification,
+  .top-menu .icon-menu .icon-menu-order {
+    float: right;
+  }
+
 }
 
 @media only screen and (max-width: 321px) {
