@@ -76,10 +76,10 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="comment padding-20">
+        <div class="row comment padding-20">
           <h5>Nhận xét @if ($pro->profile->total_review > 0) ({{ $pro->profile->total_review }}) @endif</h5>
           @if ($pro->profile->total_review == 0)
-          <div class="row">
+          <div class="col-md-12">
             <div class="common-text">Chưa có nhận xét</div>
           </div>
           @else @foreach ($pro->reviews as $review)

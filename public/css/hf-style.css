@@ -1883,6 +1883,24 @@ label.label-outlined.label-danger {
   background: #fff;
 }
 
+.number-style input.inp-quoted-price {
+  font-size: 30px;
+  max-width: 200px;
+}
+
+.quoted-form textarea[name="introduction"] {
+  background: #fafafa;
+}
+
+.page-order .reported {
+  padding: 20px;
+}
+
+.page-order .reported .price {
+  font-size: 25px;
+  font-weight: bold;
+}
+
 /*
 * RESPONSIVE
 */
@@ -2111,6 +2129,8 @@ label.label-outlined.label-danger {
     box-shadow: 0 0 8px 1px #00000055;
     width: 100%;
     z-index: 9999;
+    left: 0;
+    right: 0;
   }
   .page-content-inner {
     margin: 0!important;
@@ -2147,6 +2167,9 @@ label.label-outlined.label-danger {
   .top-menu .icon-menu .icon-menu-notification,
   .top-menu .icon-menu .icon-menu-order {
     float: right;
+  }
+  body.single-page .single-page-block {
+    padding: 0!important;
   }
 
 }
