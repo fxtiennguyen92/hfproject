@@ -565,6 +565,19 @@ nav.top-menu .menu {
   overflow: none;
 }
 
+.order-info .order-service-content,
+.order-info .order-address,
+.order-info .order-time {
+  padding-left: 20px;
+  display: block;
+}
+
+.order-info .order-service-content i,
+.order-info .order-address i,
+.order-info .order-time i {
+  margin-left: -20px;
+}
+
 .order-time {
   color: #242424;
 }
@@ -1558,6 +1571,7 @@ body.single-page .single-page-block .single-page-block-inner {
 .quoted-intro {
   margin: 10px;
 }
+
 .quoted-intro textarea {
   padding: 10px;
   border: 1px solid #e1e1e1 !important;
@@ -1672,6 +1686,7 @@ section.user-menu .list-menu a > i {
   width: 50%;
   text-align: center;
   margin-left: 0!important;
+  line-height: 41px;
 }
 
 .orders-page .tab-content {
@@ -1994,7 +2009,7 @@ label.label-outlined.label-danger {
     display: none;
   }
   .has-top-bar .content-body {
-    padding-bottom: 50px;
+    padding-bottom: 60px;
   }
 }
 
@@ -2152,6 +2167,7 @@ label.label-outlined.label-danger {
     z-index: 9999;
     left: 0;
     right: 0;
+    line-height: 44px;
   }
   .page-content-inner {
     margin: 0!important;
