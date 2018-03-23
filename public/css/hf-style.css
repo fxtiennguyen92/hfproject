@@ -1489,6 +1489,11 @@ body.single-page .single-page-block .single-page-block-inner {
   border-radius: 0;
 }
 
+.btn-bottom-screen {
+  width: 100%;
+  border-radius: 0;
+}
+
 .order-state input.datetimepicker {
   border: none;
   font-size: 14px;
@@ -1548,6 +1553,15 @@ body.single-page .single-page-block .single-page-block-inner {
   font-weight: bold;
   color: #fb434a;
   vertical-align: top;
+}
+
+.quoted-intro {
+  margin: 10px;
+}
+.quoted-intro textarea {
+  padding: 10px;
+  border: 1px solid #e1e1e1 !important;
+  resize: none;
 }
 
 .noti-btn {
@@ -1892,11 +1906,11 @@ label.label-outlined.label-danger {
   background: #fafafa;
 }
 
-.page-order .reported {
+.reported {
   padding: 20px;
 }
 
-.page-order .reported .price {
+.reported .price {
   font-size: 25px;
   font-weight: bold;
 }
@@ -1905,7 +1919,7 @@ label.label-outlined.label-danger {
 * RESPONSIVE
 */
 
-@media only screen and (max-wid th: 500px) {
+@media only screen and (max-width: 500px) {
   body.single-page {
     background: #fff;
   }
@@ -1975,6 +1989,12 @@ label.label-outlined.label-danger {
   }
   .has-top-bar {
     margin-top: 45px;
+  }
+  .has-top-bar .top-menu {
+    display: none;
+  }
+  .has-top-bar .content-body {
+    padding-bottom: 50px;
   }
 }
 
@@ -2121,6 +2141,7 @@ label.label-outlined.label-danger {
     background: #fff;
   }
   .page-order #btnSubmit,
+  .btn-bottom-screen,
   .row-complete.clearfix,
   .survey-form .actions {
     position: fixed;

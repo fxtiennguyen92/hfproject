@@ -1,12 +1,4 @@
 @extends('template.index') @push('stylesheets')
-<style>
-  @media only screen and (max-width: 500px) {
-    .top-menu {
-      display: none;
-    }
-  }
-</style>
-
 <!-- Page Scripts -->
 <script>
   $(document).ready(function() {

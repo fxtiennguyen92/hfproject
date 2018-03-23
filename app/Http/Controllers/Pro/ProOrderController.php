@@ -43,7 +43,12 @@ class ProOrderController extends Controller
 		// put orderId to session
 		$request->session()->put('order', $orderId);
 		
+		$page = new \stdClass();
+		$page->name = 'Đơn hàng';
+		$page->back_route = 'pro_order_list_page';
+		
 		return view(Config::get('constants.PRO_ORDER_PAGE'), array(
+						'page' => $page,
 						'order' => $order,
 						'quotedPrice' => $quotedPrice
 		));

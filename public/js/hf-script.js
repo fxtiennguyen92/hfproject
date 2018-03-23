@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
   $(window).on('load resize', function () {
     $('.hero').css('height', $(window).height() - 80);
 
