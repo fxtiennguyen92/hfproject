@@ -25,6 +25,7 @@ class ProOrderController extends Controller
 		$quotedOrders = $quotedPriceModel->getByPro(auth()->user()->id);
 		
 		return view(Config::get('constants.PRO_ORDER_LIST_PAGE'), array(
+						'nav' => 'order',
 						'newOrders' => $newOrders,
 						'quotedOrders' => $quotedOrders,
 		));

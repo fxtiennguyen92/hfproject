@@ -110,6 +110,7 @@ table {
   -webkit-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
+  border-bottom: 1px solid #dfe4ed;
 }
 
 .progress {
@@ -536,7 +537,7 @@ nav.top-menu .menu {
 .order-quoted-price i,
 .order-service-content,
 .order-service-content i {
-  font-size: 14px;
+  font-size: 13px;
   vertical-align: bottom;
   line-height: 24px;
 }
@@ -575,7 +576,8 @@ nav.top-menu .menu {
 .order-info .order-service-content i,
 .order-info .order-address i,
 .order-info .order-time i {
-  margin-left: -20px;
+  margin-left: -22px;
+  padding-right: 5px;
 }
 
 .order-time {
@@ -1155,7 +1157,7 @@ body.single-page .single-page-block .single-page-block-inner {
 .survey-form .cui-wizard > .content {
   border-radius: 0;
   margin: 0;
-  min-height: 372px;
+  min-height: 385px;
 
 }
 
@@ -1255,7 +1257,7 @@ body.single-page .single-page-block .single-page-block-inner {
 
 .survey-form .wizard > .actions > ul li a {
   border-radius: 0;
-  padding: 18px;
+  padding: 13px;
   line-height: 1;
   opacity: 1;
 }
@@ -1320,7 +1322,8 @@ body.single-page .single-page-block .single-page-block-inner {
   float: left;
   border-radius: 0;
   border: none;
-  padding: 20px;
+  padding: 12px;
+  font-size: 13px;
 
 }
 
@@ -1331,7 +1334,7 @@ body.single-page .single-page-block .single-page-block-inner {
 }
 
 .survey-form .service-title {
-  height: 64px;
+  height: 60px;
   line-height: 32px;
   color: #242424;
   text-transform: uppercase;
@@ -1363,7 +1366,7 @@ body.single-page .single-page-block .single-page-block-inner {
 }
 
 #positionAndTime .content {
-  min-height: 483px;
+  min-height: 500px;
 }
 
 #positionAndTime .address {
@@ -1751,7 +1754,7 @@ section.user-menu .list-menu a > i {
 }
 
 .header-top-bar .arrow-back i {
-  font-size: 32px;
+  font-size: 22px;
   line-height: 32px;
   vertical-align: middle;
   color: #fff;
@@ -1910,6 +1913,7 @@ label.label-outlined.label-danger {
 
 .orders-content-body .nav.nav-tabs {
   background: #fff;
+  margin-bottom: 1px;
 }
 
 .number-style input.inp-quoted-price {

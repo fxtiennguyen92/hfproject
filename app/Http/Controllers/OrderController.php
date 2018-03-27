@@ -28,6 +28,7 @@ class OrderController extends Controller
 		//$newOrders = $orderModel->getNewByMember(auth()->user()->id);
 		
 		return view(Config::get('constants.ORDER_LIST_PAGE'), array(
+						'nav' => 'order',
 						'currentOrders' => $currentOrders,
 						//'newOrders' => $newOrders,
 		));

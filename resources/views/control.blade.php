@@ -1,4 +1,4 @@
-@extends('template.test') @push('stylesheets') @endpush @section('title') Trang điều khiển @endsection @section('content')
+@extends('template.index') @push('stylesheets') @endpush @section('title') Trang điều khiển @endsection @section('content')
 <section class="content-body user-menu">
   <ul class="list-menu">
     @if (auth()->user())

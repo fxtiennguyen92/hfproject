@@ -139,16 +139,16 @@
   </style>
   
   <script>
-    $(window).load(function() {
-      NProgress.start();
-    });
+//     $(window).load(function() {
+//       NProgress.start();
+//     });
 
-    var interval = setInterval(function() {
-      if(document.readyState === 'complete') {
-        clearInterval(interval);
-        NProgress.done();
-      }
-    }, 2000);
+//     var interval = setInterval(function() {
+//       if(document.readyState === 'complete') {
+//         clearInterval(interval);
+//         NProgress.done();
+//       }
+//     }, 2000);
   </script>
   <!-- Page Scripts -->
   @stack('stylesheets')

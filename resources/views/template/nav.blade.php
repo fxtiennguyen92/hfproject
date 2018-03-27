@@ -21,7 +21,11 @@
             </a>
           </li>
           <li class="icon-menu-order @if(isset($nav)) @if($nav == 'order') active @endif @endif">
+            @if (auth()->check() && auth()->user()->role == 1)
+            <a href="{{ route('pro_order_list_page') }}">
+            @else
             <a href="{{ route('order_list_page') }}">
+            @endif
               <span><i class="material-icons">&#xE8B0;</i></span>
             </a>
           </li>

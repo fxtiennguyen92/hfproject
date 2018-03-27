@@ -100,6 +100,7 @@
       $('#positionAndTime').show();
       $('.service-title').hide();
       $('#surveyList').hide();
+      geolocation();
     });
     $('#btnBack').on('click', function() {
       $('#positionAndTime').hide();
@@ -318,24 +319,43 @@
 </section>
 
 <script>
-function initMap() {
+function initMap(lat = null, lng = null) {
+	var google_map_pos = null;
+	if (lat && lng) {
+		google_map_pos = new google.maps.LatLng(lat, lng);
+	} else {
+		google_map_pos = new google.maps.LatLng(10.762622, 106.660172);
+	}
+
 	var map = new google.maps.Map(document.getElementById('map'), {
-		center: {lat: 10.762622, lng: 106.660172},
+		center: google_map_pos,
 		zoom: 13,
 		disableDefaultUI: true
 	});
-	var infowindowContent = document.getElementById('infowindow-content');
+
 	var input = document.getElementById('orderAddress');
 	var autocomplete = new google.maps.places.Autocomplete(input);
 	autocomplete.bindTo('bounds', map);
 	autocomplete.setTypes(['address']);
 
 	var infowindow = new google.maps.InfoWindow();
-	infowindow.open(map);
 	var marker = new google.maps.Marker({
 		map: map,
+		position: google_map_pos,
+		visible: false,
 	});
 
+	// init map
+	if (lat && lng) {
+		marker.setVisible(true);
+		map.setZoom(17);
+	} else {
+		marker.setVisible(false);
+		map.setZoom(13);
+	}
+	infowindow.open(map);
+
+	var infowindowContent = document.getElementById('infowindow-content');
 	autocomplete.addListener('place_changed', function() {
 		infowindow.close();
 		marker.setVisible(false);
@@ -360,21 +380,51 @@ function initMap() {
 		}
 
 		marker.setPosition(place.geometry.location);
-		marker.setTitle(place.name);
 		marker.setVisible(true);
 
 		$('input[name=address]').val(place.formatted_address);
 		$('input[name=location]').val(place.geometry.location.lat() + ',' + place.geometry.location.lng());
 
-		infowindowContent.children['place-address'].textContent = place.name;
+		infowindowContent.children['place-address'].textContent = $('#orderAddress').val();
 		infowindow.setContent(infowindowContent);
 		infowindow.open(map, marker);
-
-// 		var wrapper = $('#infowindow-content').parent().parent().parent();
-// 		wrapper.find('div').first().hide();
-// 		wrapper.find('div').last().hide();
-// 		wrapper.addClass('address-content');
 	});
+}
+
+function geolocation() {
+	// geolocation
+	if ($('input[name=location]').val() == '') {
+		navigator.geolocation.getCurrentPosition(
+			function(position) {
+				var lat = position.coords.latitude;
+				var lng = position.coords.longitude;
+				var google_map_pos = new google.maps.LatLng(lat, lng);
+				/* Use Geocoder to get address */
+				var google_maps_geocoder = new google.maps.Geocoder();
+				google_maps_geocoder.geocode(
+					{'latLng': google_map_pos },
+					function(results, status) {
+						if (status == google.maps.GeocoderStatus.OK && results[0]) {
+							$('#orderAddress').val(results[0].formatted_address);
+							
+							$('input[name=address]').val(results[0].formatted_address);
+							$('input[name=location]').val(lat + ',' + lng);
+						}
+					}
+				);
+
+				initMap(lat, lng);
+			},
+			function() {
+			}
+		);
+	}
+}
+
+function formatAddress(address) {
+	address = address.replace(', Việt Nam','');
+	address = address.replace(', Vietnam', '');
+	address = address.replace(', VietNam', '');
 }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key={{ env('MAP_API_KEY') }}&callback=initMap&languages=vi&libraries=places" async defer ></script>
