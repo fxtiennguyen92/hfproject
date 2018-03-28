@@ -83,17 +83,6 @@
         </div>
       </div>
       <div class="col-md-8 col-sm-12 ">
-        <!--
-<div class="nav-tabs-horizontal">
-  <ul class="nav nav-tabs" role="tablist">
-    <li class="nav-item">
-      <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#tabQPrice" role="tab">
-               Danh sách báo giá</a>
-    </li>
-  </ul>
-</div>
--->
-        
         @if (sizeof($order->quoted_price) == 0)
         <div class="common-text">Không có báo giá nào</div>
         @else

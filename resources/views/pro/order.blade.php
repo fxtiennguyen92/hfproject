@@ -89,7 +89,8 @@
 </script>
 @endpush @section('title') Đơn hàng @endsection @section('content')
 <section class="content-body">
-  @include('template.order_detail_header_map') @include('pro.order_detail_header') @if (!$quotedPrice)
+  @include('template.order_detail_header_map') @include('pro.order_detail_header')
+  @if (!$quotedPrice)
   <form class="quoted-form" id="frmMain" name="form-validation" method="POST" action="{{ route('quote_price') }}">
     <input name="inpPrice" class="inp-quoted-price" value="10000" step="5000" min="10000" max="">
     <input name="price" class="basic-inp-quoted-price" value="10000" type="hidden" />
@@ -107,7 +108,9 @@
     <div class="text-uppercase margin-top-25">Lời giới thiệu</div>
     <div>{{ $quotedPrice->introduction }}</div>
   </div>
-  <button id="btnSubmit" type="button" class="btn btn-primary text-uppercase btn-bottom-screen">Tôi đã đến</button> @elseif ($quotedPrice->state == 2) @endif
+  <button id="btnSubmit" type="button" class="btn btn-primary text-uppercase btn-bottom-screen">Tôi đã đến</button>
+  @elseif ($quotedPrice->state == 2)
+  @endif
 </section>
 
 <script type="text/javascript">

@@ -5,14 +5,46 @@
       display: none;
     }
   }
-
 </style>
 <script>
-
-
+  $(document).ready(function() {
+    $('#btnAccept').on('click', function() {
+          $.ajax({
+            type: 'POST',
+            url: $('#frmMain').attr('action'),
+            data: $('#frmMain').serialize(),
+            success: function(response) {
+              swal({
+                  title: 'Thành công',
+                  text: 'Bạn đã chọn đối tác cho mình!',
+                  type: 'success',
+                  confirmButtonClass: 'btn-primary',
+                  confirmButtonText: 'Xem đơn hàng',
+                },
+                function() {
+                  location.href = '{{ url()->previous() }}';
+                });
+            },
+            error: function(xhr) {
+              if (xhr.status == 400) {
+                swal({
+                 title: 'Thất bại',
+                  text: 'Không thể chọn đối tác này, hãy thử lại!',
+                  type: 'danger',
+                  confirmButtonClass: 'btn-default',
+                  confirmButtonText: 'Quay lại',
+                },
+                function() {
+                  location.href = '{{ url()->previous() }}';
+                });
+              }
+            }
+          });
+    });
+  });
 </script>
 @endpush @section('title') Trang điều khiển @endsection @section('content')
-<section class="content-body content-width-700 padding-bottom-50">
+<section class="content-body content-width-700 @if (isset($action) && $action == 'order') has-mb-button-bottom @endif">
   <div class="padding-top-20 hf-card pro-profile" style="margin-right:0; min-height:560px;">
     <div class="row">
       <div class="col-md-6">
@@ -50,11 +82,11 @@
 
       </div>
     </div>
-
+    @if (isset($action) && $action == 'order')
     <div class="text-center padding-20 btn-book-border">
       <button type="button" class="btn-book btn btn-primary-outline">Chọn đối tác này</button>
     </div>
-
+    @endif
     <div class="row">
       <div class="col-md-6">
         <div class="project padding-20">
@@ -112,9 +144,14 @@
         </div>
       </div>
     </div>
+    @if (isset($action) && $action == 'order')
     <div class="text-center">
-      <button type="button" class="mb-btn-book">Chọn đối tác này</button>
+      <form id="frmMain" method="POST" action="{{ route('accept_quoted_price', ['proId' => $pro->id]) }}">
+        <button id="btnAccept" type="button" class="mb-btn-book">Chọn đối tác này</button>
+        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+      </form>
     </div>
+    @endif
   </div>
 </section>
 @endsection

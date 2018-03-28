@@ -1,8 +1,8 @@
 @if (isset($page))
 <nav class="navbar header-top-bar navbar-fixed-top">
-  @if ($page->back_route)
+  @if (isset($page->back_route) && $page->back_route)
   <a class="arrow-back" href="{{ route($page->back_route) }}"><i class="material-icons">&#xE5C4;</i></a>@else
-  <a class="arrow-back" href="window.history.back();"><i class="material-icons">&#xE5C4;</i></a>@endif
+  <a class="arrow-back" href="{{ url()->previous() }}"><i class="material-icons">&#xE5C4;</i></a>@endif
   <h3 class="navbar-title">{{ $page->name }}</h3>
 </nav>
 <script>

@@ -23,6 +23,13 @@ class Order extends Model
 			->first();
 	}
 
+	public function getByIdAndUserId($id, $userId) {
+		return $this::with('user', 'service')
+			->where('id', $id)
+			->where('user_id', $userId)
+			->first();
+	}
+
 	public function getByUser($id) {
 		return $this->where('user_id', $id)->get();
 	}

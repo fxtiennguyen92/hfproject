@@ -1552,6 +1552,14 @@ body.single-page .single-page-block .single-page-block-inner {
   margin: 2.5px;
 }
 
+.pro-avt-row {
+  
+}
+.pro-avt-row .pro-avt {
+  max-width: 40px;
+  margin: 2.5px;
+}
+
 .order-more {
   line-height: 50px;
   width: 50px;
@@ -1795,7 +1803,7 @@ section.user-menu .list-menu a > i {
 }
 
 .order-tag {
-  font-size: 14px;
+  font-size: 13px;
   color: #424242;
 }
 
@@ -1884,6 +1892,16 @@ section.user-menu .list-menu a > i {
 label.label-outlined.label-danger {
   color: #d9534f;
   border: solid 1px #d9534f;
+  background: #fff;
+}
+label.label-outlined.label-info {
+  color: #02b3e4;
+  border: solid 1px #02b3e4;
+  background: #fff;
+}
+label.label-outlined.label-success {
+  color: #46be8a;
+  border: solid 1px #46be8a;
   background: #fff;
 }
 
@@ -2013,7 +2031,7 @@ label.label-outlined.label-danger {
     display: none;
   }
   .has-top-bar .content-body {
-    padding-bottom: 60px;
+    /*padding-bottom: 60px;*/
   }
 }
 
@@ -2102,7 +2120,7 @@ label.label-outlined.label-danger {
   .mb-btn-book {
     display: block;
     width: 100%;
-    padding: 15px;
+    padding: 18px;
     background-color: #02b3e4;
     color: #fff;
     border-top: solid 1px #02b3e4;
@@ -2112,6 +2130,9 @@ label.label-outlined.label-danger {
     left: 0;
     right: 0;
     z-index: 999;
+  }
+  .has-mb-button-bottom {
+    padding-bottom: 60px;
   }
 }
 

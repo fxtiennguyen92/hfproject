@@ -382,10 +382,10 @@ function initMap(lat = null, lng = null) {
 		marker.setPosition(place.geometry.location);
 		marker.setVisible(true);
 
-		$('input[name=address]').val(place.formatted_address);
+		$('input[name=address]').val(formatAddress(place.formatted_address));
 		$('input[name=location]').val(place.geometry.location.lat() + ',' + place.geometry.location.lng());
 
-		infowindowContent.children['place-address'].textContent = $('#orderAddress').val();
+		infowindowContent.children['place-address'].textContent = formatAddress($('#orderAddress').val());
 		infowindow.setContent(infowindowContent);
 		infowindow.open(map, marker);
 	});
@@ -405,9 +405,9 @@ function geolocation() {
 					{'latLng': google_map_pos },
 					function(results, status) {
 						if (status == google.maps.GeocoderStatus.OK && results[0]) {
-							$('#orderAddress').val(results[0].formatted_address);
+							$('#orderAddress').val(formatAddress(results[0].formatted_address));
 							
-							$('input[name=address]').val(results[0].formatted_address);
+							$('input[name=address]').val(formatAddress(results[0].formatted_address));
 							$('input[name=location]').val(lat + ',' + lng);
 						}
 					}
@@ -425,6 +425,8 @@ function formatAddress(address) {
 	address = address.replace(', Việt Nam','');
 	address = address.replace(', Vietnam', '');
 	address = address.replace(', VietNam', '');
+
+	return address;
 }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key={{ env('MAP_API_KEY') }}&callback=initMap&languages=vi&libraries=places" async defer ></script>

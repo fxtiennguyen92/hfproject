@@ -19,15 +19,15 @@
             <div class="common-text">Không có đơn hàng nào</div>
           @endif
           @foreach ($currentOrders as $order)
-          <div class="col-md-12 col-sm-12">
-            @include('template.order_detail_tag')
+          <div class="col-md-12 col-sm-12" onclick="location.href='{{ route('order_page', ['orderId' => $order->id]) }}'">
+            @include('order.order_detail_tag')
           </div>
           @endforeach
         </div>
       </div>
       <div class="tab-pane" id="history" role="tabpanel" aria-expanded="false">
         <div class="row">
-          <div class="common-text">Chưa có lịch sử đơn hàng</div>
+          <div class="common-text">Chưa có đơn hàng</div>
         </div>
       </div>
     </div>

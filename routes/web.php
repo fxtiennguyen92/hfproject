@@ -69,14 +69,17 @@ Route::post('order/complete', 'ServiceController@complete')
 	->name('complete_order');
 Route::post('order/delete', 'ServiceController@delete')
 	->name('delete_order');
+
 Route::get('/orders', 'OrderController@viewList')
 	->name('order_list_page');
 Route::get('/order/{orderId}', 'OrderController@view')
 	->name('order_page');
-Route::post('/order/qprice/{qpId}', 'OrderController@accept')
+Route::post('/order/pro/{proId}/accept', 'OrderController@accept')
 	->name('accept_quoted_price');
 Route::post('/order/{orderId}/cancel', 'OrderController@cancel')
 	->name('cancel_order');
+Route::get('/order/pro/{proId}/info', 'OrderController@viewProPage')
+	->name('order_pro_page');
 /** Service - Order - END **/
 
 /** Pro - STA **/
