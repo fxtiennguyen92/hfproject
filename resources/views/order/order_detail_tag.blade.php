@@ -10,8 +10,8 @@
         <div class="order-address" title="{{ $order->address }}"><i class="material-icons">&#xE0C8;</i> {{ $order->address }}</div>
         <div class="order-state">
           @if ($order->est_excute_at_string)
-          <span class="order-time state-est-time"><i class="material-icons">&#xE855;</i> {{ $order->est_excute_at_string }}</span> @else
-          <span class="order-time state-now"><i class="material-icons">&#xE3E7;</i> Ngay lập tức</span> @endif
+          <span class="order-time state-est-time"><i class="material-icons">&#xE8B5;</i> {{ $order->est_excute_at_string }}</span> @else
+          <span class="order-time state-now"><i class="material-icons">&#xE8B5;</i> Ngay lập tức</span> @endif
         </div>
         @if (is_null($order->no))
         <label class="margin-top-10 padding-10 label-outlined label label-default margin-inline text-uppercase">Chờ xác nhận</label>

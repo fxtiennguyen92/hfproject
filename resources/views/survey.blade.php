@@ -28,7 +28,9 @@
             .find('input:not([type=text],[type=button],[type=submit])')
             .first()
             .attr('name');
-          if ($('input[name="' + name + '"]:checked').length == 0) {
+          if (typeof name == 'undefined') {
+            validReturn = true;
+          } else if ($('input[name="' + name + '"]:checked').length == 0) {
             $.notify({
               message: 'Hãy chọn một nội dung bên dưới.'
             }, {
@@ -205,7 +207,7 @@
 <section class="content-body">
   <form id="frmMain" class="survey-form" method="get">
 
-    <div class="service-title" style="background-image:url('{{ env('CDN_HOST') }}/img/banner/survey.png')">
+    <div class="service-title hf-bg-gradient">
       <span class="title"><img class="service-icon" src="{{ env('CDN_HOST') }}/img/service/{{ $service->id }}.svg" /> {{ $service->name }}</span>
     </div>
     <div id="surveyList" class="cui-wizard cui-wizard__numbers">
@@ -218,7 +220,7 @@
         <div class="answer">
           @if ($q->answer_type == '0')
           <div>
-            <textarea style="margin:0;padding:10px;" class="form-control" name="q[{{ $q->id }}]" rows="6" maxlength="100" placeholder="Ghi chú"></textarea>
+            <textarea style="margin:0;padding:10px;" class="form-control" name="q[{{ $q->id }}]" rows="6" maxlength="100"></textarea>
           </div>
           @elseif ($q->answer_type == '1')
           <div data-toggle="buttons">
@@ -261,7 +263,7 @@
 
     <div id="positionAndTime" style="display: none">
       <div class="content clearfix">
-        <div class="address" style="background-image:url('{{ env('CDN_HOST') }}/img/banner/survey.png')">
+        <div class="address hf-bg-gradient text-uppercase">
           Địa điểm và Thời gian
         </div>
         <div id="map" class="order-map"></div>

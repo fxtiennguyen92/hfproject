@@ -1,9 +1,12 @@
 $(document).ready(function () {
   $(window).on('load resize', function () {
     $('.hero').css('height', $(window).height() - 80);
-
     $('.fullHeight').css('height', $(window).height());
   });
+
+  $('.backToHome').on('click', function () {
+    
+  })
 
   $('.hiw-slider, .testinomial-slider').slick({
     slidesToShow: 1,

@@ -89,7 +89,7 @@
 </script>
 @endpush @section('title') Đơn hàng @endsection @section('content')
 <section class="content-body">
-  @include('template.order_detail_header_map') @include('pro.order_detail_header')
+  @include('order.order_detail_map') @include('pro.order_detail_header')
   @if (!$quotedPrice)
   <form class="quoted-form" id="frmMain" name="form-validation" method="POST" action="{{ route('quote_price') }}">
     <input name="inpPrice" class="inp-quoted-price" value="10000" step="5000" min="10000" max="">

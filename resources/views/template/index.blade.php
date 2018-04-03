@@ -160,6 +160,8 @@
   @include('template.nav')
   @include('template.header-top-bar')
   @yield('content')
+  
+  @include('template.mb.footer-menu')
 </body>
 
 </html>

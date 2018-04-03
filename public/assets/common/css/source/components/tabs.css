@@ -10,7 +10,7 @@
 }
 
 .nav-tabs-horizontal .nav-tabs .nav-item {
-    margin-bottom: -2px;
+    margin-bottom: 0px;
     cursor: pointer;
 }
 
@@ -20,7 +20,7 @@
 }
 
 .nav-tabs-horizontal .nav-tabs .nav-item .nav-link.active, .nav-tabs-horizontal .nav-tabs .nav-item .nav-link:focus {
-    border-bottom-color: #01a8fe !important;
+    border-bottom-color: #fff !important;
 }
 
 .nav-tabs-horizontal .nav-tabs .nav-item .nav-link:hover {

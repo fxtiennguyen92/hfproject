@@ -133,12 +133,5 @@
 
   </div>
 </section>
-<div id="footer-menu">
-  <ul class="list-inline clearfix ">
-    <li><a href="# "><img src="img/icon/icon-128x128.png "/></a></li>
-    <li><a href="# "><i class="material-icons ">&#xE871;</i></a></li>
-    <li><a href="# "><i class="material-icons ">&#xE8B0;</i></a></li>
-    <li><a href="# "><i class="material-icons ">&#xE7FD;</i></a></li>
-  </ul>
-</div>
+@include('template.mb.footer-menu')
 @endsection

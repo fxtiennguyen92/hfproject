@@ -39,15 +39,10 @@ class ServiceController extends Controller
 		$dates = CommonController::getNext7Days();
 		$times = CommonController::getAllTimes();
 		
-		$page = new \stdClass();
-		$page->name = 'Đơn hàng';
-		$page->back_route = 'home_page';
-		
 		// put service to session
 		$request->session()->put('service', $service->id);
 		
 		return view(Config::get('constants.SURVEY_PAGE'), array(
-				'page' => $page,
 				'service' => $service,
 				'questions' => $questions,
 				'cities' => $cities,

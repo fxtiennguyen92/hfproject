@@ -31,52 +31,36 @@ $(document).ready(function() {
   <div style="min-height: 500px;">
     @include('order.order_detail_map')
     @include('order.order_detail_tag')
-    @include('order.order_detail_item')
-
-    @if ($order->state == 0 && $order->no && $order->quoted_price_count == 0)
-    @elseif ($order->state == 0 && $order->quoted_price_count > 0)
-    <div class="row padding-top-20">
-    <div class="col-md-12">
-      @foreach ($order->quotedPrice as $quoted)
-      <div class="orders-item hf-card">
-        <div class="row flex">
-          <div class="col-md-5 col-sm-5 col-xs-5 text-center">
-            <div class="author-avt"><img src="{{ env('CDN_HOST') }}/u/{{ $quoted->pro->id }}/{{ $quoted->pro->avatar }}" /></div>
-          </div>
-          <div class="col-md-7 col-sm-7 col-xs-7">
-            <div class="author-name margin-top-10">{{ $quoted->pro->name }}</div>
-            <div class="author-rating">
-              <select id="rating" class="rating" data-current-rating="{{ $quoted->pro->profile->rating }}">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </select>
-            </div>
-            <div>Báo giá: <span class="price text-danger">{{ $quoted->price }}</span></div>
-          </div>
-        </div>
-        <div class="padding-20">
-          <div class="message text-center">{{ $quoted->introduction }}</div>
-        </div>
-        <div class="text-center padding-top-15" style="border-top:solid 1px #e1e1e1">
-          <a class="text-info" href="{{ route('order_pro_page', ['proId' => $quoted->pro_id]) }}">Xem hồ sơ đối tác</a>
-        </div>
+  <div class="nav-tabs-horizontal order-page">
+    <ul class="nav nav-tabs nav-page" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#stateTab" role="tab" aria-expanded="true">Tình trạng</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link right" href="javascript: void(0);" data-toggle="tab" data-target="#infoTab" role="tab" aria-expanded="false">Thông tin</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link right" href="javascript: void(0);" data-toggle="tab" data-target="#supTab" role="tab" aria-expanded="false">Hỗ trợ</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active" id="stateTab" role="tabpanel" aria-expanded="true">
+        @include('order.order_detail_state')
       </div>
-      @endforeach
-    </div>
-    </div>
-    @elseif ($order->state == 1)
-    <div class="row padding-top-20">
-    <div class="col-md-12">
-      <div class="orders-item hf-card">
-        <div class="row">
-          <div class="col-md-12 col-sm-12 col-xs-12 text-center">
-            <h5>Đối tác thực hiện</h5>
-          </div>
+      <div class="tab-pane" id="infoTab" role="tabpanel" aria-expanded="false">
+<!--         <h5 class="padding-top-10">Chi tiết đơn hàng</h5> -->
+<!--         <div class="common-text">Chi tiết đơn hàng</div> -->
+        <h5 class="padding-top-20">Khách hàng</h5>
+        <div class="padding-10 text-center hf-card user-row">
+          <img class="user-avt" src="{{ env('CDN_HOST') }}/u/{{ $order->user_id }}/{{ $order->user->avatar }}">
+          <label>{{ $order->user_name }}</label>
         </div>
-        <div class="row flex padding-bottom-15">
+        <h5 class="padding-top-20">Đối tác</h5>
+        @if(!$order->pro_id)
+        <div class="common-text">Chưa có đối tác</div>
+        @else
+        <div class="orders-item hf-card">
+        <div class="row flex padding-bottom-10">
           <div class="col-md-5 col-sm-5 col-xs-5 text-center">
             <div class="author-avt"><img src="{{ env('CDN_HOST') }}/u/{{ $order->pro->id }}/{{ $order->pro->avatar }}" /></div>
           </div>
@@ -91,16 +75,19 @@ $(document).ready(function() {
                 <option value="5">5</option>
               </select>
             </div>
-            <div><span class="price text-danger">{{ $order->total_price }}</span></div>
           </div>
         </div>
         <div class="text-center padding-top-15" style="border-top:solid 1px #e1e1e1">
           <a class="text-info" href="javascript:void(0);">Gọi đối tác</a>
         </div>
+        </div>
+        @endif
+      </div>
+      <div class="tab-pane" id="supTab" role="tabpanel" aria-expanded="false">
+        <h5 class="padding-top-10">Câu hỏi thường gặp</h5>
       </div>
     </div>
-    </div>
-    @endif
+  </div>
   </div>
   @if (is_null($order->no))
   <div class="row-complete clearfix">

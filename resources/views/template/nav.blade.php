@@ -1,4 +1,4 @@
-<nav class="top-menu">
+<nav id="top-menu" class="top-menu">
   <div class="menu-icon-container hidden-md-up">
   </div>
   <div class="menu">

@@ -55,6 +55,9 @@ class OrderController extends Controller
 		
 		$page = new \stdClass();
 		$page->name = 'Đơn hàng';
+		if ($order->no) {
+			$page->name = $page->name.' #'.$order->no;
+		}
 		$page->back_route = 'order_list_page';
 		
 		return view('order_detail', array(
@@ -80,7 +83,7 @@ class OrderController extends Controller
 		// get and check quoted price
 		$qpId = $orderId.'-'.$proId;
 		$quotedPriceModel = new QuotedPrice();
-		$quotedPrice = $quotedPriceModel->getById($qpId);
+		$quotedPrice = $quotedPriceModel->getById();
 		if (!$quotedPrice) {
 			response()->json('', 400);
 		}

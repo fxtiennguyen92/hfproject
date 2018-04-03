@@ -6,7 +6,7 @@
         <label class="order-user">{{ $order->user->name }}</label>
       </div>
       <div class="col-md-7 col-sm-7 col-xs-7">
-        <div class="order-code">@if (!is_null($order->no)) Mã #{{ $order->no }} @else Đơn hàng mới @endif</div>
+        <div class="order-code">#{{ $order->no }}</div>
         <div class="order-service-content"><i class="material-icons">&#xE869;</i> {{ $order->service->name }}</div>
         <div class="order-address" title="{{ $order->address }}"><i class="material-icons">&#xE0C8;</i> {{ $order->address }}</div>
         <div class="order-state">
@@ -16,9 +16,5 @@
         </div>
       </div>
     </div>
-    <div toggle="showLessContent" class="content-detail text-center">{{ $order->short_requirements }}</div>
-  </div>
-  <div class="text-center">
-    <button type="button" toggle="toggleContent" class=" btn btn-squared btn-default btn-block ">Xem thêm Chi tiết đơn hàng</button>
   </div>
 </div>
