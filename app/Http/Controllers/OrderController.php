@@ -11,6 +11,8 @@ use App\QuotedPrice;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use App\Review;
+use Illuminate\Support\Facades\Redirect;
+use App\ProProfile;
 
 class OrderController extends Controller
 {
@@ -55,10 +57,10 @@ class OrderController extends Controller
 		
 		$page = new \stdClass();
 		$page->name = 'Đơn hàng';
-		if ($order->no) {
-			$page->name = $page->name.' #'.$order->no;
-		}
 		$page->back_route = 'order_list_page';
+		if (auth()->user()->role == 1) {
+			$page->back_route = 'pro_order_list_page';
+		}
 		
 		return view('order_detail', array(
 						'page' => $page,
@@ -83,7 +85,7 @@ class OrderController extends Controller
 		// get and check quoted price
 		$qpId = $orderId.'-'.$proId;
 		$quotedPriceModel = new QuotedPrice();
-		$quotedPrice = $quotedPriceModel->getById();
+		$quotedPrice = $quotedPriceModel->getById($qpId);
 		if (!$quotedPrice) {
 			response()->json('', 400);
 		}
@@ -114,9 +116,42 @@ class OrderController extends Controller
 
 	public function cancel($orderId, Request $request) {
 		$orderModel = new Order();
-		$order = $orderModel->updateState($orderId, Config::get('constants.ORD_CANCEL'));
+		$isUpdated = $orderModel->updateState($orderId, Config::get('constants.ORD_CANCEL'));
 		
-		response()->json('', 200);
+		if ($isUpdated) {
+			response()->json('', 200);
+		} else {
+			response()->json('', 400);
+		}
+	}
+	
+	public function finish(Request $request) {
+		// get orderId from session
+		if (!$request->session()->has('order')) {
+			throw new NotFoundHttpException();
+		}
+		$orderId = $request->session()->get('order');
+		
+		try {
+			DB::beginTransaction();
+			$orderModel = new Order();
+			$orderModel->updateState($orderId, '1');
+			$order = $orderModel->updateState($orderId, Config::get('constants.ORD_COMPLETE'));
+			
+			// set income for pro
+			$order = $orderModel->getById($orderId);
+			$profile = ProProfile::where('id', $order->pro_id)->first();
+			$profile->total_orders = $profile->total_orders + 1;
+			$profile->total_order_price = $profile->total_order_price + $order->total_price;
+			$profile->point = $profile->point + ($order->total_price / 1000);
+			$profile->save();
+
+			DB::commit();
+		} catch (\Exception $e) {
+			DB::rollback();
+		}
+		
+		return Redirect::back();
 	}
 	
 	public function viewProPage($proId, Request $request) {

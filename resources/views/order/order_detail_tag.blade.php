@@ -7,7 +7,11 @@
       </div>
       <div class="col-md-7 col-sm-7 col-xs-7">
         <div class="order-code">@if (!is_null($order->no)) #{{ $order->no }} @else Đơn hàng chưa xác nhận @endif</div>
-        <div class="order-address" title="{{ $order->address }}"><i class="material-icons">&#xE0C8;</i> {{ $order->address }}</div>
+        <div class="order-address" title="{{ $order->address }}"
+          @if (!is_null($order->location))
+          onclick="window.open('https://www.google.com/maps/search/?api=1&query={{ $order->location }}', '_blank');"
+          @endif>
+          <i class="material-icons">&#xE0C8;</i> {{ $order->address }}</div>
         <div class="order-state">
           @if ($order->est_excute_at_string)
           <span class="order-time state-est-time"><i class="material-icons">&#xE8B5;</i> {{ $order->est_excute_at_string }}</span> @else

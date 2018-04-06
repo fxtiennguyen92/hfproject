@@ -63,11 +63,11 @@ Route::get('/dich-vu/{serviceUrlName}', 'ServiceController@view')
 	->name('service_page');
 Route::post('/order/submit', 'ServiceController@submit')
 	->name('submit_order');
-Route::get('order/review', 'ServiceController@review')
+Route::get('/order/review', 'ServiceController@review')
 	->name('review_order');
-Route::post('order/complete', 'ServiceController@complete')
+Route::post('/order/complete', 'ServiceController@complete')
 	->name('complete_order');
-Route::post('order/delete', 'ServiceController@delete')
+Route::post('/order/delete', 'ServiceController@delete')
 	->name('delete_order');
 
 Route::get('/orders', 'OrderController@viewList')
@@ -80,6 +80,8 @@ Route::post('/order/{orderId}/cancel', 'OrderController@cancel')
 	->name('cancel_order');
 Route::get('/order/pro/{proId}/info', 'OrderController@viewProPage')
 	->name('order_pro_page');
+Route::post('/order/finish', 'OrderController@finish')
+	->name('finish_order');
 /** Service - Order - END **/
 
 /** Pro - STA **/
@@ -102,7 +104,7 @@ Route::get('/order/pro/{proId}/info', 'OrderController@viewProPage')
 
 
 Route::middleware('pro.manager')->group(function() {
-	Route::get('pro/mng/pros', 'Pro\ProManagerController@viewProListPage')
+	Route::get('/pro/mng/pros', 'Pro\ProManagerController@viewProListPage')
 		->name('view_pro_mng_page');
 });
 
@@ -118,12 +120,12 @@ Route::get('/companies', 'CommonController@getCompanies')
 /** Management - STA **/
 Route::middleware('cs.officer')->group(function() {
 	Route::get('/mng/pros', 'Mng\ProController@viewList')
-		->name('pro_list_page');
+		->name('mng_pro_list_page');
 	Route::post('pro/mng/pro/{proId}/delete','Pro\ProManagerController@deleteByProManager')
 		->name('delete_pro_by_pro_mng');
 
 	Route::get('/mng/pro/{proId}/profile', 'Mng\ProController@viewProfile')
-		->name('pro_profile_mng_page');
+		->name('mng_pro_profile_page');
 	Route::post('/mng/pro/avatar', 'Mng\ProController@approveAvatar')
 		->name('approve_pro_avatar');
 	Route::post('/mng/pro/update_cv', 'Mng\ProController@updateCV')

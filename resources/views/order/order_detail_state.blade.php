@@ -44,5 +44,7 @@
         </div>
     </div>
     </div>
+    @else
+    <div class="common-text">Chưa xác nhận đơn hàng</div>
     @endif
 </div>

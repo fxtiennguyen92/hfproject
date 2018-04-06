@@ -25,13 +25,13 @@
 </script>
 @endpush
 
-@section('title') Đối tác @endsection
+@section('title') Tài khoản @endsection
 
 @section('content')
 <section class="content-body-full-page content-template-1">
-	<div class="page-header hf-bg-gradient text-capitalize">Đối tác</div>
+	<div class="page-header hf-bg-gradient text-capitalize">Tài khoản</div>
 	<div class="form-wrapper">
-		<button class="btn btn-primary pull-right" type="button" onclick="location.href='{{ route('signup_pro') }}'">
+		<button class="btn btn-primary pull-right" type="button" onclick="javascript:void(0);">
 			<i class="material-icons">&#xE7F0;</i></button>
 		<div class="row">
 			<div class="col-md-12">
@@ -47,55 +47,55 @@
 						</tr>
 					</thead>
 					<tbody>
-						@foreach ($pros as $pro)
+						@foreach ($users as $user)
 						<tr>
 							<td class="text-capitalize">
-								<div class="emp-name">{{ $pro['name'] }}
-									@if ($pro['role'] == 2)
+								<div class="emp-name">{{ $user['name'] }}
+									@if ($user['role'] == 2)
 									<span style="color: red; font-style: italic;">(Mng)</span>
 									@endif
 								</div>
-								<div class="emp-email">{{ $pro['email'] }}</div>
+								<div class="emp-email">{{ $user['email'] }}</div>
 							</td>
 							<td class="text-center label-profile-state">
-								@if ($pro['delete_flg'] == 1)
+								@if ($user['delete_flg'] == 1)
 									<span class="label label-secondary">Đã xóa</span>
-								@elseif ($pro['profile']['state'] == '1')
+								@elseif ($user['profile']['state'] == '1')
 									<span class="label label-primary">Sẵn Sàng</span>
-								@elseif ($pro['profile']['state'] == '2')
+								@elseif ($user['profile']['state'] == '2')
 									<span class="label label-default">Treo</span>
-								@elseif ($pro['profile']['state'] == '3')
+								@elseif ($user['profile']['state'] == '3')
 									<span class="label label-warning">Cảnh cáo</span>
-								@elseif ($pro['profile']['state'] == '4')
+								@elseif ($user['profile']['state'] == '4')
 									<span class="label label-danger">Khóa</span>
-								@elseif ($pro['profile']['state'] == '5')
+								@elseif ($user['profile']['state'] == '5')
 									<span class="label label-secondary">Cấm vĩnh viễn</span>
 								@else
 									<span class="label label-success">Chờ Duyệt</span>
 								@endif
 							</td>
 							<td class="text-center">
-								{{ Carbon\Carbon::parse($pro['created_at'])->format('d-m-Y H:i') }}
+								{{ Carbon\Carbon::parse($user['created_at'])->format('d-m-Y H:i') }}
 							</td>
 							<td class="text-center">
-								@if ($pro['profile']['gender'] == '1')
+								@if ($user['profile']['gender'] == '1')
 									Nam
-								@elseif ($pro['profile']['gender'] == '2')
+								@elseif ($user['profile']['gender'] == '2')
 									Nữ
 								@else
 									Khác
 								@endif
 							</td>
 							<td class="text-center">
-								{{ Carbon\Carbon::parse($pro['profile']['date_of_birth'])->format('d-m-Y') }}
+								{{ Carbon\Carbon::parse($user['profile']['date_of_birth'])->format('d-m-Y') }}
 							</td>
 							<td>
-								<div class="dropdown margin-inline pull-right row-action-btn">
+								<div class="dropdown margin-inline pull-right">
 									<span class="btn btn-sm " data-toggle="dropdown">
 									<i class="icmn-cog3"></i>
 									</span>
 									<ul class="dropdown-menu dropdown-menu-right" role="menu">
-										<a class="dropdown-item view" href="{{ route('mng_pro_profile_page', ['proId' => $pro['id']]) }}">
+										<a class="dropdown-item view" href="javascript:void(0);">
 											<i class="icmn-grid6"></i> Chi tiết
 										</a>
 										<a class="dropdown-item view" href="javascript:void(0);">

@@ -1,4 +1,6 @@
 @extends('template.index') @push('stylesheets')
+<style>
+</style>
 <script>
 $(document).ready(function() {
   $('.price').each(function() {
@@ -24,11 +26,15 @@ $(document).ready(function() {
     $('#frmMain').attr('action', '{{ route("complete_order") }}');
     $('#frmMain').submit();
   });
+  $('#btnFinish').on('click', function() {
+    $('#frmMain').attr('action', '{{ route("finish_order") }}');
+    $('#frmMain').submit();
+  });
 });
 </script>
 @endpush @section('title') Đơn hàng @endsection @section('content')
 <section class="content-body">
-  <div style="min-height: 500px;">
+  <div style="min-height: 513px; padding-bottom: 60px;">
     @include('order.order_detail_map')
     @include('order.order_detail_tag')
   <div class="nav-tabs-horizontal order-page">
@@ -91,13 +97,17 @@ $(document).ready(function() {
   </div>
   @if (is_null($order->no))
   <div class="row-complete clearfix">
-    <button id="btnBack" type="button" class="btn"><i class="material-icons">&#xE14C;</i></button>
-    <button id="btnSubmit" type="button" class="btn btn-primary"><i class="material-icons">&#xE876;</i></button>
+    <button id="btnBack" type="button" class="btn color-secondary" style="font-size: 18px; padding: 15px;">Hủy</button>
+    <button id="btnSubmit" type="button" class="btn btn-primary" style="font-size: 18px; padding: 15px;">Xác nhận</button>
   </div>
+  @elseif ($order->state == 1)
+  <div class="row-complete clearfix">
+    <button id="btnFinish" type="button" class="btn btn-primary" style="font-size: 18px; padding: 15px;">Hoàn tất</button>
+  </div>
+  @endif
   <form id="frmMain" method="post">
     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
   </form>
-  @endif
 </section>
 
 <script type="text/javascript">

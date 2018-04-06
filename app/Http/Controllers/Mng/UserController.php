@@ -12,14 +12,14 @@ use App\Common;
 use App\Service;
 use App\Http\Controllers\FileController;
 
-class ProController extends Controller
+class UserController extends Controller
 {
-	public function viewList() {
+	public function viewAccountList() {
 		$userModel = new User();
-		$pros = $userModel->getAllPro();
+		$users = $userModel->getAllAcc();
 		
-		return view(Config::get('constants.MNG_PRO_LIST_PAGE'), array(
-						'pros' => $pros,
+		return view(Config::get('constants.MNG_ACC_LIST_PAGE'), array(
+						'users' => $users,
 		));
 	}
 

@@ -42,7 +42,12 @@ class ServiceController extends Controller
 		// put service to session
 		$request->session()->put('service', $service->id);
 		
+		$page = new \stdClass();
+		$page->name = 'Đơn hàng';
+		$page->back_route = 'home_page';
+		
 		return view(Config::get('constants.SURVEY_PAGE'), array(
+				'page' => $page,
 				'service' => $service,
 				'questions' => $questions,
 				'cities' => $cities,

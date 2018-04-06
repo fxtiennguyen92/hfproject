@@ -89,7 +89,7 @@
 </script>
 @endpush @section('title') Đơn hàng @endsection @section('content')
 <section class="content-body">
-  @include('order.order_detail_map') @include('pro.order_detail_header')
+  @include('order.order_detail_map') @include('order.order_detail_tag')
   @if (!$quotedPrice)
   <form class="quoted-form" id="frmMain" name="form-validation" method="POST" action="{{ route('quote_price') }}">
     <input name="inpPrice" class="inp-quoted-price" value="10000" step="5000" min="10000" max="">
@@ -115,7 +115,7 @@
 
 <script type="text/javascript">
   function initMap() {
-    initOrderMap("{{ explode(',', $order -> location)[0] }}", "{{ explode(',', $order -> location)[1] }}", "{{ $order->address }}");
+    initOrderMap("{{ explode(',', $order->location)[0] }}", "{{ explode(',', $order->location)[1] }}", "{{ $order->address }}");
   }
 </script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ env('MAP_API_KEY') }}&callback=initMap&languages=vi&libraries=places" async defer></script>

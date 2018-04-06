@@ -22,10 +22,11 @@ return [
 	
 	'PRO_MNG_PAGE' => 'pro.pros',
 	
-	'PRO_LIST_PAGE' => 'mng.pros',
-	'PRO_PROFILE_MNG_PAGE' => 'mng.pro_profile',
-	'COMPANY_PAGE' => 'mng.company',
-	'COMPANY_LIST_PAGE' => 'mng.companies',
+	'MNG_ACC_LIST_PAGE' => 'mng.accounts',
+	'MNG_PRO_LIST_PAGE' => 'mng.pros',
+	'MNG_PRO_PROFILE_PAGE' => 'mng.pro_profile',
+	'MNG_COMPANY_PAGE' => 'mng.company',
+	'MNG_COMPANY_LIST_PAGE' => 'mng.companies',
 	
 	
 	

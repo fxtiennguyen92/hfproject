@@ -1,4 +1,6 @@
 @extends('template.index') @push('stylesheets')
+<style>
+</style>
 <!-- Page Scripts -->
 <script>
   $(document).ready(function() {
@@ -22,42 +24,54 @@
         previous: "<i class='material-icons'>&#xE314;</i>",
       },
       onStepChanging: function(e, currentIndex, newIndex) {
-        var validReturn = true;
         if (currentIndex < newIndex) {
-          var name = $('section[id=surveyList-p-' + currentIndex + ']')
-            .find('input:not([type=text],[type=button],[type=submit])')
-            .first()
-            .attr('name');
-          if (typeof name == 'undefined') {
-            validReturn = true;
-          } else if ($('input[name="' + name + '"]:checked').length == 0) {
-            $.notify({
-              message: 'Hãy chọn một nội dung bên dưới.'
-            }, {
-              type: 'danger',
-            });
+          return validateStep(currentIndex);
+        }
+        return true;
+      },
+      onFinishing: function(e, currentIndex) {
+        return validateStep(currentIndex);
+      },
+      onFinished: function(e, currentIndex) {
+        $('#positionAndTime').show();
+        $('.service-title').hide();
+        $('#surveyList').hide();
+        geolocation();
+      }
+    });
 
-            validReturn = false;
-          };
+    function validateStep(currentIndex) {
+    	var validate = true;
+        var section = $('section[id=surveyList-p-' + currentIndex + ']');
+        var name = section.find('input:not([type=text],[type=button],[type=submit])').first().attr('name');
+        if (typeof name == 'undefined') {
+          validReturn = true;
+        } else if ($('input[name="' + name + '"]:checked').length == 0) {
+          $.notify({
+            message: 'Hãy chọn một nội dung bên dưới.'
+          }, {
+            type: 'danger',
+          });
 
-          var inpOther = $('section[id=surveyList-p-' + currentIndex + ']')
-            .find('input.input-other');
-          if ($.trim(inpOther.val()) == '' && inpOther.parent().hasClass('active')) {
-            $.notify({
-              message: 'Vui lòng cung cấp thông tin.'
-            }, {
-              type: 'danger',
-            });
-            inpOther.focus();
-            validReturn = false;
-          }
+          validate = false;
+        } else {
+          section.find('label[class*=active]').each(function() {
+            var otherInput = $(this).find('.input-other');
+            if (typeof otherInput !== 'undefined' && otherInput.val() == '') {
+              $.notify({
+                message: 'Vui lòng cung cấp thông tin.'
+              }, {
+                type: 'danger',
+              });
+              otherInput.focus();
+              validate = false;
+            };
+          });
         }
 
-        return validReturn;
-      },
-      onStepChanged: function(e, currentIndex, priorIndex) {
-      },
-    });
+        return validate;
+    }
+    
     $('label').on('click', function() {
       // control show/hide next answers
       var questionId = $(this).attr('question-id');
@@ -99,10 +113,7 @@
       }
     });
     $('a[href=#finish]').on('click', function() {
-      $('#positionAndTime').show();
-      $('.service-title').hide();
-      $('#surveyList').hide();
-      geolocation();
+      
     });
     $('#btnBack').on('click', function() {
       $('#positionAndTime').hide();
@@ -159,16 +170,7 @@
               url: '{{ route("submit_order") }}',
               data: $('#frmMain').serialize(),
               success: function(response) {
-                swal({
-                    title: 'Đơn hàng mới',
-                    text: 'Mời kiểm tra lại thông tin đơn hàng!',
-                    type: 'success',
-                    confirmButtonClass: 'btn-primary',
-                    confirmButtonText: 'Xem đơn hàng',
-                  },
-                  function() {
-                    location.href = '{{ route("review_order") }}';
-                  });
+                location.href = '{{ route("review_order") }}';
               },
               error: function(xhr) {
                 if (xhr.status == 400) {
@@ -246,14 +248,25 @@
           </div>
           @elseif ($q->answer_type == '2')
           <div class="btn-group" data-toggle="buttons">
-            @foreach ($q->answers as $a)
+            @foreach ($q->answers as $a) @if ($a->init_flg == 2)
+            <label class="btn" question-id="q{{ $q->id }}" ans-group="q{{ $q->id }}-a{{ $a->order_dsp }}" @if ($a->previous_answer != 0) prev-ans-group="q{{ $questions[$qKey-1]->id }}-a{{ $a->previous_answer }}" @endif>
+              <input type="radio"
+                  name="q[{{ $q->id }}]"
+                  value="{{ $a->order_dsp }}">
+              <span class="icon icmn-radio-unchecked"></span>
+              
+              <input class="input-other" type="text"
+                  placeholder="{{ $a->content }}"
+                  name="{{ $q->id.'_'.$a->order_dsp }}_text"
+                  value="">
+            </label> @else
             <label class="btn" question-id="q{{ $q->id }}" ans-group="q{{ $q->id }}-a{{ $a->order_dsp }}" @if ($a->previous_answer != 0) prev-ans-group="q{{ $questions[$qKey-1]->id }}-a{{ $a->previous_answer }}" @endif>
               <input type="radio"
                   name="q[{{ $q->id }}]"
                   value="{{ $a->order_dsp }}">
               <span class="icon icmn-radio-unchecked"></span>
                 {{ $a->content }}
-            </label> @endforeach
+            </label> @endif @endforeach
           </div>
           @endif
         </div>
@@ -284,12 +297,12 @@
           <label class="btn time-rad">
                   <input type="radio" name="timeState" value="0" checked>
                   <span class="icon icmn-checkmark-circle"></span>
-                      Càng sớm càng tốt
+                      Sớm nhất có thể
               </label>
           <label class="btn time-rad">
                   <input type="radio" name="timeState" value="1">
                   <span class="icon icmn-radio-unchecked"></span>
-                      Ấn định thời gian
+                      Chọn thời gian
               </label>
         </div>
         <div id="excuteDatetime" class="row excute-date-wrapper" style="display: none">
@@ -387,7 +400,7 @@ function initMap(lat = null, lng = null) {
 		$('input[name=address]').val(formatAddress(place.formatted_address));
 		$('input[name=location]').val(place.geometry.location.lat() + ',' + place.geometry.location.lng());
 
-		infowindowContent.children['place-address'].textContent = formatAddress($('#orderAddress').val());
+		infowindowContent.children['place-address'].textContent = place.name;
 		infowindow.setContent(infowindowContent);
 		infowindow.open(map, marker);
 	});

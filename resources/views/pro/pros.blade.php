@@ -1,13 +1,6 @@
 @extends('template.index')
 @push('stylesheets')
 <style>
-	body {
-		background: #f4f4f4;
-	}
-
-	.dropdown-menu {
-		z-index: 3000;
-	}
 </style>
 
 <!-- Page Scripts -->

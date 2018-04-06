@@ -1,11 +1,6 @@
 @extends('template.index') @push('stylesheets')
 <link rel="stylesheet" type="text/css" href="css/home.css">
 <style>
-  @media only screen and (max-width: 500px) {
-    .header-top-bar {
-      display: none;
-    }
-  }
 </style>
 <script>
   (function(d, s, id) {
@@ -23,6 +18,7 @@
 @endpush
 @section('title') Ứng dụng đặt dịch vụ @endsection
 @section('content')
+<section class="has-bottom-menu">
 <!-- SECTION BANNER -->
 <section class="top-banner">
   <div class="hero" style="background-image: url({{ env('CDN_HOST') }}/img/banner/main.png);">
@@ -51,6 +47,9 @@
 @foreach ($parts as $part)
 {!! $part->text !!}
 @endforeach
+</section>
+@endsection
+@include('template.mb.footer-menu')
 
 <!-- <div id="section-form"> -->
 <!--   <div class="container"> -->
@@ -105,4 +104,4 @@
 <!--     </div> -->
 <!--   </div> -->
 <!-- </div> -->
-@endsection
+

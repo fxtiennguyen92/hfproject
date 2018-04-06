@@ -4,9 +4,9 @@ $(document).ready(function () {
     $('.fullHeight').css('height', $(window).height());
   });
 
-  $('.backToHome').on('click', function () {
-    
-  })
+  $('li.backToHome>#previous').on('click', function () {
+    location.href='{{ route("home_page") }}';
+  });
 
   $('.hiw-slider, .testinomial-slider').slick({
     slidesToShow: 1,
@@ -39,11 +39,10 @@ $(document).ready(function () {
     })
   });
 
-  //show less content order
+  // show less content order
   $("button[toggle=toggleContent]").on('click', function () {
     $(this).parent().parent().find('div[toggle=showLessContent]').toggleClass('show');
   });
-
 });
 
 function initOrderMap(lat, lng, address) {
@@ -60,10 +59,6 @@ function initOrderMap(lat, lng, address) {
   marker.setTitle(address);
   marker.setVisible(true);
 
-  var infowindowContent = document.getElementById('infowindow-content');
-  infowindowContent.children['place-address'].textContent = address;
-
   var infowindow = new google.maps.InfoWindow();
-  infowindow.setContent(infowindowContent);
-  infowindow.open(map, marker);
+  infowindow.open(map);
 }

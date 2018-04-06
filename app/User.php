@@ -30,6 +30,10 @@ class User extends Authenticatable
 		'password', 'remember_token',
 	];
 
+	public function getAllAcc() {
+		return $this->get();
+	}
+
 	public function getAllPro() {
 		return $this::with('profile')
 			->proAndProManager()

@@ -51,6 +51,10 @@ class InitPageController extends Controller
 	}
 	
 	public function control() {
+		if (!auth()->check()) {
+			return redirect()->route('login_page');
+		}
+		
 		return view(Config::get('constants.CONTROL_PAGE'), array(
 			'nav' => 'control',
 		));

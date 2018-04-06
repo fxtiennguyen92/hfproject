@@ -2,7 +2,7 @@
 <script>
 </script>
 @endpush @section('title') Đơn hàng @endsection @section('content')
-<section class="content-body" style="margin:auto;">
+<section class="content-body has-bottom-menu">
   <div class="page-header hf-bg-gradient text-capitalize">Đơn hàng</div>
   <div class="nav-tabs-horizontal orders-page">
     <ul class="nav nav-tabs nav-page hf-bg-gradient text-uppercase" role="tablist">
@@ -41,3 +41,4 @@
   </div>
 </section>
 @endsection
+@include('template.mb.footer-menu')

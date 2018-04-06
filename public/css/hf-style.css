@@ -100,6 +100,75 @@ table {
   border-radius: 0;
 }
 
+.control-list {
+  margin-left: -20px;
+  margin-right: -20px;
+  background: #fff;
+}
+
+.hf-main-card {
+  background: #fff;
+  -webkit-box-shadow: 0px 5px 25px 0px rgba(46, 61, 73, 0.2);
+  box-shadow: 0px 5px 25px 0px rgba(46, 61, 73, 0.2);
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  padding: 20px;
+  margin: -20px;
+  line-height: 26px;
+}
+
+.hf-main-card .avt {
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+}
+
+.hf-main-card .name {
+  font-size: 14px;
+  font-weight: bold;
+  color: #000;
+}
+
+.hf-main-card .email {
+  font-size: 13px;
+  color: #000;
+}
+
+.hf-main-card .phone {
+  font-size: 13px;
+  color: #000;
+}
+
+.hf-main-card .no-phone {
+  font-size: 12px;
+  font-style: italic;
+  color: #000;
+}
+
+.hf-main-card .edit-icon {
+  position: relative;
+  right: -12px;
+  bottom: 12px;
+  float: right;
+}
+.hf-main-card .edit-icon i {
+  font-size: 20px;
+}
+
+.hf-main-card .social-icon {
+  width: 60px;
+  height: 60px;
+  display: block;
+  margin: auto;
+}
+
+.hf-main-card .social-label {
+  margin-top: 10px;
+  color: #acb7bf;
+}
+
+
 .hf-card {
   background: #fff;
   -webkit-box-shadow: 5px 5px 25px 0px rgba(46, 61, 73, 0.2);
@@ -108,6 +177,16 @@ table {
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
   border-bottom: 1px solid #dfe4ed;
+}
+
+.hf-card .bottom-full-width-btn {
+  width: 100%;
+  height: 40px;
+}
+
+.hf-card .acc-balance,
+.hf-card .acc-point {
+  font-size: 24px;
 }
 
 #listTab .hf-card {
@@ -552,6 +631,11 @@ nav.top-menu .menu {
   font-size: 13px;
   vertical-align: bottom;
   line-height: 24px;
+}
+
+.order-address,
+.order-address i {
+  cursor: pointer;
 }
 
 .order-cancel,
@@ -1183,7 +1267,7 @@ body.single-page .single-page-block .single-page-block-inner {
 .survey-form .cui-wizard > .content {
   border-radius: 0;
   margin: 0;
-  min-height: 385px;
+  min-height: 395px;
 
 }
 
@@ -1359,6 +1443,10 @@ body.single-page .single-page-block .single-page-block-inner {
   width: 30%;
 }
 
+.row-complete #btnFinish {
+  width: 100%;
+}
+
 .survey-form .service-title {
   height: 120px;
   line-height: 32px;
@@ -1391,7 +1479,7 @@ body.single-page .single-page-block .single-page-block-inner {
 }
 
 #positionAndTime .content {
-  min-height: 500px;
+  min-height: 513px;
 }
 
 #positionAndTime .address {
@@ -1567,9 +1655,9 @@ body.single-page .single-page-block .single-page-block-inner {
 }
 
 .order-info .order-code {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .order-info .pro-avt {
@@ -1704,16 +1792,18 @@ section.user-menu .list-menu li {
 }
 
 section.user-menu .list-menu a {
-  font-size: 18px;
+  font-size: 16px;
   color: #242424;
-  text-transform: uppercase;
   display: block;
-  padding: 20px;
+  padding: 10px;
+  background-color: #fff;
 }
 
 section.user-menu .list-menu a > i {
   vertical-align: middle;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
+  font-size: 25px;
+  margin-right: 10px;
 }
 
 
@@ -1807,20 +1897,17 @@ section.user-menu .list-menu a > i {
 }
 
 .header-top-bar {
-  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, .4);
-  box-shadow: 0 1px 5px rgba(0, 0, 0, .4);
-  background: #02b3e4;
+  background: transparent;
+  display: none;
+  width: 100px;
 }
 
 .header-top-bar .arrow-back i {
   font-size: 22px;
   line-height: 32px;
   vertical-align: middle;
-  color: #fff;
-}
-
-.header-top-bar {
-  display: none;
+  color: #000;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, .4);
 }
 
 .header-top-bar .navbar-title {
@@ -2053,6 +2140,14 @@ label.label-outlined.label-success {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#02b2e3', endColorstr='#02cbba', GradientType=1);
 }
 
+.mng-list td {
+  vertical-align: middle;
+}
+
+.mng-list .label-profile-state span {
+  line-height: 16px;
+}
+
 /*
 * RESPONSIVE
 */
@@ -2114,7 +2209,6 @@ label.label-outlined.label-success {
     box-shadow: none;
     border: none;
     min-height: 0;
-    padding-bottom: 60px;
   }
   .content-template-1 .form-wrapper {
     padding: 30px;
@@ -2123,7 +2217,10 @@ label.label-outlined.label-success {
     display: block;
   }
   .has-top-bar {
-    margin-top: 45px;
+    margin-top: 0px;
+  }
+  .has-bottom-menu {
+    margin-bottom: 60px;
   }
   #footer-menu {
     display: block;
@@ -2311,17 +2408,7 @@ label.label-outlined.label-success {
     width: 150px;
     padding-top: 5px;
   }
-  section.user-menu .list-menu {
-    text-align: left;
-  }
-  section.user-menu .list-menu a {
-    font-size: 15px;
-  }
-  section.user-menu .list-menu a > i {
-    margin-bottom: 3px;
-    font-size: 15px;
-    margin-right: 10px;
-  }
+
   .top-menu .icon-menu-wrapper {
     width: 40%;
   }

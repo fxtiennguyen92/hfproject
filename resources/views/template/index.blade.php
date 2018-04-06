@@ -119,37 +119,7 @@
   <script src="assets/vendors/slick/slick.min.js"></script>
   <!-- Clean UI Scripts -->
   <script src="assets/common/js/common.js"></script>
-  <script src="assets/common/js/demo.temp.js"></script>
   <script src="js/hf-script.js"></script>
-  <style type="text/css">
-    .single-page-block-inner {
-      margin-top: 0px;
-    }
-
-    @media only screen and (min-width: 540px) {
-      .single-page-block-inner {
-        margin-top: 100px;
-      }
-    }
-
-    #nprogress .spinner-icon {
-      background: url("{{ env('CDN_HOST') }}/img/loading/loading.gif") no-repeat;
-      background-size: contain;
-    }
-  </style>
-  
-  <script>
-//     $(window).load(function() {
-//       NProgress.start();
-//     });
-
-//     var interval = setInterval(function() {
-//       if(document.readyState === 'complete') {
-//         clearInterval(interval);
-//         NProgress.done();
-//       }
-//     }, 2000);
-  </script>
   <!-- Page Scripts -->
   @stack('stylesheets')
   <!-- End Page Scripts -->
@@ -160,8 +130,6 @@
   @include('template.nav')
   @include('template.header-top-bar')
   @yield('content')
-  
-  @include('template.mb.footer-menu')
 </body>
 
 </html>
