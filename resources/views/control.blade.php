@@ -55,14 +55,12 @@ $(document).ready(function() {
           </div>
           <button id="btnFillWallet" class="bottom-full-width-btn btn btn-primary text-uppercase">Nạp thêm</button>
         </div>
-        @if (auth()->user()->role == 1)
         <div class="hf-card margin-top-20">
           <div class="row padding-20">
             <h5>Điểm tích lũy</h5>
-            <div class="color-primary text-center acc-point">{{ auth()->user()->profile->point }}</div>
+            <div class="color-primary text-center acc-point">{{ auth()->user()->point }}</div>
           </div>
         </div>
-        @endif
         <div class="control-list margin-top-20">
         <section class="user-menu">
           <ul class="list-menu">

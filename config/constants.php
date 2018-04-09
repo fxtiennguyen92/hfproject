@@ -60,6 +60,7 @@ return [
 	'ORD_PROCESSING' => '1',
 	'ORD_COMPLETE' => '2',
 	'ORD_CANCEL' => '3',
+	'ORD_ACCEPTED' => '4',
 	
 	'QPRICE_NEW' => '0',
 	'QPRICE_SUCCESS' => '1',

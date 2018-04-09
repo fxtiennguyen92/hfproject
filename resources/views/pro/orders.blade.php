@@ -24,6 +24,7 @@
           @if (sizeof($newOrders) == 0)
             <div class="common-text">Chưa có đơn hàng nào</div>
           @endif
+          @php $mode = 'list' @endphp
           @foreach ($newOrders as $order)
           <div class="col-md-12 col-sm-12">
             @include('pro.order_detail_tag')

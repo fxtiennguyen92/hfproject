@@ -135,17 +135,22 @@ class OrderController extends Controller
 		try {
 			DB::beginTransaction();
 			$orderModel = new Order();
-			$orderModel->updateState($orderId, '1');
-			$order = $orderModel->updateState($orderId, Config::get('constants.ORD_COMPLETE'));
+			$orderModel->updateState($orderId, Config::get('constants.ORD_COMPLETE'));
 			
-			// set income for pro
 			$order = $orderModel->getById($orderId);
-			$profile = ProProfile::where('id', $order->pro_id)->first();
-			$profile->total_orders = $profile->total_orders + 1;
-			$profile->total_order_price = $profile->total_order_price + $order->total_price;
-			$profile->point = $profile->point + ($order->total_price / 1000);
-			$profile->save();
-
+			
+			$pro = User::where('id', $order->pro_id)->first();
+			$pro->total_orders = $pro->total_orders + 1;
+			$pro->total_order_price = $pro->total_order_price + $order->total_price;
+			$pro->point = $pro->point + ($order->total_price / 1000);
+			$pro->save();
+			
+			$user = User::where('id', $order->user_id)->first();
+			$user->total_orders = $user->total_orders + 1;
+			$user->total_order_price = $user->total_order_price + $order->total_price;
+			$user->point = $user->point + ($order->total_price / 1000);
+			$user->save();
+			
 			DB::commit();
 		} catch (\Exception $e) {
 			DB::rollback();

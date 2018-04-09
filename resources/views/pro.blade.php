@@ -84,7 +84,7 @@
     </div>
     @if (isset($action) && $action == 'order')
     <div class="text-center padding-20 btn-book-border">
-      <button type="button" class="btn-book btn btn-primary-outline">Chọn đối tác này</button>
+      <button id="btnAccept" type="button" class="btn-book btn btn-primary-outline">Chọn đối tác này</button>
     </div>
     @endif
     <div class="row">

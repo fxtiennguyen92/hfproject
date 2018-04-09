@@ -20,6 +20,7 @@
           @if (sizeof($currentOrders) == 0)
             <div class="common-text">Không có đơn hàng nào</div>
           @endif
+          @php $mode = 'list' @endphp
           @foreach ($currentOrders as $order)
           <div class="col-md-12 col-sm-12" onclick="location.href='{{ route('order_page', ['orderId' => $order->id]) }}'">
             @include('order.order_detail_tag')

@@ -1,3 +1,10 @@
+@if (isset($mode) && $mode == 'list')
+<style>
+.order-info * {
+  cursor: pointer !important;
+}
+@endif
+</style>
 <div class="order-info hf-card" style="margin-right:0; padding:0">
   <div class="padding-20">
     <div class="flex">
@@ -6,11 +13,12 @@
         <label class="order-user">{{ $order->service->name }}</label>
       </div>
       <div class="col-md-7 col-sm-7 col-xs-7">
-        <div class="order-code">@if (!is_null($order->no)) #{{ $order->no }} @else Đơn hàng chưa xác nhận @endif</div>
-        <div class="order-address" title="{{ $order->address }}"
-          @if (!is_null($order->location))
+        <div class="order-code">#{{ $order->no }}</div>
+        <div class="order-address"
+          @if (!(isset($mode) && $mode == 'list'))
           onclick="window.open('https://www.google.com/maps/search/?api=1&query={{ $order->location }}', '_blank');"
-          @endif>
+          @endif
+          title="{{ $order->address }}">
           <i class="material-icons">&#xE0C8;</i> {{ $order->address }}</div>
         <div class="order-state">
           @if ($order->est_excute_at_string)
