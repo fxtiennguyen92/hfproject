@@ -38,6 +38,7 @@ class ProOrderController extends Controller
 			throw new NotFoundHttpException();
 		}
 		
+		// get qouted price
 		$quotedPrice = new QuotedPrice();
 		$quotedPrice = $quotedPrice->getById($orderId.'-'.auth()->user()->id);
 		
@@ -48,7 +49,7 @@ class ProOrderController extends Controller
 		$page->name = 'Đơn hàng';
 		$page->back_route = 'pro_order_list_page';
 		
-		return view(Config::get('constants.PRO_ORDER_PAGE'), array(
+		return view(Config::get('constants.ORDER_PAGE'), array(
 						'page' => $page,
 						'order' => $order,
 						'quotedPrice' => $quotedPrice

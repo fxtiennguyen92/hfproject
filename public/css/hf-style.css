@@ -189,7 +189,9 @@ table {
   font-size: 24px;
 }
 
-#listTab .hf-card {
+#listTab .hf-card,
+#newTab .hf-card,
+#quotedTab .hf-card {
   margin-bottom: 20px;
 }
 
@@ -1443,7 +1445,9 @@ body.single-page .single-page-block .single-page-block-inner {
   width: 30%;
 }
 
-.row-complete #btnFinish {
+.row-complete #btnComplete,
+.row-complete #btnQuoted,
+.row-complete #btnCancelQuoted {
   width: 100%;
 }
 
@@ -1665,7 +1669,12 @@ body.single-page .single-page-block .single-page-block-inner {
   margin: 2.5px;
 }
 
-.pro-avt-row {}
+.fail-order .order-info * {
+  cursor: no-drop !important;
+}
+.active-order .order-info * {
+  cursor: pointer !important;
+}
 
 .pro-avt-row .pro-avt {
   max-width: 40px;

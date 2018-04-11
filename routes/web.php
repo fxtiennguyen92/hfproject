@@ -85,7 +85,7 @@ Route::post('/order/finish', 'OrderController@finish')
 /** Service - Order - END **/
 
 /** Pro - STA **/
-// Route::middleware('pro')->group(function() {
+Route::middleware('pro')->group(function() {
 	Route::get('/dashboard', 'InitPageController@viewDashboardPage')
 		->name('dashboard_page');
 	Route::get('/pro', 'Pro\ProProfileController@view')
@@ -100,7 +100,7 @@ Route::post('/order/finish', 'OrderController@finish')
 		->name('pro_order_page');
 	Route::post('/pro/order/quote', 'Pro\ProOrderController@quotePrice')
 		->name('quote_price');
-// });
+});
 
 
 Route::middleware('pro.manager')->group(function() {

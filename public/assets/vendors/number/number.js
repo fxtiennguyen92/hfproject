@@ -13,6 +13,8 @@
 
         var input = this;
 
+        input.val(accounting.formatMoney(input.val()));
+
         input.wrap('<' + options.containerTag + ' class="' + options.containerClass + '">');
 
         var wrapper = input.parent();

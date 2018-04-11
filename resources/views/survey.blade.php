@@ -169,8 +169,20 @@
               type: 'POST',
               url: '{{ route("submit_order") }}',
               data: $('#frmMain').serialize(),
-              success: function(response) {
-                location.href = '{{ route("review_order") }}';
+              success: function(orderId) {
+                swal({
+                  title: 'Thành công',
+                  text: 'Bạn đã đặt đơn hàng thành công!',
+                  type: 'success',
+                  showCancelButton: false,
+                  confirmButtonClass: 'btn-primary',
+                  confirmButtonText: 'Xem đơn hàng',
+                },
+                function() {
+                  var url = '{{ route("order_page", ["orderId" => "orderId"]) }}';
+                  url = url.replace('orderId', orderId);
+                  location.href = url;
+                });
               },
               error: function(xhr) {
                 if (xhr.status == 400) {

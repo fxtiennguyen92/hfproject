@@ -4,7 +4,6 @@ return [
 	/** PAGE NAME **/
 	'HOME_PAGE' => 'home',
 	'CONTROL_PAGE' => 'control',
-	'DASHBOARD_PAGE' => 'home',
 	'LOGIN_PAGE' => 'login',
 	'SIGNUP_PAGE' => 'signup',
 	'PASSWORD_PAGE' => 'password',
@@ -15,6 +14,7 @@ return [
 	'ORDER_PAGE' => 'order',
 	'PRO_PAGE' => 'pro',
 
+	'DASHBOARD_PAGE' => 'pro.dashboard',
 	'PRO_PROFILE_PAGE' => 'pro.profile',
 	'PRO_ORDER_LIST_PAGE' => 'pro.orders',
 	'PRO_ORDER_PAGE' => 'pro.order',
@@ -57,10 +57,10 @@ return [
 	'ANS_RADBTN' => '2',
 	
 	'ORD_NEW' => '0',
-	'ORD_PROCESSING' => '1',
-	'ORD_COMPLETE' => '2',
-	'ORD_CANCEL' => '3',
-	'ORD_ACCEPTED' => '4',
+	'ORD_ACCEPTED' => '1',
+	'ORD_PROCESSING' => '2',
+	'ORD_COMPLETE' => '3',
+	'ORD_CANCEL' => '4',
 	
 	'QPRICE_NEW' => '0',
 	'QPRICE_SUCCESS' => '1',

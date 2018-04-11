@@ -9,10 +9,15 @@ use App\Common;
 use App\User;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Review;
+use App\Order;
 
 class InitPageController extends Controller
 {
 	public function viewHomePage() {
+		if (auth()->check() && auth()->user()->role == Config::get('constants.ROLE_PRO')) {
+			return $this->viewDashboardPage();
+		}
+		
 		$serviceModel = new Service();
 		$services = $serviceModel->getAll();
 		
@@ -26,7 +31,11 @@ class InitPageController extends Controller
 	}
 	
 	public function viewDashboardPage() {
+		$orderModel = new Order();
+		$orders = $orderModel->getNewByPro(auth()->user()->id);
+		
 		return view(Config::get('constants.DASHBOARD_PAGE'), array(
+						'orders' => $orders
 		));
 	}
 	

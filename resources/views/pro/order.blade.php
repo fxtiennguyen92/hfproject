@@ -35,7 +35,6 @@
     $('.price').each(function() {
       $(this).html(accounting.formatMoney($(this).html()));
     });
-
     $('#frmMain').validate({
       submit: {
         settings: {
@@ -45,6 +44,7 @@
         },
         callback: {
           onSubmit: function() {
+            $('input[name=price]').val(accounting.unformat($('.inp-quoted-price').val()));
             $.ajax({
               type: 'POST',
               url: '{{ route("quote_price") }}',
@@ -92,8 +92,8 @@
   @include('order.order_detail_map') @include('order.order_detail_tag')
   @if (!$quotedPrice)
   <form class="quoted-form" id="frmMain" name="form-validation" method="POST" action="{{ route('quote_price') }}">
-    <input name="inpPrice" class="inp-quoted-price" value="10000" step="5000" min="10000" max="">
-    <input name="price" class="basic-inp-quoted-price" value="10000" type="hidden" />
+    <input name="inpPrice" class="inp-quoted-price" step="5000" min="100000" max="">
+    <input name="price" class="basic-inp-quoted-price" value="100000" type="hidden" />
 
     <div class="quoted-intro">
     <textarea class="form-control" name="introduction" rows="6" maxlength="200" placeholder="Ghi chú"></textarea>

@@ -137,26 +137,35 @@ class ServiceController extends Controller
 		$order->est_excute_at_string = $estExcuteDateString;
 		
 		$order->save();
+		Order::setOrderNo($order->id, CommonController::getOrderNo($order));
 		
-		$request->session()->put('order_temp', $order->id);
-		return response()->json($order, 200);
+		$request->session()->put('order', $order->id);
+		return response()->json($order->id, 200);
 
 		//return redirect()->route('review_order');
 	}
 
 	public function review(Request $request) {
-		if (!$request->session()->has('order_temp')) {
+		if (!$request->session()->has('order')) {
 			throw new NotFoundHttpException();
 		}
 		
 		$orderModel = new Order();
-		$orderId = $request->session()->get('order_temp');
+		$orderId = $request->session()->get('order');
 		$order = $orderModel->getTempById($orderId);
 		if (!$order) {
 			throw new NotFoundHttpException();
 		}
 		
+		// get qouted price
+		$order->quoted_price = $quotedPriceModel->getByOrder($order->id);
+		
+		$page = new \stdClass();
+		$page->name = 'Đơn hàng';
+		$page->back_route = 'order_list_page';
+		
 		return view('order_detail', array(
+				'page' => $page,
 				'order' => $order,
 		));
 	}

@@ -12,7 +12,6 @@ use App\User;
 use Illuminate\Support\Facades\DB;
 use App\Review;
 use Illuminate\Support\Facades\Redirect;
-use App\ProProfile;
 
 class OrderController extends Controller
 {
@@ -39,30 +38,23 @@ class OrderController extends Controller
 
 	public function view($orderId, Request $request) {
 		$orderModel = new Order();
-		$quotedPriceModel = new QuotedPrice();
-		
 		$order = $orderModel->getByIdAndUserId($orderId, auth()->user()->id);
 		if (!$order) {
 			throw new NotFoundHttpException();
 		}
-		// put orderId to session
-		$request->session()->put('order', $orderId);
 		
 		// get qouted price
+		$quotedPriceModel = new QuotedPrice();
 		$order->quoted_price = $quotedPriceModel->getByOrder($order->id);
 		
-// 		return view(Config::get('constants.ORDER_PAGE'), array(
-// 						'order' => $order,
-// 		));
+		// put orderId to session
+		$request->session()->put('order', $orderId);
 		
 		$page = new \stdClass();
 		$page->name = 'Đơn hàng';
 		$page->back_route = 'order_list_page';
-		if (auth()->user()->role == 1) {
-			$page->back_route = 'pro_order_list_page';
-		}
 		
-		return view('order_detail', array(
+		return view(Config::get('constants.ORDER_PAGE'), array(
 						'page' => $page,
 						'order' => $order,
 		));
