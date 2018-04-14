@@ -19,14 +19,11 @@ class ProOrderController extends Controller
 	}
 
 	public function viewList() {
-		$orderModel = new Order();
 		$quotedPriceModel = new QuotedPrice();
-		$newOrders = $orderModel->getNewByPro(auth()->user()->id);
 		$quotedOrders = $quotedPriceModel->getByPro(auth()->user()->id);
 		
 		return view(Config::get('constants.PRO_ORDER_LIST_PAGE'), array(
 						'nav' => 'order',
-						'newOrders' => $newOrders,
 						'quotedOrders' => $quotedOrders,
 		));
 	}
@@ -49,10 +46,15 @@ class ProOrderController extends Controller
 		$page->name = 'Đơn hàng';
 		$page->back_route = 'pro_order_list_page';
 		
+		$dates = CommonController::getNext2Days();
+		$times = CommonController::getAllTimes();
+		
 		return view(Config::get('constants.ORDER_PAGE'), array(
 						'page' => $page,
 						'order' => $order,
-						'quotedPrice' => $quotedPrice
+						'quotedPrice' => $quotedPrice,
+						'dates' => $dates,
+						'times' => $times,
 		));
 	}
 
@@ -64,18 +66,24 @@ class ProOrderController extends Controller
 		$orderId = $request->session()->get('order');
 		
 		$orderModel = new Order();
-		$order = $orderModel->getById($orderId);
+		$order = $orderModel->getNewById($orderId);
 		if (!$order) {
 			response()->json('', 400);
 		}
 
-		$estDate = null;
-		$estDateStr = null;
+		// check excute date
+		$estExcuteDate = null;
+		$estExcuteDateString = null;
 		if (!$order->est_excute_at_string) {
-			$date = CommonController::convertStringToDateTime(substr($request->estTime, -16));
-			if ($date) {
-				$estDate = $date;
-				$estDateStr = $request->estTime;
+			$estExcuteDateString = $request->estDate.' '.$request->estTime;
+			if (strlen($estExcuteDateString) < 16) {
+				return response()->json('', 403);
+			}
+			
+			$currDate = new \DateTime('now');
+			$estExcuteDate = CommonController::convertStringToDateTime(substr($estExcuteDateString, -16));
+			if ($estExcuteDate === null || $estExcuteDate <= $currDate) {
+				return response()->json('', 403);
 			}
 		}
 		
@@ -86,8 +94,8 @@ class ProOrderController extends Controller
 						'pro_id' => auth()->user()->id,
 						'price' => $request->price,
 						'introduction' => $request->introduction,
-						'est_excute_at' => $estDate,
-						'est_excute_at_string' => $estDateStr,
+						'est_excute_at' => $estExcuteDate,
+						'est_excute_at_string' => $estExcuteDateString,
 		]);
 		
 		response()->json('', 200);

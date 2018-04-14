@@ -51,22 +51,24 @@ class CommonController
 		return response()->json('', 200);
 	}
 
+	public static function getNext2Days() {
+		$dates = array();
+		for ($i = 0; $i <= 1; $i++) {
+			$weekday = '';
+			$date = date('d/m/Y', strtotime('today + '.$i.' day'));
+			$weekday = CommonController::translateWeekday(date('l', strtotime('today + '.$i.' day')));
+			array_push($dates, $weekday.', '.$date);
+		}
+		
+		return $dates;
+	}
+	
 	public static function getNext7Days() {
 		$dates = array();
 		for ($i = 0; $i <= 6; $i++) {
 			$weekday = '';
 			$date = date('d/m/Y', strtotime('today + '.$i.' day'));
-			switch ($i) {
-// 				case 0:
-// 					$weekday = 'Hôm nay';
-// 					break;
-// 				case 1:
-// 					$weekday = 'Ngày mai';
-// 					break;
-				default:
-					$weekday = CommonController::translateWeekday(date('l', strtotime('today + '.$i.' day')));
-					break;
-			}
+			$weekday = CommonController::translateWeekday(date('l', strtotime('today + '.$i.' day')));
 			array_push($dates, $weekday.', '.$date);
 		}
 		

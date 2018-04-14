@@ -16,10 +16,10 @@ class Order extends Model
 			->first();
 	}
 
-	public function getTempById($id) {
+	public function getNewById($id) {
 		return $this::with('user', 'service')
 			->where('id', $id)
-			->temp()
+			->new()
 			->first();
 	}
 
@@ -124,16 +124,8 @@ class Order extends Model
 		return $this->hasMany('App\QuotedPrice', 'order_id', 'id');
 	}
 
-	public function scopeTemp($query) {
-		return $query
-			->whereNull('no')
-			->where('state', Config::get('constants.ORD_NEW'))
-			->orderBy('created_at', 'desc');
-	}
-
 	public function scopeNew($query) {
 		return $query
-			->whereNotNull('no')
 			->where('state', Config::get('constants.ORD_NEW'))
 			->orderBy('created_at', 'desc');
 	}

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Blog;
 
 class FileController
 {
@@ -28,5 +29,20 @@ class FileController
 		
 		$user->avatar = $fileName;
 		$user->save();
+	}
+	
+	public static function saveBlogImage($data, $blogId) {
+		$fileName = str_random(6).'.png';
+		
+		$directoryName = 'img/blog/';
+		
+		$blog = Blog::where('id', $blogId)->first();
+		if ($blog->image) {
+			\Storage::delete($directoryName.'/'.$blog->image);
+		}
+		$fileSrc = \Storage::put($directoryName.'/'. $fileName, $data);
+		
+		$blog->image = $fileName;
+		$blog->save();
 	}
 }

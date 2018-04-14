@@ -19,6 +19,8 @@ Route::get('/control', 'InitPageController@control')
 	->name('control');
 Route::get('/pro/{proId}/info', 'InitPageController@viewProPage')
 	->name('pro_page');
+Route::get('/blog/{urlName?}', 'InitPageController@viewBlogPage')
+	->name('blog_page');
 
 /** Password - STA **/
 Route::get('/password', 'Auth\PasswordController@view')
@@ -63,12 +65,6 @@ Route::get('/dich-vu/{serviceUrlName}', 'ServiceController@view')
 	->name('service_page');
 Route::post('/order/submit', 'ServiceController@submit')
 	->name('submit_order');
-Route::get('/order/review', 'ServiceController@review')
-	->name('review_order');
-Route::post('/order/complete', 'ServiceController@complete')
-	->name('complete_order');
-Route::post('/order/delete', 'ServiceController@delete')
-	->name('delete_order');
 
 Route::get('/orders', 'OrderController@viewList')
 	->name('order_list_page');
@@ -76,12 +72,13 @@ Route::get('/order/{orderId}', 'OrderController@view')
 	->name('order_page');
 Route::post('/order/pro/{proId}/accept', 'OrderController@accept')
 	->name('accept_quoted_price');
-Route::post('/order/{orderId}/cancel', 'OrderController@cancel')
-	->name('cancel_order');
 Route::get('/order/pro/{proId}/info', 'OrderController@viewProPage')
 	->name('order_pro_page');
-Route::post('/order/finish', 'OrderController@finish')
-	->name('finish_order');
+
+Route::post('/order/cancel', 'OrderController@cancel')
+	->name('cancel_order');
+Route::post('/order/complete', 'OrderController@finish')
+	->name('complete_order');
 /** Service - Order - END **/
 
 /** Pro - STA **/
@@ -118,7 +115,7 @@ Route::get('/companies', 'CommonController@getCompanies')
 /** Common - END **/
 
 /** Management - STA **/
-Route::middleware('cs.officer')->group(function() {
+// Route::middleware('cs.officer')->group(function() {
 	Route::get('/mng/pros', 'Mng\ProController@viewList')
 		->name('mng_pro_list_page');
 	Route::post('pro/mng/pro/{proId}/delete','Pro\ProManagerController@deleteByProManager')
@@ -132,8 +129,15 @@ Route::middleware('cs.officer')->group(function() {
 		->name('update_pro_cv');
 	Route::post('/mng/pro/active', 'Mng\ProController@active')
 		->name('active_pro');
-});
+	
+// });
 
+Route::get('/mng/blogs', 'Mng\BlogController@viewList')
+	->name('mng_blog_list_page');
+Route::get('/mng/blog/{urlName?}', 'Mng\BlogController@view')
+	->name('mng_blog_page');
+Route::post('/mng/blog/post', 'Mng\BlogController@post')
+	->name('post_blog');
 
 Route::get('/mng/companies', 'Mng\CompanyController@viewList')
 	->name('company_list_page');

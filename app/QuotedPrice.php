@@ -28,6 +28,7 @@ class QuotedPrice extends Model
 	public function getByPro($id) {
 		return $this::with('order')
 			->where('pro_id', $id)
+			->orderBy('updated_at', 'desc')
 			->get();
 	}
 	

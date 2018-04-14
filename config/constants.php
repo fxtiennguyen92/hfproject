@@ -7,6 +7,7 @@ return [
 	'LOGIN_PAGE' => 'login',
 	'SIGNUP_PAGE' => 'signup',
 	'PASSWORD_PAGE' => 'password',
+	'BLOG_PAGE' => 'blog',
 
 	'SURVEY_PAGE' => 'survey',
 	'COMPLETE_PAGE' => 'complete',
@@ -27,8 +28,8 @@ return [
 	'MNG_PRO_PROFILE_PAGE' => 'mng.pro_profile',
 	'MNG_COMPANY_PAGE' => 'mng.company',
 	'MNG_COMPANY_LIST_PAGE' => 'mng.companies',
-	
-	
+	'MNG_BLOG_LIST_PAGE' => 'mng.blogs',
+	'MNG_BLOG_PAGE' => 'mng.blog',
 	
 	/** ERROR PAGE **/
 	'404_PAGE' => 'error.404',
@@ -75,4 +76,7 @@ return [
 	'STS_WARNING' => '3',
 	'STS_LOCKED' => '4',
 	'STS_BANNED' => '5',
+	
+	'BLOG_GENERAL' => '0',
+	'BLOG_PRO' => '1',
 ];

@@ -13,7 +13,9 @@ $(document).ready(function() {
       'containerTag': 'div',
       'btnTag': 'span'
   });
-  $('#btnBack').on('click', function() {
+
+  $('#btnCancel').on('click', function(e) {
+    e.preventDefault();
     swal({
       title: 'Hủy đơn',
       text: 'Bạn muốn hủy đơn hàng này?',
@@ -25,23 +27,74 @@ $(document).ready(function() {
       confirmButtonText: 'Hủy',
     },
     function() {
-      $('#frmMain').attr('action', '{{ route("delete_order") }}');
+      $('#frmMain').attr('action', '{{ route("cancel_order") }}');
       $('#frmMain').submit();
     });
   });
-  $('#btnSubmit').on('click', function() {
+  $('#btnComplete').on('click', function(e) {
+    e.preventDefault();
     $('#frmMain').attr('action', '{{ route("complete_order") }}');
     $('#frmMain').submit();
   });
-  $('#btnFinish').on('click', function() {
-    $('#frmMain').attr('action', '{{ route("finish_order") }}');
-    $('#frmMain').submit();
+  $('#btnQuoted').on('click', function(e) {
+    e.preventDefault();
+    $('input[name=price]').val(accounting.unformat($('input[name=inpPrice]').val()));
+    $.ajax({
+        type: 'POST',
+        url: '{{ route("quote_price") }}',
+        data: $('#frmQuotedPrice').serialize(),
+        success: function(response) {
+            swal({
+                title: 'Thành công',
+                text: 'Hoàn tất báo giá, chờ khách hàng đồng ý!',
+                type: 'success',
+                confirmButtonClass: 'btn-primary',
+                confirmButtonText: 'Kết thúc',
+              },
+              function() {
+                location.href = '{{ route("pro_order_list_page") }}';
+              });
+        },
+        error: function(xhr) {
+          if (xhr.status == 400) {
+              swal({
+                  title: 'Thất bại',
+                  text: 'Không thể báo giá cho đơn hàng này!',
+                  type: 'error',
+                  confirmButtonClass: 'btn-default',
+                  confirmButtonText: 'Quay lại',
+                },
+                function() {
+                  location.href = '{{ route("dashboard_page") }}';
+                });
+          } else if (xhr.status == 403) {
+              swal({
+                  title: 'Thất bại',
+                  text: 'Thời gian thực hiện không đúng!',
+                  type: 'error',
+                  confirmButtonClass: 'btn-danger',
+                  confirmButtonText: 'Báo giá lại',
+                });
+          } else {
+              swal({
+                  title: 'Thất bại',
+                  text: 'Có lỗi phát sinh!',
+                  type: 'error',
+                  confirmButtonClass: 'btn-default',
+                  confirmButtonText: 'Quay lại',
+                },
+                function() {
+                  location.href = '{{ route("dashboard_page") }}';
+                });
+          };
+        }
+    });
   });
 });
 </script>
 @endpush @section('title') Đơn hàng @endsection @section('content')
 <section class="content-body">
-  <div style="min-height: 513px; padding-bottom: 60px;">
+  <div class="has-mb-button-bottom" style="min-height: 513px">
     @include('order.order_detail_map')
     @include('order.order_detail_tag')
   <div class="nav-tabs-horizontal order-page">
@@ -56,7 +109,7 @@ $(document).ready(function() {
         <a class="nav-link right" href="javascript: void(0);" data-toggle="tab" data-target="#supTab" role="tab" aria-expanded="false">Hỗ trợ</a>
       </li>
     </ul>
-    <div class="tab-content">
+    <div class="tab-content tab-background-white">
       <div class="tab-pane active" id="stateTab" role="tabpanel" aria-expanded="true">
         @if (auth()->user()->role == 1)
           @include('order.order_detail_state_pro')
@@ -73,7 +126,7 @@ $(document).ready(function() {
           <label>{{ $order->user_name }}</label>
         </div>
         <h5 class="padding-top-20">Đối tác</h5>
-        @if(!$order->pro_id)
+        @if (!$order->pro_id)
         <div class="common-text">Chưa có đối tác</div>
         @else
         <div class="orders-item hf-card">
@@ -120,9 +173,13 @@ $(document).ready(function() {
   @else
     @if ($order->state == 0)
     <div class="row-complete clearfix">
-      <button id="btnCancel" type="button" class="btn btn-primary" style="font-size: 18px; padding: 15px;">Hoàn tất</button>
+      <button id="btnCancel" type="button" class="btn btn-default" style="font-size: 18px; padding: 15px;">Hủy đơn</button>
     </div>
     @elseif ($order->state == 1)
+    <div class="row-complete clearfix">
+      <button id="btnCancel" type="button" class="btn btn-default" style="font-size: 18px; padding: 15px;">Hủy đơn</button>
+    </div>
+    @elseif ($order->state == 2)
     <div class="row-complete clearfix">
       <button id="btnComplete" type="button" class="btn btn-primary" style="font-size: 18px; padding: 15px;">Hoàn tất</button>
     </div>
@@ -135,7 +192,7 @@ $(document).ready(function() {
 
 <script type="text/javascript">
   function initMap() {
-    initOrderMap("{{ explode(',', $order -> location)[0] }}", "{{ explode(',', $order -> location)[1] }}", "{{ $order->address }}");
+    initOrderMap("{{ explode(',', $order->location)[0] }}", "{{ explode(',', $order->location)[1] }}", "{{ $order->address }}");
   }
 </script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key={{ env('MAP_API_KEY') }}&callback=initMap&languages=vi&libraries=places" async defer></script>

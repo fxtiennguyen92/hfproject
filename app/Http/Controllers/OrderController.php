@@ -106,7 +106,13 @@ class OrderController extends Controller
 		}
 	}
 
-	public function cancel($orderId, Request $request) {
+	public function cancel(Request $request) {
+		// get orderId from session
+		if (!$request->session()->has('order')) {
+			response()->json('', 400);
+		}
+		$orderId = $request->session()->get('order');
+		
 		$orderModel = new Order();
 		$isUpdated = $orderModel->updateState($orderId, Config::get('constants.ORD_CANCEL'));
 		
@@ -117,7 +123,7 @@ class OrderController extends Controller
 		}
 	}
 	
-	public function finish(Request $request) {
+	public function complete(Request $request) {
 		// get orderId from session
 		if (!$request->session()->has('order')) {
 			throw new NotFoundHttpException();

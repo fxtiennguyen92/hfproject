@@ -1446,6 +1446,7 @@ body.single-page .single-page-block .single-page-block-inner {
 }
 
 .row-complete #btnComplete,
+.row-complete #btnCancel,
 .row-complete #btnQuoted,
 .row-complete #btnCancelQuoted {
   width: 100%;
@@ -1842,6 +1843,10 @@ section.user-menu .list-menu a > i {
   background: #fafbfc;
 }
 
+.order-page .tab-background-white {
+  background: #fff !important;
+}
+
 .order-page .nav-tabs .nav-link {
   color: #000;
 }
@@ -1852,6 +1857,15 @@ section.user-menu .list-menu a > i {
 
 .order-page .nav-tabs .nav-item .nav-link.active {
   border-bottom-color: #02b3e4 !important;
+}
+
+.order-page .text-light {
+  font-size: 15px;
+}
+
+.order-page .excute-date {
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .orders-item {
@@ -2149,6 +2163,17 @@ label.label-outlined.label-success {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#02b2e3', endColorstr='#02cbba', GradientType=1);
 }
 
+.sweet-alert {
+  border-radius: 0px;
+  -webkit-border-radius: 0px;
+}
+
+.sweet-alert .btn {
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+}
+
+
 .mng-list td {
   vertical-align: middle;
 }
@@ -2157,10 +2182,31 @@ label.label-outlined.label-success {
   line-height: 16px;
 }
 
+.mng-list .blog-title {
+  font-weight: bold;
+  color: #02b3e4;
+}
+
+.blog-carousel-row {
+  margin-left: -20px;
+  margin-top: -20px;
+  margin-right: -20px;
+}
+
+.blog-carousel-row .carousel-indicators {
+  top: 10px !important;
+  left: 85% !important;
+  bottom: 0px !important;
+  height: 20px; 
+}
+
+.blog-carousel-row .carousel-caption {
+  padding-bottom: 0px !important;
+}
+
 /*
 * RESPONSIVE
 */
-
 @media only screen and (max-width: 500px) {
   .page-content {
     margin-left: 0px;
@@ -2230,6 +2276,9 @@ label.label-outlined.label-success {
   }
   .has-bottom-menu {
     margin-bottom: 60px;
+  }
+  .has-mb-button-bottom {
+    padding-bottom: 60px;
   }
   #footer-menu {
     display: block;
@@ -2335,9 +2384,6 @@ label.label-outlined.label-success {
     right: 0;
     z-index: 999;
   }
-  .has-mb-button-bottom {
-    padding-bottom: 60px;
-  }
 }
 
 
@@ -2346,14 +2392,6 @@ label.label-outlined.label-success {
   .single-page-block-inner {
     margin-top: 100px;
   }
-
-
-  /*
-			.page-content {
-				margin-top: -30px;
-				position: fixed;
-			}
-*/
 }
 
 @media only screen and (max-width: 425px) {

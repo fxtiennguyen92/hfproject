@@ -4,10 +4,6 @@ $(document).ready(function () {
     $('.fullHeight').css('height', $(window).height());
   });
 
-  $('li.backToHome>#previous').on('click', function () {
-    location.href='{{ route("home_page") }}';
-  });
-
   $('.hiw-slider, .testinomial-slider').slick({
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -61,4 +57,30 @@ function initOrderMap(lat, lng, address) {
 
   var infowindow = new google.maps.InfoWindow();
   infowindow.open(map);
+};
+
+function changeToUrl() {
+  var title, url;
+
+  title = document.getElementById('title').value;
+
+  url = title.toLowerCase();
+
+  url = url.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, 'a');
+  url = url.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, 'e');
+  url = url.replace(/i|í|ì|ỉ|ĩ|ị/gi, 'i');
+  url = url.replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, 'o');
+  url = url.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, 'u');
+  url = url.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, 'y');
+  url = url.replace(/đ/gi, 'd');
+  url = url.replace(/\`|\~|\!|\@|\#|\||\$|\%|\^|\&|\*|\(|\)|\+|\=|\,|\.|\/|\?|\>|\<|\'|\"|\:|\;|_/gi, '');
+  url = url.replace(/ /gi, "-");
+  url = url.replace(/\-\-\-\-\-/gi, '-');
+  url = url.replace(/\-\-\-\-/gi, '-');
+  url = url.replace(/\-\-\-/gi, '-');
+  url = url.replace(/\-\-/gi, '-');
+  url = '@' + url + '@';
+  url = url.replace(/\@\-|\-\@|\@/gi, '');
+
+  document.getElementById('urlName').value = url;
 }

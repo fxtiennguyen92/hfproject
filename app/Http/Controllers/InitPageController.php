@@ -10,6 +10,7 @@ use App\User;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Review;
 use App\Order;
+use App\Blog;
 
 class InitPageController extends Controller
 {
@@ -59,6 +60,20 @@ class InitPageController extends Controller
 		));
 	}
 	
+	public function viewBlogPage($urlName = null) {
+		$blogModel = new Blog();
+		
+		if (!$urlName) {
+			$genBlogs = $blogModel->getTopGeneralBlog();
+			$proBlogs = $blogModel->getTopProBlog();
+			
+			return view(Config::get('constants.BLOG_PAGE'), array(
+						'genBlogs' => $genBlogs,
+						'proBlogs' => $proBlogs
+			));
+		}
+	}
+
 	public function control() {
 		if (!auth()->check()) {
 			return redirect()->route('login_page');

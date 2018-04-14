@@ -12,27 +12,14 @@
   <div class="nav-tabs-horizontal orders-page">
     <ul class="nav nav-tabs nav-page hf-bg-gradient text-uppercase" role="tablist">
       <li class="nav-item">
-        <a class="nav-link active pull-right" href="javascript: void(0);" data-toggle="tab" data-target="#newTab" role="tab" aria-expanded="true">Mới</a>
+        <a class="nav-link active pull-right" href="javascript: void(0);" data-toggle="tab" data-target="#quotedTab" role="tab" aria-expanded="true">Đã nhận</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link right pull-left" href="javascript: void(0);" data-toggle="tab" data-target="#quotedTab" role="tab" aria-expanded="false">Đã nhận</a>
+        <a class="nav-link right pull-left" href="javascript: void(0);" data-toggle="tab" data-target="#notiTab" role="tab" aria-expanded="false">Thông báo</a>
       </li>
     </ul>
     <div class="tab-content">
-      <div class="tab-pane active" id="newTab" role="tabpanel" aria-expanded="true">
-        <div class="row">
-          @if (sizeof($newOrders) == 0)
-            <div class="common-text">Chưa có đơn hàng nào</div>
-          @endif
-          @php $mode = 'list' @endphp
-          @foreach ($newOrders as $order)
-          <div class="col-md-12 col-sm-12 active-order" onclick="location.href='{{ route('pro_order_page', ['orderId' => $order->id]) }}'">
-            @include('order.order_detail_tag')
-          </div>
-          @endforeach
-        </div>
-      </div>
-      <div class="tab-pane" id="quotedTab" role="tabpanel" aria-expanded="false">
+      <div class="tab-pane active" id="quotedTab" role="tabpanel" aria-expanded="false">
         <div class="row">
           @if (sizeof($quotedOrders) == 0)
             <div class="common-text">Không có đơn hàng nào</div>
@@ -46,6 +33,11 @@
             @include('order.order_detail_tag')
           </div>
           @endforeach
+        </div>
+      </div>
+      <div class="tab-pane" id="notiTab" role="tabpanel" aria-expanded="false">
+        <div class="row">
+          <div class="common-text">Chưa có thông báo</div>
         </div>
       </div>
     </div>

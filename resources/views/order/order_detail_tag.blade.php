@@ -45,7 +45,7 @@
           @endif
         @else
           @if ($order->state == 0)
-            @if (isset($order->quoted) && $order->quoted == 0)
+            @if ((isset($order->quoted) && $order->quoted == 0) || isset($quotedPrice))
             <label class="margin-top-10 padding-10 label-outlined label label-danger margin-inline text-uppercase">Đã báo giá</label>
             @else
             <label class="margin-top-10 padding-10 label-outlined label label-danger margin-inline text-uppercase">Chờ báo giá</label>
