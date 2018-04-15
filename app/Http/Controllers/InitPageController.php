@@ -72,6 +72,20 @@ class InitPageController extends Controller
 						'proBlogs' => $proBlogs
 			));
 		}
+		
+		$blog = $blogModel->getByUrlName($urlName);
+		if (!$blog) {
+			throw new NotFoundHttpException();
+		}
+		
+		$page = new \stdClass();
+		$page->name = 'Blog';
+		$page->back_route = 'blog_page';
+		
+		return view(Config::get('constants.BLOG_CONTENT_PAGE'), array(
+						'page' => $page,
+						'blog' => $blog,
+		));
 	}
 
 	public function control() {

@@ -115,7 +115,7 @@ Route::get('/companies', 'CommonController@getCompanies')
 /** Common - END **/
 
 /** Management - STA **/
-// Route::middleware('cs.officer')->group(function() {
+Route::middleware('cs.officer')->group(function() {
 	Route::get('/mng/pros', 'Mng\ProController@viewList')
 		->name('mng_pro_list_page');
 	Route::post('pro/mng/pro/{proId}/delete','Pro\ProManagerController@deleteByProManager')
@@ -130,8 +130,6 @@ Route::get('/companies', 'CommonController@getCompanies')
 	Route::post('/mng/pro/active', 'Mng\ProController@active')
 		->name('active_pro');
 	
-// });
-
 Route::get('/mng/blogs', 'Mng\BlogController@viewList')
 	->name('mng_blog_list_page');
 Route::get('/mng/blog/{urlName?}', 'Mng\BlogController@view')
@@ -145,6 +143,8 @@ Route::get('/mng/company/{id?}', 'Mng\CompanyController@view')
 	->name('company_page');
 Route::post('/mng/company/{id?}', 'Mng\CompanyController@modify')
 	->name('modify_company');
+
+});
 /** Management - END **/
 	
 /** Alpha - STA **/

@@ -47,9 +47,9 @@
 							<td title="{{ $blog->title }}"><span class="blog-title">{{ $blog->title }}</span></td>
 							<td class="blog-style text-center">
 								@if ($blog->style == 0)
-								<span class="label label-success">Chung</span>
+								<span class="label label-primary">Chung</span>
 								@else
-								<span class="label label-warning">Đối tác</span>
+								<span class="label label-success">Đối tác</span>
 								@endif
 							</td>
 							<td class="text-center">

@@ -20,15 +20,34 @@ $(document).ready(function() {
     </ul>
     <div class="tab-content">
       <div class="tab-pane active" id="generalTab" role="tabpanel" aria-expanded="true">
+        @if (sizeof($genBlogs) == 0)
+        <div class="row">
+          <div class="common-text">Chưa có bài viết nào</div>
+        </div>
+        @else
         <div class="row blog-carousel-row">
           @php $blogs = $genBlogs; $caroId = 'genBlogs' @endphp
           @include('blog.blog-carousel')
         </div>
+        @foreach ($genBlogs as $blog)
+          @include('blog.blog-intro')
+        @endforeach
+        @endif
       </div>
       <div class="tab-pane" id="proTab" role="tabpanel" aria-expanded="false">
+        @if (sizeof($proBlogs) == 0)
         <div class="row">
-          <div class="common-text">Chưa có thông báo</div>
+          <div class="common-text">Chưa có bài viết nào</div>
         </div>
+        @else
+        <div class="row blog-carousel-row">
+          @php $blogs = $proBlogs; $caroId = 'proBlogs' @endphp
+          @include('blog.blog-carousel')
+        </div>
+        @foreach ($proBlogs as $blog)
+          @include('blog.blog-intro')
+        @endforeach
+        @endif
       </div>
     </div>
   </div>

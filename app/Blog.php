@@ -21,14 +21,14 @@ class Blog extends Model
 	public function getTopGeneralBlog() {
 		return $this->general()
 			->orderBy('created_at', 'desc')
-			->take(5)
+// 			->take(5)
 			->get();
 	}
 	
 	public function getTopProBlog() {
 		return $this->pro()
 			->orderBy('created_at', 'desc')
-			->take(5)
+// 			->take(5)
 			->get();
 	}
 	

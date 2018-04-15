@@ -2187,6 +2187,16 @@ label.label-outlined.label-success {
   color: #02b3e4;
 }
 
+.blog-carousel {
+  height: 300px;
+  margin-bottom: 20px;
+}
+
+.blog-carousel .carousel-inner,
+.blog-carousel .carousel-item img {
+  height: 300px !important;
+}
+
 .blog-carousel-row {
   margin-left: -20px;
   margin-top: -20px;
@@ -2202,6 +2212,61 @@ label.label-outlined.label-success {
 
 .blog-carousel-row .carousel-caption {
   padding-bottom: 0px !important;
+}
+
+.blog-row {
+  margin-left: -20px;
+  margin-right: -20px;
+  padding: 20px;
+  background: #fff;
+  border-top: solid 1px #e1e1e1!important;
+}
+
+.blog-row .blog-image {
+  width: 150px;
+  height: 90px;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  float: left;
+  margin-right: 20px;
+}
+.blog-row .blog-title {
+  font-size: 14px;
+}
+
+.blog-content .blog-image {
+  width: 100%;
+  height: auto;
+}
+.blog-content .blog-icon {
+  padding: 20px;
+  line-height: 36px;
+  vertical-align: middle;
+}
+.blog-content .blog-icon img {
+  width: 150px;
+}
+
+.blog-content .blog-icon .blog-style {
+  width: 120px;
+  padding: 10px;
+}
+
+.blog-content .blog-title {
+  padding: 20px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.blog-content .blog-create-date {
+  padding: 0px 20px 20px 20px;
+  font-size: 12px;
+  text-align: right;
+}
+
+.blog-content .blog-content{
+  padding: 0px 20px 0px 20px;
+  font-size: 13px;
 }
 
 /*
@@ -2386,8 +2451,6 @@ label.label-outlined.label-success {
   }
 }
 
-
-
 @media only screen and (min-width: 540px) {
   .single-page-block-inner {
     margin-top: 100px;
@@ -2466,11 +2529,24 @@ label.label-outlined.label-success {
   body.single-page .single-page-block {
     padding: 0!important;
   }
-
+  
+  .blog-carousel,
+  .blog-carousel .carousel-inner,
+  .blog-carousel .carousel-item img {
+    height: 240px !important;
+    width: 100% !important;
+  }
 }
 
 @media only screen and (max-width: 321px) {
   .single-page-block-inner {
     padding-right: 20px !important;
+  }
+  
+  .blog-carousel,
+  .blog-carousel .carousel-inner,
+  .blog-carousel .carousel-item img {
+    height: 190px !important;
+    width: 100% !important;
   }
 }

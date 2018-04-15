@@ -1,11 +1,11 @@
-<div id="{{ $caroId }}" class="carousel slide" data-ride="carousel">
+<div id="{{ $caroId }}" class="blog-carousel carousel slide" data-ride="carousel">
 	<ol class="carousel-indicators">
-		@foreach ($blogs as $key=>$blog)
+		@foreach ($blogs as $key=>$blog) @if($key == 3) @break @endif
 		<li data-target="#{{ $caroId }}" data-slide-to="{{ $key }}" @if($key == 0) class="active" @endif></li>
 		@endforeach
 	</ol>
 	<div class="carousel-inner" role="listbox">
-		@foreach ($blogs as $key=>$blog)
+		@foreach ($blogs as $key=>$blog) @if($key == 3) @break @endif
 		<div class="carousel-item @if($key == 0) active @endif">
 			<img src="{{ env('CDN_HOST') }}/img/blog/{{ $blog->image }}">
 			<div class="carousel-caption">

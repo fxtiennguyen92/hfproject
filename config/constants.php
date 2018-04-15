@@ -8,6 +8,7 @@ return [
 	'SIGNUP_PAGE' => 'signup',
 	'PASSWORD_PAGE' => 'password',
 	'BLOG_PAGE' => 'blog',
+	'BLOG_CONTENT_PAGE' => 'blog-content',
 
 	'SURVEY_PAGE' => 'survey',
 	'COMPLETE_PAGE' => 'complete',
@@ -25,7 +26,7 @@ return [
 	
 	'MNG_ACC_LIST_PAGE' => 'mng.accounts',
 	'MNG_PRO_LIST_PAGE' => 'mng.pros',
-	'MNG_PRO_PROFILE_PAGE' => 'mng.pro_profile',
+	'MNG_PRO_PROFILE_PAGE' => 'mng.pro-profile',
 	'MNG_COMPANY_PAGE' => 'mng.company',
 	'MNG_COMPANY_LIST_PAGE' => 'mng.companies',
 	'MNG_BLOG_LIST_PAGE' => 'mng.blogs',
