@@ -15,7 +15,7 @@ Route::get('/', 'InitPageController@viewHomePage')
 	->name('home_page');
 Route::get('/redirect', 'Auth\LoginController@redirectPath')
 	->name('redirect');
-Route::get('/control', 'InitPageController@control')
+Route::get('/account', 'InitPageController@control')
 	->name('control');
 Route::get('/pro/{proId}/info', 'InitPageController@viewProPage')
 	->name('pro_page');
@@ -75,10 +75,12 @@ Route::post('/order/pro/{proId}/accept', 'OrderController@accept')
 Route::get('/order/pro/{proId}/info', 'OrderController@viewProPage')
 	->name('order_pro_page');
 
+Route::post('/order/process', 'OrderController@process')
+	->name('process_order');
+Route::post('/order/complete', 'OrderController@complete')
+	->name('complete_order');
 Route::post('/order/cancel', 'OrderController@cancel')
 	->name('cancel_order');
-Route::post('/order/complete', 'OrderController@finish')
-	->name('complete_order');
 /** Service - Order - END **/
 
 /** Pro - STA **/

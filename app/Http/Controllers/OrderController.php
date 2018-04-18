@@ -18,7 +18,7 @@ class OrderController extends Controller
 	public function __construct() {
 	}
 
-	public function viewList($style = null) {
+	public function viewList($style = null, Request $request) {
 		// redirect to login page if not member
 		if (!auth()->check()) {
 			return redirect()->route('login_page');
@@ -28,6 +28,8 @@ class OrderController extends Controller
 		$currentOrders = $orderModel->getCurrentByMember(auth()->user()->id);
 		
 		//$newOrders = $orderModel->getNewByMember(auth()->user()->id);
+		
+		$request->session()->forget('order'); // clear session
 		
 		return view(Config::get('constants.ORDER_LIST_PAGE'), array(
 						'nav' => 'order',
@@ -89,9 +91,8 @@ class OrderController extends Controller
 		
 		$order->id = $orderId;
 		$order->total_price = $quotedPrice->price;
-		$order->state = Config::get('constants.ORD_PROCESSING');
+		$order->state = Config::get('constants.ORD_ACCEPTED');
 		$order->pro_id = $quotedPrice->pro_id;
-		
 		
 		try {
 			DB::beginTransaction();
@@ -106,23 +107,31 @@ class OrderController extends Controller
 		}
 	}
 
-	public function cancel(Request $request) {
+	public function process(Request $request) {
 		// get orderId from session
 		if (!$request->session()->has('order')) {
-			response()->json('', 400);
+			throw new NotFoundHttpException();
 		}
 		$orderId = $request->session()->get('order');
 		
+		// get and check order
 		$orderModel = new Order();
-		$isUpdated = $orderModel->updateState($orderId, Config::get('constants.ORD_CANCEL'));
-		
-		if ($isUpdated) {
-			response()->json('', 200);
-		} else {
-			response()->json('', 400);
+// 		$order = $orderModel->getByIdAndUserId($orderId, auth()->user()->id);
+// 		if (!$order) {
+// 			return Redirect::back();
+// 		}
+
+		try {
+			$orderModel->updateState($orderId, Config::get('constants.ORD_PROCESSING'));
+			
+			DB::commit();
+		} catch (\Exception $e) {
+			DB::rollback();
 		}
+		
+		return Redirect::back();
 	}
-	
+
 	public function complete(Request $request) {
 		// get orderId from session
 		if (!$request->session()->has('order')) {
@@ -156,7 +165,24 @@ class OrderController extends Controller
 		
 		return Redirect::back();
 	}
-	
+
+	public function cancel(Request $request) {
+		// get orderId from session
+		if (!$request->session()->has('order')) {
+			response()->json('', 400);
+		}
+		$orderId = $request->session()->get('order');
+		
+		$orderModel = new Order();
+		$isUpdated = $orderModel->updateState($orderId, Config::get('constants.ORD_CANCEL'));
+		
+		if ($isUpdated) {
+			response()->json('', 200);
+		} else {
+			response()->json('', 400);
+		}
+	}
+
 	public function viewProPage($proId, Request $request) {
 		// get orderId from session
 		if (!$request->session()->has('order')) {

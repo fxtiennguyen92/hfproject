@@ -1442,14 +1442,19 @@ body.single-page .single-page-block .single-page-block-inner {
 .row-complete #btnBack {
   background: #ffffff;
   color: #02b3e4;
+  font-size: 18px;
+  padding: 15px;
   width: 30%;
 }
 
 .row-complete #btnComplete,
 .row-complete #btnCancel,
 .row-complete #btnQuoted,
-.row-complete #btnCancelQuoted {
+.row-complete #btnCancelQuoted,
+.row-complete #btnProcess {
   width: 100%;
+  font-size: 18px;
+  padding: 15px;
 }
 
 .survey-form .service-title {
@@ -2212,6 +2217,7 @@ label.label-outlined.label-success {
 
 .blog-carousel-row .carousel-caption {
   padding-bottom: 0px !important;
+  cursor: pointer;
 }
 
 .blog-row {
@@ -2220,6 +2226,10 @@ label.label-outlined.label-success {
   padding: 20px;
   background: #fff;
   border-top: solid 1px #e1e1e1!important;
+}
+
+.blog-row * {
+  cursor: pointer;
 }
 
 .blog-row .blog-image {
@@ -2264,9 +2274,10 @@ label.label-outlined.label-success {
   text-align: right;
 }
 
-.blog-content .blog-content{
-  padding: 0px 20px 0px 20px;
+.blog-content .blog-content {
+  padding: 0px 20px 20px 20px;
   font-size: 13px;
+  text-align: justify;
 }
 
 /*

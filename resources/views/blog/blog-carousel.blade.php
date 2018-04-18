@@ -8,7 +8,7 @@
 		@foreach ($blogs as $key=>$blog) @if($key == 3) @break @endif
 		<div class="carousel-item @if($key == 0) active @endif">
 			<img src="{{ env('CDN_HOST') }}/img/blog/{{ $blog->image }}">
-			<div class="carousel-caption">
+			<div class="carousel-caption" onclick="location.href='{{ route('blog_page', ['urlName' => $blog->url_name]) }}'">
 					<p>{{ $blog->title }}</p>
 			</div>
 		</div>

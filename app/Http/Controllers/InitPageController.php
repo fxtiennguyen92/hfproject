@@ -68,6 +68,7 @@ class InitPageController extends Controller
 			$proBlogs = $blogModel->getTopProBlog();
 			
 			return view(Config::get('constants.BLOG_PAGE'), array(
+						'nav' => 'blog',
 						'genBlogs' => $genBlogs,
 						'proBlogs' => $proBlogs
 			));
@@ -83,6 +84,7 @@ class InitPageController extends Controller
 		$page->back_route = 'blog_page';
 		
 		return view(Config::get('constants.BLOG_CONTENT_PAGE'), array(
+						'nav' => 'blog',
 						'page' => $page,
 						'blog' => $blog,
 		));

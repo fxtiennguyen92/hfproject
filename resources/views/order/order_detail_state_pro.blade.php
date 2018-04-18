@@ -26,6 +26,30 @@
     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
   </form>
   @elseif ($order->state == 0)
-  
-  @else
+  <div class="common-text color-danger">Đã báo giá đơn hàng này</div>
+  <div class="padding-10 text-center hf-card user-row">
+    <div class="color-primary price" style="font-size: 26px; font-weight: bold;">{{ $quotedPrice->price }}</div>
+    @if ($quotedPrice->est_excute_at_string)
+    <div class="color-primary" style="font-size: 14px">{{ $quotedPrice->est_excute_at_string }}</div>
+    @endif
+  </div>
+  @elseif ($order->state == 1)
+  <div class="common-text color-primary">Báo giá thành công, đơn hàng đang đợi thực hiện</div>
+  <div class="row">
+    <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <h3>{{ Carbon\Carbon::parse($order->est_excute_at)->format('H:i') }}</h3>
+            <progress class="progress progress-primary" value="75" max="100"></progress>
+          </div>
+        </div>
+    </div>
+  </div>
+  @elseif ($order->state == 2)
+  <div class="common-text color-primary">Đơn hàng đang được thực hiện</div>
+  @elseif ($order->state == 3)
+  <div class="common-text color-success">Đơn hàng đã hoàn tất</div>
+  @elseif ($order->state == 4)
+  <div class="common-text color-danger">Đơn hàng đã hủy</div>
+  @endif
 </div>

@@ -5,8 +5,8 @@
         <img src="{{ env('CDN_HOST') }}/img/icon/icon-128x128.png "/>
       </a>
     </li>
-    <li>
-      <a href="javascript:void(0);">
+    <li class="@if(isset($nav)) @if($nav == 'blog') active @endif @endif">
+      <a href="{{ route('blog_page') }}">
         <i class="material-icons ">&#xE871;</i>
       </a>
     </li>

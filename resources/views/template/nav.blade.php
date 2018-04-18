@@ -15,9 +15,9 @@
               <span>@if (auth()->check()) {{ auth()->user()->email }} @endif</span><i class="material-icons">&#xE7FD;</i>
             </a>
           </li>
-          <li class="icon-menu-notification @if(isset($nav)) @if($nav == 'noti') active @endif @endif">
-            <a href="javascript:void(0)">
-              <span><i class="material-icons">&#xE80B;</i></span>
+          <li class="icon-menu-notification @if(isset($nav)) @if($nav == 'blog') active @endif @endif" style="margin-right: 1px">
+            <a href="{{ route('blog_page') }}">
+              <span><i class="material-icons">&#xE871;</i></span>
             </a>
           </li>
           <li class="icon-menu-order @if(isset($nav)) @if($nav == 'order') active @endif @endif">

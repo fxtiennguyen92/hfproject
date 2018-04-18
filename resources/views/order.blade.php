@@ -31,6 +31,11 @@ $(document).ready(function() {
       $('#frmMain').submit();
     });
   });
+  $('#btnProcess').on('click', function(e) {
+    e.preventDefault();
+    $('#frmMain').attr('action', '{{ route("process_order") }}');
+    $('#frmMain').submit();
+  });
   $('#btnComplete').on('click', function(e) {
     e.preventDefault();
     $('#frmMain').attr('action', '{{ route("complete_order") }}');
@@ -125,10 +130,8 @@ $(document).ready(function() {
           <img class="user-avt" src="{{ env('CDN_HOST') }}/u/{{ $order->user_id }}/{{ $order->user->avatar }}">
           <label>{{ $order->user_name }}</label>
         </div>
+        @if ($order->pro_id)
         <h5 class="padding-top-20">Đối tác</h5>
-        @if (!$order->pro_id)
-        <div class="common-text">Chưa có đối tác</div>
-        @else
         <div class="orders-item hf-card">
         <div class="row flex padding-bottom-10">
           <div class="col-md-5 col-sm-5 col-xs-5 text-center">
@@ -145,11 +148,14 @@ $(document).ready(function() {
                 <option value="5">5</option>
               </select>
             </div>
+            <div><span class="price text-danger">{{ $order->total_price }}</span></div>
           </div>
         </div>
-        <div class="text-center padding-top-15" style="border-top:solid 1px #e1e1e1">
-          <a class="text-info" href="javascript:void(0);">Gọi đối tác</a>
-        </div>
+          @if (auth()->user()->role == 0 && ($order->state == 1 || $order->state == 2))
+          <div class="text-center padding-top-15" style="border-top:solid 1px #e1e1e1">
+            <a class="text-info" href="javascript:void(0);">Gọi đối tác</a>
+          </div>
+          @endif
         </div>
         @endif
       </div>
@@ -162,32 +168,40 @@ $(document).ready(function() {
   @if (auth()->user()->role == 1)
     @if (!$quotedPrice && $order->state == 0)
     <div class="row-complete clearfix">
-      <button id="btnQuoted" type="button" class="btn btn-primary" style="font-size: 18px; padding: 15px;">Báo giá</button>
+      <button id="btnQuoted" type="button" class="btn btn-primary">Báo giá</button>
     </div>
     @elseif ($quotedPrice && $order->state == 0)
     <div class="row-complete clearfix">
-      <button id="btnCancelQuoted" type="button" class="btn btn-default" style="font-size: 18px; padding: 15px;">Hủy báo giá</button>
+      <button id="btnCancelQuoted" type="button" class="btn btn-default">Hủy báo giá</button>
     </div>
-    @else
+    @elseif ($order->state == 1)
+    <div class="row-complete clearfix">
+      <button id="btnProcess" type="button" class="btn btn-primary">Tôi đã đến</button>
+    </div>
+    @elseif ($order->state == 2)
+    <div class="row-complete clearfix">
+      <button id="btnComplete" type="button" class="btn btn-primary">Hoàn tất</button>
+    </div>
     @endif
   @else
     @if ($order->state == 0)
     <div class="row-complete clearfix">
-      <button id="btnCancel" type="button" class="btn btn-default" style="font-size: 18px; padding: 15px;">Hủy đơn</button>
+      <button id="btnCancel" type="button" class="btn btn-default">Hủy</button>
     </div>
     @elseif ($order->state == 1)
     <div class="row-complete clearfix">
-      <button id="btnCancel" type="button" class="btn btn-default" style="font-size: 18px; padding: 15px;">Hủy đơn</button>
+      <button id="btnCancel" type="button" class="btn btn-default" style="width: 30%">Hủy</button>
+      <button id="btnProcess" type="button" class="btn btn-primary" style="width: 70%">Đối tác đã đến</button>
     </div>
     @elseif ($order->state == 2)
     <div class="row-complete clearfix">
-      <button id="btnComplete" type="button" class="btn btn-primary" style="font-size: 18px; padding: 15px;">Hoàn tất</button>
+      <button id="btnComplete" type="button" class="btn btn-primary">Hoàn tất</button>
     </div>
     @endif
+  @endif
   <form id="frmMain" method="post">
     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
   </form>
-  @endif
 </section>
 
 <script type="text/javascript">

@@ -44,7 +44,11 @@
         </div>
     </div>
     </div>
-    @else
-    <div class="common-text">Chưa xác nhận đơn hàng</div>
+    @elseif ($order->state == 2)
+    <div class="common-text color-primary">Đơn hàng đang được thực hiện</div>
+    @elseif ($order->state == 3)
+    <div class="common-text color-success">Đơn hàng đã hoàn tất</div>
+    @elseif ($order->state == 4)
+    <div class="common-text color-danger">Đơn hàng đã hủy</div>
     @endif
 </div>
