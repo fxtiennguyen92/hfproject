@@ -4,7 +4,7 @@ $(document).ready(function() {
 });
 </script>
 @endpush @section('title') Blog @endsection @section('content')
-<section class="content-body blog-content">
+<section class="content-body blog-section">
   <div class="has-mb-button-bottom" style="min-height: 513px">
     <img class="blog-image" src="{{ env('CDN_HOST') }}/img/blog/{{ $blog->image }}">
     <div class="blog-icon">

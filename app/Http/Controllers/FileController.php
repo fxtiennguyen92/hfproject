@@ -14,7 +14,7 @@ class FileController
 		
 		$fileName = str_random(6).'.png';
 		
-		$directoryName = 'u/'. $userId;
+		$directoryName = 'u'.'/'. $userId;
 		$directory = \Storage::allDirectories($directoryName);
 		if(empty($directory)) {
 			\Storage::makeDirectory($directoryName);
@@ -33,8 +33,7 @@ class FileController
 	
 	public static function saveBlogImage($data, $blogId) {
 		$fileName = str_random(6).'.png';
-		
-		$directoryName = 'img/blog/';
+		$directoryName = 'img/blog';
 		
 		$blog = Blog::where('id', $blogId)->first();
 		if ($blog->image) {
@@ -44,5 +43,14 @@ class FileController
 		
 		$blog->image = $fileName;
 		$blog->save();
+	}
+	
+	public static function deleteBlogImage($blogId) {
+		$directoryName = 'img/blog';
+		
+		$blog = Blog::where('id', $blogId)->first();
+		if ($blog->image) {
+			\Storage::delete($directoryName.'/'.$blog->image);
+		}
 	}
 }

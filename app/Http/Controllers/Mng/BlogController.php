@@ -96,4 +96,23 @@ class BlogController extends Controller
 			return Redirect::back()->withInput()->with('error', $e->getMessage());
 		}
 	}
+
+	public function delete(Request $request) {
+		if (!$request->session()->has('blog')) {
+			throw new NotFoundHttpException();
+		}
+		$blogId = $request->session()->get('blog');
+
+		try {
+			DB::beginTransaction();
+			FileController::deleteBlogImage($blogId);
+			Blog::destroy($blogId);
+			
+			DB::commit();
+			return redirect()->route('mng_blog_list_page');
+		} catch (\Exception $e) {
+			DB::rollback();
+			return Redirect::back()->withInput()->with('error', $e->getMessage());
+		}
+	}
 }

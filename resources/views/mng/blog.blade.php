@@ -52,10 +52,29 @@
 			},
 		});
 
-		$('#btnPostBlog, #btnUpdateBlog').on('click', function() {
+		$('#btnPostBlog, #btnUpdateBlog').on('click', function(e) {
+			e.preventDefault();
 			$('input[name=image]').val($('span.dropify-render').find('img').attr('src'));
 			$('#frmMain').attr('action', '{{ route("post_blog") }}');
 			$('#frmMain').submit();
+		});
+
+		$('#btnDeleteBlog').on('click', function(e) {
+			e.preventDefault();
+			swal({
+				title: 'Xóa blog',
+				text: 'Bạn muốn xóa bài đăng này?',
+				type: 'warning',
+				showCancelButton: true,
+				cancelButtonClass: 'btn-default',
+				confirmButtonClass: 'btn-danger',
+				cancelButtonText: 'Quay lại',
+				confirmButtonText: 'Xóa bài',
+			},
+			function() {
+				$('#frmMain').attr('action', '{{ route("delete_blog") }}');
+				$('#frmMain').submit();
+			});
 		});
 	});
 </script>

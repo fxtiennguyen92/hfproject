@@ -2200,6 +2200,7 @@ label.label-outlined.label-success {
 .blog-carousel .carousel-inner,
 .blog-carousel .carousel-item img {
   height: 300px !important;
+  width: 100%;
 }
 
 .blog-carousel-row {
@@ -2244,40 +2245,44 @@ label.label-outlined.label-success {
   font-size: 14px;
 }
 
-.blog-content .blog-image {
+.blog-section .blog-image {
   width: 100%;
   height: auto;
 }
-.blog-content .blog-icon {
+.blog-section .blog-icon {
   padding: 20px;
   line-height: 36px;
   vertical-align: middle;
 }
-.blog-content .blog-icon img {
+.blog-section .blog-icon img {
   width: 150px;
 }
 
-.blog-content .blog-icon .blog-style {
+.blog-section .blog-icon .blog-style {
   width: 120px;
   padding: 10px;
 }
 
-.blog-content .blog-title {
+.blog-section .blog-title {
   padding: 20px;
   font-size: 16px;
   font-weight: bold;
 }
 
-.blog-content .blog-create-date {
+.blog-section .blog-create-date {
   padding: 0px 20px 20px 20px;
   font-size: 12px;
   text-align: right;
 }
 
-.blog-content .blog-content {
+.blog-section .blog-content {
   padding: 0px 20px 20px 20px;
   font-size: 13px;
   text-align: justify;
+}
+
+.blog-section .blog-content img {
+  width: 100% !important;
 }
 
 /*

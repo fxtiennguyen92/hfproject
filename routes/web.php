@@ -138,6 +138,8 @@ Route::get('/mng/blog/{urlName?}', 'Mng\BlogController@view')
 	->name('mng_blog_page');
 Route::post('/mng/blog/post', 'Mng\BlogController@post')
 	->name('post_blog');
+Route::post('/mng/blog/delete', 'Mng\BlogController@delete')
+	->name('delete_blog');
 
 Route::get('/mng/companies', 'Mng\CompanyController@viewList')
 	->name('company_list_page');
