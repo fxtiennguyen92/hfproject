@@ -19,14 +19,16 @@ class Blog extends Model
 	}
 	
 	public function getTopGeneralBlog() {
-		return $this->general()
+		return $this->select('id', 'title', 'url_name', 'style', 'image')
+			->general()
 			->orderBy('created_at', 'desc')
 // 			->take(5)
 			->get();
 	}
 	
 	public function getTopProBlog() {
-		return $this->pro()
+		return $this->select('id', 'title', 'url_name', 'style', 'image')
+			->pro()
 			->orderBy('created_at', 'desc')
 // 			->take(5)
 			->get();

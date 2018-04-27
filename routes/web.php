@@ -118,6 +118,7 @@ Route::get('/companies', 'CommonController@getCompanies')
 
 /** Management - STA **/
 Route::middleware('cs.officer')->group(function() {
+
 	Route::get('/mng/pros', 'Mng\ProController@viewList')
 		->name('mng_pro_list_page');
 	Route::post('pro/mng/pro/{proId}/delete','Pro\ProManagerController@deleteByProManager')
@@ -142,11 +143,19 @@ Route::post('/mng/blog/delete', 'Mng\BlogController@delete')
 	->name('delete_blog');
 
 Route::get('/mng/companies', 'Mng\CompanyController@viewList')
-	->name('company_list_page');
+	->name('mng_company_list_page');
 Route::get('/mng/company/{id?}', 'Mng\CompanyController@view')
-	->name('company_page');
+	->name('mng_company_page');
 Route::post('/mng/company/{id?}', 'Mng\CompanyController@modify')
 	->name('modify_company');
+
+Route::get('/mng/accounts', 'Mng\AccountController@viewList')
+	->name('mng_account_list_page');
+
+Route::get('/mng/orders', 'Mng\OrderController@viewList')
+	->name('mng_order_list_page');
+Route::post('/mng/order/{orderNo}/cancel', 'Mng\OrderController@cancel')
+	->name('mng_cancel_order');
 
 });
 /** Management - END **/
@@ -158,5 +167,7 @@ Route::post('/pro/signup', 'Pro\ProSignUpController@signup')
 	->name('signup_pro');
 /** Alpha - END **/
 
-Route::get('/test2', function () { return view('test2'); });
+// Route::get('/outlocation', 'MailController@outlocation');
+	
+Route::get('/test2', function () { return view('mail.out-location'); });
 Route::get('/test3', function () { return view('test3'); });

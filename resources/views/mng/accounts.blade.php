@@ -14,8 +14,8 @@
 				zeroRecords: "Chưa có thông tin",
 				search: "Tìm kiếm"
 			},
-			order: [[2, 'desc']],
-			columnDefs: [ { orderable: false, targets: [5] } ]
+			order: [[3, 'desc']],
+// 			columnDefs: [ { orderable: false, targets: [4] } ]
 		});
 
 		$('a.delete').on('click', function() {
@@ -31,79 +31,63 @@
 <section class="content-body-full-page content-template-1">
 	<div class="page-header hf-bg-gradient text-capitalize">Tài khoản</div>
 	<div class="form-wrapper">
-		<button class="btn btn-primary pull-right" type="button" onclick="javascript:void(0);">
-			<i class="material-icons">&#xE7F0;</i></button>
 		<div class="row">
 			<div class="col-md-12">
-				<table class="emp-table table table-hover nowrap mng-list" width="100%">
+				<table class="table table-hover nowrap mng-list" width="100%">
 					<thead>
 						<tr>
-							<th class="text-center col-name">Họ tên - Tài khoản</th>
-							<th class="text-center col-state">Trạng thái</th>
+							<th class="text-center">Họ tên - Tài khoản</th>
+							<th class="text-center">Đối tượng</th>
+							<th class="text-center">Trạng thái</th>
 							<th class="text-center">Ngày đăng ký</th>
-							<th class="text-center">Giới tính</th>
-							<th class="text-center">Ngày sinh</th>
-							<th>&nbsp;</th>
+<!-- 							<th>&nbsp;</th> -->
 						</tr>
 					</thead>
 					<tbody>
-						@foreach ($users as $user)
+						@foreach ($accounts as $acc)
 						<tr>
-							<td class="text-capitalize">
-								<div class="emp-name">{{ $user['name'] }}
-									@if ($user['role'] == 2)
-									<span style="color: red; font-style: italic;">(Mng)</span>
-									@endif
-								</div>
-								<div class="emp-email">{{ $user['email'] }}</div>
+							<td class="text-capitalize col-cus-info">
+								<div class="cus-name">{{ $acc->name }}</div>
+								<div class="cus-email">{{ $acc->email }}</div>
 							</td>
-							<td class="text-center label-profile-state">
-								@if ($user['delete_flg'] == 1)
-									<span class="label label-secondary">Đã xóa</span>
-								@elseif ($user['profile']['state'] == '1')
-									<span class="label label-primary">Sẵn Sàng</span>
-								@elseif ($user['profile']['state'] == '2')
-									<span class="label label-default">Treo</span>
-								@elseif ($user['profile']['state'] == '3')
-									<span class="label label-warning">Cảnh cáo</span>
-								@elseif ($user['profile']['state'] == '4')
-									<span class="label label-danger">Khóa</span>
-								@elseif ($user['profile']['state'] == '5')
-									<span class="label label-secondary">Cấm vĩnh viễn</span>
+							<td class="text-center col-label-user-role">
+								@if ($acc->role == 0)
+								<label class="label-outlined label label-success">Customer</label>
+								@elseif ($acc->role == 1 || $acc->role == 2)
+								<label class="label-outlined label label-danger">Pro</label>
+								@elseif ($acc->role == 90)
+								<label class="label-outlined label label-default">CSO</label>
+								@elseif ($acc->role == 99)
+								<label class="label-outlined label label-default">Admin</label>
+								@endif
+							</td>
+							<td class="text-center col-label-acc-state">
+								@if ($acc->delete_flg == 1)
+									<span class="label label-default">Deleted</span>
+								@elseif ($acc->confirm_flg != 1)
+									<span class="label label-warning">Unconfirmed</span>
 								@else
-									<span class="label label-success">Chờ Duyệt</span>
+									<span class="label label-primary">Active</span>
 								@endif
 							</td>
 							<td class="text-center">
-								{{ Carbon\Carbon::parse($user['created_at'])->format('d-m-Y H:i') }}
+								{{ Carbon\Carbon::parse($acc->created_at)->format('d/m/Y H:i') }}
 							</td>
-							<td class="text-center">
-								@if ($user['profile']['gender'] == '1')
-									Nam
-								@elseif ($user['profile']['gender'] == '2')
-									Nữ
-								@else
-									Khác
-								@endif
-							</td>
-							<td class="text-center">
-								{{ Carbon\Carbon::parse($user['profile']['date_of_birth'])->format('d-m-Y') }}
-							</td>
-							<td>
-								<div class="dropdown margin-inline pull-right">
-									<span class="btn btn-sm " data-toggle="dropdown">
-									<i class="icmn-cog3"></i>
-									</span>
-									<ul class="dropdown-menu dropdown-menu-right" role="menu">
-										<a class="dropdown-item view" href="javascript:void(0);">
-											<i class="icmn-grid6"></i> Chi tiết
-										</a>
-										<a class="dropdown-item view" href="javascript:void(0);">
-											<i class="icmn-bin"></i> Xóa
-										</a>
-									</ul>
-								</div>
-							</td>
+<!-- 							<td> -->
+<!-- 								<div class="dropdown pull-right"> -->
+<!-- 									<span class="btn btn-sm " data-toggle="dropdown"> -->
+<!-- 									<i class="icmn-cog3"></i> -->
+<!-- 									</span> -->
+<!-- 									<ul class="dropdown-menu dropdown-menu-right" role="menu"> -->
+<!-- 										<a class="dropdown-item view" href="javascript:void(0);"> -->
+<!-- 											<i class="icmn-grid6"></i> Chi tiết -->
+<!-- 										</a> -->
+<!-- 										<a class="dropdown-item view" href="javascript:void(0);"> -->
+<!-- 											<i class="icmn-bin"></i> Xóa -->
+<!-- 										</a> -->
+<!-- 									</ul> -->
+<!-- 								</div> -->
+<!-- 							</td> -->
 						</tr>
 						@endforeach
 					</tbody>

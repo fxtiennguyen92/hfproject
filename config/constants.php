@@ -31,13 +31,15 @@ return [
 	'MNG_COMPANY_LIST_PAGE' => 'mng.companies',
 	'MNG_BLOG_LIST_PAGE' => 'mng.blogs',
 	'MNG_BLOG_PAGE' => 'mng.blog',
+	'MNG_ORDER_LIST_PAGE' => 'mng.orders',
 	
 	/** ERROR PAGE **/
 	'404_PAGE' => 'error.404',
 	
 	/** MAIL **/
-	'VERIFY_MAIL_SUBJECT' => '[HANDFREE APP] Confirmation',
+	'VERIFY_MAIL_SUBJECT' => '[HANDFREE APP] Xác nhận Email',
 	'ACTIVE_PRO_ACCOUNT_MAIL_SUBJECT' => '[HANDFREE APP] Kích hoạt tài khoản Đối tác',
+	'OUT_LOCATION_MAIL_SUBJECT' => '[HANDFREE APP] Địa điểm chưa được hỗ trợ',
 	
 	/** ENUM **/
 	'ROLE_MEM' => '0',

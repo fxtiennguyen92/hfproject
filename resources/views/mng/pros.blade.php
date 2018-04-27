@@ -57,7 +57,7 @@
 								</div>
 								<div class="emp-email">{{ $pro['email'] }}</div>
 							</td>
-							<td class="text-center label-profile-state">
+							<td class="text-center col-label-profile-state">
 								@if ($pro['delete_flg'] == 1)
 									<span class="label label-secondary">Đã xóa</span>
 								@elseif ($pro['profile']['state'] == '1')
