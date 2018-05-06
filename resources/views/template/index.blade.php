@@ -126,8 +126,12 @@
 </head>
 
 <body class="theme-default single-page">
-  <!-- Check user login -->
-  @include('template.nav')
+  @if (auth()->check() && auth()->user()->role >= 80)
+    @include('template.admin-nav')
+  @else
+    @include('template.nav')
+  @endif
+  
   @include('template.header-top-bar')
   @yield('content')
 </body>

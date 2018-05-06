@@ -21,6 +21,8 @@ Route::get('/pro/{proId}/info', 'InitPageController@viewProPage')
 	->name('pro_page');
 Route::get('/blog/{urlName?}', 'InitPageController@viewBlogPage')
 	->name('blog_page');
+Route::get('/company/new', 'Mng\CompanyController@newCompany')
+	->name('new_company');
 
 /** Password - STA **/
 Route::get('/password', 'Auth\PasswordController@view')
@@ -133,29 +135,29 @@ Route::middleware('cs.officer')->group(function() {
 	Route::post('/mng/pro/active', 'Mng\ProController@active')
 		->name('active_pro');
 	
-Route::get('/mng/blogs', 'Mng\BlogController@viewList')
-	->name('mng_blog_list_page');
-Route::get('/mng/blog/{urlName?}', 'Mng\BlogController@view')
-	->name('mng_blog_page');
-Route::post('/mng/blog/post', 'Mng\BlogController@post')
-	->name('post_blog');
-Route::post('/mng/blog/delete', 'Mng\BlogController@delete')
-	->name('delete_blog');
-
-Route::get('/mng/companies', 'Mng\CompanyController@viewList')
-	->name('mng_company_list_page');
-Route::get('/mng/company/{id?}', 'Mng\CompanyController@view')
-	->name('mng_company_page');
-Route::post('/mng/company/{id?}', 'Mng\CompanyController@modify')
-	->name('modify_company');
-
-Route::get('/mng/accounts', 'Mng\AccountController@viewList')
-	->name('mng_account_list_page');
-
-Route::get('/mng/orders', 'Mng\OrderController@viewList')
-	->name('mng_order_list_page');
-Route::post('/mng/order/{orderNo}/cancel', 'Mng\OrderController@cancel')
-	->name('mng_cancel_order');
+	Route::get('/mng/blogs', 'Mng\BlogController@viewList')
+		->name('mng_blog_list_page');
+	Route::get('/mng/blog/{urlName?}', 'Mng\BlogController@view')
+		->name('mng_blog_page');
+	Route::post('/mng/blog/post', 'Mng\BlogController@post')
+		->name('post_blog');
+	Route::post('/mng/blog/delete', 'Mng\BlogController@delete')
+		->name('delete_blog');
+	
+	Route::get('/mng/companies', 'Mng\CompanyController@viewList')
+		->name('mng_company_list_page');
+	Route::get('/mng/company/{id?}', 'Mng\CompanyController@view')
+		->name('mng_company_page');
+	Route::post('/mng/company/{id?}', 'Mng\CompanyController@modify')
+		->name('modify_company');
+	
+	Route::get('/mng/accounts', 'Mng\AccountController@viewList')
+		->name('mng_account_list_page');
+	
+	Route::get('/mng/orders', 'Mng\OrderController@viewList')
+		->name('mng_order_list_page');
+	Route::post('/mng/order/{orderNo}/cancel', 'Mng\OrderController@cancel')
+		->name('mng_cancel_order');
 
 });
 /** Management - END **/

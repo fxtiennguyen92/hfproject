@@ -174,7 +174,8 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label>Ngày tháng năm sinh</label>
-							<input type="text" maxlength="10" class="form-control datepicker-only-init" name="dateOfBirth" data-validation="[NOTEMPTY]"/>
+							<input type="text" maxlength="10" class="form-control datepicker-only-init" style="padding-top: 11px;"
+								name="dateOfBirth" data-validation="[NOTEMPTY]"/>
 						</div>
 					</div>
 					<div class="col-md-6">

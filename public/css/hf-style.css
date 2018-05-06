@@ -2193,14 +2193,35 @@ label.label-outlined.label-success {
 }
 
 .mng-list .col-order-no {
+  font-size: 12px;
   font-weight: bold;
 }
 
+.mng-list .col-service,
+.mng-list .col-order-created-date {
+  font-size: 13px;
+}
+
 .mng-list .col-label-order-state span,
+.mng-list .col-label-company-state span,
 .mng-list .col-label-user-role label,
 .mng-list .col-label-acc-state span {
   line-height: 16px;
-  width: 90px;
+  font-size: 13px;
+  width: 80px;
+}
+
+.mng-list. col-order-price {
+  font-weight: bold;
+}
+
+.mng-list .order-address {
+  display: inline-block;
+  width: 280px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  cursor: default !important;
 }
 
 .mng-list .dropdown-item > i {
@@ -2312,6 +2333,21 @@ label.label-outlined.label-success {
   color: #ccc;
   text-transform: none !important;
 }
+
+.company-new-form label.btn {
+  display: block;
+  width: 100%;
+  border: none;
+  text-align: left;
+  background: none;
+  padding-left: 0;
+  color: #55595c;
+}
+
+.company-new-form label.active {
+  color: #02b3e4;
+}
+
 
 /*
 * RESPONSIVE

@@ -9,6 +9,7 @@ use App\Company;
 use App\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Material;
 
 class CompanyController extends Controller
 {
@@ -17,7 +18,8 @@ class CompanyController extends Controller
 						'name' => 'required|string|max:150',
 						'address' => 'string|max:150',
 						'email' => 'string|email|max:100',
-						'phone' => 'string|max:50',
+						'phone_1' => 'string|max:50',
+						'phone_2' => 'string|max:50',
 		]);
 	}
 
@@ -25,7 +27,7 @@ class CompanyController extends Controller
 		$compModel = new Company();
 		$companies = $compModel->getAll();
 
-		return view(Config::get('constants.COMPANY_LIST_PAGE'), array(
+		return view(Config::get('constants.MNG_COMPANY_LIST_PAGE'), array(
 						'companies' => $companies,
 		));
 	}
@@ -47,11 +49,30 @@ class CompanyController extends Controller
 			$districts = $commonModel->getDistList($cities->first()->code);
 		}
 		
-		return view(Config::get('constants.COMPANY_PAGE'), array(
+		return view(Config::get('constants.MNG_COMPANY_PAGE'), array(
 						'company' => $comp,
 						'cities' => $cities,
 						'districts' => $districts,
 						'services' => $services
+		));
+	}
+
+	public function newCompany() {
+		$commonModel = new Common();
+		$serviceModel = new Service();
+		$materialModel = new Material();
+		
+		$services = $serviceModel->getAll();
+		$materials = $materialModel->getAll();
+		
+		$cities = $commonModel->getCityList();
+		$districts = $commonModel->getDistList($cities->first()->code);
+		
+		return view('mng.company-new', array(
+						'cities' => $cities,
+						'districts' => $districts,
+						'services' => $services,
+						'materials' => $materials
 		));
 	}
 
@@ -60,6 +81,12 @@ class CompanyController extends Controller
 		if ($validator->fails()) {
 			return response()->json('', 409);
 		}
+		
+		$style = array(
+			'style' => $request->style,
+			'service' => $request->service,
+			'material' => $request->material,
+		);
 		
 		// update
 		if ($id) {
@@ -75,8 +102,13 @@ class CompanyController extends Controller
 				$comp->district = $request->dist;
 				$comp->city = $request->city;
 				$comp->email = $request->email;
-				$comp->phone = $request->phone;
-				$comp->services = json_encode($request->services);
+				$comp->phone_1 = $request->phone_1;
+				$comp->phone_2 = $request->phone_2;
+				$comp->style = json_encode($style);
+				if (auth()->check()) {
+					$comp->updated_by = auth()->user()->id;
+				}
+				
 				$comp->save();
 				
 				return response()->json('', 200);
@@ -93,8 +125,12 @@ class CompanyController extends Controller
 			$comp->district = $request->dist;
 			$comp->city = $request->city;
 			$comp->email = $request->email;
-			$comp->phone = $request->phone;
-			$comp->services = json_encode($request->services);
+			$comp->phone_1 = $request->phone_1;
+			$comp->phone_2 = $request->phone_2;
+			$comp->style= json_encode($style);
+			if (auth()->check()) {
+				$comp->created_by = auth()->user()->id;
+			}
 			$comp->save();
 			
 			return response()->json('', 200);

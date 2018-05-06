@@ -1,13 +1,6 @@
 @extends('template.index')
 @push('stylesheets')
 <style>
-	body {
-		background: #f4f4f4;
-	}
-
-	.dropdown-menu {
-		z-index: 3000;
-	}
 </style>
 
 <!-- Page Scripts -->
@@ -129,29 +122,26 @@
 				confirmButtonText: 'Tiếp tục',
 			},
 			function(){
-				location.href = "{{ route('company_list_page') }}";
+				location.href = "{{ route('mng_company_list_page') }}";
 			});
 		});
 	});
 </script>
 @endpush
 
-@section('title')
-@endsection
+@section('title') Doanh nghiệp @endsection
 
 @section('content')
-<section class="page-content signup-pro">
-	<div class="col-md-2">
-	</div>
-	<div class="col-md-8">
-		<form id="frmMain" class="form-wrapper hf-card" name="form-validation" method="post" enctype="multipart/form-data" action="{{ route('modify_company') }}">
-			<h1 class="page-title text-left">Thông tin Doanh Nghiệp</h1>
+<section class="content-body-full-page content-template-1">
+	<div class="page-header hf-bg-gradient text-capitalize">Doanh nghiệp</div>
+	<div class="form-wrapper">
+		<form id="frmMain" name="form-validation" method="post" enctype="multipart/form-data" action="{{ route('modify_company') }}">
 			<div class="row">
 				<div class="col-md-12">
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
-								<label>Tên Doanh nghiệp</label>
+								<label>Tên Doanh nghiệp / Cửa Hàng</label>
 								<input type="text" maxlength="150" class="form-control" name="name" type="text" data-validation="[NOTEMPTY]"
 								@if ($company) value="{{ $company->name }}" @endif>
 							</div>

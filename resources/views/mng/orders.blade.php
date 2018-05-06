@@ -23,6 +23,10 @@
 				confirmButtonText: 'Quay lại',
 			});
 		@endif
+
+		$('.price').each(function() {
+			$(this).html(accounting.formatMoney($(this).html()));
+		});
 		
 		$('.mng-list').DataTable({
 			responsive: true,
@@ -32,8 +36,8 @@
 				zeroRecords: 'Chưa có thông tin',
 				search: 'Tìm kiếm'
 			},
-			order: [[4, 'desc']],
-			columnDefs: [ { orderable: false, targets: [6] } ]
+			order: [[6, 'desc']],
+			columnDefs: [ { orderable: false, targets: [8] } ]
 		});
 
 		$('a.cancel').on('click', function(e) {
@@ -76,6 +80,8 @@
 							<th class="">Dịch vụ</th>
 							<th class="text-center">Khách hàng</th>
 							<th class="text-center">Đối tác</th>
+							<th class="text-center">Địa điểm - Thời gian</th>
+							<th class="text-center">Giá</th>
 							<th class="text-center">Ngày đăng</th>
 							<th class="text-center">Trạng thái</th>
 							<th>&nbsp;</th>
@@ -85,7 +91,7 @@
 						@foreach ($orders as $order)
 						<tr>
 							<td class="text-center col-order-no">{{ '#'.$order->no }}</td>
-							<td class="">{{ $order->service->name }}</td>
+							<td class="col-service">{{ $order->service->name }}</td>
 							<td class="text-capitalize col-cus-info">
 								<div class="cus-name">{{ $order->user->name }}</div>
 								<div class="cus-email">{{ $order->user->email }}</div>
@@ -97,12 +103,28 @@
 								@else ---
 								@endif
 							</td>
-							<td class="text-center">
-								{{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y H:i') }}
+							<td>
+								<div class="order-address" title="{{ $order->address }}">
+									<i class="material-icons">&#xE0C8;</i> {{ $order->address }}
+								</div>
+								<div class="order-state">
+									@if ($order->est_excute_at_string)
+									<span class="order-time state-est-time"><i class="material-icons">&#xE8B5;</i> {{ $order->est_excute_at_string }}</span> @else
+									<span class="order-time state-now"><i class="material-icons">&#xE8B5;</i> Ngay lập tức</span> @endif
+								</div>
+							</td>
+							<td class="text-right col-order-price">
+								@if ($order->state != 0 && $order->state != 4)
+								<span class="price text-danger">{{ $order->total_price }}</span>
+								@endif
+							</td>
+							<td class="text-right col-order-created-date">
+								<div>{{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }}</div>
+								<div>{{ Carbon\Carbon::parse($order->created_at)->format('H:i') }}</div>
 							</td>
 							<td class="text-center col-label-order-state">
 								@if ($order->state == 0)
-									<span class="label label-info">New</span>
+									<span class="label label-success">New</span>
 								@elseif ($order->state == '1')
 									<span class="label label-warning">Accepted</span>
 								@elseif ($order->state == '2')
@@ -140,6 +162,8 @@
 			<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 		</form>
 	</div>
+
 	<!-- MODAL -->
+	
 </section>
 @endsection
