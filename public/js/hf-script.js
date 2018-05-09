@@ -41,6 +41,15 @@ $(document).ready(function () {
   });
 });
 
+function loadingBtnSubmit(id) {
+	$('#' + id).html('<i class="fa fa-spinner fa-spin"></i> Đang xử lý');
+	$('#' + id).prop('disabled', true);
+}
+function resetBtnSubmit(id, text) {
+	$('#' + id).html(text);
+	$('#' + id).prop('disabled', false);
+}
+
 function initOrderMap(lat, lng, address) {
   var location = new google.maps.LatLng(lat, lng);
   var map = new google.maps.Map(document.getElementById('map'), {

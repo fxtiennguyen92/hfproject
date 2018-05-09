@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class LoginController extends Controller
 {
@@ -75,7 +76,7 @@ class LoginController extends Controller
 	}
 
 	/**
-	 * Redirect after login
+	 * Redirect after login.
 	 * 
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
@@ -95,8 +96,9 @@ class LoginController extends Controller
 	 * Log out.
 	 * 
 	 */
-	public function logout() {
+	public function logout(Request $request) {
 		Auth::logout();
+		$request->session()->flush();
 		return redirect()->route('home_page');
 	}
 }

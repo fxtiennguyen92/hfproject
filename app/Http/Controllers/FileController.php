@@ -53,4 +53,11 @@ class FileController
 			\Storage::delete($directoryName.'/'.$blog->image);
 		}
 	}
+
+	public static function saveCompanyCoverImage($data, $fileName) {
+		$directoryName = 'img/comp/cover';
+		
+		\Storage::delete($directoryName.'/'.$fileName);
+		$fileSrc = \Storage::put($directoryName.'/'. $fileName, $data);
+	}
 }

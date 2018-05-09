@@ -35,7 +35,7 @@ class ProController extends Controller
 		if ($cities) {
 			$districts = $commonModel->getDistList($cities->first()->code);
 		}
-		$services = $serviceModel->getAll();
+		$services = $serviceModel->getAllServing();
 
 		// put proId to session
 		$request->session()->put('proId', $proId);

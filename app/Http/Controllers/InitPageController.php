@@ -20,7 +20,7 @@ class InitPageController extends Controller
 		}
 		
 		$serviceModel = new Service();
-		$services = $serviceModel->getAll();
+		$services = $serviceModel->getAllServing();
 		
 		$commonModel = new Common();
 		$parts = $commonModel->getByKey(Config::get('constants.HOME_PAGE'));

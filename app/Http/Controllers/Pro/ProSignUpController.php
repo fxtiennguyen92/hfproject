@@ -32,7 +32,7 @@ class ProSignUpController extends Controller
 		if ($cities) {
 			$districts = $commonModel->getDistList($cities->first()->code);
 		}
-		$services = $serviceModel->getAll();
+		$services = $serviceModel->getAllServing();
 		
 		// pro manager
 		$company = null;

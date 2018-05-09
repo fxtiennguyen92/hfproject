@@ -141,7 +141,7 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
-								<label>Tên Doanh nghiệp / Cửa Hàng</label>
+								<label>Tên Doanh nghiệp/Cửa Hàng</label>
 								<input type="text" maxlength="150" class="form-control" name="name" type="text" data-validation="[NOTEMPTY]"
 								@if ($company) value="{{ $company->name }}" @endif>
 							</div>
@@ -158,7 +158,7 @@
 						<div class="col-md-3">
 							<div class="form-group">
 								<label>Quận/Huyện</label>
-								<select class="form-control selectpicker ddDist hf-select" data-live-search="true" name="dist" data-validation="[NOTEMPTY]">
+								<select class="form-control selectpicker ddDist hf-select" data-live-search="true" name="district">
 									@foreach ($districts as $dist)
 										@if ($company)
 										<option value="{{ $dist->code }}" @if ($company->district == $dist->code) selected @endif>{{ $dist->name }}</option>
@@ -172,7 +172,7 @@
 						<div class="col-md-3">
 							<div class="form-group">
 								<label>Thành phố/Tỉnh</label>
-								<select class="form-control selectpicker ddCity hf-select" data-live-search="true" name="city" data-validation="[NOTEMPTY]">
+								<select class="form-control selectpicker ddCity hf-select" data-live-search="true" name="city">
 									@foreach ($cities as $city)
 										@if ($company)
 										<option value="{{ $city->code }}" @if ($company->city == $city->code) selected @endif>{{ $city->name }}</option>

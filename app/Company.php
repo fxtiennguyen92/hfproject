@@ -29,9 +29,30 @@ class Company extends Model
 			->available()
 			->first();
 	}
-	
+
 	public function getAll() {
 		return $this->available()->get();
+	}
+
+	public function existPhone($phone, $id = null) {
+		if (!$phone) {
+			return false;
+		}
+		
+		$comp = $this
+			->where('phone_1', $phone)
+			->orWhere('phone_2', $phone)
+			->first();
+		
+		if (!$comp) {
+			return false;
+		}
+		
+		if ($comp->id === $id) {
+			return false;
+		}
+		
+		return true;
 	}
 
 	public function scopeAvailable($query) {

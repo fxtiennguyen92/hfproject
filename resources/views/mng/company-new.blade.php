@@ -1,11 +1,24 @@
 @extends('template.index')
 @push('stylesheets')
 <style>
+::placeholder {
+  font-size: 13px;
+  color: #ccc;
+  opacity: 1;
+}
+:-ms-input-placeholder {
+  color: #ccc;
+}
+::-ms-input-placeholder {
+  color: #ccc;
+}
 </style>
 
 <!-- Page Scripts -->
 <script>
 	$(document).ready(function() {
+		autosize($('textarea'));
+		$('.dropify').dropify();
 		$('.phone').mask('0000000000000');
 		$('.selectpicker').selectpicker();
 		$('.ddCity').on('change', function() {
@@ -26,14 +39,14 @@
 									.attr('value', value.code)
 									.text(value.name));
 					});
-
+					
 					ddDist.selectpicker('refresh');
 				}
 			});
 			
 		});
-
-		$('.service-row').hide();
+		
+		$('.service-row').show();
 		$('.material-row').hide();
 		$('div[data-toggle="buttons"]').on('change', function() {
 			var style = $(this).find('input').attr('id');
@@ -81,6 +94,8 @@
 						});
 					},
 					onSubmit: function() {
+						$('input[name=image]').val($('span.dropify-render').find('img').attr('src'));
+						loadingBtnSubmit('btnSubmit');
 						$.ajax({
 							type: 'POST',
 							url: "{{ route('modify_company') }}",
@@ -99,30 +114,31 @@
 							},
 							error: function(xhr) {
 								if (xhr.status == 400) {
-									$.notify({
-										title: '<strong>Thất bại! </strong>',
-										message: 'Không có thông tin để thay đổi.'
-									}, {
-										type: 'danger',
-										z_index: 1051,
+									swal({
+										title: 'Thất bại',
+										text: 'Yêu cầu không thực hiện được!',
+										type: 'error',
+										confirmButtonClass: 'btn-default',
+										confirmButtonText: 'Quay lại',
 									});
 								} else if (xhr.status == 409) {
-									$.notify({
-										title: '<strong>Thất bại! </strong>',
-										message: 'Email hoặc Số Điện Thoại đã được sử dụng.'
-									}, {
-										type: 'danger',
-										z_index: 1051,
+									swal({
+										title: 'Thất bại',
+										text: 'Email không đúng hoặc đã được sử dụng!',
+										type: 'error',
+										confirmButtonClass: 'btn-default',
+										confirmButtonText: 'Quay lại',
 									});
 								} else {
-									$.notify({
-										title: '<strong>Thất bại! </strong>',
-										message: 'Không đăng ký được, vui lòng thử lại.'
-									}, {
-										type: 'danger',
-										z_index: 1051,
+									swal({
+										title: 'Thất bại',
+										text: 'Có lỗi phát sinh, mời thử lại!',
+										type: 'error',
+										confirmButtonClass: 'btn-default',
+										confirmButtonText: 'Quay lại',
 									});
 								};
+								resetBtnSubmit('btnSubmit', 'Đăng ký');
 							}
 						});
 					}
@@ -142,46 +158,60 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="row">
-					<div class="col-md-12">
-						<div class="form-group">
-							<label>Tên Doanh nghiệp/Cửa hàng <span class="color-danger">*</span></label>
-							<input type="text" maxlength="225" class="form-control" name="name" data-validation="[NOTEMPTY]">
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
-						<div class="form-group">
-							<label>Địa chỉ <span class="color-danger">*</span></label>
-							<input type="text" maxlength="150" class="form-control" name="address" data-validation="[NOTEMPTY]">
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group">
-							<label>Quận/Huyện</label>
-							<select class="form-control selectpicker ddDist hf-select" data-live-search="true" name="districe" data-validation="[NOTEMPTY]">
-								@foreach($districts as $dist)
-								<option value="{{ $dist->code }}">{{ $dist->name }}</option>
-								@endforeach
-							</select>
-						</div>
-					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<label>Thành phố/Tỉnh</label>
 							<select class="form-control selectpicker ddCity hf-select" data-live-search="true" name="city" data-validation="[NOTEMPTY]">
 								@foreach($cities as $city)
-								<option value="{{ $city->code }}">{{ $city->name }}</option>
+									@if ($preAddress && $city->code == $preAddress['city'])
+									<option value="{{ $city->code }}" selected>{{ $city->name }}</option>
+									@else
+									<option value="{{ $city->code }}">{{ $city->name }}</option>
+									@endif
 								@endforeach
 							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Quận/Huyện</label>
+							<select class="form-control selectpicker ddDist hf-select" data-live-search="true" name="district" data-validation="[NOTEMPTY]">
+								@foreach($districts as $dist)
+									@if ($preAddress && $dist->code == $preAddress['district'])
+									<option value="{{ $dist->code }}" selected>{{ $dist->name }}</option>
+									@else
+									<option value="{{ $dist->code }}">{{ $dist->name }}</option>
+									@endif
+								@endforeach
+							</select>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>Địa chỉ <span class="color-danger">*</span></label>
+							<input type="text" maxlength="150"
+								class="form-control" name="address_1"
+								placeholder="Số nhà"
+								value="@if ($preAddress) {{ $preAddress['address_1'] }} @endif"
+								data-validation="[NOTEMPTY]">
+						</div>
+					</div>
+					<div class="col-md-8">
+						<div class="form-group">
+							<label>&nbsp;</label>
+							<input type="text" maxlength="150"
+								class="form-control" name="address_2"
+								placeholder="Tên đường"
+								value="@if ($preAddress) {{ $preAddress['address_2'] }} @endif"
+								data-validation="[NOTEMPTY]">
 						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<div class="form-group">
-							<label>Email</label>
-							<input type="text" maxlength="100" class="form-control" name="email">
+							<label>Tên Doanh nghiệp/Cửa hàng <span class="color-danger">*</span></label>
+							<input type="text" maxlength="225" class="form-control" name="name" data-validation="[NOTEMPTY]">
 						</div>
 					</div>
 				</div>
@@ -200,16 +230,35 @@
 					</div>
 				</div>
 				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>Email</label>
+							<input type="text" maxlength="100" class="form-control" name="email">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>Hình chụp cửa hàng</label>
+							<input type="file" class="dropify"
+								data-allowed-file-extensions="gif png jpg"
+								data-max-file-size-preview="3M">
+							<input type="hidden" name="image">
+						</div>
+					</div>
+				</div>
+				<div class="row">
 					<div class="form-group col-md-12">
 						<label>Loại cửa hàng</label>
 						<div class="row" style="margin: 0px 5px;">
 							<div data-toggle="buttons" class="col-md-6">
-								<label class="btn">
+								<label class="btn active">
 									<input id="tog-service"
 										type="checkbox"
 										name="style[]"
-										value="0">
-										<span class="icon icmn-checkbox-unchecked2"></span> Dịch vụ
+										value="0" checked>
+										<span class="icon icmn-checkbox-checked2"></span> Dịch vụ
 								</label>
 							</div>
 							<div data-toggle="buttons" class="col-md-6">
@@ -229,7 +278,7 @@
 						<label>Dịch vụ</label>
 						<div class="row" style="margin: 0px 5px;">
 							@foreach ($services as $service)
-							<div data-toggle="buttons" class="col-md-6">
+							<div data-toggle="buttons" class="col-md-6 col-sm-6 col-sx-6">
 								<label class="btn">
 									<input type="checkbox"
 										name="service[]"
@@ -239,6 +288,13 @@
 							</div>
 							@endforeach
 						</div>
+						<div class="row" style="margin: 0px 5px;">
+							<div class="col-md-12">
+								<input type="text" class="form-control"
+									placeholder="Dịch vụ khác"
+									name="otherService">
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="material-row row">
@@ -246,7 +302,7 @@
 						<label>Loại vật tư</label>
 						<div class="row" style="margin: 0px 5px;">
 							@foreach ($materials as $material)
-							<div data-toggle="buttons" class="col-md-6">
+							<div data-toggle="buttons" class="col-md-6 col-sm-6 col-sx-6">
 								<label class="btn">
 									<input type="checkbox"
 										name="material[]"
@@ -255,6 +311,23 @@
 								</label>
 							</div>
 							@endforeach
+							
+							
+						</div>
+						<div class="row" style="margin: 0px 5px;">
+							<div class="col-md-12">
+								<input type="text" class="form-control 
+									placeholder="Vật tư khác"
+									name="otherMaterial">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label>Ghi chú</label>
+							<textarea class="form-control" name="description" rows="3" maxlength="200"></textarea>
 						</div>
 					</div>
 				</div>
