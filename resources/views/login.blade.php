@@ -5,7 +5,7 @@
 <!-- Page Scripts -->
 <script>
   $(document).ready(function() {
-    $('#inpEmail').focus();
+    $('#inpUsername').focus();
 
     // Form Validation
     $('#frmMain').validate({
@@ -100,7 +100,7 @@
                 <div class="form-group">
                   <br/>
                   <p class="text-center text-label">Hoặc</p>
-                  <input id="inpEmail" maxlength="100" class="form-control" placeholder="Email" name="email" type="text" data-validation="[EMAIL]">
+                  <input id="inpUsername" maxlength="100" class="form-control" placeholder="Email hoặc Số điện thoại" name="username" type="text" data-validation="[NOTEMPTY]">
                 </div>
                 <div class="form-group">
                   <input id="inpPassword" class="form-control password" placeholder="Mật khẩu" name="password" type="password" data-validation="[L>=6]">

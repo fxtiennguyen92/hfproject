@@ -11,9 +11,21 @@ use App\Http\Controllers\MailController;
 use App\Common;
 use App\Service;
 use App\Http\Controllers\FileController;
+use App\Company;
+use Illuminate\Support\Facades\Validator;
+use App\Event;
+use App\EventUser;
 
 class ProController extends Controller
 {
+
+	protected function validator(array $data) {
+		return Validator::make($data, [
+						'name' => 'required|string|max:150',
+						'phone' => 'required|string|max:25',
+		]);
+	}
+
 	public function viewList() {
 		$userModel = new User();
 		$pros = $userModel->getAllPro();
@@ -78,7 +90,7 @@ class ProController extends Controller
 		
 		$pro = $userModel->getProOrProManager($proId);
 		if (!$pro) {
-			response()->json('', 400);
+			return response()->json('', 400);
 		}
 		
 		try {
@@ -94,10 +106,10 @@ class ProController extends Controller
 			$mail = new MailController();
 			$mail->sendActiveProAccountMail($pro->name, $pro->email, $pro->password_temp);
 			
-			response()->json('', 200);
+			return response()->json('', 200);
 		} catch (\Exception $e) {
 			DB::rollback();
-			response()->json('', 400);
+			return response()->json('', 400);
 		}
 	}
 
@@ -110,6 +122,86 @@ class ProController extends Controller
 		$profileModel = new ProProfile();
 		$profileModel->updateInspection($proId, json_encode($request->inspection));
 		
-		response()->json('', 200);
+		return response()->json('', 200);
+	}
+
+	/** Partner Acquisition **/
+	
+	public function viewListForPA() {
+		$userModel = new User();
+		$compModel = new Company();
+		$eventModel = new Event();
+		
+		$pros = $userModel->getAllProForPA();
+		$companies = $compModel->getAll();
+		$events = $eventModel->getAll();
+		
+		return view(Config::get('constants.PA_PRO_LIST_PAGE'), array(
+						'pros' => $pros,
+						'companies' => $companies,
+						'events' => $events
+		));
+	}
+	
+	public function createForPA(Request $request) {
+		$validator = $this->validator($request->all());
+		if ($validator->fails()) {
+			return response()->json($validator->errors()->first(), 409);
+		}
+		
+		$userModel = new User();
+		if ($userModel->existPhone($request->phone)) {
+			return response()->json('Phone is registered', 409);
+		}
+		
+		try {
+			// create user
+			$userId = $this->createUser($request);
+			// create pro profile
+			$this->createProProfile($userId, $request);
+			
+			if ($request->event !== '') {
+				$this->createEventUser($userId, $request->event);
+			}
+			
+			return response()->json('', 200);
+		} catch (\Exception $e) {
+			return response()->json($e->getMessage(), 400);
+		}
+	}
+	
+	private function createUser($request) {
+		$user = new User();
+		$user->name = $request->name;
+		$user->phone = $request->phone;
+		$user->password_temp = str_random(12);
+		$user->password = bcrypt($user->password_temp);
+		$user->confirm_flg = Config::get('constants.FLG_ON');
+		$user->role = ($request->style == 2) ? Config::get('constants.ROLE_PRO_MNG') : Config::get('constants.ROLE_PRO');
+		$user->created_by = (auth()->check()) ? auth()->user()->id : null;
+		
+		$user->save();
+		return $user->id;
+	}
+	
+	private function createProProfile($userId, $request) {
+		$profile = new ProProfile();
+		$profile->id = $userId;
+		$profile->company_id = ($request->style != 0) ? $request->company : null;
+		$profile->created_by = (auth()->check()) ? auth()->user()->id : null;
+		
+		$profile->save();
+	}
+	
+	private function createEventUser($userId, $eventId) {
+		$eventUser = new EventUser();
+		$eventUser->event_id = $eventId;
+		$eventUser->user_id = $userId;
+		$eventUser->created_by = $userId;
+		if (auth()->check()) {
+			$eventUser->created_by = auth()->user()->id;
+		}
+		
+		$eventUser->save();
 	}
 }

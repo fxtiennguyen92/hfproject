@@ -31,7 +31,10 @@ class Company extends Model
 	}
 
 	public function getAll() {
-		return $this->available()->get();
+		return $this
+			->available()
+			->orderBy('created_at', 'desc')
+			->get();
 	}
 
 	public function existPhone($phone, $id = null) {

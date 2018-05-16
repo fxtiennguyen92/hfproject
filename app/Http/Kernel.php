@@ -59,5 +59,6 @@ class Kernel extends HttpKernel
         'pro' => \App\Http\Middleware\ProAuthenticate::class,
         'pro.manager' => \App\Http\Middleware\ProManagerAuthenticate::class,
         'cs.officer' => \App\Http\Middleware\CusServiceOfficerAuthenticate::class,
+        'cs.pa' => \App\Http\Middleware\CusServicePAAuthenticate::class,
     ];
 }

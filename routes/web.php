@@ -21,8 +21,26 @@ Route::get('/pro/{proId}/info', 'InitPageController@viewProPage')
 	->name('pro_page');
 Route::get('/blog/{urlName?}', 'InitPageController@viewBlogPage')
 	->name('blog_page');
-Route::get('/company/new', 'Mng\CompanyController@newCompany')
-	->name('new_company');
+
+Route::get('/doc/{urlName}', 'InitPageController@viewDocPage')
+	->name('doc_view');
+
+/** Guest - STA **/
+Route::middleware('guest')->group(function() {
+	
+	// Singup Pro
+	Route::get('/pro/new', 'Pro\ProController@newPro')
+		->name('pro_new');
+	Route::post('/pro/create', 'Pro\ProController@create')
+		->name('pro_create');
+	
+	// Regist company
+	Route::get('/company/new', 'Mng\CompanyController@newCompany')
+		->name('company_new');
+	Route::post('/company/create', 'Mng\CompanyController@create')
+		->name('company_create');
+});
+/** Guest - END **/
 
 /** Password - STA **/
 Route::get('/password', 'Auth\PasswordController@view')
@@ -58,10 +76,6 @@ Route::get('/verify/{confirmCode}', 'Auth\RegisterController@verify')
 	->name('verify');
 /** Sign Up - END **/
 
-
-Route::middleware('auth')->group(function() {
-
-});
 /** Service - Order - STA **/
 Route::get('/dich-vu/{serviceUrlName}', 'ServiceController@view')
 	->name('service_page');
@@ -105,7 +119,7 @@ Route::middleware('pro')->group(function() {
 
 
 Route::middleware('pro.manager')->group(function() {
-	Route::get('/pro/mng/pros', 'Pro\ProManagerController@viewProListPage')
+	Route::get('/pro/mng/pro', 'Pro\ProManagerController@viewProListPage')
 		->name('view_pro_mng_page');
 });
 
@@ -114,14 +128,32 @@ Route::middleware('pro.manager')->group(function() {
 /** Common - STA **/
 Route::get('/city/{code}/dist', 'CommonController@getDistByCity')
 	->name('get_dist_by_city');
-Route::get('/companies', 'CommonController@getCompanies')
-	->name('get_companies');
+Route::get('/company', 'CommonController@getcompany')
+	->name('get_company');
 /** Common - END **/
 
+/** Partner Acquisition - STA **/
+Route::middleware('cs.pa')->group(function() {
+	// Company
+	Route::get('/pa/company', 'Mng\CompanyController@viewList_PA')
+		->name('pa_company_list');
+	Route::get('pa/company/new', 'Mng\CompanyController@newCompany')
+		->name('pa_company_new');
+	Route::post('/pa/company', 'Mng\CompanyController@create')
+		->name('pa_company_create');
+	
+	// Pro
+	Route::get('/pa/pro', 'Mng\ProController@viewListForPA')
+		->name('pa_pro_list');
+	Route::post('/pa/pro', 'Mng\ProController@createForPA')
+		->name('pa_pro_create');
+});
+/** Partner Acquisition - END **/
+	
 /** Management - STA **/
 Route::middleware('cs.officer')->group(function() {
 
-	Route::get('/mng/pros', 'Mng\ProController@viewList')
+	Route::get('/mng/pro', 'Mng\ProController@viewList')
 		->name('mng_pro_list_page');
 	Route::post('pro/mng/pro/{proId}/delete','Pro\ProManagerController@deleteByProManager')
 		->name('delete_pro_by_pro_mng');
@@ -144,7 +176,7 @@ Route::middleware('cs.officer')->group(function() {
 	Route::post('/mng/blog/delete', 'Mng\BlogController@delete')
 		->name('delete_blog');
 	
-	Route::get('/mng/companies', 'Mng\CompanyController@viewList')
+	Route::get('/mng/company', 'Mng\CompanyController@viewList')
 		->name('mng_company_list_page');
 	Route::get('/mng/company/{id?}', 'Mng\CompanyController@view')
 		->name('mng_company_page');
@@ -159,17 +191,28 @@ Route::middleware('cs.officer')->group(function() {
 	Route::post('/mng/order/{orderNo}/cancel', 'Mng\OrderController@cancel')
 		->name('mng_cancel_order');
 
+	// Common parameters
+	Route::get('/mng/common/{key?}', 'Mng\CommonController@viewList')
+		->name('mng/common/list');
+	Route::post('/mng/common/{key}', 'Mng\CommonController@createCommon')
+		->name('mng/common/create');
+	Route::post('/mng/common/{key}/{code}/active', 'Mng\CommonController@active')
+		->name('mng/common/active');
+	Route::post('/mng/common/{key}/{code}/delete', 'Mng\CommonController@delete')
+		->name('mng/common/delete');
+
+	// Document
+	Route::get('/mng/doc', 'Mng\DocController@viewList')
+		->name('mng_doc_list');
+	Route::get('/mng/doc/new', 'Mng\DocController@newDoc')
+		->name('mng_doc_new');
+	Route::get('/mng/doc', 'Mng\DocController@create')
+		->name('mng_doc_create');
+
 });
 /** Management - END **/
-	
-/** Alpha - STA **/
-Route::get('/pro/signup', 'Pro\ProSignUpController@view')
-	->name('pro_signup_page');
-Route::post('/pro/signup', 'Pro\ProSignUpController@signup')
-	->name('signup_pro');
-/** Alpha - END **/
 
 // Route::get('/outlocation', 'MailController@outlocation');
 	
-Route::get('/test2', function () { return view('mail.out-location'); });
-Route::get('/test3', function () { return view('test3'); });
+// Route::get('/test2', function () { return view('mail.out-location'); });
+// Route::get('/test3', function () { return view('test3'); });

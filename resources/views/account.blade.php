@@ -45,7 +45,7 @@ $(document).ready(function() {
               @endif
             </div>
           </div>
-          <a class="edit-icon" href="javascript:void(0)"><i class="material-icons">&#xE254;</i></a>
+          <a class="edit-icon" href="javascript:void(0)"><i class="material-icons">edit</i></a>
         </div>
 
         <div class="hf-card margin-top-40">
@@ -64,8 +64,8 @@ $(document).ready(function() {
         <div class="control-list margin-top-20">
         <section class="user-menu">
           <ul class="list-menu">
-            <li><a href="{{ route('password_page') }}"><i class="material-icons">&#xE8E8;</i> Mật khẩu</a></li>
-            <li><a href="{{ route('logout') }}"><i class="material-icons">&#xE879;</i> Đăng xuất</a></li>
+            <li><a href="{{ route('password_page') }}"><i class="material-icons">verified_user</i> Mật khẩu</a></li>
+            <li><a href="{{ route('logout') }}"><i class="material-icons">power_settings_new</i> Đăng xuất</a></li>
           </ul>
         </section>
         </div>
@@ -92,7 +92,7 @@ $(document).ready(function() {
         <section class="user-menu">
           <ul class="list-menu">
             <li><a href="javascript:void(0);"><i class="material-icons">&#xE887;</i> Câu hỏi thường gặp</a></li>
-            <li><a href="{{ route('pro_signup_page') }}"><i class="material-icons">&#xE227;</i> Trở thành đối tác</a></li>
+            <li><a href="{{ route('pros_new') }}"><i class="material-icons">&#xE227;</i> Trở thành đối tác</a></li>
             <li><a href="javascript:void(0);"><i class="material-icons">&#xE8A3;</i> Tuyển dụng</a></li>
             <li><a href="javascript:void(0);"><i class="material-icons">&#xE55A;</i> Về HandFree</a></li>
           </ul>

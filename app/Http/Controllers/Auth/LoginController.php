@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Symfony\Component\HttpFoundation\Session\Session;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -39,7 +40,7 @@ class LoginController extends Controller
 	 * @return string
 	 */
 	public function username() {
-		return 'email';
+		return 'phone';
 	}
 
 	/**
@@ -61,14 +62,9 @@ class LoginController extends Controller
 	 * @return Response
 	 */
 	public function authenticate(Request $request) {
-		$data = [
-			'email' => $request->email,
-			'password' => $request->password,
-			'delete_flg' => Config::get('constants.FLG_OFF'),
-			'confirm_flg' => Config::get('constants.FLG_ON')
-		];
-		
-		if (Auth::attempt($data)) {
+		$user = User::checkLoginAccount($request);
+		if ($user) {
+			Auth::login($user);
 			return $this->redirectPath();
 		} else {
 			return response()->json('', 401);
@@ -95,6 +91,8 @@ class LoginController extends Controller
 	/**
 	 * Log out.
 	 * 
+	 * @param Request $request
+	 * @return \Illuminate\Http\RedirectResponse
 	 */
 	public function logout(Request $request) {
 		Auth::logout();

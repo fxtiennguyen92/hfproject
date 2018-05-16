@@ -3,10 +3,11 @@
 return [
 	/** PAGE NAME **/
 	'HOME_PAGE' => 'home',
-	'CONTROL_PAGE' => 'control',
 	'LOGIN_PAGE' => 'login',
 	'SIGNUP_PAGE' => 'signup',
+	'PRO_SIGNUP_PAGE' => 'pro-new',
 	'PASSWORD_PAGE' => 'password',
+	'ACCOUNT_PAGE' => 'account',
 	'BLOG_PAGE' => 'blog',
 	'BLOG_CONTENT_PAGE' => 'blog-content',
 
@@ -20,10 +21,10 @@ return [
 	'PRO_PROFILE_PAGE' => 'pro.profile',
 	'PRO_ORDER_LIST_PAGE' => 'pro.orders',
 	'PRO_ORDER_PAGE' => 'pro.order',
-	'PRO_SIGN_UP_PAGE' => 'pro.signup',
 	
 	'PRO_MNG_PAGE' => 'pro.pros',
 	
+	'MNG_CONTROL_PAGE' => 'mng.control',
 	'MNG_ACC_LIST_PAGE' => 'mng.accounts',
 	'MNG_PRO_LIST_PAGE' => 'mng.pros',
 	'MNG_PRO_PROFILE_PAGE' => 'mng.pro-profile',
@@ -32,6 +33,12 @@ return [
 	'MNG_BLOG_LIST_PAGE' => 'mng.blogs',
 	'MNG_BLOG_PAGE' => 'mng.blog',
 	'MNG_ORDER_LIST_PAGE' => 'mng.orders',
+	'MNG_COMMON_LIST_PAGE' => 'mng.commons',
+	'MNG_DOC_PAGE' => 'mng.doc',
+	
+	'PA_COMPANY_LIST_PAGE' => 'mng.pa.companies',
+	'PA_COMPANY_PAGE' => 'mng.pa.company',
+	'PA_PRO_LIST_PAGE' => 'mng.pa.pros',
 	
 	/** ERROR PAGE **/
 	'404_PAGE' => 'error.404',
@@ -42,11 +49,15 @@ return [
 	'OUT_LOCATION_MAIL_SUBJECT' => '[HANDFREE APP] Địa điểm chưa được hỗ trợ',
 	
 	/** ENUM **/
+	'COMMON_ROOT' => '*ROOT',
+	
 	'ROLE_MEM' => '0',
 	'ROLE_PRO' => '1',
 	'ROLE_PRO_MNG' => '2', // Pro Manager
-
-	'ROLE_CSO' => '90', // Customer Service
+	
+	'ROLE_CSO' => '90', // Customer Service Officer
+	'ROLE_PA' => '91',  // Partner Acquisition
+	
 	'ROLE_ADM' => '99',
 	
 	'FLG_OFF' => '0',

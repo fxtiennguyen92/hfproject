@@ -21,7 +21,7 @@
         <i class="material-icons ">&#xE8B0;</i>
       </a>
     </li>
-    <li class="@if(isset($nav)) @if($nav == 'control') active @endif @endif">
+    <li class="@if(isset($nav)) @if($nav == 'account') active @endif @endif">
       <a href="{{ route('control') }}">
         <i class="material-icons ">&#xE7FD;</i>
       </a>

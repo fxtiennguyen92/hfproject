@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -37,6 +38,13 @@ class User extends Authenticatable
 	public function getAllPro() {
 		return $this::with('profile')
 			->proAndProManager()
+			->get();
+	}
+
+	public function getAllProForPA() {
+		return $this::with('profile', 'profile.company')
+			->proAndProManager()
+			->orderBy('updated_at', 'desc')
 			->get();
 	}
 
@@ -80,6 +88,26 @@ class User extends Authenticatable
 			->first();
 	}
 
+	public function existPhone($phone, $id = null) {
+		if (!$phone) {
+			return false;
+		}
+		
+		$user = $this
+			->where('phone', $phone)
+			->first();
+		
+		if (!$user) {
+			return false;
+		}
+		
+		if ($comp->id === $id) {
+			return false;
+		}
+		
+		return true;
+	}
+
 	public function activeProAccount($id) {
 		$passwordTemp = str_random(12);
 		return User::where('id', $id)->update([
@@ -90,7 +118,7 @@ class User extends Authenticatable
 		]);
 	}
 
-	public function updateDeleteFlg ($id, $deleteFlg) {
+	public function updateDeleteFlg($id, $deleteFlg) {
 		return User::where('id', $id)->update([
 						'delete_flg' => $deleteFlg
 		]);
@@ -100,6 +128,31 @@ class User extends Authenticatable
 		return User::where('id', $id)->update([
 						'password' => bcrypt($password)
 		]);
+	}
+
+	public static function checkLoginAccount($account) {
+		// get with username is phone
+		$user = User::where('phone', $account->username)
+			->available()
+			->first();
+		
+		if (!$user) {
+			// get with username is email
+			$user = User::where('email', $account->username)
+				->available()
+				->first();
+		}
+		
+		if (!$user) {
+			return null;
+		}
+		
+		// check password
+		if (!(Hash::check($account->password, $user->password))) {
+			return null;
+		}
+		
+		return $user;
 	}
 
 	public function profile() {

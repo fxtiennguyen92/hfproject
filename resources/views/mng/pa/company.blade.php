@@ -1,18 +1,5 @@
 @extends('template.index')
 @push('stylesheets')
-<style>
-::placeholder {
-  font-size: 13px;
-  color: #ccc;
-  opacity: 1;
-}
-:-ms-input-placeholder {
-  color: #ccc;
-}
-::-ms-input-placeholder {
-  color: #ccc;
-}
-</style>
 
 <!-- Page Scripts -->
 <script>
@@ -96,9 +83,16 @@
 					onSubmit: function() {
 						$('input[name=image]').val($('span.dropify-render').find('img').attr('src'));
 						loadingBtnSubmit('btnSubmit');
+						
+						@if (!auth()->check())
+						var url = '{{ route("company_create") }}';
+						@else
+						var url = '{{ route("pa_company_create") }}';
+						@endif
+						
 						$.ajax({
 							type: 'POST',
-							url: "{{ route('modify_company') }}",
+							url: url,
 							data: $('#frmMain').serialize(),
 							success: function(response) {
 								swal({
@@ -109,7 +103,11 @@
 									confirmButtonText: 'Kết thúc',
 								},
 								function() {
-									location.href = '{{ route("new_company") }}';
+									@if (!auth()->check())
+									location.href = '{{ route("company_new") }}';
+									@else
+									location.href = '{{ route("pa_company_list") }}';
+									@endif
 								});
 							},
 							error: function(xhr) {
@@ -153,7 +151,7 @@
 
 @section('content')
 <section class="content-body content-template-1">
-	<form id="frmMain" class="company-new-form form-wrapper" name="form-validation" method="post" enctype="multipart/form-data" action="{{ route('modify_company') }}">
+	<form id="frmMain" class="company-new-form form-wrapper" name="form-validation" method="post" enctype="multipart/form-data" action="">
 		<h1 class="page-title text-left">Thông tin <span style="white-space: nowrap;">Doanh nghiệp<span></span></h1>
 		<div class="row">
 			<div class="col-md-12">
@@ -278,7 +276,7 @@
 						<label>Dịch vụ</label>
 						<div class="row" style="margin: 0px 5px;">
 							@foreach ($services as $service)
-							<div data-toggle="buttons" class="col-md-6 col-sm-6 col-sx-6">
+							<div data-toggle="buttons" class="col-md-6 col-sm-6 col-xs-6">
 								<label class="btn">
 									<input type="checkbox"
 										name="service[]"
@@ -288,6 +286,7 @@
 							</div>
 							@endforeach
 						</div>
+						@if (auth()->check())
 						<div class="row" style="margin: 0px 5px;">
 							<div class="col-md-12">
 								<input type="text" class="form-control"
@@ -295,6 +294,7 @@
 									name="otherService">
 							</div>
 						</div>
+						@endif
 					</div>
 				</div>
 				<div class="material-row row">
@@ -302,7 +302,7 @@
 						<label>Loại vật tư</label>
 						<div class="row" style="margin: 0px 5px;">
 							@foreach ($materials as $material)
-							<div data-toggle="buttons" class="col-md-6 col-sm-6 col-sx-6">
+							<div data-toggle="buttons" class="col-md-6 col-sm-6 col-xs-6">
 								<label class="btn">
 									<input type="checkbox"
 										name="material[]"
@@ -311,16 +311,16 @@
 								</label>
 							</div>
 							@endforeach
-							
-							
 						</div>
+						@if (auth()->check())
 						<div class="row" style="margin: 0px 5px;">
 							<div class="col-md-12">
-								<input type="text" class="form-control 
+								<input type="text" class="form-control"
 									placeholder="Vật tư khác"
 									name="otherMaterial">
 							</div>
 						</div>
+						@endif
 					</div>
 				</div>
 				<div class="row">

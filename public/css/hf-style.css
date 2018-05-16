@@ -2,6 +2,18 @@ body.single-page {
   background: #fafbfc;
 }
 
+::placeholder {
+  font-size: 12px;
+  color: #808080;
+  opacity: 1;
+}
+:-ms-input-placeholder {
+  color: #808080;
+}
+::-ms-input-placeholder {
+  color: #808080;
+}
+
 table {
   font-size: 14px;
 }
@@ -394,7 +406,7 @@ table {
   border: none;
   border-bottom: solid 1px #e1e1e1 !important;
   padding: 10px 0;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 textarea.form-control {
@@ -403,12 +415,12 @@ textarea.form-control {
 
 .input-group input[disabled] {
   background: none;
-  color: #ccc;
+  color: #aaa;
 }
 
 .form-group label {
   font-size: 13px;
-  color: #ccc;
+  color: #aaa;
   margin-bottom: 0;
 }
 
@@ -534,7 +546,7 @@ nav.top-menu .menu {
 
 .emp-table .emp-email {
   font-style: italic;
-  color: #ccc;
+  color: #aaa;
   text-transform: none !important;
 }
 
@@ -599,7 +611,7 @@ nav.top-menu .menu {
 }
 
 .pro-order .pro-content .order-row .detail span {
-  color: #ccc;
+  color: #aaa;
 }
 
 .under-line {
@@ -1104,8 +1116,8 @@ body.single-page .single-page-block .single-page-block-inner {
   width: 20px;
   height: 20px;
   border-radius: 100%;
-  background: #ccc;
-  border: solid 1px #ccc;
+  background: #aaa;
+  border: solid 1px #aaa;
   color: transparent;
   outline: none;
 }
@@ -1122,7 +1134,7 @@ body.single-page .single-page-block .single-page-block-inner {
 }
 
 .hf-footer .intro {
-  color: #ccc;
+  color: #aaa;
 }
 
 .hf-footer .title {
@@ -1531,7 +1543,7 @@ body.single-page .single-page-block .single-page-block-inner {
   position: absolute;
   left: 20px;
   top: 20px;
-  color: #ccc;
+  color: #aaa;
 }
 
 #positionAndTime .address-history .item .right-content {
@@ -1539,7 +1551,7 @@ body.single-page .single-page-block .single-page-block-inner {
 }
 
 #positionAndTime .address-history .item .right-content > div:last-child {
-  color: #ccc;
+  color: #aaa;
   font-size: 13px;
 }
 
@@ -1915,7 +1927,7 @@ section.user-menu .list-menu a > i {
 }
 
 .orders-item .code-item {
-  color: #ccc;
+  color: #aaa;
   font-size: 13px;
 }
 
@@ -1987,7 +1999,7 @@ section.user-menu .list-menu a > i {
 
 .pro-profile .des {
   font-size: 14px;
-  color: #ccc;
+  color: #aaa;
 }
 
 .pro-profile .project img {
@@ -2187,8 +2199,18 @@ label.label-outlined.label-success {
   vertical-align: middle;
 }
 
+.mng-list .row-deleted-flg {
+  text-decoration: line-through;
+}
+
 .mng-list .col-label-profile-state span {
   line-height: 16px;
+}
+
+.mng-list .no-info {
+  font-size: 13px;
+  font-style: italic;
+  color: #aaa;
 }
 
 .mng-list .blog-title {
@@ -2215,7 +2237,7 @@ label.label-outlined.label-success {
   width: 80px;
 }
 
-.mng-list. col-order-price {
+.mng-list .col-order-price {
   font-weight: bold;
 }
 
@@ -2231,6 +2253,29 @@ label.label-outlined.label-success {
 .mng-list .dropdown-item > i {
   padding-right: 7px;
 }
+
+.mng-list .col-company-name,
+.mng-list .col-pro-info .pro-name {
+  font-weight: bold;
+  color: #02b3e4;
+}
+
+.mng-list .col-company-address,
+.mng-list .col-company-style,
+.mng-list .col-company-phone,
+.mng-list .col-pro-info .pro-phone,
+.mng-list .col-pro-info .pro-company {
+  font-size: 12px;
+}
+
+.mng-list .col-company-address i,
+.mng-list .col-company-style i,
+.mng-list .col-company-phone i,
+.mng-list .col-pro-info i {
+  font-size: 12px;
+  padding-right: 5px;
+}
+
 
 .blog-carousel {
   height: 300px;
@@ -2334,11 +2379,12 @@ label.label-outlined.label-success {
 .col-cus-info .cus-email,
 .col-pro-info .pro-email {
   font-style: italic;
-  color: #ccc;
+  color: #aaa;
   text-transform: none !important;
 }
 
-.company-new-form label.btn {
+.company-new-form label.btn,
+.pro-new-form label.btn {
   display: block;
   width: 100%;
   border: none;
@@ -2348,9 +2394,16 @@ label.label-outlined.label-success {
   color: #55595c;
 }
 
-.company-new-form label.active {
+.company-new-form label.active,
+.pro-new-form label.active {
   color: #02b3e4;
 }
+
+span.header-info {
+  font-size: 13px;
+  color: #000;
+}
+
 
 /*
 * RESPONSIVE
@@ -2412,9 +2465,6 @@ label.label-outlined.label-success {
     box-shadow: none;
     border: none;
     min-height: 0;
-  }
-  .content-template-1 .form-wrapper {
-    padding: 30px;
   }
   .header-top-bar {
     display: block;

@@ -13,26 +13,29 @@ use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\CommonController;
+use App\Event;
+use App\EventUser;
 
-class ProSignUpController extends Controller
+class ProController extends Controller
 {
 	protected function validator(array $data) {
 		return Validator::make($data, [
-						'email' => 'string|email|max:255|unique:users',
-						'phone' => 'numeric|unique:users',
+						'name' => 'string|max:225',
+						'email' => 'nullable|string|max:100|email|unique:users',
+						'phone' => 'string|max:25|unique:users',
 		]);
 	}
 
-	public function view() {
+	public function newPro() {
 		$commonModel = new Common();
 		$serviceModel = new Service();
+		$eventModel = new Event();
+		
+		$services = $serviceModel->getAll();
+		$events = $eventModel->getAll();
 		
 		$cities = $commonModel->getCityList();
-		$districts = null;
-		if ($cities) {
-			$districts = $commonModel->getDistList($cities->first()->code);
-		}
-		$services = $serviceModel->getAllServing();
+		$districts = $commonModel->getDistList();
 		
 		// pro manager
 		$company = null;
@@ -46,35 +49,25 @@ class ProSignUpController extends Controller
 			}
 		}
 		
-		return view(Config::get('constants.PRO_SIGN_UP_PAGE'), array(
+		return view(Config::get('constants.PRO_SIGNUP_PAGE'), array(
 						'cities' => $cities,
 						'districts' => $districts,
 						'company' => $company,
-						'services' => $services
+						'services' => $services,
+						'events' => $events
 		));
 	}
 
-	public function signup(Request $request) {
+	public function create(Request $request) {
 		$validator = $this->validator($request->all());
 		if ($validator->fails()) {
-			return response()->json('', 409);
+			return response()->json($validator->errors()->first(), 409);
 		}
 		
 		// register
 		try {
 			DB::beginTransaction();
-			
-			// company
-			if ($request->operationMode == 1) {
-				$comp = new Company();
-				$comp->name = $request->compName;
-				$comp->address = $request->compAddress;
-				$comp->district = $request->compDist;
-				$comp->city = $request->compCity;
-				$comp->services = json_encode($request->services);
-				$comp->save();
-			}
-			
+
 			// account
 			$user = new User();
 			$user->name = $request->name;
@@ -82,10 +75,6 @@ class ProSignUpController extends Controller
 			$user->phone = $request->phone;
 			
 			$user->role = Config::get('constants.ROLE_PRO');
-			if ($request->operationMode == 1) {
-				$user->role = Config::get('constants.ROLE_PRO_MNG');
-			}
-			
 			if (auth()->check()) {
 				$user->created_by = auth()->user()->id;
 			}
@@ -105,32 +94,31 @@ class ProSignUpController extends Controller
 			$pro->fg_address = $request->familyRegAddress;
 			$pro->fg_district = $request->familyRegDist;
 			$pro->fg_city = $request->familyRegCity;
-			$pro->address = $request->address;
+			$pro->address_1 = $request->address_1;
+			$pro->address_2 = $request->address_2;
 			$pro->district = $request->dist;
 			$pro->city = $request->city;
 			$pro->services = json_encode($request->services);
 			
 			if (auth()->check()) {
-				if (auth()->user()->role == Config::get('constants.ROLE_PRO_MNG')) {
-					$profileModel = new ProProfile();
-					$manager = $profileModel->getById(auth()->user()->id);
-					
-					$pro->company_id = $manager->company_id;
-				} else {
-					if ($request->operationMode == 1) {
-						$pro->company_id = $comp->id;
-					}
-				}
-				
 				$pro->created_by = auth()->user()->id;
-			} else {
-				if ($request->operationMode == 1) {
-					$pro->company_id = $comp->id;
-				}
-				$pro->created_by = $user->id;
 			}
 			
 			$pro->save();
+			
+			// event
+			if ($request->event !== '') {
+				$eventUser = new EventUser();
+				$eventUser->event_id = $request->event;
+				$eventUser->user_id = $user->id;
+				$eventUser->created_by = $user->id;
+				if (auth()->check()) {
+					$eventUser->created_by = auth()->user()->id;
+				}
+				
+				$eventUser->save();
+			}
+			
 			DB::commit();
 			return response()->json('', 200);
 		} catch(\Exception $e) {

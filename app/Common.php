@@ -11,15 +11,27 @@ class Common extends Model
 	protected $table = 'commons';
 
 	public function getByKey($key) {
-		return $this->where('key', $key)
+		return $this
+			->where('key', $key)
 			->available()
 			->orderBy('order_dsp')
 			->orderBy('name')
 			->get();
 	}
 
+	public function getInitByKey($key) {
+		return $this
+			->where('key', $key)
+			->where('init_flg', Config::get('constants.FLG_ON'))
+			->available()
+			->first();
+	}
+
 	public function getByCode($code) {
-		return $this->where('code', $code)->available()->first();
+		return $this
+			->where('code', $code)
+			->available()
+			->first();
 	}
 
 	public function getByKeyAndValue($key, $value) {
@@ -31,16 +43,49 @@ class Common extends Model
 			->orderBy('name')
 			->get();
 	}
+	
+	public function getAllByKey($key) {
+		return $this
+			->where('key', $key)
+			->get();
+	}
+
+	public static function updateDeleteFlg($key, $code, $deleteFlg) {
+		Common::where('key', $key)
+			->where('code', $code)
+			->update(['delete_flg' => $deleteFlg]);
+	}
 
 	public function scopeAvailable($query) {
 		return $query->where('delete_flg', Config::get('constants.FLG_OFF'));
 	}
 
+	/**
+	 * Get city list for ajax
+	 * 
+	 * @return unknown
+	 */
 	public function getCityList() {
 		return $this->getByKey(Config::get('constants.KEY_CITY'));
 	}
 
-	public function getDistList($cityCode) {
+	/**
+	 * Get district list for ajax
+	 *
+	 * @return unknown
+	 */
+	public function getDistList($cityCode = null) {
+		if (!$cityCode) {
+			$initCity = $this->getInitByKey(Config::get('constants.KEY_CITY'));
+			
+			$cityCode = '';
+			if ($initCity) {
+				$cityCode = $initCity->code;
+			} else {
+				$cityCode = $this->getCityList()->first()->code;
+			}
+		}
+		
 		return $this->getByKeyAndValue(Config::get('constants.KEY_DIST'), $cityCode);
 	}
 }

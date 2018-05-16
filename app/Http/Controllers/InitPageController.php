@@ -11,6 +11,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Review;
 use App\Order;
 use App\Blog;
+use App\Doc;
 
 class InitPageController extends Controller
 {
@@ -90,13 +91,32 @@ class InitPageController extends Controller
 		));
 	}
 
+	public function viewDocPage($urlName) {
+		$docModel = new Doc();
+		
+		$doc = $docModel->getByUrlName($urlName);
+		if (!$doc) {
+			throw new NotFoundHttpException();
+		}
+		
+		return view(Config::get('constants.DOC_PAGE'), array(
+						'doc' => $doc,
+		));
+	}
+
 	public function control() {
 		if (!auth()->check()) {
 			return redirect()->route('login_page');
 		}
 		
-		return view(Config::get('constants.CONTROL_PAGE'), array(
-			'nav' => 'control',
+		if (auth()->user()->role == Config::get('constants.ROLE_ADM')) {
+			return view(Config::get('constants.MNG_CONTROL_PAGE'), array(
+							'nav' => 'account',
+			));
+		}
+		
+		return view(Config::get('constants.ACCOUNT_PAGE'), array(
+			'nav' => 'account',
 		));
 	}
 }

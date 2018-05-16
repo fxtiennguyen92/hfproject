@@ -127,7 +127,7 @@
 
 <body class="theme-default single-page">
   @if (auth()->check() && auth()->user()->role >= 80)
-    @include('template.admin-nav')
+    @include('template.mng.nav')
   @else
     @include('template.nav')
   @endif

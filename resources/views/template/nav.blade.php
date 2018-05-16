@@ -10,7 +10,7 @@
       </div>
       <div class="icon-menu-wrapper">
         <ul class="icon-menu">
-          <li class="icon-menu-user @if(isset($nav)) @if($nav == 'control') active @endif @endif">
+          <li class="icon-menu-user @if(isset($nav)) @if($nav == 'account') active @endif @endif">
             <a href="{{ route('control') }}">
               <span>@if (auth()->check()) {{ auth()->user()->email }} @endif</span><i class="material-icons">&#xE7FD;</i>
             </a>
