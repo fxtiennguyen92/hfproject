@@ -3,8 +3,10 @@
   <form class="quoted-form" id="frmQuotedPrice" name="form-validation" method="POST" action="{{ route('quote_price') }}">
     <input name="inpPrice" class="inp-quoted-price" value="100000" step="5000" min="100000" max="">
     <input name="price" class="basic-inp-quoted-price" type="hidden"/>
-    <div class="text-light padding-top-20 text-left" style="padding-left: 10px;">Vào lúc</div>
-    <div class="row excute-date">
+    <div class="padding-top-10 color-danger text-left" style="font-size: 13px">Giá trên là số tiền bạn thu của Khách</div>
+    <div class="padding-bottom-10 color-danger text-left" style="font-size: 13px">Tiền Chiết khấu trả cho Hand Free là <span id="spanCK" style="font-weight: bold">17.000 đ</span></div>
+    <div class="text-light padding-top-20 text-left" style="padding-left: 10px; display: none;">Vào lúc</div>
+    <div class="row excute-date" style="display: none;">
       <div class="col-md-8 col-sm-8 col-xs-8" style="padding-left: 0; padding-right: 0">
         <select class="form-control selectpicker hf-select hf-select-date" data-live-search="false" name="estDate">
         @foreach ($dates as $date)
@@ -20,8 +22,8 @@
         </select>
       </div>
     </div>
-    <div class="quoted-intro padding-top-20">
-    <textarea class="form-control" name="introduction" rows="6" maxlength="200" placeholder="Ghi chú"></textarea>
+    <div class="padding-top-20">
+    <textarea class="form-control" name="introduction" rows="6" maxlength="200" placeholder="Mô tả dịch vụ của bạn"></textarea>
     </div>
     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
   </form>

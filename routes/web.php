@@ -147,19 +147,26 @@ Route::middleware('cs.pa')->group(function() {
 		->name('pa_pro_list');
 	Route::post('/pa/pro', 'Mng\ProController@createForPA')
 		->name('pa_pro_create');
+	Route::post('/pa/pro/{proId}/delete', 'Mng\ProController@deleteForPA')
+		->name('pa_pro_delete');
 });
 /** Partner Acquisition - END **/
 	
 /** Management - STA **/
 Route::middleware('cs.officer')->group(function() {
 
+	// Pro
 	Route::get('/mng/pro', 'Mng\ProController@viewList')
-		->name('mng_pro_list_page');
-	Route::post('pro/mng/pro/{proId}/delete','Pro\ProManagerController@deleteByProManager')
-		->name('delete_pro_by_pro_mng');
-
-	Route::get('/mng/pro/{proId}/profile', 'Mng\ProController@viewProfile')
-		->name('mng_pro_profile_page');
+		->name('mng_pro_list');
+	Route::get('/mng/pro/{proId}', 'Mng\ProController@edit')
+		->name('mng_pro_edit');
+	Route::post('/mng/pro/{proId}/update','Mng\ProController@update')
+		->name('mng_pro_update');
+	Route::post('/mng/pro/{proId}/active','Mng\ProController@active')
+		->name('mng_pro_active');
+	Route::post('/mng/pro/{proId}/delete','Mng\ProController@delete')
+		->name('mng_pro_delete');
+		
 	Route::post('/mng/pro/avatar', 'Mng\ProController@approveAvatar')
 		->name('approve_pro_avatar');
 	Route::post('/mng/pro/update_cv', 'Mng\ProController@updateCV')
@@ -193,21 +200,27 @@ Route::middleware('cs.officer')->group(function() {
 
 	// Common parameters
 	Route::get('/mng/common/{key?}', 'Mng\CommonController@viewList')
-		->name('mng/common/list');
+		->name('mng_common_list');
 	Route::post('/mng/common/{key}', 'Mng\CommonController@createCommon')
-		->name('mng/common/create');
+		->name('mng_common_create');
 	Route::post('/mng/common/{key}/{code}/active', 'Mng\CommonController@active')
-		->name('mng/common/active');
+		->name('mng_common_active');
 	Route::post('/mng/common/{key}/{code}/delete', 'Mng\CommonController@delete')
-		->name('mng/common/delete');
+		->name('mng_common_delete');
 
 	// Document
 	Route::get('/mng/doc', 'Mng\DocController@viewList')
 		->name('mng_doc_list');
 	Route::get('/mng/doc/new', 'Mng\DocController@newDoc')
 		->name('mng_doc_new');
-	Route::get('/mng/doc', 'Mng\DocController@create')
+	Route::post('/mng/doc', 'Mng\DocController@create')
 		->name('mng_doc_create');
+	Route::get('/mng/{id}', 'Mng\DocController@edit')
+		->name('mng_doc_edit');
+	Route::post('/mng/{id}/update', 'Mng\DocController@update')
+		->name('mng_doc_update');
+	Route::post('/mng/{id}/delete', 'Mng\DocController@delete')
+		->name('mng_doc_delete');
 
 });
 /** Management - END **/

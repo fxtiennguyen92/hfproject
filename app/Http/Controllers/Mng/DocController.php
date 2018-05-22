@@ -3,37 +3,52 @@
 namespace App\Http\Controllers\Mng;
 
 use App\Http\Controllers\Controller;
-use App\Blog;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Http\Request;
-use App\Http\Controllers\FileController;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\DB;
 use App\Doc;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DocController extends Controller
 {
 	protected function validator(array $data) {
 		return Validator::make($data, [
 						'title' => 'required|string|max:150',
-						'urlName' => 'required|string|max:45|unique:docs',
+						'url_name' => 'required|string|max:45',
 						'content' => 'required|string',
 		]);
 	}
 
-	public function viewList() {
-// 		$blogModel = new Blog();
-// 		$blogs = $blogModel->getAll();
+	public function viewList(Request $request) {
+		$request->session()->forget('doc');
 		
-// 		return view(Config::get('constants.MNG_BLOG_LIST_PAGE'), array(
-// 						'blogs' => $blogs,
-// 		));
+		$docModel = new Doc();
+		$docs = $docModel->getAllForMng();
+		
+		return view(Config::get('constants.MNG_DOC_LIST_PAGE'), array(
+						'docs' => $docs,
+		));
 	}
 
-	public function newDoc() {
+	public function newDoc(Request $request) {
+		$request->session()->forget('doc');
+		
 		return view(Config::get('constants.MNG_DOC_PAGE'), array(
-			
+		));
+	}
+
+	public function edit($id, Request $request) {
+		$docModel = new Doc();
+		$doc = $docModel->getById($id);
+		if (!$doc) {
+			throw new NotFoundHttpException();
+		}
+		
+		$request->session()->put('doc', $doc->id);
+		
+		return view(Config::get('constants.MNG_DOC_PAGE'), array(
+						'doc' => $doc
 		));
 	}
 
@@ -46,10 +61,11 @@ class DocController extends Controller
 		try {
 			$doc = new Doc();
 			
-			$doc->url_name = $request->urlName;
-			$doc->title = $request->urlName;
+			$doc->url_name = $request->url_name;
+			$doc->title = $request->title;
 			$doc->content = $request->content;
-
+			$doc->updated_by = auth()->user()->id;
+			
 			$doc->save();
 			return redirect()->route('mng_doc_list');
 		} catch (\Exception $e) {
@@ -57,22 +73,34 @@ class DocController extends Controller
 		}
 	}
 
-	public function delete(Request $request) {
-		if (!$request->session()->has('blog')) {
-			throw new NotFoundHttpException();
+	public function update($id, Request $request) {
+		$validator = $this->validator($request->all());
+		if ($validator->fails()) {
+			return Redirect::back()->withInput()->with('error', $validator->errors()->first());
 		}
-		$blogId = $request->session()->get('blog');
-
+		
 		try {
-			DB::beginTransaction();
-			FileController::deleteBlogImage($blogId);
-			Blog::destroy($blogId);
+			$doc = Doc::find($id);
 			
-			DB::commit();
-			return redirect()->route('mng_blog_list_page');
+			$doc->url_name = $request->url_name;
+			$doc->title = $request->title;
+			$doc->content = $request->content;
+			$doc->updated_by = auth()->user()->id;
+			
+			$doc->save();
+			return redirect()->route('mng_doc_list');
 		} catch (\Exception $e) {
-			DB::rollback();
-			return Redirect::back()->withInput()->with($e->getMessage(), 500);
+			return Redirect::back()->withInput()->with('error', $e->getMessage());
+		}
+	}
+
+	public function delete($id) {
+		try {
+			Doc::destroy($id);
+			
+			return response()->json('', 200);
+		} catch (\Exception $e) {
+			return response()->json($e->getMessage(), 500);
 		}
 	}
 }

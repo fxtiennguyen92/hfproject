@@ -17,15 +17,16 @@ class Doc extends Model
 	public function getByUrlName($urlName) {
 		return $this
 			->where('url_name', $urlName)
-			->available()
+			->first();
+	}
+	
+	public function getById($id) {
+		return $this
+			->where('id', $id)
 			->first();
 	}
 	
 	public function getAllForMng() {
 		return $this->get();
-	}
-
-	public function scopeAvailable($query) {
-		return $query->where('delete_flg', Config::get('constants.FLG_OFF'));
 	}
 }

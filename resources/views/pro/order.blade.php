@@ -94,7 +94,6 @@
   <form class="quoted-form" id="frmMain" name="form-validation" method="POST" action="{{ route('quote_price') }}">
     <input name="inpPrice" class="inp-quoted-price" step="5000" min="100000" max="">
     <input name="price" class="basic-inp-quoted-price" value="100000" type="hidden" />
-
     <div class="quoted-intro">
     <textarea class="form-control" name="introduction" rows="6" maxlength="200" placeholder="Ghi chú"></textarea>
     </div>

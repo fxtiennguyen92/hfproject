@@ -43,7 +43,7 @@
 					<tbody>
 						@foreach ($blogs as $blog)
 						<tr onclick="location.href='{{ route('mng_blog_page', ['urlName' => $blog->url_name]) }}'">
-							<td class="text-center">{{ '#'.sprintf('%05d', $blog->id) }}</td>
+							<td>{{ '#'.sprintf('%05d', $blog->id) }}</td>
 							<td title="{{ $blog->title }}"><span class="blog-title">{{ $blog->title }}</span></td>
 							<td class="blog-style text-center">
 								@if ($blog->style == 0)

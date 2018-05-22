@@ -43,9 +43,20 @@
 			},
 		});
 
-		$('#btnCreateDoc, #btnUpdateDoc').on('click', function(e) {
+		$('#btnCreateDoc').on('click', function(e) {
 			e.preventDefault();
+			loadingBtnSubmit($(this).attr('id'));
+			
 			$('#frmMain').attr('action', '{{ route("mng_doc_create") }}');
+			$('#frmMain').submit();
+		});
+
+		@if (session()->has('doc'))
+		$('#btnUpdateDoc').on('click', function(e) {
+			e.preventDefault();
+			loadingBtnSubmit($(this).attr('id'));
+			
+			$('#frmMain').attr('action', '{{ route("mng_doc_update", ["id" => $doc->id ]) }}');
 			$('#frmMain').submit();
 		});
 
@@ -62,10 +73,13 @@
 				confirmButtonText: 'Xóa',
 			},
 			function() {
-				$('#frmMain').attr('action', '{{ route("mng_doc_delete") }}');
+				loadingBtnSubmit('btnDeleteDoc');
+				
+				$('#frmMain').attr('action', '{{ route("mng_doc_delete", ["id" => $doc->id ]) }}');
 				$('#frmMain').submit();
 			});
 		});
+		@endif
 	});
 </script>
 @endpush
@@ -77,7 +91,7 @@
 	<div class="page-header hf-bg-gradient text-capitalize">Tài liệu</div>
 	<form id="frmMain" class="form-wrapper" method="post" enctype="multipart/form-data" action="">
 		<div class="row">
-			<div class="col-md-8">
+			<div class="col-md-12">
 				<div class="row">
 					<div class="col-md-12 form-group">
 						<label>Tiêu đề</label>
@@ -97,10 +111,9 @@
 						<label>URL</label>
 						<input type="text" maxlength="45"
 							class="form-control"
-							id="urlName"
-							name="urlName"
+							name="url_name"
 							@if (session('error') || !session()->has('doc'))
-							value="{{ old('urlName') }}">
+							value="{{ old('url_name') }}">
 							@else
 							value="{{ $doc->url_name }}">
 							@endif

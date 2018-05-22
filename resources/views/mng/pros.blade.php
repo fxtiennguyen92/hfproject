@@ -12,16 +12,43 @@
 			paging: false,
 			language: {
 				zeroRecords: "Chưa có thông tin",
-				search: "Tìm kiếm"
+				search: "Tìm kiếm cục bộ"
 			},
 			order: [[2, 'desc']],
-			columnDefs: [ { orderable: false, targets: [5] } ]
-		});
-
-		$('a.delete').on('click', function() {
-			
+			columnDefs: [ { orderable: false, targets: [4] } ]
 		});
 	});
+
+	function deletePro(proId) {
+		swal({
+			title: 'Xóa Đối tác?',
+			text: 'Thông tin này sẽ không thể phục hồi!',
+			type: 'warning',
+			showCancelButton: true,
+			cancelButtonClass: 'btn-default',
+			confirmButtonClass: 'btn-danger',
+			cancelButtonText: 'Quay lại',
+			confirmButtonText: 'Xóa',
+			closeOnConfirm: false,
+		},
+		function(isConfirm) {
+			if (isConfirm) {
+				swal({
+					title: 'Đang xử lý yêu cầu',
+					text: 'Xin chờ trong giây lát!',
+					type: 'info',
+					showConfirmButton: false,
+					closeOnConfirm: false,
+				});
+				
+				var url = "{{ route('mng_pro_delete', ['proId' => 'selectedProId']) }}";
+				url = url.replace('selectedProId', proId);
+				
+				$('#frmMain').attr('action', url);
+				$('#frmMain').submit();
+			}
+		});
+	}
 </script>
 @endpush
 
@@ -31,75 +58,104 @@
 <section class="content-body-full-page content-template-1">
 	<div class="page-header hf-bg-gradient text-capitalize">Đối tác</div>
 	<div class="form-wrapper">
-		<button class="btn btn-primary pull-right" type="button" onclick="location.href='{{ route('signup_pro') }}'">
-			<i class="material-icons">&#xE7F0;</i></button>
 		<div class="row">
-			<div class="col-md-12">
-				<table class="emp-table table table-hover nowrap mng-list" width="100%">
+			<div class="col-sm-12">
+				<table class="table table-hover nowrap mng-list" width="100%">
 					<thead>
 						<tr>
-							<th class="text-center col-name">Họ tên - Tài khoản</th>
-							<th class="text-center col-state">Trạng thái</th>
+							<th class="text-center">Họ tên</th>
+							<th class="text-center">Địa chỉ</th>
 							<th class="text-center">Ngày đăng ký</th>
-							<th class="text-center">Giới tính</th>
-							<th class="text-center">Ngày sinh</th>
+							<th class="text-center">Trạng thái</th>
 							<th>&nbsp;</th>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach ($pros as $pro)
 						<tr>
-							<td class="text-capitalize">
-								<div class="emp-name">{{ $pro['name'] }}
-									@if ($pro['role'] == 2)
-									<span style="color: red; font-style: italic;">(Mng)</span>
+							<td class="col-pro-info"">
+								<div class="@if ($pro->role == 2) color-danger @endif pro-name">
+									{{ $pro->name }}
+								</div>
+								<div class="padding-left-5">
+									@if (isset($pro->profile) && isset($pro->profile->company))
+									<i class="material-icons">store</i> {{ $pro->profile->company->name }}
+									@else
+									<i class="material-icons">build</i> Kinh doanh cá nhân
 									@endif
 								</div>
-								<div class="emp-email">{{ $pro['email'] }}</div>
+							</td>
+							<td>
+								<div>
+									<i class="material-icons">phone</i>
+									@if ($pro->phone){{ $pro->phone }}
+									@else
+										<span class="no-info">Chưa cập nhật</span>
+									@endif
+								</div>
+								<div>
+									<i class="material-icons">mail</i>
+									@if ($pro->email){{ $pro->email }}
+									@else
+										<span class="no-info">Chưa cập nhật</span>
+									@endif
+								</div>
+								<div>
+									<i class="material-icons">person_pin_circle</i> 
+									@if ($pro->profile->address_2) {{ $pro->profile->address_1.' '.$pro->profile->address_2 }}
+										@if ($pro->profile->city && $pro->profile->district)
+										{{ $pro->profile->district_info->name.', '.$pro->profile->city_info->name }}</div>
+										@endif
+									@else
+										<span class="no-info">Chưa cập nhật</span>
+									@endif
+							</td>
+							<td class="text-center">
+								{{ Carbon\Carbon::parse($pro->created_at)->format('d/m/Y H:i') }}
 							</td>
 							<td class="text-center col-label-profile-state">
-								@if ($pro['delete_flg'] == 1)
+								@if ($pro->delete_flg == 1)
 									<span class="label label-secondary">Đã xóa</span>
-								@elseif ($pro['profile']['state'] == '1')
+								@elseif ($pro->profile->state == '1')
 									<span class="label label-primary">Sẵn Sàng</span>
-								@elseif ($pro['profile']['state'] == '2')
+								@elseif ($pro->profile->state == '2')
 									<span class="label label-default">Treo</span>
-								@elseif ($pro['profile']['state'] == '3')
+								@elseif ($pro->profile->state == '3')
 									<span class="label label-warning">Cảnh cáo</span>
-								@elseif ($pro['profile']['state'] == '4')
+								@elseif ($pro->profile->state == '4')
 									<span class="label label-danger">Khóa</span>
-								@elseif ($pro['profile']['state'] == '5')
+								@elseif ($pro->profile->state == '5')
 									<span class="label label-secondary">Cấm vĩnh viễn</span>
 								@else
 									<span class="label label-success">Chờ Duyệt</span>
 								@endif
 							</td>
-							<td class="text-center">
-								{{ Carbon\Carbon::parse($pro['created_at'])->format('d-m-Y H:i') }}
-							</td>
-							<td class="text-center">
-								@if ($pro['profile']['gender'] == '1')
-									Nam
-								@elseif ($pro['profile']['gender'] == '2')
-									Nữ
-								@else
-									Khác
-								@endif
-							</td>
-							<td class="text-center">
-								{{ Carbon\Carbon::parse($pro['profile']['date_of_birth'])->format('d-m-Y') }}
-							</td>
-							<td>
-								<div class="dropdown margin-inline pull-right row-action-btn">
+							<td class="text-right">
+								<div class="dropdown">
 									<span class="btn btn-sm " data-toggle="dropdown">
 									<i class="icmn-cog3"></i>
 									</span>
 									<ul class="dropdown-menu dropdown-menu-right" role="menu">
-										<a class="dropdown-item view" href="{{ route('mng_pro_profile_page', ['proId' => $pro['id']]) }}">
+										<a class="dropdown-item" href="{{ route('mng_pro_edit', ['proId' => $pro->id]) }}">
 											<i class="icmn-grid6"></i> Chi tiết
 										</a>
-										<a class="dropdown-item view" href="javascript:void(0);">
+										<a class="dropdown-item" href="javascript:void(0);">
+											<i class="icmn-user-minus2"></i> Treo
+										</a>
+										<a class="dropdown-item" href="javascript:void(0);">
+											<i class="icmn-user-cancel2"></i> Cảnh cáo
+										</a>
+										<a class="dropdown-item" href="javascript:void(0);">
+											<i class="icmn-user-lock2"></i> Khóa
+										</a>
+										<a class="dropdown-item" href="javascript:void(0);">
+											<i class="icmn-user-block"></i> Cấm vĩnh viễn
+										</a>
+										<a class="dropdown-item" href="javascript:void(0);" onclick="return deletePro('{{ $pro->id }}')">
 											<i class="icmn-bin"></i> Xóa
+										</a>
+										<a class="dropdown-item" href="javascript:void(0);">
+											<i class="icmn-user-check2"></i> Phục hồi
 										</a>
 									</ul>
 								</div>

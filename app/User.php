@@ -35,8 +35,8 @@ class User extends Authenticatable
 		return $this->get();
 	}
 
-	public function getAllPro() {
-		return $this::with('profile')
+	public function getAllProForMng() {
+		return $this::with('profile', 'profile.company', 'profile.district_info', 'profile.city_info')
 			->proAndProManager()
 			->get();
 	}
@@ -44,6 +44,7 @@ class User extends Authenticatable
 	public function getAllProForPA() {
 		return $this::with('profile', 'profile.company')
 			->proAndProManager()
+			->available()
 			->orderBy('updated_at', 'desc')
 			->get();
 	}
@@ -157,10 +158,6 @@ class User extends Authenticatable
 
 	public function profile() {
 		return $this->hasOne('App\ProProfile', 'id');
-	}
-	
-	public static function getAvatar($id) {
-		return User::select('avatar')->where('id', $id)->first();
 	}
 	
 	public function scopeMember($query) {

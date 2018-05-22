@@ -41,6 +41,9 @@ $(document).ready(function() {
     $('#frmMain').attr('action', '{{ route("complete_order") }}');
     $('#frmMain').submit();
   });
+  $('.number-minus, .number-plus').on('click', function(e) {
+	  $('#spanCK').html(accounting.formatMoney(accounting.unformat($('input[name=inpPrice]').val())*0.17));
+  });
   $('#btnQuoted').on('click', function(e) {
     e.preventDefault();
     $('input[name=price]').val(accounting.unformat($('input[name=inpPrice]').val()));
@@ -123,8 +126,15 @@ $(document).ready(function() {
         @endif
       </div>
       <div class="tab-pane" id="infoTab" role="tabpanel" aria-expanded="false">
-<!--         <h5 class="padding-top-10">Chi tiết đơn hàng</h5> -->
-<!--         <div class="common-text">Chi tiết đơn hàng</div> -->
+        <h5 class="padding-top-10">Chi tiết đơn hàng</h5>
+        <div class="padding-10 text-left hf-card">
+        @php $as = explode(", ", $order->short_requirements) @endphp
+        @foreach ($as as $a)
+        	@if ($a !== '')
+        	<div>- {{ $a }}</div>
+        	@endif
+        @endforeach
+        </div>
         <h5 class="padding-top-20">Khách hàng</h5>
         <div class="padding-10 text-center hf-card user-row">
           <img class="user-avt" src="{{ env('CDN_HOST') }}/u/{{ $order->user_id }}/{{ $order->user->avatar }}">

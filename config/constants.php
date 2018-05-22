@@ -8,8 +8,9 @@ return [
 	'PRO_SIGNUP_PAGE' => 'pro-new',
 	'PASSWORD_PAGE' => 'password',
 	'ACCOUNT_PAGE' => 'account',
-	'BLOG_PAGE' => 'blog',
-	'BLOG_CONTENT_PAGE' => 'blog-content',
+	'BLOG_PAGE' => 'blogs',
+	'BLOG_CONTENT_PAGE' => 'blog',
+	'DOC_PAGE' => 'doc',
 
 	'SURVEY_PAGE' => 'survey',
 	'COMPLETE_PAGE' => 'complete',
@@ -27,7 +28,10 @@ return [
 	'MNG_CONTROL_PAGE' => 'mng.control',
 	'MNG_ACC_LIST_PAGE' => 'mng.accounts',
 	'MNG_PRO_LIST_PAGE' => 'mng.pros',
+				
+	'MNG_PRO_PAGE' => 'mng.pro',
 	'MNG_PRO_PROFILE_PAGE' => 'mng.pro-profile',
+				
 	'MNG_COMPANY_PAGE' => 'mng.company',
 	'MNG_COMPANY_LIST_PAGE' => 'mng.companies',
 	'MNG_BLOG_LIST_PAGE' => 'mng.blogs',
@@ -35,6 +39,7 @@ return [
 	'MNG_ORDER_LIST_PAGE' => 'mng.orders',
 	'MNG_COMMON_LIST_PAGE' => 'mng.commons',
 	'MNG_DOC_PAGE' => 'mng.doc',
+	'MNG_DOC_LIST_PAGE' => 'mng.docs',
 	
 	'PA_COMPANY_LIST_PAGE' => 'mng.pa.companies',
 	'PA_COMPANY_PAGE' => 'mng.pa.company',

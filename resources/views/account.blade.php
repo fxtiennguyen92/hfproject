@@ -75,7 +75,7 @@ $(document).ready(function() {
           <div class="row">
             <div class="col-md-4 col-sm-4 col-xs-4 text-center">
               <img class="social-icon" src="{{ env('CDN_HOST') }}/img/social/zalo.png">
-              <label class="social-label">0904623460</label>
+              <label class="social-label">02473041114</label>
             </div>
             <div class="col-md-4 col-sm-4 col-xs-4 text-center"
               onclick="window.open('https://m.me/handfreeco', '_blank');">
@@ -84,7 +84,7 @@ $(document).ready(function() {
             </div>
             <div class="col-md-4 col-sm-4 col-xs-4 text-center">
               <img class="social-icon" src="{{ env('CDN_HOST') }}/img/social/phone.png">
-              <label class="social-label">0904623460</label>
+              <label class="social-label">02473041114</label>
             </div>
           </div>
         </div>
@@ -92,7 +92,7 @@ $(document).ready(function() {
         <section class="user-menu">
           <ul class="list-menu">
             <li><a href="javascript:void(0);"><i class="material-icons">&#xE887;</i> Câu hỏi thường gặp</a></li>
-            <li><a href="{{ route('pros_new') }}"><i class="material-icons">&#xE227;</i> Trở thành đối tác</a></li>
+            <li><a href="{{ route('pro_new') }}"><i class="material-icons">&#xE227;</i> Trở thành đối tác</a></li>
             <li><a href="javascript:void(0);"><i class="material-icons">&#xE8A3;</i> Tuyển dụng</a></li>
             <li><a href="javascript:void(0);"><i class="material-icons">&#xE55A;</i> Về HandFree</a></li>
           </ul>

@@ -108,6 +108,37 @@
 			}
 		});
 	});
+	
+	function deletePro(proId) {
+		swal({
+			title: 'Xóa Đối tác',
+			text: 'Bạn muốn xóa đối tác này?',
+			type: 'warning',
+			showCancelButton: true,
+			cancelButtonClass: 'btn-default',
+			confirmButtonClass: 'btn-danger',
+			cancelButtonText: 'Quay lại',
+			confirmButtonText: 'Xóa',
+			closeOnConfirm: false,
+		},
+		function(isConfirm) {
+			if (isConfirm) {
+				swal({
+					title: 'Đang xử lý yêu cầu',
+					text: 'Xin chờ trong giây lát!',
+					type: 'info',
+					showConfirmButton: false,
+					closeOnConfirm: false,
+				});
+				
+				var url = "{{ route('pa_pro_delete', ['proId' => 'selectedProId']) }}";
+				url = url.replace('selectedProId', proId);
+				
+				$('#frmMain').attr('action', url);
+				$('#frmMain').submit();
+			}
+		});
+	}
 </script>
 @endpush
 
@@ -122,7 +153,7 @@
 				<i class="material-icons">create</i></button>
 		</div>
 		<div class="row">
-			<div class="col-md-12">
+			<div class="col-sm-12">
 				<table class="table table-hover nowrap mng-list" width="100%">
 					<thead>
 						<tr>
@@ -159,15 +190,17 @@
 								@endif
 							</td>
 							<td class="text-right">
-								<div class="dropdown row-action-btn">
+								<div class="dropdown">
 									<span class="btn" data-toggle="dropdown">
 									<i class="icmn-cog3"></i>
 									</span>
+									@if ($pro->created_by == auth()->user()->id)
 									<ul class="dropdown-menu dropdown-menu-right" role="menu">
-										<a class="dropdown-item view" href="javascript:void(0);">
+										<a class="dropdown-item" href="javascript:void(0);" onclick="return deletePro('{{ $pro->id }}');">
 											<i class="icmn-bin"></i> Xóa
 										</a>
 									</ul>
+									@endif
 								</div>
 							</td>
 						</tr>
@@ -192,7 +225,7 @@
 						<div class="form-wrapper">
 							<h1 class="page-title text-left">Tài khoản Đối tác</h1>
 							<div class="row">
-								<div class="col-md-12">
+								<div class="col-sm-12">
 									<div class="form-group">
 										<label>Họ tên <span class="color-danger">*</span></label>
 										<input type="text" maxlength="225" class="form-control" name="name" data-validation="[NOTEMPTY]">
@@ -200,7 +233,7 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-12">
+								<div class="col-sm-12">
 									<div class="form-group">
 										<label>Số điện thoại <span class="color-danger">*</span></label>
 										<input type="text" maxlength="25" class="form-control phone" name="phone" data-validation="[NOTEMPTY]">
@@ -208,23 +241,23 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="form-group col-md-12">
+								<div class="form-group col-sm-12">
 									<label>Loại tài khoản</label>
 									<div class="row" style="margin: 0px 5px;">
-										<div class="btn-group" data-toggle="buttons" class="col-md-12">
-											<label class="col-md-12 btn active">
+										<div class="btn-group" data-toggle="buttons" class="col-sm-12">
+											<label class="col-sm-12 btn active">
 												<input type="radio"
 													name="style"
 													value="1" checked>
 													<span class="icon icmn-checkmark-circle"></span> Doanh nghiệp
 											</label>
-											<label class="col-md-12 btn">
+											<label class="col-sm-12 btn">
 												<input type="radio"
 													name="style"
 													value="2">
 													<span class="icon icmn-radio-unchecked"></span> Quản lý Doanh nghiệp
 											</label>
-											<label class="col-md-12 btn">
+											<label class="col-sm-12 btn">
 												<input type="radio"
 													name="style"
 													value="0">
@@ -235,7 +268,7 @@
 								</div>
 							</div>
 							<div class="row company-row">
-								<div class="col-md-12">
+								<div class="col-sm-12">
 									<div class="form-group">
 										<label>Doanh nghiệp</label>
 										<select class="form-control selectpicker hf-select" data-live-search="true" name="company">
@@ -246,8 +279,8 @@
 									</div>
 								</div>
 							</div>
-							<div class="row company-row">
-								<div class="col-md-12">
+							<div class="row">
+								<div class="col-sm-12">
 									<div class="form-group">
 										<label>Training</label>
 										<select class="form-control selectpicker hf-select" data-live-search="true" name="event">

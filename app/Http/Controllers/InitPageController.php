@@ -26,9 +26,13 @@ class InitPageController extends Controller
 		$commonModel = new Common();
 		$parts = $commonModel->getByKey(Config::get('constants.HOME_PAGE'));
 		
+		$blogModel = new Blog();
+		$blogs = $blogModel->getNewestBlogs();
+		
 		return view(Config::get('constants.HOME_PAGE'), array(
 			'services' => $services,
-			'parts' => $parts
+			'blogs' => $blogs,
+			'parts' => $parts,
 		));
 	}
 	

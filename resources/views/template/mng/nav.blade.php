@@ -22,18 +22,18 @@
 					</li>
 					<li class="icon-menu-user">
 						@if (auth()->user()->role == 91)
-						<a href="{{ route('pa_pros_list') }}">
+						<a href="{{ route('pa_pro_list') }}">
 						@else
-						<a href="{{ route('mng_pro_list_page') }}">
+						<a href="{{ route('mng_pro_list') }}">
 						@endif
 							<i class="material-icons ">assignment_ind</i>
 						</a>
 					</li>
 					<li class="icon-menu-user">
 						@if (auth()->user()->role == 91)
-						<a href="{{ route('pa_companies_list') }}">
+						<a href="{{ route('pa_company_list') }}">
 						@else
-						<a href="{{ route('pa_companies_list') }}">
+						<a href="{{ route('pa_company_list') }}">
 						@endif
 							<i class="material-icons ">store</i>
 						</a>

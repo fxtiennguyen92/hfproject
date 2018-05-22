@@ -140,7 +140,8 @@
 					<div class="col-md-12 form-group">
 						<label>Hình đại diện</label>
 						<input id="inpImageDropify" type="file" class="dropify"
-							accept="image/*"
+							data-allowed-file-extensions="gif png jpg"
+							data-max-file-size-preview="3M"
 							@if (session('error') || !session()->has('blog'))
 							@else
 							data-default-file="{{ env('CDN_HOST') }}/img/blog/{{ $blog->image }}"

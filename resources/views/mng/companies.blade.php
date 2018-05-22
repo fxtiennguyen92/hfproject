@@ -41,8 +41,10 @@
 <section class="content-body-full-page content-template-1">
 	<div class="page-header hf-bg-gradient text-capitalize">Doanh nghiệp</div>
 	<div class="form-wrapper">
-		<button class="btn btn-primary pull-right" type="button" onclick="location.href='{{ route('mng_company_page') }}'">
-			<i class="material-icons">&#xE7F0;</i></button>
+		<div class="text-right">
+			<button class="btn btn-primary" type="button" onclick="location.href='{{ route('mng_company_page') }}'">
+				<i class="material-icons">&#xE7F0;</i></button>
+		</div>
 		<div class="row">
 			<div class="col-md-12">
 				<table class="table table-hover nowrap mng-list" width="100%">

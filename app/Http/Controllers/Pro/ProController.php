@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Pro;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use App\Common;
-use App\Company;
 use App\Service;
 use Illuminate\Http\Request;
 use App\ProProfile;
@@ -37,22 +36,9 @@ class ProController extends Controller
 		$cities = $commonModel->getCityList();
 		$districts = $commonModel->getDistList();
 		
-		// pro manager
-		$company = null;
-		if (auth()->check()) {
-			if (auth()->user()->role == Config::get('constants.ROLE_PRO_MNG')) {
-				$profileModel = new ProProfile();
-				$manager = $profileModel->getById(auth()->user()->id);
-				
-				$companyModel = new Company();
-				$company = $companyModel->get($manager->company_id);
-			}
-		}
-		
 		return view(Config::get('constants.PRO_SIGNUP_PAGE'), array(
 						'cities' => $cities,
 						'districts' => $districts,
-						'company' => $company,
 						'services' => $services,
 						'events' => $events
 		));
@@ -78,6 +64,7 @@ class ProController extends Controller
 			if (auth()->check()) {
 				$user->created_by = auth()->user()->id;
 			}
+			
 			$user->save();
 			
 			// profile
@@ -99,7 +86,8 @@ class ProController extends Controller
 			$pro->district = $request->dist;
 			$pro->city = $request->city;
 			$pro->services = json_encode($request->services);
-			
+			$pro->training = $request->event;
+			$pro->created_by = $user->id;
 			if (auth()->check()) {
 				$pro->created_by = auth()->user()->id;
 			}
@@ -107,9 +95,9 @@ class ProController extends Controller
 			$pro->save();
 			
 			// event
-			if ($request->event !== '') {
+			if ($request->event) {
 				$eventUser = new EventUser();
-				$eventUser->event_id = $request->event;
+				$eventUser->id = $request->event;
 				$eventUser->user_id = $user->id;
 				$eventUser->created_by = $user->id;
 				if (auth()->check()) {

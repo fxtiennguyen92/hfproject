@@ -33,7 +33,7 @@ class Company extends Model
 	public function getAll() {
 		return $this
 			->available()
-			->orderBy('created_at', 'desc')
+			->orderBy('name')
 			->get();
 	}
 

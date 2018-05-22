@@ -18,6 +18,13 @@ class Blog extends Model
 		return $this->where('url_name', $urlName)->first();
 	}
 	
+	public function getNewestBlogs() {
+		return $this->select('id', 'title', 'url_name', 'style', 'image')
+			->orderBy('created_at', 'desc')
+			->take(5)
+			->get();
+	}
+	
 	public function getTopGeneralBlog() {
 		return $this->select('id', 'title', 'url_name', 'style', 'image')
 			->general()

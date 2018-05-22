@@ -97,7 +97,7 @@
 	function activeCommon(code) {
 		var url = '{{ route("mng_common_active", ["key" => $key, "code" => "commonCode" ]) }}';
 		url = url.replace('commonCode', code);
-
+		
 		$.ajax({
 			type: 'POST',
 			url: url,

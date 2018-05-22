@@ -16,6 +16,7 @@ class ServiceController extends Controller
 	public function view($serviceUrlName, Request $request) {
 		// redirect to login page if not member
 		if (!auth()->check()) {
+			$request->session()->put('back_service', $serviceUrlName);
 			return redirect()->route('login_page');
 		}
 		

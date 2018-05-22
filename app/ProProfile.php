@@ -30,4 +30,12 @@ class ProProfile extends Model
 	public function company() {
 		return $this->hasOne('App\Company', 'id', 'company_id');
 	}
+	
+	public function district_info() {
+		return $this->hasOne('App\Common', 'code', 'district');
+	}
+	
+	public function city_info() {
+		return $this->hasOne('App\Common', 'code', 'city');
+	}
 }

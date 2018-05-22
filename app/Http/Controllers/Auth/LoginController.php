@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Symfony\Component\HttpFoundation\Session\Session;
 use App\User;
+use Illuminate\Support\Facades\Redirect;
 
 class LoginController extends Controller
 {
@@ -65,9 +66,9 @@ class LoginController extends Controller
 		$user = User::checkLoginAccount($request);
 		if ($user) {
 			Auth::login($user);
-			return $this->redirectPath();
+			return $this->redirectPath($request);
 		} else {
-			return response()->json('', 401);
+			return Redirect::back()->withInput()->with('error', 401);
 		}
 	}
 
@@ -76,7 +77,7 @@ class LoginController extends Controller
 	 * 
 	 * @return \Illuminate\Http\RedirectResponse
 	 */
-	public static function redirectPath() {
+	public static function redirectPath(Request $request) {
 		if (!Auth::check()) {
 			return redirect()->route('home_page');
 		}
@@ -85,6 +86,12 @@ class LoginController extends Controller
 			return redirect()->route('dashboard_page');
 		}
 		
+		if ($request->session()->has('back_service')) {
+			$service = $request->session()->get('back_service');
+			$request->session()->forget('back_service');
+			
+			return redirect()->route('service_page', ['serviceUrlName' => $service]);
+		}
 		return redirect()->route('home_page');
 	}
 

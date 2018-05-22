@@ -107,8 +107,7 @@
 			}
 		});
 
-		$('#frmMain').attr('action', '{{ route("pros_create") }}');
-		$('#frmMain2').validate({
+		$('#frmMain').validate({
 			submit: {
 				settings: {
 					inputContainer: '.form-group',
@@ -126,9 +125,10 @@
 						});
 					},
 					onSubmit: function() {
+						loadingBtnSubmit('btnSubmit');
 						$.ajax({
 							type: 'POST',
-							url: '{{ route("pros_create") }}',
+							url: '{{ route("pro_create") }}',
 							data: $('#frmMain').serialize(),
 							success: function(response) {
 								swal({
@@ -168,6 +168,7 @@
 										z_index: 1051,
 									});
 								};
+								resetBtnSubmit('btnSubmit', 'Đăng ký');
 							}
 						});
 					}

@@ -43,8 +43,8 @@
 	<div class="page-header hf-bg-gradient text-capitalize">Doanh nghiệp</div>
 	<div class="form-wrapper">
 		<div class="text-right">
-		<button class="btn btn-primary" type="button" onclick="location.href='{{ route('pa_company_new') }}'">
-			<i class="material-icons">create</i></button>
+			<button class="btn btn-primary" type="button" onclick="location.href='{{ route('pa_company_new') }}'">
+				<i class="material-icons">create</i></button>
 		</div>
 		<div class="row">
 			<div class="col-md-12">

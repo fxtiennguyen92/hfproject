@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>HandFree | @yield('title')</title>
+  <title>Hand Free | @yield('title')</title>
 
   <base href="{{ asset('') }}">
   <link href="{{ env('CDN_HOST') }}/img/icon/icon-144x144.png" rel="icon" type="image/png">
@@ -32,10 +32,12 @@
   <script src="assets/vendors/html5-form-validation/dist/jquery.validation.min.js"></script>
   <script src="assets/vendors/bootstrap-sweetalert/dist/sweetalert.min.js"></script>
   <script src="assets/vendors/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js"></script>
+  <script src="assets/vendors/slick/slick.min.js"></script>
 
   <!-- Clean UI Scripts -->
   <script src="assets/common/js/common.js"></script>
   <script src="assets/common/js/demo.temp.js"></script>
+  <script src="js/hf-script.js"></script>
   <style type="text/css">
     .single-page-block-inner {
       margin-top: 0px;
