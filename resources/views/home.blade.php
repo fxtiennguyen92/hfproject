@@ -81,7 +81,7 @@ $(document).ready(function() {
 		</ol>
 		<div class="carousel-inner" role="listbox">
 			<div class="carousel-item active">
-				<img src="{{ env('CDN_HOST') }}/img/banner/home/1.png">
+				<img src="{{ env('CDN_HOST') }}/img/banner/home/0.png">
 	<!-- 				<div class="carousel-caption"> -->
 	<!-- 					<p>Title</p> -->
 	<!-- 				</div> -->
@@ -174,9 +174,9 @@ $(document).ready(function() {
 		</div>
 	</div>
 
-	@foreach ($parts as $part)
-	{!! $part->text !!}
-	@endforeach
+<!-- 	@foreach ($parts as $part) -->
+<!-- 	{/!! $part->text !!} -->
+<!-- 	@endforeach -->
 
 	<footer class="hf-footer">
 		<div class="row padding-bottom-10">

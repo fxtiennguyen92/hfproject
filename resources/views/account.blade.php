@@ -1,106 +1,198 @@
 @extends('template.index') @push('stylesheets')
 <script>
 $(document).ready(function() {
-  $('.price').each(function() {
-    $(this).html(accounting.formatMoney($(this).html()));
-  });
-
-  $('#btnFillWallet').on('click', function() {
-      swal({
-          title: 'Tài khoản',
-          text: 'Hiện tại chúng tôi chỉ nhận nạp thêm tài khoản tại Văn phòng 4/2 Đinh Bộ Lĩnh, P104',
-          type: 'warning',
-          confirmButtonClass: 'btn-primary',
-          confirmButtonText: 'Quay lại',
-      });
-  });
+	$('.price').each(function() {
+		$(this).html(accounting.formatMoney($(this).html()));
+	});
+	$("[data-toggle=tooltip]").tooltip();
+	$('#btnFillWallet').on('click', function() {
+		swal({
+			title: 'Tài khoản',
+			text: 'Hiện tại chúng tôi chỉ nhận nạp thêm tài khoản tại Văn phòng 4/2 Đinh Bộ Lĩnh, P104',
+			type: 'warning',
+			confirmButtonClass: 'btn-primary',
+			confirmButtonText: 'Quay lại',
+		});
+	});
 });
 </script>
 @endpush @section('title') Tài khoản @endsection @section('content')
-<section class="content-body has-bottom-menu">
-  <div class="page-header hf-bg-gradient text-capitalize">Tài khoản</div>
-  <div class="nav-tabs-horizontal orders-page">
-    <ul class="nav nav-tabs nav-page hf-bg-gradient text-uppercase" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active pull-right" href="javascript: void(0);" data-toggle="tab" data-target="#infoTab" role="tab" aria-expanded="true">Cá nhân</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link right pull-left" href="javascript: void(0);" data-toggle="tab" data-target="#supTab" role="tab" aria-expanded="false">Hỗ trợ</a>
-      </li>
-    </ul>
-    <div class="tab-content">
-      <div class="tab-pane active" id="infoTab" role="tabpanel" aria-expanded="true">
-        <div class="hf-main-card">
-          <div class="row">
-            <div class="col-md-4 col-sm-4 col-xs-4 text-right">
-              <img class="avt" src="{{ env('CDN_HOST') }}/u/{{ auth()->user()->id }}/{{ auth()->user()->avatar }}">
-            </div>
-            <div class="col-md-7 col-sm-7 col-xs-7 text-center">
-              <div class="name">{{ auth()->user()->name }}</div>
-              <div class="email">{{ auth()->user()->email }}</div>
-              @if (is_null(auth()->user()->phone))
-              <div class="no-phone color-warning">(Chưa cập nhật số điện thoại)</div>
-              @else
-              <div class="phone">{{ auth()->user()->phone }}</div>
-              @endif
-            </div>
-          </div>
-          <a class="edit-icon" href="javascript:void(0)"><i class="material-icons">edit</i></a>
-        </div>
-
-        <div class="hf-card margin-top-40">
-          <div class="row padding-20">
-            <h5>Số dư Tài khoản</h5>
-            <div class="price color-primary text-center acc-balance">{{ auth()->user()->wallet }}</div>
-          </div>
-          <button id="btnFillWallet" class="bottom-full-width-btn btn btn-primary text-uppercase">Nạp thêm</button>
-        </div>
-        <div class="hf-card margin-top-20">
-          <div class="row padding-20">
-            <h5>Điểm tích lũy</h5>
-            <div class="color-primary text-center acc-point">{{ auth()->user()->point }}</div>
-          </div>
-        </div>
-        <div class="control-list margin-top-20">
-        <section class="user-menu">
-          <ul class="list-menu">
-            <li><a href="{{ route('password_page') }}"><i class="material-icons">verified_user</i> Mật khẩu</a></li>
-            <li><a href="{{ route('logout') }}"><i class="material-icons">power_settings_new</i> Đăng xuất</a></li>
-          </ul>
-        </section>
-        </div>
-      </div>
-      <div class="tab-pane" id="supTab" role="tabpanel" aria-expanded="false">
-        <div class="hf-main-card">
-          <div class="row">
-            <div class="col-md-4 col-sm-4 col-xs-4 text-center">
-              <img class="social-icon" src="{{ env('CDN_HOST') }}/img/social/zalo.png">
-              <label class="social-label">02473041114</label>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-4 text-center"
-              onclick="window.open('https://m.me/handfreeco', '_blank');">
-              <img class="social-icon" src="{{ env('CDN_HOST') }}/img/social/facebook-messenger.png">
-              <label class="social-label">handfree</label>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-4 text-center">
-              <img class="social-icon" src="{{ env('CDN_HOST') }}/img/social/phone.png">
-              <label class="social-label">02473041114</label>
-            </div>
-          </div>
-        </div>
-        <div class="control-list margin-top-40">
-        <section class="user-menu">
-          <ul class="list-menu">
-            <li><a href="javascript:void(0);"><i class="material-icons">&#xE887;</i> Câu hỏi thường gặp</a></li>
-            <li><a href="{{ route('pro_new') }}"><i class="material-icons">&#xE227;</i> Trở thành đối tác</a></li>
-            <li><a href="javascript:void(0);"><i class="material-icons">&#xE8A3;</i> Tuyển dụng</a></li>
-            <li><a href="javascript:void(0);"><i class="material-icons">&#xE55A;</i> Về HandFree</a></li>
-          </ul>
-        </section>
-        </div>
-      </div>
-    </div>
-  </div>
+<section class="content-body content-template-1 has-bottom-menu">
+	<div class="hf-bg-gradient wallet">
+		<div class="padding-20 row">
+			<div class="col-xs-6 text-center" style="border-right: solid 2px #fff">
+				<div class="name">Ví Hand
+					<i class="icmn-notification" data-toggle="tooltip" data-placement="right"
+						title="Ví Hand ..."></i></div>
+				<div class="price">1500000</div>
+			</div>
+			<div class="col-xs-6 text-center">
+				<div class="name">Ví Tiền
+					<i class="icmn-notification" data-toggle="tooltip" data-placement="left"
+						title="Ví Tiền ..."></i></div>
+				<div class="price">1500000</div>
+			</div>
+		</div>
+		<div class="margin-top-20 padding-bottom-20 row">
+			<div class="margin-bottom-10 col-xs-12 text-center">
+				<button class="btn-deposit btn color-primary text-uppercase">Nạp thêm</button>
+			</div>
+			<div class="col-xs-12 text-center">
+				<button class="btn-withdraw btn text-uppercase">Rút ra</button>
+			</div>
+		</div>
+	</div>
+	
+	<div class="form-wrapper">
+		<h3 class="padding-top-20">Tài khoản</h3>
+		<div class="padding-20 hf-card">
+			<div class="row">
+				<div class="col-xs-5 text-right">
+					<img class="avt" src="{{ env('CDN_HOST') }}/u/{{ auth()->user()->id }}/{{ auth()->user()->avatar }}">
+				</div>
+				<div class="col-xs-7">
+					<div class="name text-uppercase">{{ auth()->user()->name }}</div>
+					
+					@if (!auth()->user()->phone)
+					<div class="no-info color-warning">(Chưa cập nhật Số điện thoại)</div>
+					@else
+					<div class="phone">{{ auth()->user()->phone }}</div>
+					@endif
+					
+					@if (!auth()->user()->email)
+					<div class="no-info color-warning">(Chưa cập nhật Email)</div>
+					@else
+					<div class="email">{{ auth()->user()->email }}</div>
+					@endif
+				</div>
+			</div>
+			<div class="row">
+				<div class="margin-top-20 margin-bottom-20 col-xs-12 text-center">
+					<button type="button" class="btn btn-primary-outline" style="width: 80%">handfree.co/pro/{{ auth()->user()->id }}</button>
+				</div>
+				<div class="col-xs-12 text-center">
+					<a class="color-primary" href="{{ route('logout') }}">Đăng xuất</a>
+				</div>
+			</div>
+		</div>
+		
+		<h3 class="padding-top-30">Cấp độ</h3>
+		<div class="padding-20 hf-card">
+			<h3 class="color-primary">Cấp độ 6 - {{ auth()->user()->point }}</h3>
+			<progress class="progress progress-primary" value="74" max="100"></progress>
+			<div class="margin-top-10 info">Còn 12300 điểm để đạt cấp độ tiếp theo</div>
+			<div class="margin-top-30 text-center">
+				<a class="margin-right-30 color-primary" href="javacript:void(0);">Xem lịch sử</a>
+				<a class="color-primary" href="javacript:void(0);">Hệ thống cấp độ</a>
+			</div>
+		</div>
+		
+		<h3 class="padding-top-30">Đánh giá</h3>
+		<div class="padding-20 hf-card">
+			<div class="row">
+				<div class="col-xs-2"></div>
+				<div class="col-xs-10">
+					<span class="margin-right-20 rating-number color-primary">3.7 <i class="material-icons">star</i></span>
+					<span class="total-review">513 người</span>
+				</div>
+			</div>
+			<div class="margin-top-20 row">
+				<div class="col-xs-2 text-center">5</div>
+				<div class="margin-top-10 col-xs-8">
+					<progress class="progress progress-primary" value="74" max="100"></progress>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-2 text-center">4</div>
+				<div class="margin-top-10 col-xs-8">
+					<progress class="progress progress-info" value="54" max="100"></progress>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-2 text-center">3</div>
+				<div class="margin-top-10 col-xs-8">
+					<progress class="progress progress-success" value="34" max="100"></progress>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-2 text-center">2</div>
+				<div class="margin-top-10 col-xs-8">
+					<progress class="progress progress-warning" value="10" max="100"></progress>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-2 text-center">1</div>
+				<div class="margin-top-10 col-xs-8">
+					<progress class="progress progress-danger" value="1" max="100"></progress>
+				</div>
+			</div>
+			<div class="margin-top-30 row text-center">
+				<a class="color-primary" href="javacript:void(0);">Cách để tăng điểm đánh giá</a>
+			</div>
+		</div>
+		
+		<h3 class="padding-top-30">Nhận xét</h3>
+		<div class="padding-20 hf-card">
+			<div class="row">
+				<div class="col-xs-2"></div> 
+				<div class="col-xs-10">
+					<h3 class="color-primary"><span class="margin-right-5 total-review-number">158</span> nhận xét</h3>
+				</div>
+			</div>
+			<div class="margin-top-30 row text-center">
+				<a class="color-primary" href="javacript:void(0);">Xem tất cả nhận xét</a>
+			</div>
+		</div>
+		
+		<h3 class="padding-top-30">Hỗ trợ</h3>
+		<div class="padding-20 hf-card">
+			<div class="row">
+				<div class="col-xs-4 text-center">
+					<img class="social-icon" src="{{ env('CDN_HOST') }}/img/social/zalo.png">
+					<label class="margin-top-10">024 7304 1114</label>
+				</div>
+				<div class="col-xs-4 text-center"
+					onclick="window.open('https://m.me/handfreeco', '_blank');">
+					<img class="social-icon" src="{{ env('CDN_HOST') }}/img/social/facebook-messenger.png">
+					<label class="margin-top-10">handfreeco</label>
+				</div>
+				<div class="col-xs-4 text-center">
+					<img class="social-icon" src="{{ env('CDN_HOST') }}/img/social/phone.png">
+					<label class="margin-top-10">024 7304 1114</label>
+				</div>
+			</div>
+		</div>
+		
+		<h3 class="padding-top-30">Thông tin Hand Free</h3>
+		<div class="padding-20 hf-card">
+			<div class="row">
+				<div class="margin-top-10 col-xs-4 text-center">
+					<div><i class="material-icons">perm_identity</i></div>
+					<div>Về chúng tôi</div>
+				</div>
+				<div class="margin-top-10 col-xs-4 text-center">
+					<div><i class="material-icons">work_outline</i></div>
+					<div>Tuyển dụng</div>
+				</div>
+				<div class="margin-top-10 col-xs-4 text-center">
+					<div><i class="material-icons">live_help</i></div>
+					<div>Câu hỏi <span style="white-space: nowrap;">thường gặp</span></div>
+				</div>
+				<div class="margin-top-10 col-xs-4 text-center">
+					<div><i class="material-icons">verified_user</i></div>
+					<div>Chính sách <span style="white-space: nowrap;">bảo mật</span></div>
+				</div>
+				<div class="margin-top-10 col-xs-4 text-center">
+					<div><i class="material-icons">description</i></div>
+					<div>Điều khoản</div>
+				</div>
+				<div class="margin-top-10 col-xs-4 text-center">
+					<div><i class="material-icons">security</i></div>
+					<div>An ninh</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </section>
 @endsection
 @include('template.mb.footer-menu')

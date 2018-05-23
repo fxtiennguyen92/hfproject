@@ -123,8 +123,13 @@ class InitPageController extends Controller
 			));
 		}
 		
-		return view(Config::get('constants.ACCOUNT_PAGE'), array(
-			'nav' => 'account',
-		));
+		$userModel = new User();
+// 		if (auth()->user()->role == Config::get('constants.ROLE_PRO')) {
+			$user = $userModel->getPro(auth()->user()->id);
+			return view(Config::get('constants.ACCOUNT_PAGE'), array(
+				'nav' => 'account',
+				'user' => $user,
+			));
+// 		}
 	}
 }

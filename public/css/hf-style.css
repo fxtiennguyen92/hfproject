@@ -122,68 +122,41 @@ table {
   background: #fff;
 }
 
-.hf-main-card {
+.wallet {
+  color: #fff;
+}
+
+.wallet .name {
+  font-size: 16px;
+  padding-top: 10px;
+  margin-bottom: 20px;
+}
+
+.wallet .name i {
+  position: absolute;
+  top: 2px;
+  margin-left: 5px;
+}
+
+.wallet .price {
+  font-size: 25px;
+}
+
+.wallet .btn-withdraw {
+  color: #fff;
+  background: transparent;
+  border-radius: 5px;
+  width: 300px;
+  font-size: 16px;
+}
+
+.wallet .btn-deposit {
   background: #fff;
-  -webkit-box-shadow: 0px 5px 25px 0px rgba(46, 61, 73, 0.2);
-  box-shadow: 0px 5px 25px 0px rgba(46, 61, 73, 0.2);
-  -webkit-transition: all 0.3s ease;
-  -o-transition: all 0.3s ease;
-  transition: all 0.3s ease;
-  padding: 20px;
-  margin: -20px;
-  line-height: 26px;
-}
-
-.hf-main-card .avt {
-  width: 80px;
-  height: 80px;
-  border-radius: 100%;
-}
-
-.hf-main-card .name {
-  font-size: 14px;
+  border-radius: 5px;
+  width: 300px;
+  font-size: 16px;
   font-weight: bold;
-  color: #000;
 }
-
-.hf-main-card .email {
-  font-size: 13px;
-  color: #000;
-}
-
-.hf-main-card .phone {
-  font-size: 13px;
-  color: #000;
-}
-
-.hf-main-card .no-phone {
-  font-size: 12px;
-  font-style: italic;
-  color: #000;
-}
-
-.hf-main-card .edit-icon {
-  position: relative;
-  right: -12px;
-  bottom: 12px;
-  float: right;
-}
-.hf-main-card .edit-icon i {
-  font-size: 20px;
-}
-
-.hf-main-card .social-icon {
-  width: 60px;
-  height: 60px;
-  display: block;
-  margin: auto;
-}
-
-.hf-main-card .social-label {
-  margin-top: 10px;
-  color: #acb7bf;
-}
-
 
 .hf-card {
   background: #fff;
@@ -193,6 +166,61 @@ table {
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
   border-bottom: 1px solid #dfe4ed;
+  color: #000;
+}
+
+.hf-card .avt {
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+}
+
+.hf-card .name {
+  font-size: 16px;
+  line-height: 30px;
+  font-weight: bold;
+}
+
+.hf-card .email {
+  font-size: 14px;
+  line-height: 25px;
+}
+
+.hf-card .phone {
+  font-size: 13px;
+}
+
+.hf-card .no-info {
+  font-size: 12px;
+  font-style: italic;
+}
+
+.hf-card .info {
+  font-size: 13px;
+}
+
+.hf-card .total-review-number,
+.hf-card .rating-number {
+  font-size: 40px;
+  font-weight: bold;
+  line-height: 45px;
+}
+
+.hf-card .rating-number i {
+  font-size: 30px;
+  line-height: 35px;
+  vertical-align: bottom;
+}
+
+.hf-card .total-review {
+  font-size: 14px;
+}
+
+.hf-card .social-icon {
+  width: 60px;
+  height: 60px;
+  display: block;
+  margin: auto;
 }
 
 .hf-card .bottom-full-width-btn {
@@ -222,10 +250,10 @@ table {
 }
 
 .progress {
-  height: 5px;
+  height: 7px;
   margin: 0;
   overflow: hidden;
-  background-color: #f5f5f5;
+  background-color: #fff;
 }
 
 .progress-bar {
@@ -1142,7 +1170,7 @@ body.single-page .single-page-block .single-page-block-inner {
 }
 
 .copyright {
-  padding: 10px 0;
+  padding: 20px;
   background: #fff;
 }
 
@@ -2388,15 +2416,6 @@ span.header-info {
   body.single-page .single-page-block {
     padding: 0!important;
   }
-  /*
-  nav.top-menu + .page-content {
-    margin-top: 10px;
-  }
-  .top-menu .icon-menu-wrapper {
-    float: right;
-    width: auto;
-  }
-  */
   .single-page-login-alpha .single-page-block .single-page-block-inner {
     margin-bottom: 0;
   }
@@ -2452,6 +2471,9 @@ span.header-info {
     display: block;
   }
   #top-menu {
+    display: none;
+  }
+  .home-page #banner {
     display: none;
   }
 }

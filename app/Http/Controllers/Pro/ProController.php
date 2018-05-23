@@ -30,7 +30,7 @@ class ProController extends Controller
 		$serviceModel = new Service();
 		$eventModel = new Event();
 		
-		$services = $serviceModel->getAll();
+		$services = $serviceModel->getAllServingChildren();
 		$events = $eventModel->getAll();
 		
 		$cities = $commonModel->getCityList();
