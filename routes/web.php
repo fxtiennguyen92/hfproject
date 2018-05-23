@@ -147,7 +147,7 @@ Route::middleware('cs.pa')->group(function() {
 		->name('pa_pro_list');
 	Route::post('/pa/pro', 'Mng\ProController@createForPA')
 		->name('pa_pro_create');
-	Route::post('/pa/pro/{proId}/delete', 'Mng\ProController@deleteForPA')
+	Route::post('/pa/pro/{id}/delete', 'Mng\ProController@deleteForPA')
 		->name('pa_pro_delete');
 });
 /** Partner Acquisition - END **/
@@ -158,14 +158,15 @@ Route::middleware('cs.officer')->group(function() {
 	// Pro
 	Route::get('/mng/pro', 'Mng\ProController@viewList')
 		->name('mng_pro_list');
-	Route::get('/mng/pro/{proId}', 'Mng\ProController@edit')
+	Route::get('/mng/pro/{id}', 'Mng\ProController@edit')
 		->name('mng_pro_edit');
-	Route::post('/mng/pro/{proId}/update','Mng\ProController@update')
+	Route::post('/mng/pro/{id}/update','Mng\ProController@update')
 		->name('mng_pro_update');
-	Route::post('/mng/pro/{proId}/active','Mng\ProController@active')
+	Route::post('/mng/pro/{id}/active','Mng\ProController@active')
 		->name('mng_pro_active');
-	Route::post('/mng/pro/{proId}/delete','Mng\ProController@delete')
+	Route::post('/mng/pro/{id}/delete','Mng\ProController@delete')
 		->name('mng_pro_delete');
+	
 		
 	Route::post('/mng/pro/avatar', 'Mng\ProController@approveAvatar')
 		->name('approve_pro_avatar');
@@ -198,6 +199,30 @@ Route::middleware('cs.officer')->group(function() {
 	Route::post('/mng/order/{orderNo}/cancel', 'Mng\OrderController@cancel')
 		->name('mng_cancel_order');
 
+	// Services
+	Route::get('/mng/service', 'Mng\ServiceController@viewList')
+		->name('mng_service_list');
+	Route::get('/mng/service/new', 'Mng\ServiceController@newService')
+		->name('mng_service_new');
+	Route::post('/mng/service', 'Mng\ServiceController@create')
+		->name('mng_service_create');
+	Route::get('/mng/service/{id}', 'Mng\ServiceController@edit')
+		->name('mng_service_edit');
+	Route::post('/mng/service/{id}/update', 'Mng\ServiceController@update')
+		->name('mng_service_update');
+	Route::post('/mng/service/{id}/delete', 'Mng\ServiceController@delete')
+		->name('mng_service_delete');
+	Route::post('/mng/service/{id}/active', 'Mng\ServiceController@active')
+		->name('mng_service_active');
+	Route::post('/mng/service/{id}/publish', 'Mng\ServiceController@publish')
+		->name('mng_service_publish');
+	Route::post('/mng/service/{id}/unpublish', 'Mng\ServiceController@unpublish')
+		->name('mng_service_unpublish');
+	Route::post('/mng/service/{id}/popular', 'Mng\ServiceController@popular')
+		->name('mng_service_popular');
+	Route::post('/mng/service/{id}/unpopular', 'Mng\ServiceController@unpopular')
+		->name('mng_service_unpopular');
+
 	// Common parameters
 	Route::get('/mng/common/{key?}', 'Mng\CommonController@viewList')
 		->name('mng_common_list');
@@ -215,11 +240,11 @@ Route::middleware('cs.officer')->group(function() {
 		->name('mng_doc_new');
 	Route::post('/mng/doc', 'Mng\DocController@create')
 		->name('mng_doc_create');
-	Route::get('/mng/{id}', 'Mng\DocController@edit')
+	Route::get('/mng/doc/{id}', 'Mng\DocController@edit')
 		->name('mng_doc_edit');
-	Route::post('/mng/{id}/update', 'Mng\DocController@update')
+	Route::post('/mng/doc/{id}/update', 'Mng\DocController@update')
 		->name('mng_doc_update');
-	Route::post('/mng/{id}/delete', 'Mng\DocController@delete')
+	Route::post('/mng/doc/{id}/delete', 'Mng\DocController@delete')
 		->name('mng_doc_delete');
 
 });

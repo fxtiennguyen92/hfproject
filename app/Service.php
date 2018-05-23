@@ -10,19 +10,6 @@ class Service extends Model
 	// table name
 	protected $table = 'services';
 
-	public function get($id) {
-		return $this->where('id', $id)
-			->available()
-			->first();
-	}
-	
-	public function getFromArray($arr) {
-		return $this->whereIn('id', $arr)
-			->serving()
-			->available()
-			->get();
-	}
-	
 	public function getByIdOrUrlName($string) {
 		return $this->where('id', $string)
 			->orWhere('url_name', $string)
@@ -31,25 +18,109 @@ class Service extends Model
 			->first();
 	}
 	
-	/**
-	 * Get all for view customer page
-	 * 
-	 * @param string $orderCol
-	 * @param string $sorting
-	 * @return unknown
-	 */
-	public function getAll() {
+	public function getMostPopular() {
 		return $this
+			->child()
+			->serving()
+			->popular()
 			->available()
 			->orderBy('name')
 			->get();
 	}
 	
-	public function getAllServing() {
-		return $this
+	public function getHints() {
+		return $this->select('hint') 
+			->child()
 			->serving()
 			->available()
+			->orderBy('hint')
 			->get();
+	}
+	
+	public function getAllServingRoots() {
+		return $this
+			->root()
+			->serving()
+			->available()
+			->orderBy('name')
+			->get();
+	}
+	
+	public function getAllServingChildren() {
+		return $this
+			->children()
+			->serving()
+			->available()
+			->orderBy('name')
+			->get();
+	}
+	
+	public function getByIdForMng($id) {
+		return $this->where('id', $id)
+			->first();
+	}
+	
+	public function getAllRootsForMng() {
+		return $this::with('children')
+			->root()
+			->orderBy('name')
+			->get();
+	}
+
+	public static function updateDeleteFlg($id, $flg, $updatedBy) {
+		return Service::where('id', $id)
+			->update([
+				'delete_flg' => $flg,
+				'updated_by' => $updatedBy
+			]);
+	}
+
+	public static function updateDeleteFlgByParentId($parentId, $flg, $updatedBy) {
+		return Service::where('parent_id', $parentId)
+			->update([
+				'delete_flg' => $flg,
+				'updated_by' => $updatedBy
+			]);
+	}
+
+	public static function updateServeFlg($id, $flg, $updatedBy) {
+		return Service::where('id', $id)
+			->update([
+				'serve_flg' => $flg,
+				'updated_by' => $updatedBy
+			]);
+	}
+
+	public static function updateServeFlgByParentId($parentId, $flg, $updatedBy) {
+		return Service::where('parent_id', $parentId)
+			->update([
+				'serve_flg' => $flg,
+				'updated_by' => $updatedBy
+			]);
+	}
+
+	public static function updatePopularFlg($id, $flg, $updatedBy) {
+		return Service::where('id', $id)
+			->update([
+				'popular_flg' => $flg,
+				'updated_by' => $updatedBy
+			]);
+	}
+
+	public function children() {
+		return $this->hasMany('App\Service', 'parent_id', 'id')->orderBy('name');
+	}
+
+	public function scopeRoot($query) {
+		return $query->where('parent_id', Config::get('constants.SERVICE_ROOT'));
+	}
+
+	public function scopeChild($query) {
+		return $query->where('parent_id', '!=', Config::get('constants.SERVICE_ROOT'));
+	}
+
+	public function scopePopular($query) {
+		return $query->where('popular_flg', Config::get('constants.FLG_ON'));
 	}
 
 	public function scopeServing($query) {

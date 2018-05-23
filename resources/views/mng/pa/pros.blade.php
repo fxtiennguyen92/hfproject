@@ -131,7 +131,7 @@
 					closeOnConfirm: false,
 				});
 				
-				var url = "{{ route('pa_pro_delete', ['proId' => 'selectedProId']) }}";
+				var url = "{{ route('pa_pro_delete', ['id' => 'selectedProId']) }}";
 				url = url.replace('selectedProId', proId);
 				
 				$('#frmMain').attr('action', url);

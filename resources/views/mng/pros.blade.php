@@ -41,7 +41,7 @@
 					closeOnConfirm: false,
 				});
 				
-				var url = "{{ route('mng_pro_delete', ['proId' => 'selectedProId']) }}";
+				var url = "{{ route('mng_pro_delete', ['id' => 'selectedProId']) }}";
 				url = url.replace('selectedProId', proId);
 				
 				$('#frmMain').attr('action', url);
@@ -136,7 +136,7 @@
 									<i class="icmn-cog3"></i>
 									</span>
 									<ul class="dropdown-menu dropdown-menu-right" role="menu">
-										<a class="dropdown-item" href="{{ route('mng_pro_edit', ['proId' => $pro->id]) }}">
+										<a class="dropdown-item" href="{{ route('mng_pro_edit', ['id' => $pro->id]) }}">
 											<i class="icmn-grid6"></i> Chi tiết
 										</a>
 										<a class="dropdown-item" href="javascript:void(0);">

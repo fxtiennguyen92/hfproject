@@ -130,7 +130,7 @@
 			loadingBtnSubmit('btnUpdate');
 			$('#btnSubmit').prop('disabled', true);
 			
-			$('#frmMain').attr('action',"{{ route('mng_pro_update', ['proId' => $pro->id]) }}");
+			$('#frmMain').attr('action',"{{ route('mng_pro_update', ['id' => $pro->id]) }}");
 			$('#frmMain').submit();
 		});
 
@@ -141,7 +141,7 @@
 			loadingBtnSubmit('btnSubmit');
 			$('#btnUpdate').prop('disabled', true);
 			
-			$('#frmMain').attr('action',"{{ route('mng_pro_active', ['proId' => $pro->id]) }}");
+			$('#frmMain').attr('action',"{{ route('mng_pro_active', ['id' => $pro->id]) }}");
 			$('#frmMain').submit();
 		});
 
@@ -166,7 +166,7 @@
 	<div class="page-header hf-bg-gradient text-capitalize"
 		style="line-height: 150px; background-image: url('{{ env('CDN_HOST') }}/img/banner/pro_new.png ')">Thông tin đối tác</div>
 	<form id="frmMain" class="pro-new-form form-wrapper" name="form-validation" method="post" enctype="multipart/form-data"
-		action="{{ route('mng_pro_active', ['proId' => $pro->id]) }}">
+		action="{{ route('mng_pro_active', ['id' => $pro->id]) }}">
 		<h5>Ảnh đại diện</h5>
 		<div>
 			<input id="imgAvatar" type="file" class="dropify"

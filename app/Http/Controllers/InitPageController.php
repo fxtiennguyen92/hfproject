@@ -21,7 +21,9 @@ class InitPageController extends Controller
 		}
 		
 		$serviceModel = new Service();
-		$services = $serviceModel->getAllServing();
+		$roots = $serviceModel->getAllServingRoots();
+		$services = $serviceModel->getMostPopular();
+		$hints = $serviceModel->getHints();
 		
 		$commonModel = new Common();
 		$parts = $commonModel->getByKey(Config::get('constants.HOME_PAGE'));
@@ -30,9 +32,11 @@ class InitPageController extends Controller
 		$blogs = $blogModel->getNewestBlogs();
 		
 		return view(Config::get('constants.HOME_PAGE'), array(
-			'services' => $services,
-			'blogs' => $blogs,
-			'parts' => $parts,
+						'roots' => $roots,
+						'services' => $services,
+						'hints' => $hints,
+						'blogs' => $blogs,
+						'parts' => $parts,
 		));
 	}
 	

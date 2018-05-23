@@ -39,10 +39,24 @@ $(document).ready(function() {
 			650: {
 				items:2
 			},
-			1000: {
+			900: {
 				items:3
+			},
+			1000: {
+				items:4
 			}
 		}
+	});
+
+	var hints = [ @foreach ($hints as $h) '{{ $h->hint }}', @endforeach ];
+	$.typeahead({
+		input: "#searchService",
+		order: "asc",
+		minLength: 1,
+		source: {
+			data: hints
+		},
+		cancelButton: false
 	});
 });
 
@@ -92,32 +106,38 @@ $(document).ready(function() {
 	<div class="margin-top-30 services">
 		<h3>Nhóm Dịch vụ</h3>
 		<div class="row">
-			@foreach ($services as $key=>$service)
+			@foreach ($roots as $key=>$root)
 			<div class="center col-lg-2 col-md-3 col-sm-4 col-xs-6">
 				<button type="button" class="btn-service shadow btn btn-default text-uppercase"
-					onclick="location.href='{{ route('service_page', ['serviceUrlName' => $service->url_name]) }}'"
-					style="">{{ $service->name }}</button>
+					onclick="location.href='{{ route('service_page', ['serviceUrlName' => $root->url_name]) }}'"
+					style="{{ $root->css }}">{{ $root->name }}</button>
 			</div>
 			@endforeach
 		</div>
 	</div>
 	
 	<div class="margin-top-30 services">
-		<div class="margin-bottom-20 form-group" style="width: 300px;">
-			<div class="typeahead__container">
-				<div class="typeahead__field">
-					<div class="typeahead__query">
-						<div class="input-group">
-							<input id="searchService"
-									class="form-control"
-									name=""
-									type="text"
-									placeholder=""
-									autocomplete="off"
-									style="border: solid 1px #e1e1e1"/>
-							<span class="input-group-btn">
-								<a href="javascript: void(0);" class="btn btn-primary">Tìm Dịch vụ</a>
-							</span>
+		<div class="margin-bottom-20 row">
+			<div class="col-md-4 col-sm-2"></div>
+			<div class="col-md-4 col-sm-8">
+				<div class="form-group">
+					<div class="typeahead__container">
+						<div class="typeahead__field">
+							<div class="typeahead__query">
+								<div class="input-group">
+									<input id="searchService"
+											class="input-search form-control"
+											maxlength="100"
+											name=""
+											type="text"
+											placeholder=""
+											autocomplete="off"
+											style="border: solid 1px #e1e1e1; padding-left: 5px; padding-right: 5px;"/>
+									<span class="input-group-btn">
+										<a href="javascript: void(0);" style="border: solid 3px #01a8fe" class="btn btn-primary">Tìm Dịch vụ</a>
+									</span>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -128,7 +148,7 @@ $(document).ready(function() {
 			@foreach ($services as $service)
 			<div class="item center">
 				<div>
-					<img class="service-img" src="{{ env('CDN_HOST') }}/img/service/{{ $service->id }}.svg">
+					<img class="service-img" src="{{ env('CDN_HOST') }}/img/service/{{ $service->image }}">
 				</div>
 				<div>
 					<span class="service-name">{{ $service->name }}</span>
@@ -213,49 +233,6 @@ $(document).ready(function() {
 		</div>
 	</div>
 	
-	<script>
-    $(function() {
-
-        var countries = [
-            "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda",
-            "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh",
-            "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia",
-            "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burma",
-            "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Republic", "Chad",
-            "Chile", "China", "Colombia", "Comoros", "Congo, Democratic Republic", "Congo, Republic of the",
-            "Costa Rica", "Cote d'Ivoire", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti",
-            "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador",
-            "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Finland", "France", "Gabon",
-            "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Greenland", "Grenada", "Guatemala", "Guinea",
-            "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India",
-            "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan",
-            "Kazakhstan", "Kenya", "Kiribati", "Korea, North", "Korea, South", "Kuwait", "Kyrgyzstan", "Laos",
-            "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
-            "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands",
-            "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Mongolia", "Morocco", "Monaco",
-            "Mozambique", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger",
-            "Nigeria", "Norway", "Oman", "Pakistan", "Panama", "Papua New Guinea", "Paraguay", "Peru",
-            "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Samoa", "San Marino",
-            "Sao Tome", "Saudi Arabia", "Senegal", "Serbia and Montenegro", "Seychelles", "Sierra Leone",
-            "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "Spain",
-            "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan",
-            "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey",
-            "Turkmenistan", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States",
-            "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
-        ];
-
-        $.typeahead({
-            input: "#searchService",
-            order: "asc",
-            minLength: 1,
-            source: {
-                data: countries
-            },
-            cancelButton: false
-        });
-
-    });
-</script>
 </section>
 @endsection
 @include('template.mb.footer-menu')

@@ -42,16 +42,6 @@
 			});
 		@endif
 
-		$('#frmMain').validate({
-			submit: {
-				settings: {
-					inputContainer: '.form-group',
-					errorListClass: 'form-control-error',
-					errorClass: 'has-danger',
-				}
-			},
-		});
-
 		$('#btnPostBlog, #btnUpdateBlog').on('click', function(e) {
 			e.preventDefault();
 			$('input[name=image]').val($('span.dropify-render').find('img').attr('src'));

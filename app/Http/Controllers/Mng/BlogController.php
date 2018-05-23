@@ -35,7 +35,6 @@ class BlogController extends Controller
 			$request->session()->forget('blog');
 			
 			return view(Config::get('constants.MNG_BLOG_PAGE'), array(
-							'new' => true,
 			));
 		}
 		

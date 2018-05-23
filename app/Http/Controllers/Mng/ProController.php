@@ -38,7 +38,7 @@ class ProController extends Controller
 		));
 	}
 
-	public function edit($proId) {
+	public function edit($id) {
 		$commonModel = new Common();
 		$serviceModel = new Service();
 		$eventModel = new Event();
@@ -46,7 +46,7 @@ class ProController extends Controller
 		$companyModel = new Company();
 		$userModel = new User();
 		
-		$pro = $userModel->getProOrProManager($proId);
+		$pro = $userModel->getProOrProManager($id);
 		if (!$pro) {
 			throw new NotFoundHttpException();
 		}
@@ -58,7 +58,7 @@ class ProController extends Controller
 		$events = $eventModel->getAll();
 		$companies = $companyModel->getAll();
 		
-		$joinedEvents = $eventUserModel->getByUserId($proId);
+		$joinedEvents = $eventUserModel->getByUserId($id);
 		if (sizeof($joinedEvents) > 0) {
 			$pro->event = $joinedEvents->first()->id;
 		}
@@ -73,7 +73,7 @@ class ProController extends Controller
 		));
 	}
 
-	public function update($proId, Request $request, $returnFlg = true) {
+	public function update($id, Request $request, $returnFlg = true) {
 		$validator = $this->validator($request->all());
 		if ($validator->fails()) {
 			return Redirect::back()->withInput()->with('error', 400);
@@ -85,7 +85,7 @@ class ProController extends Controller
 			$baseToPhp = explode(',', $image); // remove the "data:image/png;base64,"
 			if (sizeof($baseToPhp) == 2) {
 				$data = base64_decode($baseToPhp[1]);
-				FileController::saveAvatar($data, $proId);
+				FileController::saveAvatar($data, $id);
 			}
 		}
 		if ($request->govEvidence) {
@@ -93,15 +93,15 @@ class ProController extends Controller
 			$baseToPhp = explode(',', $image); // remove the "data:image/png;base64,"
 			if (sizeof($baseToPhp) == 2) {
 				$data = base64_decode($baseToPhp[1]);
-				FileController::saveGovEnvidence($data, $proId);
+				FileController::saveGovEnvidence($data, $id);
 			}
 		}
 		
 		try {
 			DB::beginTransaction();
 			
-			$user = User::find($proId);
-			$pro = ProProfile::find($proId);
+			$user = User::find($id);
+			$pro = ProProfile::find($id);
 			
 			// account
 			$user->name = $request->name;
@@ -113,14 +113,14 @@ class ProController extends Controller
 			// event
 			if ($request->event != $pro->training) {
 				if (!$pro->training) {
-					$this->createEventUser($proId, $request->event);
+					$this->createEventUser($id, $request->event);
 				} elseif (!$request->event) {
 					$eventUserModel = new EventUser();
-					$joinedEvent = $eventUserModel->getByEventIdAndUserId($pro->training, $proId);
+					$joinedEvent = $eventUserModel->getByEventIdAndUserId($pro->training, $id);
 					$joinedEvent->delete();
 				} else {
 					$eventUserModel = new EventUser();
-					$joinedEvent = $eventUserModel->getByEventIdAndUserId($pro->training, $proId);
+					$joinedEvent = $eventUserModel->getByEventIdAndUserId($pro->training, $id);
 					$joinedEvent->id = $request->event;
 					$joinedEvent->save();
 				}
@@ -159,8 +159,8 @@ class ProController extends Controller
 		}
 	}
 
-	public function active($proId, Request $request) {
-		$this->update($proId, $request, false);
+	public function active($id, Request $request) {
+		$this->update($id, $request, false);
 		
 		$userModel = new User();
 		$profileModel = new ProProfile();
@@ -168,13 +168,13 @@ class ProController extends Controller
 		try {
 			DB::beginTransaction();
 			
-			$userModel->activeProAccount($proId);
-			$profileModel->updateState($proId, Config::get('constants.STS_READY'));
+			$userModel->activeProAccount($id);
+			$profileModel->updateState($id, Config::get('constants.STS_READY'));
 			
 			DB::commit();
 			
 			// send mail
-// 			$pro = $userModel->getProOrProManager($proId);
+// 			$pro = $userModel->getProOrProManager($id);
 // 			if ($pro->email) {
 // 				$mail = new MailController();
 // 				$mail->sendActiveProAccountMail($pro->name, $pro->email, $pro->password_temp);
@@ -187,14 +187,14 @@ class ProController extends Controller
 		}
 	}
 
-	public function delete($proId) {
+	public function delete($id) {
 		try {
 			DB::beginTransaction();
 			
-			$user = User::find($proId);
+			$user = User::find($id);
 			$user->delete();
 			
-			$pro = ProProfile::find($proId);
+			$pro = ProProfile::find($id);
 			$pro->delete();
 			
 			DB::commit();
@@ -250,9 +250,9 @@ class ProController extends Controller
 		}
 	}
 	
-	public function deleteForPA($proId) {
+	public function deleteForPA($id) {
 		$userModel = new User();
-		$userModel->updateDeleteFlg($proId, Config::get('constants.FLG_ON'));
+		$userModel->updateDeleteFlg($id, Config::get('constants.FLG_ON'));
 		
 		return redirect()->route('pa_pro_list');
 	}

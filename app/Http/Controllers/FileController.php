@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Blog;
 use App\ProProfile;
+use App\Service;
 
 class FileController
 {
@@ -68,5 +69,20 @@ class FileController
 		
 		$pro->gov_evidence = $fileName;
 		$pro->save();
+	}
+	
+	public static function saveServiceImage($data, $serviceId) {
+		$fileName = str_random(6).'.png';
+		$directoryName = 'img/service';
+		
+		$service = Service::where('id', $serviceId)->first();
+		if ($service->image) {
+			\Storage::delete($directoryName.'/'.$service->image);
+		}
+		
+		$fileSrc = \Storage::put($directoryName.'/'. $fileName, $data);
+		
+		$service->image = $fileName;
+		$service->save();
 	}
 }

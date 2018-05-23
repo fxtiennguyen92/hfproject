@@ -40,10 +40,14 @@ return [
 	'MNG_COMMON_LIST_PAGE' => 'mng.commons',
 	'MNG_DOC_PAGE' => 'mng.doc',
 	'MNG_DOC_LIST_PAGE' => 'mng.docs',
+	'MNG_SERVICE_PAGE' => 'mng.service',
+	'MNG_SERVICE_LIST_PAGE' => 'mng.services',
 	
 	'PA_COMPANY_LIST_PAGE' => 'mng.pa.companies',
 	'PA_COMPANY_PAGE' => 'mng.pa.company',
 	'PA_PRO_LIST_PAGE' => 'mng.pa.pros',
+	
+	'HOME_BANNER' => 'home_banner',
 	
 	/** ERROR PAGE **/
 	'404_PAGE' => 'error.404',
@@ -98,4 +102,6 @@ return [
 	
 	'BLOG_GENERAL' => '0',
 	'BLOG_PRO' => '1',
+	
+	'SERVICE_ROOT' => '0',
 ];
