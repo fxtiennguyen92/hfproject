@@ -31,6 +31,7 @@ class ProOrderController extends Controller
 	public function view($orderId, Request $request) {
 		$order = new Order();
 		$order = $order->getById($orderId);
+		
 		if (!$order) {
 			throw new NotFoundHttpException();
 		}

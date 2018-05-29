@@ -147,9 +147,10 @@ $(document).ready(function() {
 		<h3 class="padding-top-30">Hỗ trợ</h3>
 		<div class="padding-20 hf-card">
 			<div class="row">
-				<div class="col-xs-4 text-center">
+				<div class="col-xs-4 text-center"
+					onclick="window.open('https://zalo.me/1699928395940319098', '_blank');">
 					<img class="social-icon" src="{{ env('CDN_HOST') }}/img/social/zalo.png">
-					<label class="margin-top-10">024 7304 1114</label>
+					<label class="margin-top-10">Hand Free</label>
 				</div>
 				<div class="col-xs-4 text-center"
 					onclick="window.open('https://m.me/handfreeco', '_blank');">
@@ -179,7 +180,7 @@ $(document).ready(function() {
 					<div>Câu hỏi <span style="white-space: nowrap;">thường gặp</span></div>
 				</div>
 				<div class="margin-top-10 col-xs-4 text-center">
-					<div><i class="material-icons">verified_user</i></div>
+					<div><i class="material-icons">security</i></div>
 					<div>Chính sách <span style="white-space: nowrap;">bảo mật</span></div>
 				</div>
 				<div class="margin-top-10 col-xs-4 text-center">
@@ -187,7 +188,7 @@ $(document).ready(function() {
 					<div>Điều khoản</div>
 				</div>
 				<div class="margin-top-10 col-xs-4 text-center">
-					<div><i class="material-icons">security</i></div>
+					<div><i class="material-icons">verified_user</i></div>
 					<div>An ninh</div>
 				</div>
 			</div>

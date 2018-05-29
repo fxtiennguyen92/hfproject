@@ -35,7 +35,7 @@ class Order extends Model
 	}
 
 	public function getByIdAndUserId($id, $userId) {
-		return $this::with('user', 'service')
+		return $this::with('user', 'service', 'questions')
 			->where('id', $id)
 			->where('user_id', $userId)
 			->first();
@@ -121,6 +121,10 @@ class Order extends Model
 
 	public function service() {
 		return $this->hasOne('App\Service', 'id', 'service_id');
+	}
+
+	public function questions() {
+		return $this->hasMany('App\Survey', 'service_id', 'service_id');
 	}
 
 	public function user() {

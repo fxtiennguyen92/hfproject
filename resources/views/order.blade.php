@@ -127,12 +127,20 @@ $(document).ready(function() {
       </div>
       <div class="tab-pane" id="infoTab" role="tabpanel" aria-expanded="false">
         <h5 class="padding-top-10">Chi tiết đơn hàng</h5>
-        <div class="padding-10 text-left hf-card">
-        @php $as = explode(", ", $order->short_requirements) @endphp
-        @foreach ($as as $a)
-        	@if ($a !== '')
-        	<div>- {{ $a }}</div>
-        	@endif
+        <div class="padding-20 text-left hf-card">
+        <div class="padding-bottom-10">
+            <div style="font-size: 13px; color: #aaa;">Mã đơn hàng</div>
+            <div><b>{{ '#'.$order->no }}</b></div>
+        </div>
+        @foreach (json_decode($order->requirements) as $r)
+        <div class="padding-bottom-10">
+            <div style="font-size: 13px; color: #aaa;">{{ $r->q_c }}</div>
+            @if (is_array($r->a_c))
+            <div>@foreach($r->a_c as $a) {{ $a.',' }} @endforeach</div>
+            @else
+            <div>{{ $r->a_c }}</div>
+            @endif
+        </div>
         @endforeach
         </div>
         <h5 class="padding-top-20">Khách hàng</h5>

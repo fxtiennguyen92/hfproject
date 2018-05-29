@@ -5,47 +5,31 @@
 <script>
 $(document).ready(function() {
 	$('.carousel').carousel({
-		interval: 5000
+		interval: 5000,
 	});
-	$('#most-popular-services').owlCarousel({
-		center: true,
-		loop: true,
+	$('#roots').owlCarousel({
+		center: false,
+		loop: false,
 		nav: false,
 		margin: 10,
-		responsive: {
-			0: {
-				items:1
-			},
-			400: {
-				items:2
-			},
-			700: {
-				items:4
-			},
-			1000: {
-				items:5
-			}
-		}
+		items: 6,
+		autoWidth: true,
+	});
+	$('#most-popular-services').owlCarousel({
+		center: false,
+		loop: false,
+		nav: false,
+		margin: 10,
+		items: 5,
+		autoWidth: true,
 	});
 	$('#newest-blogs').owlCarousel({
-		center: true,
-		loop: true,
+		center: false,
+		loop: false,
 		nav: false,
-		margin: 20,
-		responsive: {
-			0: {
-				items:1
-			},
-			650: {
-				items:2
-			},
-			900: {
-				items:3
-			},
-			1000: {
-				items:4
-			}
-		}
+		margin: 10,
+		items: 4,
+		autoWidth: true,
 	});
 
 	var hints = [ @foreach ($hints as $h) '{{ $h->hint }}', @endforeach ];
@@ -53,10 +37,31 @@ $(document).ready(function() {
 		input: "#searchService",
 		order: "asc",
 		minLength: 1,
+		maxItem: 0,
 		source: {
 			data: hints
 		},
-		cancelButton: false
+		cancelButton: false,
+		accent: true,
+	});
+	$.typeahead({
+		input: "#searchServiceNav",
+		order: "asc",
+		minLength: 1,
+		maxItem: 0,
+		source: {
+			data: hints
+		},
+		cancelButton: false,
+		accent: true,
+		callback: {
+			onClick (node, a, item, event) {
+				// submit form
+			},
+			onSubmit (node, form, item, event) {
+				// submit form
+			}
+		}
 	});
 });
 
@@ -72,25 +77,28 @@ $(document).ready(function() {
 @endpush
 @section('title') Ứng dụng đặt dịch vụ @endsection
 @section('content')
+<nav class="top-menu-mb">
+	<a href="{{ route('home_page') }}"><img src="{{ env('CDN_HOST') }}/img/logo/logoh.png" class="navbar-logo"></a>
+</nav>
 <section class="home-page has-bottom-menu">
 	<div id="banner" class="home-carousel carousel slide" data-ride="carousel">
 		<ol class="carousel-indicators">
-			<li data-target="banner" data-slide-to="1" class="active"></li>
+			<li data-target="banner" data-slide-to="0" class="active"></li>
+			<li data-target="banner" data-slide-to="1"></li>
 			<li data-target="banner" data-slide-to="2"></li>
-			<li data-target="banner" data-slide-to="3"></li>
 		</ol>
 		<div class="carousel-inner" role="listbox">
 			<div class="carousel-item active">
-				<img src="{{ env('CDN_HOST') }}/img/banner/home/0.png">
+				<img src="{{ env('CDN_HOST') }}/img/banner/home/banner-home-001.png">
 	<!-- 				<div class="carousel-caption"> -->
 	<!-- 					<p>Title</p> -->
 	<!-- 				</div> -->
 			</div>
 			<div class="carousel-item">
-				<img src="{{ env('CDN_HOST') }}/img/banner/home/2.png">
+				<img src="{{ env('CDN_HOST') }}/img/banner/home/banner-home-002.png">
 			</div>
 			<div class="carousel-item">
-				<img src="{{ env('CDN_HOST') }}/img/banner/home/2.png">
+				<img src="{{ env('CDN_HOST') }}/img/banner/home/banner-home-003.png">
 			</div>
 		</div>
 		<a class="left carousel-control" data-target="#banner" role="button" data-slide="prev">
@@ -102,24 +110,53 @@ $(document).ready(function() {
 			<span class="sr-only">Next</span>
 		</a>
 	</div>
+	<div id="banner-mb" class="home-carousel carousel slide" data-ride="carousel">
+		<ol class="carousel-indicators">
+			<li data-target="banner-mb" data-slide-to="1" class="active"></li>
+			<li data-target="banner-mb" data-slide-to="2"></li>
+		</ol>
+		<div class="carousel-inner" role="listbox">
+			<div class="carousel-item active">
+				<img src="{{ env('CDN_HOST') }}/img/banner/home-mb/banner-mb-001.png">
+	<!-- 				<div class="carousel-caption"> -->
+	<!-- 					<p>Title</p> -->
+	<!-- 				</div> -->
+			</div>
+			<div class="carousel-item">
+				<img src="{{ env('CDN_HOST') }}/img/banner/home-mb/banner-mb-002.png">
+			</div>
+		</div>
+		<a class="left carousel-control" data-target="#banner-mb" role="button" data-slide="prev">
+			<span class="icon-prev fa fa-arrow-left" aria-hidden="true"></span>
+		</a>
+		<a class="right carousel-control" data-target="#banner-mb" role="button" data-slide="next">
+			<span class="icon-next fa fa-arrow-right" aria-hidden="true"></span>
+		</a>
+	</div>
 	
 	<div class="margin-top-30 services">
 		<h3>Nhóm Dịch vụ</h3>
-		<div class="row">
+		<div id="roots" class="owl-carousel owl-theme">
 			@foreach ($roots as $key=>$root)
-			<div class="center col-lg-2 col-md-3 col-sm-4 col-xs-6">
-				<button type="button" class="btn-service shadow btn btn-default text-uppercase"
-					onclick="location.href='{{ route('service_page', ['serviceUrlName' => $root->url_name]) }}'"
-					style="{{ $root->css }}">{{ $root->name }}</button>
+			@if ($key%2 == 0)
+			<div class="item center">
+			@endif
+				<div>
+					<button type="button" class="btn-service shadow btn btn-default"
+						onclick="location.href='{{ route('service_page', ['serviceUrlName' => $root->url_name]) }}'"
+						style="{{ $root->css }}">{{ $root->name }}</button>
+				</div>
+			@if ($key%2 == 1 || $key == (sizeof($roots) - 1))
 			</div>
+			@endif
 			@endforeach
 		</div>
 	</div>
 	
 	<div class="margin-top-30 services">
 		<div class="margin-bottom-20 row">
-			<div class="col-md-4 col-sm-2"></div>
-			<div class="col-md-4 col-sm-8">
+			<div class="col-md-3 col-sm-2"></div>
+			<div class="col-md-6 col-sm-8">
 				<div class="form-group">
 					<div class="typeahead__container">
 						<div class="typeahead__field">
@@ -130,7 +167,7 @@ $(document).ready(function() {
 											maxlength="100"
 											name=""
 											type="text"
-											placeholder=""
+											placeholder="Bạn cần làm gì?"
 											autocomplete="off"
 											style="border: solid 1px #e1e1e1; padding-left: 5px; padding-right: 5px;"/>
 									<span class="input-group-btn">
@@ -143,6 +180,8 @@ $(document).ready(function() {
 				</div>
 			</div>
 		</div>
+		
+		@if (sizeof($services) > 0)
 		<h3>Đặt nhiều nhất</h3>
 		<div id="most-popular-services" class="owl-carousel owl-theme">
 			@foreach ($services as $service)
@@ -156,6 +195,7 @@ $(document).ready(function() {
 			</div>
 			@endforeach
 		</div>
+		@endif
 	</div>
 	
 	<div class="margin-top-30 margin-bottom-30 blogs">
@@ -226,9 +266,19 @@ $(document).ready(function() {
 	
 	<div class="copyright">
 		<div class="row">
-			<div class="col-md-6 text-left">
+			<div class="col-md-8 text-left">
 				<p><b>© 2018 Bản quyền của Công ty Cổ phần Hand Free</b></p>
 				<p>Giấy phép kinh doanh số 0315000331 do Sở Kế hoạch và Đầu tư Thành phố Hồ Chí Minh cấp ngày 19/04/2018</p>
+			</div>
+			<div class="col-md-4 text-center">
+				<div class="col-xs-4">
+				</div>
+				<div class="margin-top-10 col-xs-4" style="border-right: 1px solid #000">
+					<div class="doc-link"><a href="https://handfree.co/doc/privacy" target="_blank">Chính sách bảo mật</a></div>
+				</div>
+				<div class="margin-top-10 col-xs-4">
+					<div class="doc-link"><a href="https://handfree.co/doc/term-of-use" target="_blank">Điều khoản sử dụng</a></div>
+				</div>
 			</div>
 		</div>
 	</div>
