@@ -1,6 +1,16 @@
 @extends('template.index') @push('stylesheets')
 <script>
 $(document).ready(function() {
+	@if (session('error'))
+		swal({
+			title: 'Thất bại',
+			text: '{{ session("error") }}',
+			type: 'error',
+			confirmButtonClass: 'btn-default',
+			confirmButtonText: 'Quay lại',
+		});
+	@endif
+	
 	$('#frmMain').validate({
 		submit: {
 			settings: {
@@ -9,51 +19,28 @@ $(document).ready(function() {
 				errorClass: 'has-danger',
 			},
 			callback: {
-				onSubmit: function() {
-					$.ajax({
-						type: 'POST',
-						url: '{{ route("change_password") }}',
-						data: $('#frmMain').serialize(),
-						success: function(response) {
-							swal({
-								title: 'Thành công',
-								text: 'Hoàn tất cập nhật mật khẩu!',
-								type: 'success',
-								confirmButtonClass: 'btn-primary',
-								confirmButtonText: 'Quay lại',
-							},
-							function() {
-								location.href = '{{ route("control") }}';
-							});
-						},
-						error: function(xhr) {
-							if (xhr.status == 401) {
-								$.notify({
-									title: '<strong>Thất bại! </strong>',
-									message: 'Mật khẩu hiện tại chưa đúng.'
-								}, {
-									type: 'danger',
-								});
-							} else if (xhr.status == 409) {
-								$.notify({
-									title: '<strong>Thất bại! </strong>',
-									message: 'Mật khẩu không đúng định dạng.'
-								}, {
-									type: 'danger'
-								});
-							} else {
-								$.notify({
-									title: '<strong>Thất bại! </strong>',
-									message: 'Có lỗi phát sinh, xin thử lại.'
-								}, {
-									type: 'danger'
-								});
-							};
-						}
-					});
+				onBeforeSubmit: function() {
+					loadingBtnSubmit('btnUpdate');
 				}
 			}
 		}
+	});
+	
+	$('#btnReset').on('click', function() {
+		swal({
+			title: 'Quên mật khẩu',
+			text: 'Mật khẩu mới sẽ được cấp lại và gửi đến tin nhắn hoặc email của bạn',
+			type: 'warning',
+			showCancelButton: true,
+			cancelButtonClass: 'btn-default',
+			confirmButtonClass: 'btn-danger',
+			cancelButtonText: 'Quay lại',
+			confirmButtonText: 'Cấp lại',
+		},
+		function() {
+			loadingBtnSubmit('btnUpdate');
+			$('#frmReset').submit();
+		});
 	});
 	
 	$('.password').password({
@@ -64,10 +51,10 @@ $(document).ready(function() {
 });
 </script>
 @endpush @section('title') Mật khẩu @endsection @section('content')
-<section class="content-body content-template-1">
-	<form id="frmMain" class="form-wrapper" name="form-validation" method="post" enctype="multipart/form-data" action="">
-		<h1 class="page-title text-left">Mật khẩu</h1>
-		<div class="row">
+<section class="content-body content-template-1" style="min-height: 0px;">
+	<div class="page-header hf-bg-gradient text-capitalize">Mật khẩu</div>
+	<form id="frmMain" class="form-wrapper" name="form-validation" method="post" enctype="multipart/form-data" action="{{ route('password_update') }}">
+		<div class="padding-bottom-20 row">
 			@if (!auth()->user()->password)
 			<div class="common-text">Hãy tạo mật khẩu để có thể đăng nhập bằng tài khoản HandFree</div>
 			@else
@@ -90,11 +77,17 @@ $(document).ready(function() {
 					<input type="password" maxlength="100" class="form-control" name="password_confirmation" data-validation="[V==password]">
 				</div>
 			</div>
+			<div class="col-md-12 text-right" style="font-size: 13px">
+				<button type="button" id="btnReset" class="btn-reset btn btn-link">Quên mật khẩu</a>
+			</div>
 		</div>
-		<div class="row row-btn-bottom form-group">
-			<button id="btnLogin" type="submit" class="btn btn-primary width-150">@if (!auth()->user()->password) Thiết lập @else Thay đổi @endif</button>
+		<div>
+			<button id="btnUpdate" type="submit" class="btn btn-primary" style="width: 100%">@if (!auth()->user()->password) Thiết lập @else Thay đổi @endif</button>
 			<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 		</div>
+	</form>
+	<form id="frmReset" class="form-wrapper" method="post" action="{{ route('password_reset') }}">
+		<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 	</form>
 </section>
 @endsection

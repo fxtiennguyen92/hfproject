@@ -1,3 +1,32 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	@if (Session::has('hint-service'))
+	var hints = [ @foreach (Session::get('hint-service') as $h) '{{ $h->hint }}', @endforeach ];
+	$.typeahead({
+		input: "#searchServiceNav",
+		order: "asc",
+		minLength: 2,
+		maxItem: 5,
+		source: {
+			data: hints
+		},
+		cancelButton: false,
+		accent: true,
+		callback: {
+			onClickAfter (node, a, item, event) {
+				node.closest('form').submit()
+			},
+			onSubmit (node, form, item, event) {
+				if ($.trim($('#searchServiceNav').val()) !== '') {
+					return true;
+				}
+				return false;
+			}
+		}
+	});
+	@endif
+});
+</script>
 <nav id="top-menu" class="top-menu">
 	<div class="menu">
 		<div class="menu-info-block">
@@ -5,14 +34,14 @@
 				<a href="{{ route('home_page') }}"><img src="{{ env('CDN_HOST') }}/img/logo/logoh.png" class="navbar-logo"></a>
 			</div>
 			<div class="col-sm-3">
-				<form name="frmSearch">
+				<form name="frmSearchServiceNav" method="get" enctype="multipart/form-data" action="{{ route('service_search') }}">
 					<div class="typeahead__container">
 						<div class="typeahead__field">
 							<span class="typeahead__query">
 								<input id="searchServiceNav"
 										class="input-search form-control"
 										maxlength="100"
-										name=""
+										name="hint"
 										type="text"
 										placeholder="Tìm kiếm"
 										autocomplete="off"
@@ -27,8 +56,7 @@
 				<button class="btn btn-menu" onclick="window.open('{{ route('blog_page') }}')">Blog</button>
 				<button class="btn btn-secondary-outline" onclick="location.href = '{{ route('pro_new') }}'">Trở Thành Đối tác</button>
 				@if (auth()->check())
-				<img class="avt" src="{{ env('CDN_HOST') }}/u/{{ auth()->user()->id }}/{{ auth()->user()->avatar }}"
-					onclick="href.loaction='{{ route('control') }}'">
+				<a href="{{ route('control') }}"><img class="avt" src="{{ env('CDN_HOST') }}/u/{{ auth()->user()->id }}/{{ auth()->user()->avatar }}"></a>
 				@else
 				<button class="btn btn-menu" onclick="location.href = '{{ route('login_page') }}'">Đăng nhập</button>
 				@endif

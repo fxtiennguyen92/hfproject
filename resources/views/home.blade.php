@@ -1,4 +1,5 @@
-@extends('template.index') @push('stylesheets')
+@extends('template.index')
+@push('stylesheets')
 <link rel="stylesheet" type="text/css" href="css/home.css">
 <style>
 </style>
@@ -32,37 +33,31 @@ $(document).ready(function() {
 		autoWidth: true,
 	});
 
-	var hints = [ @foreach ($hints as $h) '{{ $h->hint }}', @endforeach ];
+	@if(Session::has('hint-service'))
+	var hints = [ @foreach (Session::get('hint-service') as $h) '{{ $h->hint }}', @endforeach ];
 	$.typeahead({
 		input: "#searchService",
 		order: "asc",
-		minLength: 1,
-		maxItem: 0,
-		source: {
-			data: hints
-		},
-		cancelButton: false,
-		accent: true,
-	});
-	$.typeahead({
-		input: "#searchServiceNav",
-		order: "asc",
-		minLength: 1,
-		maxItem: 0,
+		minLength: 2,
+		maxItem: 5,
 		source: {
 			data: hints
 		},
 		cancelButton: false,
 		accent: true,
 		callback: {
-			onClick (node, a, item, event) {
-				// submit form
+			onClickAfter (node, a, item, event) {
+				node.closest('form').submit()
 			},
 			onSubmit (node, form, item, event) {
-				// submit form
+				if ($.trim($('#searchService').val()) !== '') {
+					return true;
+				}
+				return false;
 			}
 		}
 	});
+	@endif
 });
 
 (function(d, s, id) {
@@ -139,11 +134,11 @@ $(document).ready(function() {
 		<div id="roots" class="owl-carousel owl-theme">
 			@foreach ($roots as $key=>$root)
 			@if ($key%2 == 0)
-			<div class="item center">
+			<div class="item">
 			@endif
 				<div>
 					<button type="button" class="btn-service shadow btn btn-default"
-						onclick="location.href='{{ route('service_page', ['serviceUrlName' => $root->url_name]) }}'"
+						onclick="location.href='{{ route('service_view', ['urlName' => $root->url_name]) }}'"
 						style="{{ $root->css }}">{{ $root->name }}</button>
 				</div>
 			@if ($key%2 == 1 || $key == (sizeof($roots) - 1))
@@ -157,27 +152,29 @@ $(document).ready(function() {
 		<div class="margin-bottom-20 row">
 			<div class="col-md-3 col-sm-2"></div>
 			<div class="col-md-6 col-sm-8">
-				<div class="form-group">
-					<div class="typeahead__container">
-						<div class="typeahead__field">
-							<div class="typeahead__query">
-								<div class="input-group">
+				<form name="frmSearchService" method="get" action="{{ route('service_search') }}">
+					<div class="input-group">
+						<div class="typeahead__container">
+							<div class="typeahead__field">
+								<span class="typeahead__query">
 									<input id="searchService"
-											class="input-search form-control"
+											class="form-control"
 											maxlength="100"
-											name=""
+											name="hint"
 											type="text"
 											placeholder="Bạn cần làm gì?"
 											autocomplete="off"
 											style="border: solid 1px #e1e1e1; padding-left: 5px; padding-right: 5px;"/>
-									<span class="input-group-btn">
-										<a href="javascript: void(0);" style="border: solid 3px #01a8fe" class="btn btn-primary">Tìm Dịch vụ</a>
-									</span>
-								</div>
+								</span>
 							</div>
 						</div>
+						<span class="input-group-btn">
+							<button type="submit" class="btn btn-primary" style="border-width: 3px">
+								Tìm dịch vụ
+							</button>
+						</span>
 					</div>
-				</div>
+				</form>
 			</div>
 		</div>
 		
@@ -185,7 +182,7 @@ $(document).ready(function() {
 		<h3>Đặt nhiều nhất</h3>
 		<div id="most-popular-services" class="owl-carousel owl-theme">
 			@foreach ($services as $service)
-			<div class="item center">
+			<div class="item">
 				<div>
 					<img class="service-img" src="{{ env('CDN_HOST') }}/img/service/{{ $service->image }}">
 				</div>

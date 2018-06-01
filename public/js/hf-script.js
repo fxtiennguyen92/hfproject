@@ -40,11 +40,13 @@ $(document).ready(function () {
 		$(this).parent().parent().find('div[toggle=showLessContent]').toggleClass('show');
 	});
 
+	// image error
 	$('img').each(function() {
 		$(this).on('error', function() {
-			$(this).attr('src', "https://cdn.handfree.co/img/no-image.gif");
+			$(this).attr('src', "https://cdn.handfree.co/img/no-image.png");
 		});
 	});
+
 });
 
 function loadingBtnSubmit(id) {

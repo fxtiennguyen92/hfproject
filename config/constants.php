@@ -11,6 +11,7 @@ return [
 	'BLOG_PAGE' => 'blogs',
 	'BLOG_CONTENT_PAGE' => 'blog',
 	'DOC_PAGE' => 'doc',
+	'SERVICE_PAGE' => 'service',
 
 	'SURVEY_PAGE' => 'survey',
 	'COMPLETE_PAGE' => 'complete',
@@ -92,6 +93,7 @@ return [
 	
 	'KEY_CITY' => 'CITY',
 	'KEY_DIST' => 'DIST',
+	'KEY_POINT_LEVEL' => 'POINTLEVEL',
 	
 	'STS_INFO' => '0',
 	'STS_READY' => '1',

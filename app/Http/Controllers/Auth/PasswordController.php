@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use App\User;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Support\Facades\Redirect;
 
 class PasswordController extends Controller
 {
@@ -18,7 +19,7 @@ class PasswordController extends Controller
 		]);
 	}
 	
-	public function view() {
+	public function edit() {
 		if (!auth()->check()) {
 			return redirect()->route('home_page');
 		}
@@ -26,14 +27,14 @@ class PasswordController extends Controller
 		return view(Config::get('constants.PASSWORD_PAGE'));
 	}
 	
-	public function change(Request $request) {
+	public function update(Request $request) {
 		if (!auth()->check()) {
 			throw new NotFoundHttpException();
 		}
 		
 		if (auth()->user()->password) {
 			if (!(Hash::check($request->get('current_password'), auth()->user()->password))) {
-				return response()->json('', 401);
+				return Redirect::back()->withInput()->with('error', 'Mật khẩu hiện tại không chính xác');
 			}
 		}
 		
@@ -41,12 +42,23 @@ class PasswordController extends Controller
 		if ($validator->fails()) {
 			$errors = $validator->errors()->getMessages();
 			
-			return response()->json('', 409);
+			return Redirect::back()->withInput()->with('error', 'Mật khẩu không đúng định dạng');
 		}
 		
 		$userModel = new User();
 		$userModel->updatePassword(auth()->user()->id, $request->get('password'));
 		
-		return response()->json('', 200);
+		return redirect()->route('control');
+	}
+	
+	public function reset(Request $request) {
+		if (!auth()->check()) {
+			throw new NotFoundHttpException();
+		}
+		
+		$userModel = new User();
+		$userModel->updatePassword(auth()->user()->id);
+		
+		return redirect()->route('control');
 	}
 }

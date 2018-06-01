@@ -39,6 +39,11 @@
 					inputContainer: '.form-group',
 					errorListClass: 'form-control-error',
 					errorClass: 'has-danger',
+				},
+				callback: {
+					onBeforeSubmit: function() {
+						loadingBtnSubmit('btnLogin');
+					}
 				}
 			},
 		});

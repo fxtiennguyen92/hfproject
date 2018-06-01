@@ -13,7 +13,55 @@ use App\Service;
 
 class ServiceController extends Controller
 {
-	public function view($serviceUrlName, Request $request) {
+	public function __construct() {
+		$this->getServiceHint();
+	}
+
+	public function search(Request $request) {
+		if (!$request->hint) {
+			return redirect()->route('home_page');
+		}
+		
+		$serviceModel = new Service();
+		$roots = $serviceModel->getAllServingRoots();
+		$popularServices = $serviceModel->getMostPopular();
+		
+		$services = $serviceModel->getByHint($request->hint);
+		
+		return view(Config::get('constants.SERVICE_PAGE'), array(
+						'services' => $services,
+						'roots' => $roots,
+						'popularServices' => $popularServices,
+		));
+	}
+
+	public function view($urlName, Request $request) {
+		$serviceModel = new Service();
+		$service = $serviceModel->getByIdOrUrlName($urlName);
+		if (!$service) {
+			throw new NotFoundHttpException();
+		}
+		
+		
+		// service root => view service page
+		if ($service->parent_id == Config::get('constants.SERVICE_ROOT')) {
+			$roots = $serviceModel->getAllServingRoots();
+			$popularServices = $serviceModel->getMostPopular();
+			$services = $serviceModel->getServingChildrenByRoot($service->id);
+			
+			return view(Config::get('constants.SERVICE_PAGE'), array(
+							'services' => $services,
+							'roots' => $roots,
+							'serviceRoot' => $service,
+							'popularServices' => $popularServices,
+			));
+		}
+		
+		// service child => view survey page
+		
+	}
+
+	public function viewSurvey($serviceUrlName, Request $request) {
 		// redirect to login page if not member
 		if (!auth()->check()) {
 			$request->session()->put('back_service', $serviceUrlName);

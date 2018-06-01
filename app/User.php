@@ -116,10 +116,18 @@ class User extends Authenticatable
 		]);
 	}
 
-	public function updatePassword($id, $password) {
-		return User::where('id', $id)->update([
-						'password' => bcrypt($password)
-		]);
+	public function updatePassword($id, $password = null) {
+		if (!$password) {
+			$passwordNew = str_random(12);
+			return User::where('id', $id)->update([
+							'password' => bcrypt($passwordNew),
+							'password_temp' => $passwordNew,
+			]);
+		} else {
+			return User::where('id', $id)->update([
+							'password' => bcrypt($password)
+			]);
+		}
 	}
 
 	public static function checkLoginAccount($account) {

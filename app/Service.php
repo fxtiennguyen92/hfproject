@@ -34,13 +34,35 @@ class Service extends Model
 			->serving()
 			->available()
 			->orderBy('hint')
+			->distinct()
+			->get();
+	}
+	
+	public function getByHint($str) {
+		return $this
+			->where('hint', 'LIKE', '%'.$str.'%')
+			->child()
+			->serving()
+			->available()
+			->take(12)
+			->orderBy('name')
+			->get();
+	}
+	
+	public function getServingChildrenByRoot($rootId) {
+		return $this
+			->where('parent_id', $rootId)
+			->child()
+			->serving()
+			->available()
+			->orderBy('name')
 			->get();
 	}
 	
 	public function getAllServingRoots() {
 		return $this
 			->root()
-// 			->serving()
+			->serving()
 			->available()
 			->orderBy('name')
 			->get();
@@ -48,7 +70,7 @@ class Service extends Model
 	
 	public function getAllServingChildren() {
 		return $this
-			->children()
+			->child()
 			->serving()
 			->available()
 			->orderBy('name')

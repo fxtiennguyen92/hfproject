@@ -12,9 +12,14 @@ use App\Review;
 use App\Order;
 use App\Blog;
 use App\Doc;
+use App\Wallet;
 
 class InitPageController extends Controller
 {
+	public function __construct() {
+		$this->getServiceHint();
+	}
+	
 	public function viewHomePage() {
 		if (auth()->check() && auth()->user()->role == Config::get('constants.ROLE_PRO')) {
 			return $this->viewDashboardPage();
@@ -23,7 +28,6 @@ class InitPageController extends Controller
 		$serviceModel = new Service();
 		$roots = $serviceModel->getAllServingRoots();
 		$services = $serviceModel->getMostPopular();
-		$hints = $serviceModel->getHints();
 		
 		$commonModel = new Common();
 		$parts = $commonModel->getByKey(Config::get('constants.HOME_PAGE'));
@@ -34,7 +38,6 @@ class InitPageController extends Controller
 		return view(Config::get('constants.HOME_PAGE'), array(
 						'roots' => $roots,
 						'services' => $services,
-						'hints' => $hints,
 						'blogs' => $blogs,
 						'parts' => $parts,
 		));
@@ -119,15 +122,19 @@ class InitPageController extends Controller
 		
 		if (auth()->user()->role == Config::get('constants.ROLE_ADM')) {
 			return view(Config::get('constants.MNG_CONTROL_PAGE'), array(
-							'nav' => 'account',
 			));
 		}
 		
 		$userModel = new User();
+		$walletModel = new Wallet();
+		$commonModel = new Common();
 // 		if (auth()->user()->role == Config::get('constants.ROLE_PRO')) {
 			$user = $userModel->getPro(auth()->user()->id);
+			$user->wallet = $walletModel->getById($user->id);
+			$levels = $commonModel->getByKey(Config::get('constants.KEY_POINT_LEVEL'));
+			
 			return view(Config::get('constants.ACCOUNT_PAGE'), array(
-				'nav' => 'account',
+				'levels' => $levels,
 				'user' => $user,
 			));
 // 		}

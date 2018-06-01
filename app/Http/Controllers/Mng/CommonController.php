@@ -29,10 +29,6 @@ class CommonController
 		$commonModel = new Common();
 		$commons = $commonModel->getAllByKey($key);
 		
-		if (sizeof($commons) == 0) {
-			throw new NotFoundHttpException();
-		}
-
 		return view(Config::get('constants.MNG_COMMON_LIST_PAGE'), array(
 						'key' => $key,
 						'commons' => $commons,

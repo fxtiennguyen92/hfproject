@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Redirect;
 class OrderController extends Controller
 {
 	public function __construct() {
+		$this->getServiceHint();
 	}
 
 	public function viewList($style = null, Request $request) {

@@ -22,32 +22,35 @@ Route::get('/pro/{proId}/info', 'InitPageController@viewProPage')
 Route::get('/blog/{urlName?}', 'InitPageController@viewBlogPage')
 	->name('blog_page');
 
+// Service
+Route::get('/service/search', 'ServiceController@search')
+	->name('service_search');
+Route::get('/service/{urlName}', 'ServiceController@view')
+	->name('service_view');
+
+// Document - privacy, term of use, etc.
 Route::get('/doc/{urlName}', 'InitPageController@viewDocPage')
 	->name('doc_view');
 
-/** Guest - STA **/
-Route::middleware('guest')->group(function() {
+// Singup Pro
+Route::get('/pro/new', 'Pro\ProController@newPro')
+	->name('pro_new');
+Route::post('/pro/create', 'Pro\ProController@create')
+	->name('pro_create');
 	
-	// Singup Pro
-	Route::get('/pro/new', 'Pro\ProController@newPro')
-		->name('pro_new');
-	Route::post('/pro/create', 'Pro\ProController@create')
-		->name('pro_create');
-	
-	// Regist company
-	Route::get('/company/new', 'Mng\CompanyController@newCompany')
-		->name('company_new');
-	Route::post('/company/create', 'Mng\CompanyController@create')
-		->name('company_create');
-});
-/** Guest - END **/
+// Regist Company
+Route::get('/company/new', 'Mng\CompanyController@newCompany')
+	->name('company_new');
+Route::post('/company/create', 'Mng\CompanyController@create')
+	->name('company_create');
 
-/** Password - STA **/
-Route::get('/password', 'Auth\PasswordController@view')
-	->name('password_page');
-Route::post('/password', 'Auth\PasswordController@change')
-	->name('change_password');
-/** Password - END **/
+// Password
+Route::get('/password', 'Auth\PasswordController@edit')
+	->name('password_edit');
+Route::post('/password/update', 'Auth\PasswordController@update')
+	->name('password_update');
+Route::post('/password/reset', 'Auth\PasswordController@reset')
+	->name('password_reset');
 
 /** Login and Logout - STA **/
 Route::get('/login', 'Auth\LoginController@view')
@@ -77,8 +80,6 @@ Route::get('/verify/{confirmCode}', 'Auth\RegisterController@verify')
 /** Sign Up - END **/
 
 /** Service - Order - STA **/
-Route::get('/dich-vu/{serviceUrlName}', 'ServiceController@view')
-	->name('service_page');
 Route::post('/order/submit', 'ServiceController@submit')
 	->name('submit_order');
 

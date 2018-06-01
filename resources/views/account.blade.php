@@ -24,13 +24,13 @@ $(document).ready(function() {
 				<div class="name">Ví Hand
 					<i class="icmn-notification" data-toggle="tooltip" data-placement="right"
 						title="Ví Hand ..."></i></div>
-				<div class="price">1500000</div>
+				<div class="price">{{ $user->wallet->wallet_2 }}</div>
 			</div>
 			<div class="col-xs-6 text-center">
 				<div class="name">Ví Tiền
 					<i class="icmn-notification" data-toggle="tooltip" data-placement="left"
 						title="Ví Tiền ..."></i></div>
-				<div class="price">1500000</div>
+				<div class="price">{{ $user->wallet->wallet_1 }}</div>
 			</div>
 		</div>
 		<div class="margin-top-20 padding-bottom-20 row">
@@ -68,10 +68,12 @@ $(document).ready(function() {
 			</div>
 			<div class="row">
 				<div class="margin-top-20 margin-bottom-20 col-xs-12 text-center">
-					<button type="button" class="btn btn-primary-outline" style="width: 80%">handfree.co/pro/{{ auth()->user()->id }}</button>
+					<button type="button" class="btn btn-primary-outline" style="width: 80%"
+						onclick="window.open('https://handfree.co/pro/{{ auth()->user()->id }}')">handfree.co/pro/{{ auth()->user()->id }}</button>
 				</div>
-				<div class="col-xs-12 text-center">
-					<a class="color-primary" href="{{ route('logout') }}">Đăng xuất</a>
+				<div class="padding-top-10 padding-right-12 col-xs-12 text-right">
+					<a class="padding-right-10 color-primary" href="{{ route('password_edit') }}" style="border-right: 1px solid #01a8fe">Đổi Mật khẩu</a>
+					<a class="padding-left-10 color-primary" href="{{ route('logout') }}">Đăng xuất</a>
 				</div>
 			</div>
 		</div>
@@ -83,7 +85,7 @@ $(document).ready(function() {
 			<div class="margin-top-10 info">Còn 12300 điểm để đạt cấp độ tiếp theo</div>
 			<div class="margin-top-30 text-center">
 				<a class="margin-right-30 color-primary" href="javacript:void(0);">Xem lịch sử</a>
-				<a class="color-primary" href="javacript:void(0);">Hệ thống cấp độ</a>
+				<a class="color-primary" href="javacript:void(0);" data-toggle="modal" data-target="#modalNewCommon">Hệ thống cấp độ</a>
 			</div>
 		</div>
 		
