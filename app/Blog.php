@@ -11,45 +11,63 @@ class Blog extends Model
 	protected $table = 'blogs';
 	
 	protected $fillable = [
-					'id', 'title', 'url_name', 'style', 'image', 'content',
+		'id', 'title', 'url_name', 'category', 'image', 'content', 'video_flg', 'highlight_flg', 'updated_by', 'updated_at'
 	];
 
 	public function getByUrlName($urlName) {
-		return $this->where('url_name', $urlName)->first();
+		return $this
+			->where('url_name', $urlName)
+			->available()
+			->first();
 	}
 	
 	public function getNewestBlogs() {
-		return $this->select('id', 'title', 'url_name', 'style', 'image')
+		return $this->select('id', 'title', 'url_name', 'category', 'image')
+			->available()
 			->orderBy('created_at', 'desc')
-			->take(5)
+			->take(3)
 			->get();
 	}
 	
-	public function getTopGeneralBlog() {
-		return $this->select('id', 'title', 'url_name', 'style', 'image')
-			->general()
+	public function getHighlightBlogs() {
+		return $this->select('id', 'title', 'url_name', 'image')
+			->available()
+			->highlight()
 			->orderBy('created_at', 'desc')
-// 			->take(5)
 			->get();
 	}
 	
-	public function getTopProBlog() {
-		return $this->select('id', 'title', 'url_name', 'style', 'image')
-			->pro()
-			->orderBy('created_at', 'desc')
-// 			->take(5)
-			->get();
+	public function getCategories() {
+		return $this->select('category')
+		->distinct()
+		->orderBy('category')
+		->get();
 	}
 	
-	public function getAll() {
+	/** Management **/
+	public function getById($id) {
+		return $this
+			->where('id', $id)
+			->first();
+	}
+	
+	public function getAllForMng() {
 		return $this->get();
 	}
 
-	public function scopeGeneral($query) {
-		return $query->where('style', Config::get('constants.BLOG_GENERAL'));
+	public static function updateHighlightFlg($id, $flg, $updatedBy) {
+		return Blog::where('id', $id)
+			->update([
+						'highlight_flg' => $flg,
+						'updated_by' => $updatedBy
+			]);
 	}
 
-	public function scopePro($query) {
-		return $query->where('style', Config::get('constants.BLOG_PRO'));
+	public function scopeHighlight($query) {
+		return $query->where('highlight_flg', Config::get('constants.FLG_ON'));
+	}
+
+	public function scopeAvailable($query) {
+		return $query->where('delete_flg', Config::get('constants.FLG_OFF'));
 	}
 }

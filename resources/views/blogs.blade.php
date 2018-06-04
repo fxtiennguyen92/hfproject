@@ -1,56 +1,54 @@
 @extends('template.index') @push('stylesheets')
 <script>
 $(document).ready(function() {
-  $('.carousel').carousel({
-    interval: 5000
-  });
 });
 </script>
 @endpush @section('title') Blog @endsection @section('content')
-<section class="content-body has-bottom-menu">
-  <div class="page-header hf-bg-gradient text-capitalize">Blog</div>
-  <div class="nav-tabs-horizontal orders-page">
-    <ul class="nav nav-tabs nav-page hf-bg-gradient text-uppercase" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active pull-right" href="javascript: void(0);" data-toggle="tab" data-target="#generalTab" role="tab" aria-expanded="true">Chung</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link right pull-left" href="javascript: void(0);" data-toggle="tab" data-target="#proTab" role="tab" aria-expanded="false">Đối tác</a>
-      </li>
-    </ul>
-    <div class="tab-content">
-      <div class="tab-pane active" id="generalTab" role="tabpanel" aria-expanded="true">
-        @if (sizeof($genBlogs) == 0)
-        <div class="row">
-          <div class="common-text">Chưa có bài viết nào</div>
-        </div>
-        @else
-        <div class="row blog-carousel-row">
-          @php $blogs = $genBlogs; $caroId = 'genBlogs' @endphp
-          @include('blog.blog-carousel')
-        </div>
-        @foreach ($genBlogs as $blog)
-          @include('blog.blog-intro')
-        @endforeach
-        @endif
-      </div>
-      <div class="tab-pane" id="proTab" role="tabpanel" aria-expanded="false">
-        @if (sizeof($proBlogs) == 0)
-        <div class="row">
-          <div class="common-text">Chưa có bài viết nào</div>
-        </div>
-        @else
-        <div class="row blog-carousel-row">
-          @php $blogs = $proBlogs; $caroId = 'proBlogs' @endphp
-          @include('blog.blog-carousel')
-        </div>
-        @foreach ($proBlogs as $blog)
-          @include('blog.blog-intro')
-        @endforeach
-        @endif
-      </div>
-    </div>
-  </div>
+<section class="content-template-1 has-bottom-menu">
+	<div class="page-banner hf-bg-gradient text-capitalize"
+		style="background-image: url('{{ env('CDN_HOST') }}/img/banner/pro_new.png')">
+		<div class="page-banner-info">
+			<div class="text-capitalize text-center margin-bottom-20"><b>Blog</b></div>
+			<div class="text-center" style="font-size: 20px">Khuyến mãi, thông báo, <span style="white-space: nowrap;">mẹo vặt, chia sẻ</span></div>
+		</div>
+	</div>
+	<div class="margin-30 row">
+		<div class="col-md-7">
+			@if (sizeof($blogs) == 0)
+			<div class="row">
+				<div class="common-text">Chưa có bài viết nào</div>
+			</div>
+			@else
+			@foreach ($blogs as $blog)
+				<div class="margin-bottom-30 blog-row" onclick="location.href='{{ route('blog_page', ['urlName' => $blog->url_name]) }}'">
+					<img class="blog-image" src="{{ env('CDN_HOST') }}/img/blog/{{ $blog->image }}" />
+					<div class="margin-top-10 margin-bottom-10">
+						<span class="margin-right-10 text-uppercase label label-danger">{{ $blog->category }}</span>
+						<span style="color: #aaa">{{ Carbon\Carbon::parse($blog->created_at)->format('d/m/Y H:i') }}</span>
+					</div>
+					<div class="blog-title">{{ $blog->title }}</div>
+				</div>
+			@endforeach
+			@endif
+		</div>
+		<div class="col-md-5">
+			@if (sizeof($highlights) > 0)
+			<div class="highlight-row">
+				<h3 class="margin-bottom-20">Nổi bật</h3>
+				@foreach ($highlights as $h)
+				<div class="margin-bottom-10 row">
+					<div class="col-xs-8"><a href="{{ route('blog_page', ['urlName' => $h->url_name]) }}">{{ $h->title }}</a></div>
+					<div class="col-xs-4">
+						<img src="{{ env('CDN_HOST') }}/img/blog/{{ $h->image }}" />
+					</div>
+				</div>
+				@endforeach
+			</div>
+			@endif
+		</div>
+	</div>
+	<div >
+	</div>
 </section>
 @endsection
 @include('template.mb.footer-menu')

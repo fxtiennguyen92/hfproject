@@ -67,8 +67,8 @@ class InitPageController extends Controller
 		$page->back_route = 'home_page';
 		
 		return view(Config::get('constants.PRO_PAGE'), array(
-			'page' => $page,
-			'pro' => $pro
+						'page' => $page,
+						'pro' => $pro
 		));
 	}
 	
@@ -76,13 +76,14 @@ class InitPageController extends Controller
 		$blogModel = new Blog();
 		
 		if (!$urlName) {
-			$genBlogs = $blogModel->getTopGeneralBlog();
-			$proBlogs = $blogModel->getTopProBlog();
+			$blogs = $blogModel->getNewestBlogs();
+			$highlights = $blogModel->getHighlightBlogs();
+			$categories = $blogModel->getCategories();
 			
 			return view(Config::get('constants.BLOG_PAGE'), array(
-						'nav' => 'blog',
-						'genBlogs' => $genBlogs,
-						'proBlogs' => $proBlogs
+						'blogs' => $blogs,
+						'highlights' => $highlights,
+						'categories' => $categories
 			));
 		}
 		
@@ -96,7 +97,6 @@ class InitPageController extends Controller
 		$page->back_route = 'blog_page';
 		
 		return view(Config::get('constants.BLOG_CONTENT_PAGE'), array(
-						'nav' => 'blog',
 						'page' => $page,
 						'blog' => $blog,
 		));

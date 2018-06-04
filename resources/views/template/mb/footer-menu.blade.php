@@ -7,7 +7,7 @@
     </li>
     <li class="@if(isset($nav)) @if($nav == 'blog') active @endif @endif">
       <a href="{{ route('blog_page') }}">
-        <i class="material-icons ">&#xE871;</i>
+        <i class="material-icons ">language</i>
       </a>
     </li>
     <li class="@if(isset($nav)) @if($nav == 'order') active @endif @endif">
@@ -18,12 +18,16 @@
       @else
       <a href="{{ route('order_list_page') }}">
       @endif
-        <i class="material-icons ">&#xE8B0;</i>
+        <i class="material-icons ">receipt</i>
       </a>
     </li>
     <li class="@if(isset($nav)) @if($nav == 'account') active @endif @endif">
       <a href="{{ route('control') }}">
-        <i class="material-icons ">&#xE7FD;</i>
+        @if (auth()->check())
+        <i class="material-icons ">person</i>
+        @else
+        <i class="material-icons ">person_outline</i>
+        @endif
       </a>
     </li>
   </ul>

@@ -176,15 +176,6 @@ Route::middleware('cs.officer')->group(function() {
 	Route::post('/mng/pro/active', 'Mng\ProController@active')
 		->name('active_pro');
 	
-	Route::get('/mng/blogs', 'Mng\BlogController@viewList')
-		->name('mng_blog_list_page');
-	Route::get('/mng/blog/{urlName?}', 'Mng\BlogController@view')
-		->name('mng_blog_page');
-	Route::post('/mng/blog/post', 'Mng\BlogController@post')
-		->name('post_blog');
-	Route::post('/mng/blog/delete', 'Mng\BlogController@delete')
-		->name('delete_blog');
-	
 	Route::get('/mng/company', 'Mng\CompanyController@viewList')
 		->name('mng_company_list_page');
 	Route::get('/mng/company/{id?}', 'Mng\CompanyController@view')
@@ -199,6 +190,24 @@ Route::middleware('cs.officer')->group(function() {
 		->name('mng_order_list_page');
 	Route::post('/mng/order/{orderNo}/cancel', 'Mng\OrderController@cancel')
 		->name('mng_cancel_order');
+
+	// Blog
+	Route::get('/mng/blog', 'Mng\BlogController@viewList')
+		->name('mng_blog_list');
+	Route::get('/mng/blog/new', 'Mng\BlogController@newBlog')
+		->name('mng_blog_new');
+	Route::post('/mng/blog', 'Mng\BlogController@updateOrCreate')
+		->name('mng_blog_create');
+	Route::get('/mng/blog/{id}', 'Mng\BlogController@edit')
+		->name('mng_blog_edit');
+	Route::post('/mng/blog/{id}/update', 'Mng\BlogController@updateOrCreate')
+		->name('mng_blog_update');
+	Route::post('/mng/blog/{id}/delete', 'Mng\BlogController@delete')
+		->name('mng_blog_delete');
+	Route::post('/mng/blog/{id}/highlight', 'Mng\BlogController@highlight')
+		->name('mng_blog_highlight');
+	Route::post('/mng/blog/{id}/unhighlight', 'Mng\BlogController@unhighlight')
+		->name('mng_blog_unhighlight');
 
 	// Services
 	Route::get('/mng/service', 'Mng\ServiceController@viewList')

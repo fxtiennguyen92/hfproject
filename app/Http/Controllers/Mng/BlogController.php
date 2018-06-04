@@ -23,62 +23,61 @@ class BlogController extends Controller
 
 	public function viewList() {
 		$blogModel = new Blog();
-		$blogs = $blogModel->getAll();
+		$blogs = $blogModel->getAllForMng();
 		
 		return view(Config::get('constants.MNG_BLOG_LIST_PAGE'), array(
 						'blogs' => $blogs,
 		));
 	}
 
-	public function view($urlName = null, $error = null, Request $request) {
-		if (!$urlName) {
-			$request->session()->forget('blog');
-			
-			return view(Config::get('constants.MNG_BLOG_PAGE'), array(
-			));
-		}
-		
+	public function newBlog() {
 		$blogModel = new Blog();
-		$blog = $blogModel->getByUrlName($urlName);
+		$categories = $blogModel->getCategories();
+		
+		return view(Config::get('constants.MNG_BLOG_PAGE'), array(
+						'categories' => $categories
+		));
+	}
+
+	public function edit($id, Request $request) {
+		$blogModel = new Blog();
+		$blog = $blogModel->getById($id);
 		if (!$blog) {
 			throw new NotFoundHttpException();
 		}
 		
-		$request->session()->put('blog', $blog->id);
+		$categories = $blogModel->getCategories();
 		
 		return view(Config::get('constants.MNG_BLOG_PAGE'), array(
 						'blog' => $blog,
+						'categories' => $categories
 		));
 	}
 
-	public function post(Request $request) {
+	public function updateOrCreate($id = null, Request $request) {
 		$validator = $this->validator($request->all());
 		if ($validator->fails()) {
 			return Redirect::back()->withInput()->with('error', 400);
 		}
 		
-		$blogId = null;
-		if ($request->session()->has('blog')) {
-			$blogId = $request->session()->get('blog');
-		}
-		
 		// no image for new blog
-		if (!$blogId && !$request->image) {
+		if (!$id && !$request->image) {
 			return Redirect::back()->withInput()->with('error', 400);
 		}
 		
 		try {
 			DB::beginTransaction();
 			$blog = Blog::updateOrCreate([
-					'id' => $blogId
+					'id' => $id
 			],[
 					'title' => $request->title,
 					'url_name' => $request->urlName,
-					'style' => $request->style,
+					'category' => $request->category,
 					'content' => $request->content,
+					'updated_by' => auth()->user()->id
 			]);
 			
-			if (!$blogId || ($blogId && $request->image)) {
+			if (!$id || ($id && $request->image)) {
 				// save image - special case
 				$image = $request->image;
 				$baseToPhp = explode(',', $image); // remove the "data:image/png;base64,"
@@ -89,29 +88,34 @@ class BlogController extends Controller
 			}
 			
 			DB::commit();
-			return redirect()->route('mng_blog_list_page');
+			return redirect()->route('mng_blog_list');
 		} catch (\Exception $e) {
 			DB::rollback();
 			return Redirect::back()->withInput()->with('error', $e->getMessage());
 		}
 	}
 
-	public function delete(Request $request) {
-		if (!$request->session()->has('blog')) {
-			throw new NotFoundHttpException();
-		}
-		$blogId = $request->session()->get('blog');
-
+	public function delete($id) {
 		try {
 			DB::beginTransaction();
-			FileController::deleteBlogImage($blogId);
-			Blog::destroy($blogId);
+			FileController::deleteBlogImage($id);
+			Blog::destroy($id);
 			
 			DB::commit();
-			return redirect()->route('mng_blog_list_page');
+			return redirect()->route('mng_blog_list');
 		} catch (\Exception $e) {
 			DB::rollback();
 			return Redirect::back()->withInput()->with('error', $e->getMessage());
 		}
+	}
+
+	public function highlight($id) {
+		Blog::updateHighlightFlg($id, Config::get('constants.FLG_ON'), auth()->user()->id);
+		return redirect()->route('mng_blog_list');
+	}
+
+	public function unhighlight($id) {
+		Blog::updateHighlightFlg($id, Config::get('constants.FLG_OFF'), auth()->user()->id);
+		return redirect()->route('mng_blog_list');
 	}
 }

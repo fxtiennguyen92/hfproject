@@ -81,18 +81,6 @@ $(document).ready(function() {
 		</div>
 		<div class="service-banner-opacity"></div>
 	</div>
-	<div class="padding-top-10 padding-bottom-10">
-		<div id="roots" class="owl-carousel owl-theme">
-			@foreach ($roots as $key=>$root)
-			<div class="item" onclick="location.href='{{ route('service_view', ['urlName' => $root->url_name]) }}'">
-				<div style="margin: 10px 0px 10px 10px; padding-right: 10px; border-right: 1px solid #e1e1e1">
-					<img class="service-img" style="width: 120px;" src="{{ env('CDN_HOST') }}/img/service/{{ $root->image }}">
-				</div>
-				<div class="text-center"><span class="service-name">{{ $root->name }}</span></div>
-			</div>
-			@endforeach
-		</div>
-	</div>
 	
 	@if (sizeof($services) == 0)
 		<div class="search-result">
@@ -100,17 +88,11 @@ $(document).ready(function() {
 		</div>
 	@else
 		@if (!isset($serviceRoot))
-		<div class="search-result">
-			Kết quả tìm kiếm cho từ khóa: <span class="search-input">'{{ app('request')->input('hint') }}'</span>
-		</div>
 		<div class="margin-30">
 			<h3>Dịch vụ phù hợp ({{ sizeof($services) }})</h3>
 		@else
-		<div class="search-result">
-			Có <b>{{ sizeof($services) }}</b> dịch vụ liên quan đến <span class="search-input text-uppercase">{{ $serviceRoot->name }}</span>
-		</div>
 		<div class="margin-30">
-			<h3>Dịch vụ ({{ sizeof($services) }})</h3>
+			<h3>{{ $serviceRoot->name }} ({{ sizeof($services) }})</h3>
 		@endif
 			<div class="search-service row">
 				@foreach ($services as $service)
@@ -125,16 +107,30 @@ $(document).ready(function() {
 		</div>
 	@endif
 	
+	<div class="margin-30">
+		<h3>Tất cả</h3>
+		<div id="roots" class="owl-carousel owl-theme">
+			@foreach ($roots as $key=>$root)
+			<div class="item" onclick="location.href='{{ route('service_view', ['urlName' => $root->url_name]) }}'">
+				<div style="margin: 10px 0px 10px 10px; padding-right: 10px; border-right: 1px solid #e1e1e1">
+					<img class="service-img" style="width: 120px;" src="{{ env('CDN_HOST') }}/img/service/{{ $root->image }}">
+				</div>
+				<div class="text-center"><span class="service-name">{{ $root->name }}</span></div>
+			</div>
+			@endforeach
+		</div>
+	</div>
+	
 	@if (sizeof($popularServices) > 0)
 	<div class="margin-30">
 		<h3>Đặt nhiều nhất</h3>
-		<div id="most-popular-services" class="owl-carousel owl-theme">
+		<div id="most-popular-services" class="service-carousel owl-carousel owl-theme">
 			@foreach ($popularServices as $popService)
 			<div class="item">
 				<div>
 					<img class="service-img" src="{{ env('CDN_HOST') }}/img/service/{{ $popService->image }}">
 				</div>
-				<div>
+				<div class="padding-top-10">
 					<span class="service-name">{{ $popService->name }}</span>
 				</div>
 			</div>

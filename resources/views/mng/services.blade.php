@@ -178,22 +178,22 @@
 										<a class="dropdown-item" href="{{ route('mng_service_edit', ['id' => $service->id]) }}">
 											<i class="icmn-grid6"></i> Chi tiết
 										</a>
-										<a class="dropdown-item" href="javascript:void(0);" onclick="publishService('{{ $service->id }}')">
+										<a class="dropdown-item @if ($service->serve_flg == 1) disabled @endif" href="javascript:void(0);" onclick="publishService('{{ $service->id }}')">
 											<i class="icmn-eye"></i> Hiển thị
 										</a>
-										<a class="dropdown-item" href="javascript:void(0);" onclick="unpublishService('{{ $service->id }}')">
+										<a class="dropdown-item @if ($service->serve_flg == 0) disabled @endif" href="javascript:void(0);" onclick="unpublishService('{{ $service->id }}')">
 											<i class="icmn-eye-blocked"></i> Ẩn đi
 										</a>
-										<a class="dropdown-item" href="javascript:void(0);" onclick="popularService('{{ $service->id }}')">
+										<a class="dropdown-item @if ($service->popular_flg == 1) disabled @endif" href="javascript:void(0);" onclick="popularService('{{ $service->id }}')">
 											<i class="icmn-earth2"></i> Phổ biến
 										</a>
-										<a class="dropdown-item" href="javascript:void(0);" onclick="unpopularService('{{ $service->id }}')">
+										<a class="dropdown-item @if ($service->popular_flg == 0) disabled @endif" href="javascript:void(0);" onclick="unpopularService('{{ $service->id }}')">
 											<i class="icmn-earth3"></i> Hủy phổ biến
 										</a>
-										<a class="dropdown-item" href="javascript:void(0);" onclick="deleteService('{{ $service->id }}')">
+										<a class="dropdown-item @if ($service->delete_flg == 1) disabled @endif" href="javascript:void(0);" onclick="deleteService('{{ $service->id }}')">
 											<i class="icmn-lock"></i> Xóa
 										</a>
-										<a class="dropdown-item" href="javascript:void(0);" onclick="activeService('{{ $service->id }}')">
+										<a class="dropdown-item @if ($service->delete_flg == 0) disabled @endif" href="javascript:void(0);" onclick="activeService('{{ $service->id }}')">
 											<i class="icmn-undo2"></i> Phục hồi
 										</a>
 									</ul>

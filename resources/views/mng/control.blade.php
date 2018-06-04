@@ -40,8 +40,8 @@ $(document).ready(function() {
             <li><a href="{{ route('mng_common_list') }}"><i class="material-icons">language</i> Tùy chỉnh hệ thống</a></li>
             <li><a href="{{ route('mng_service_list') }}"><i class="material-icons">settings</i> Dịch vụ</a></li>
             <li><a href="{{ route('mng_doc_list') }}"><i class="material-icons">subject</i> Tài liệu</a></li>
-            <li><a href="{{ route('mng_blog_list_page') }}"><i class="material-icons">web</i> Blog</a></li>
-            <li><a href="{{ route('password_page') }}"><i class="material-icons">verified_user</i> Mật khẩu</a></li>
+            <li><a href="{{ route('mng_blog_list') }}"><i class="material-icons">web</i> Blog</a></li>
+            <li><a href="{{ route('password_edit') }}"><i class="material-icons">verified_user</i> Mật khẩu</a></li>
             <li><a href="{{ route('logout') }}"><i class="material-icons">power_settings_new</i> Đăng xuất</a></li>
           </ul>
         </section>

@@ -20,9 +20,7 @@ class DocController extends Controller
 		]);
 	}
 
-	public function viewList(Request $request) {
-		$request->session()->forget('doc');
-		
+	public function viewList() {
 		$docModel = new Doc();
 		$docs = $docModel->getAllForMng();
 		
@@ -31,21 +29,17 @@ class DocController extends Controller
 		));
 	}
 
-	public function newDoc(Request $request) {
-		$request->session()->forget('doc');
-		
+	public function newDoc() {
 		return view(Config::get('constants.MNG_DOC_PAGE'), array(
 		));
 	}
 
-	public function edit($id, Request $request) {
+	public function edit($id) {
 		$docModel = new Doc();
 		$doc = $docModel->getById($id);
 		if (!$doc) {
 			throw new NotFoundHttpException();
 		}
-		
-		$request->session()->put('doc', $doc->id);
 		
 		return view(Config::get('constants.MNG_DOC_PAGE'), array(
 						'doc' => $doc

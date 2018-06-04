@@ -186,7 +186,7 @@ $(document).ready(function() {
 				<div>
 					<img class="service-img" src="{{ env('CDN_HOST') }}/img/service/{{ $service->image }}">
 				</div>
-				<div>
+				<div class="padding-top-10">
 					<span class="service-name">{{ $service->name }}</span>
 				</div>
 			</div>
@@ -199,10 +199,15 @@ $(document).ready(function() {
 		<h3>Tin tức mới nhất</h3>
 		<div id="newest-blogs" class="owl-carousel owl-theme">
 			@foreach ($blogs as $blog)
-			<div class="item" style="text-align: left;">
-				<div class="text-left color-primary blog-date">{{ Carbon\Carbon::parse($blog->created_at)->format('d/m/Y H:i') }}</div>
-				<div class="text-left blog-title" title="{{ $blog->title }}">{{ $blog->title }}</div>
-				<div class="padding-top-10"><img class="blog-img" src="{{ env('CDN_HOST') }}/img/blog/{{ $blog->image }}"></div>
+			<div class="item" >
+				<div><img class="blog-img" src="{{ env('CDN_HOST') }}/img/blog/{{ $blog->image }}"></div>
+				<div class="text-left padding-top-10">
+					<span class="margin-right-10 text-uppercase label label-danger" style="font-size: 13px;">{{ $blog->category }}</span>
+					<span class="color-primary blog-date">{{ Carbon\Carbon::parse($blog->created_at)->format('d/m/Y H:i') }}</span>
+				</div>
+				<div class="text-left blog-title" title="{{ $blog->title }}">
+					<a href="{{ route('blog_page', ['urlName' => $blog->url_name]) }}" style="color: #000;">{{ $blog->title }}</a>
+				</div>
 			</div>
 			@endforeach
 		</div>

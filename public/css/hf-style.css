@@ -17,6 +17,9 @@ body.single-page {
 table {
   font-size: 14px;
 }
+a {
+  cursor: pointer;
+}
 
 .clearfix:after {
   visibility: hidden;
@@ -1003,13 +1006,16 @@ body.single-page .single-page-block .single-page-block-inner {
   margin-bottom: 10px;
 }
 
-.home-page .service-img {
+.home-page .service-img,
+.service-carousel .service-img {
   background: #fff;
   border-radius: 5px;
   width: 250px !important;
+  height: 140px;
 }
 
-.home-page .service-name {
+.home-page .service-name,
+.service-carousel .service-name {
   font-size: 14px;
   color: #000;
 }
@@ -2341,24 +2347,38 @@ label.label-outlined.label-success {
   cursor: pointer;
 }
 
+.highlight-row {
+  padding: 10px;
+  margin-left: 10px;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  border: 1px solid #fafbfc;
+  border-radius: 5px;
+}
+
+.highlight-row div {
+  font-size: 13px;
+  text-align: justify;
+}
+.highlight-row img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
 .blog-row {
-  margin-left: -20px;
-  margin-right: -20px;
-  padding: 20px;
-  background: #fff;
-  border-top: solid 1px #e1e1e1!important;
+  font-size: 14px;
 }
 
 .blog-row .blog-image {
-  width: 150px;
-  height: 90px;
+  width: 100%;
+  height: auto;
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
-  float: left;
-  margin-right: 20px;
 }
 .blog-row .blog-title {
   font-size: 14px;
+  font-weight: bold;
 }
 
 .blog-section .blog-image {
@@ -2450,6 +2470,19 @@ span.header-info {
   color: #000;
 }
 
+.page-banner {
+  width: 100%;
+  height: 300px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: table;
+}
+.page-banner-info {
+  display: table-cell;
+  vertical-align: middle;
+  color: #fff;
+  font-size: 40px;
+}
 .service-section .service-banner {
   width: 100%;
   height: 300px;
@@ -2674,6 +2707,7 @@ span.header-info {
     right: 0;
     z-index: 999;
   }
+  .page-banner,
   .service-section .service-banner {
     height: 380px;
   }
@@ -2773,12 +2807,14 @@ span.header-info {
     height: 240px !important;
     width: 100% !important;
   }
+  .page-banner,
   .service-section .service-banner {
     height: 210px;
   }
 }
 
 @media only screen and (max-width: 376px) {
+  .page-banner,
   .service-section .service-banner {
     height: 180px;
   }
@@ -2796,6 +2832,7 @@ span.header-info {
     width: 100% !important;
   }
   
+  .page-banner,
   .service-section .service-banner {
     height: 160px;
   }
