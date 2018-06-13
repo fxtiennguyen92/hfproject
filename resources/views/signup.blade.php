@@ -1,4 +1,4 @@
-@extends('template.index_no_nav') @push('stylesheets')
+@extends('template.index-no-nav') @push('stylesheets')
 <script src='https://www.google.com/recaptcha/api.js?hl=vi'></script>
 <style>
 </style>

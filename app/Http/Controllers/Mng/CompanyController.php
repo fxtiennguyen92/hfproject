@@ -299,7 +299,7 @@ class CompanyController extends Controller
 	/**
 	 * Save previous company address into session.
 	 * 
-	 * @param unknown $request
+	 * @param $request
 	 */
 	private function saveAddressForNextInput($request) {
 		if (!auth()->check()) {
@@ -319,7 +319,7 @@ class CompanyController extends Controller
 	/**
 	 * Get name array from id array
 	 * 
-	 * @param unknown $arrMaterialId
+	 * @param $arrMaterialId
 	 * @return array
 	 */
 	private function getMaterialNameArray($arrMaterialId) {
@@ -338,7 +338,7 @@ class CompanyController extends Controller
 	/**
 	 * Get name array from id array
 	 *
-	 * @param unknown $arrServiceId
+	 * @param $arrServiceId
 	 * @return array
 	 */
 	private function getServiceNameArray($arrServiceId) {
@@ -357,8 +357,8 @@ class CompanyController extends Controller
 	/**
 	 * Save new material from other material input.
 	 * 
-	 * @param unknown $newMaterial
-	 * @return NULL|unknown
+	 * @param $newMaterial
+	 * @return material
 	 */
 	private function getOtherMaterial($newMaterial) {
 		if (!$newMaterial) {
@@ -380,8 +380,8 @@ class CompanyController extends Controller
 	/**
 	 * Save new service from other service input.
 	 * 
-	 * @param unknown $newService
-	 * @return NULL|unknown
+	 * @param $newService
+	 * @return service
 	 */
 	private function getOtherService($newService) {
 		if (!$newService) {

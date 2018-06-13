@@ -9,6 +9,12 @@ class SurveyAnswer extends Model
 	// table name
 	protected $table = 'survey_answers';
 
+	public function getById($id) {
+		return $this
+			->where('id', $id)
+			->first();
+	}
+
 	public function scopeAvailable($query) {
 		return $query->where('delete_flg', 0);
 	}

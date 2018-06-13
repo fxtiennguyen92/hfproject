@@ -14,8 +14,8 @@
 				zeroRecords: "Chưa có thông tin",
 				search: "Tìm kiếm"
 			},
-			order: [[4, 'desc']],
-			columnDefs: [ { orderable: false, targets: [5] } ]
+			order: [[3, 'desc']],
+			columnDefs: [ { orderable: false, targets: [4] } ]
 		});
 	});
 
@@ -87,42 +87,34 @@
 
 @section('content')
 <section class="content-body-full-page content-template-1">
-	<div class="page-header hf-bg-gradient text-capitalize">Blog</div>
+	<div class="page-header hf-bg-gradient text-capitalize">Video</div>
 	<div class="form-wrapper">
-		<button class="btn btn-primary pull-right" type="button" onclick="location.href='{{ route('mng_blog_new') }}'">
-			<i class="material-icons">playlist_add</i></button>
+		<button class="btn btn-primary pull-right" type="button" onclick="location.href='{{ route('mng_video_new') }}'">
+			<i class="material-icons">subscriptions</i></button>
 		<div class="row">
 			<div class="col-md-12">
 				<table class="table table-hover nowrap mng-list" width="100%">
 					<thead>
 						<tr>
 							<th class="text-center">Tiêu đề</th>
-							<th class="text-center">Chủ đề</th>
-							<th class="text-center">Trạng thái</th>
+							<th class="text-center">Tên file</th>
 							<th class="text-center">Ngày đăng</th>
 							<th class="text-center">Ngày chỉnh sửa</th>
 							<th>&nbsp;</th>
 						</tr>
 					</thead>
 					<tbody>
-						@foreach ($blogs as $blog)
+						@foreach ($videos as $video)
 						<tr>
-							<td title="{{ $blog->title }}"><span class="blog-title">{{ $blog->title }}</span></td>
-							<td class="blog-style text-center">
-								<span class="label label-danger">{{ $blog->category }}</span>
-							</td>
-							<td class="blog-style text-center">
-								@if ($blog->highlight_flg == 1)
-								<span class="label label-success">Nổi bật</span>
-								@endif
+							<td title="{{ $video->title }}"><span class="blog-title">{{ $video->title }}</span></td>
+							<td class="">{{ $video->content }}</td>
+							<td class="text-center">
+								<span class='hide'>{{ Carbon\Carbon::parse($video->created_at)->format('YmdHi') }}</span>
+								{{ Carbon\Carbon::parse($video->created_at)->format('d/m/Y H:i') }}
 							</td>
 							<td class="text-center">
-								<span class='hide'>{{ Carbon\Carbon::parse($blog->created_at)->format('YmdHi') }}</span>
-								{{ Carbon\Carbon::parse($blog->created_at)->format('d/m/Y H:i') }}
-							</td>
-							<td class="text-center">
-								<span class='hide'>{{ Carbon\Carbon::parse($blog->updated_at)->format('YmdHi') }}</span>
-								{{ Carbon\Carbon::parse($blog->updated_at)->format('d/m/Y H:i') }}
+								<span class='hide'>{{ Carbon\Carbon::parse($video->updated_at)->format('YmdHi') }}</span>
+								{{ Carbon\Carbon::parse($video->updated_at)->format('d/m/Y H:i') }}
 							</td>
 							
 							<td class="text-right">
@@ -131,16 +123,10 @@
 									<i class="icmn-cog3"></i>
 									</span>
 									<ul class="dropdown-menu dropdown-menu-right" role="menu">
-										<a class="dropdown-item" href="{{ route('mng_blog_edit', ['id' => $blog->id]) }}">
+										<a class="dropdown-item" href="{{ route('mng_blog_edit', ['id' => $video->id]) }}">
 											<i class="icmn-grid6"></i> Chi tiết
 										</a>
-										<a class="dropdown-item @if ($blog->highlight_flg == 1) disabled @endif" href="javascript:void(0);" onclick="highlightBlog('{{ $blog->id }}')">
-											<i class="icmn-file-upload"></i> Nổi bật
-										</a>
-										<a class="dropdown-item @if ($blog->highlight_flg == 0) disabled @endif" href="javascript:void(0);" onclick="unhighlightBlog('{{ $blog->id }}')">
-											<i class="icmn-file-empty"></i> Hủy Nổi bật
-										</a>
-										<a class="dropdown-item" href="javascript:void(0);" onclick="deleteBlog('{{ $blog->id }}')">
+										<a class="dropdown-item" href="javascript:void(0);" onclick="deleteBlog('{{ $video->id }}')">
 											<i class="icmn-bin"></i> Xóa
 										</a>
 									</ul>

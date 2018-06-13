@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use App\Order;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

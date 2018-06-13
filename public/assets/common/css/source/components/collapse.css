@@ -9,18 +9,19 @@
 }
 
 .accordion .panel:first-child {
-    -webkit-border-radius: 5px 5px 0 0;
-            border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 0;
+            border-radius: 0;
 }
 
 .accordion .panel:last-child {
-    -webkit-border-radius: 0 0 5px 5px;
-            border-radius: 0 0 5px 5px;
+    -webkit-border-radius: 0;
+            border-radius: 0;
     border-bottom-width: 1px;
 }
 
 .accordion .panel .panel-heading {
-    padding: 10px 20px;
+    padding: 10px;
+    font-size: 15px;
     cursor: pointer;
 }
 

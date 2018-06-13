@@ -10,27 +10,11 @@
 <script>
 	$(document).ready(function() {
 		$('.dropify').dropify();
-		$('#summernote').summernote({
-			height: 250
-		});
-		
-		var categories = [ @foreach ($categories as $c) '{{ $c->category }}', @endforeach ];
-		$.typeahead({
-			input: "#category",
-			order: "asc",
-			minLength: 1,
-			maxItem: 0,
-			source: {
-				data: categories
-			},
-			cancelButton: false,
-			accent: true,
-		});
 
 		@if (session('error') && session('error') == 400)
 			swal({
 				title: 'Thất bại',
-				text: 'Nội dung bài viết không hợp lệ!',
+				text: 'Thông tin không hợp lệ!',
 				type: 'error',
 				confirmButtonClass: 'btn-danger',
 				confirmButtonText: 'Kiểm tra lại',
@@ -47,8 +31,8 @@
 
 		
 
-		@if (isset($blog))
-		$('#btnUpdateBlog').on('click', function(e) {
+		@if (isset($video))
+		$('#btnUpdateVideo').on('click', function(e) {
 			swal({
 				title: 'Đang xử lý yêu cầu',
 				text: 'Xin chờ trong giây lát!',
@@ -58,11 +42,11 @@
 			});
 			
 			$('input[name=image]').val($('span.dropify-render').find('img').attr('src'));
-			$('#frmMain').attr('action', '{{ route("mng_blog_update", ["id" => $blog->id]) }}');
+			$('#frmMain').attr('action', '{{ route("mng_video_update", ["id" => $video->id]) }}');
 			$('#frmMain').submit();
 		});
 		@else
-		$('#btnPostBlog').on('click', function(e) {
+		$('#btnCreateVideo').on('click', function(e) {
 			swal({
 				title: 'Đang xử lý yêu cầu',
 				text: 'Xin chờ trong giây lát!',
@@ -72,7 +56,7 @@
 			});
 			
 			$('input[name=image]').val($('span.dropify-render').find('img').attr('src'));
-			$('#frmMain').attr('action', '{{ route("mng_blog_new") }}');
+			$('#frmMain').attr('action', '{{ route("mng_video_new") }}');
 			$('#frmMain').submit();
 		});
 		@endif
@@ -80,11 +64,11 @@
 </script>
 @endpush
 
-@section('title') Blog @endsection
+@section('title') Video @endsection
 
 @section('content')
 <section class="content-body-full-page content-template-1">
-	<div class="page-header hf-bg-gradient text-capitalize">Blog</div>
+	<div class="page-header hf-bg-gradient text-capitalize">Video</div>
 	<form id="frmMain" class="form-wrapper" method="post" enctype="multipart/form-data" action="">
 		<div class="row">
 			<div class="col-md-8">
@@ -95,10 +79,10 @@
 							class="form-control"
 							id="title"
 							name="title"
-							@if (session('error') || !isset($blog))
+							@if (session('error') || !isset($video))
 							value="{{ old('title') }}">
 							@else
-							value="{{ $blog->title }}">
+							value="{{ $video->title }}">
 							@endif
 					</div>
 				</div>
@@ -109,38 +93,23 @@
 							class="form-control"
 							id="urlName"
 							name="urlName"
-							@if (session('error') || !isset($blog))
+							@if (session('error') || !isset($video))
 							value="{{ old('urlName') }}">
 							@else
-							value="{{ $blog->url_name }}">
+							value="{{ $video->url_name }}">
 							@endif
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12 form-group">
-						<label>Chủ đề</label>
-						<div class="row">
-						<div class="col-md-12 text-right">
-							<div class="typeahead__container">
-								<div class="typeahead__field">
-									<span class="typeahead__query">
-										<input id="category"
-												class="input-search form-control"
-												maxlength="100"
-												name="category"
-												type="text"
-												placeholder="Tìm chủ đề hoặc Nhập chủ đề mới"
-												autocomplete="off"
-												@if (session('error') || !isset($blog))
-												value="{{ old('category') }}">
-												@else
-												value="{{ $blog->category }}">
-												@endif
-									</span>
-								</div>
-							</div>
-						</div>
-						</div>
+						<label>Video</label>
+						<input type="file"
+							class="form-control"
+							name="file">
+						@if (isset($video))
+						<br />
+						<small>Video hiện tại: {{ $video->content }}</small>
+						@endif
 					</div>
 				</div>
 			</div>
@@ -151,9 +120,9 @@
 						<input id="inpImageDropify" type="file" class="dropify"
 							data-allowed-file-extensions="gif png jpg"
 							data-max-file-size-preview="3M"
-							@if (session('error') || !isset($blog))
+							@if (session('error') || !isset($video))
 							@else
-							data-default-file="{{ env('CDN_HOST') }}/img/blog/{{ $blog->image }}"
+							data-default-file="{{ env('CDN_HOST') }}/img/blog/{{ $video->image }}"
 							@endif
 							/>
 					</div>
@@ -161,20 +130,11 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-12 form-group">
-				<label>Nội dung bài viết</label>
-				<textarea id="summernote"
-						class="form-control"
-						name="content">@if (session('error') || !isset($blog)){{ old('content') }}@else{{ $blog->content }}@endif</textarea>
-			</div>
-		</div>
-		
-		<div class="row">
 			<div class="col-md-12 text-right">
-				@if (isset($blog))
-				<button id="btnUpdateBlog" type="button" class="btn btn-warning width-150">Lưu thay đổi</button>
+				@if (isset($video))
+				<button id="btnUpdateVideo" type="button" class="btn btn-warning width-150">Lưu thay đổi</button>
 				@else
-				<button id="btnPostBlog" type="button" class="btn btn-primary width-150">Đăng bài viết</button>
+				<button id="btnCreateVideo" type="button" class="btn btn-primary width-150">Tạo video</button>
 				@endif
 				<input type="hidden" name="image" value="" />
 				<input type="hidden" name="_token" value="{{ csrf_token() }}" />

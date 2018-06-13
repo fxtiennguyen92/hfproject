@@ -23,6 +23,7 @@ class Blog extends Model
 	
 	public function getNewestBlogs() {
 		return $this->select('id', 'title', 'url_name', 'category', 'image')
+			->blog()
 			->available()
 			->orderBy('created_at', 'desc')
 			->take(3)
@@ -31,6 +32,7 @@ class Blog extends Model
 	
 	public function getHighlightBlogs() {
 		return $this->select('id', 'title', 'url_name', 'image')
+			->blog()
 			->available()
 			->highlight()
 			->orderBy('created_at', 'desc')
@@ -39,9 +41,10 @@ class Blog extends Model
 	
 	public function getCategories() {
 		return $this->select('category')
-		->distinct()
-		->orderBy('category')
-		->get();
+			->blog()
+			->distinct()
+			->orderBy('category')
+			->get();
 	}
 	
 	/** Management **/
@@ -51,8 +54,17 @@ class Blog extends Model
 			->first();
 	}
 	
-	public function getAllForMng() {
-		return $this->get();
+	public function getAllBlogsForMng() {
+		return $this
+			->blog()
+			->get();
+	}
+
+	public function getAllVideosForMng() {
+		return $this
+			->video()
+			->get();
+		
 	}
 
 	public static function updateHighlightFlg($id, $flg, $updatedBy) {
@@ -65,6 +77,14 @@ class Blog extends Model
 
 	public function scopeHighlight($query) {
 		return $query->where('highlight_flg', Config::get('constants.FLG_ON'));
+	}
+
+	public function scopeBlog($query) {
+		return $query->where('video_flg', Config::get('constants.FLG_OFF'));
+	}
+
+	public function scopeVideo($query) {
+		return $query->where('video_flg', Config::get('constants.FLG_ON'));
 	}
 
 	public function scopeAvailable($query) {

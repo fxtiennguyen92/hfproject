@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use App\Service;
 use App\Common;
@@ -13,6 +12,7 @@ use App\Order;
 use App\Blog;
 use App\Doc;
 use App\Wallet;
+use App\Http\Controllers\Auth\LoginController;
 
 class InitPageController extends Controller
 {
@@ -129,8 +129,12 @@ class InitPageController extends Controller
 		$walletModel = new Wallet();
 		$commonModel = new Common();
 // 		if (auth()->user()->role == Config::get('constants.ROLE_PRO')) {
-			$user = $userModel->getPro(auth()->user()->id);
-			$user->wallet = $walletModel->getById($user->id);
+			$user = $userModel->getAvailableAcc(auth()->user()->id);
+			
+			if (!$user) {
+				LoginController::relogin();
+			}
+			
 			$levels = $commonModel->getByKey(Config::get('constants.KEY_POINT_LEVEL'));
 			
 			return view(Config::get('constants.ACCOUNT_PAGE'), array(

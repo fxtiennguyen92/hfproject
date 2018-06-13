@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use App\Survey;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -58,32 +57,22 @@ class ServiceController extends Controller
 		}
 		
 		// service child => view survey page
-		
+		return $this->viewSurvey($service, $request);
 	}
 
-	public function viewSurvey($serviceUrlName, Request $request) {
+	private function viewSurvey($service, Request $request) {
 		// redirect to login page if not member
 		if (!auth()->check()) {
-			$request->session()->put('back_service', $serviceUrlName);
+			$request->session()->put('back_service', $service->url_name);
 			return redirect()->route('login_page');
 		}
 		
 		$surveyModel = new Survey();
-		$commonModel = new Common();
-		$serviceModel = new Service();
-		
-		$service = $serviceModel->getByIdOrUrlName($serviceUrlName);
-		
 		$questions = $surveyModel->getByService($service->id);
-		if (sizeof($questions) == 0) {
-			throw new NotFoundHttpException();
-		}
 		
+		$commonModel = new Common();
 		$cities = $commonModel->getCityList();
-		$districts = null;
-		if ($cities) {
-			$districts = $commonModel->getDistList($cities->first()->code);
-		}
+		$districts = $commonModel->getDistList();
 		
 		$dates = CommonController::getNext7Days();
 		$times = CommonController::getAllTimes();
@@ -135,7 +124,7 @@ class ServiceController extends Controller
 		$short_requirements = array();
 		foreach ($request->q as $qId => $a) {
 			// get question info
-			$question = $survey->getByQuestion($qId);
+			$question = $survey->getById($qId);
 			
 			// set answers
 			$answers = '';

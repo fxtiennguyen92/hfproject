@@ -114,8 +114,6 @@ class RegisterController extends Controller
 
 	public function verify($confirmCode) {
 		$user = User::where('confirm_code', $confirmCode)->first();
-		
-		// wrong url / confirm code
 		if (!$user) {
 			throw new NotFoundHttpException();
 		}

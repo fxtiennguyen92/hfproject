@@ -119,6 +119,7 @@
 								@endif
 							</td>
 							<td class="text-right col-order-created-date">
+								<span class='hide'>{{ Carbon\Carbon::parse($order->created_at)->format('YmdHi') }}</span>
 								<div>{{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }}</div>
 								<div>{{ Carbon\Carbon::parse($order->created_at)->format('H:i') }}</div>
 							</td>

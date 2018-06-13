@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use App\Http\Controllers\FileController;
+use Illuminate\Http\Request;
 
 class SocialAuthController extends Controller
 {
@@ -15,36 +16,37 @@ class SocialAuthController extends Controller
 		return Socialite::driver('facebook')->redirect();
 	}
 
-	public function callbackFB() {
+	public function callbackFB(Request $request) {
 		// when facebook call us a with token
 		$user = Socialite::driver('facebook')->user();
-		return $this->authenticate($user);
+		return $this->authenticate($user, 0, $request);
 	}
 
 	public function redirectGG() {
 		return Socialite::driver('google')->redirect();
 	}
 
-	public function callbackGG() {
+	public function callbackGG(Request $request) {
 		$user = Socialite::driver('google')->user();
-		return $this->authenticate($user, 1);
+		return $this->authenticate($user, 1, $request);
 	}
 
-	private function authenticate($user, $socialNetwork = 0) {
+	private function authenticate($user, $socialNetwork = 0, $request) {
 		// Check existed user
 		$registedUser = User::where(function ($query) use ($user) {
-				$query->where('email', '=', $user->email)
-				->orWhere('facebook_id', '=', $user->id)
-				->orWhere('google_id', '=', $user->id);
-		})->first();
+				$query
+					->where('email', '=', $user->email)
+					->orWhere('facebook_id', '=', $user->id)
+					->orWhere('google_id', '=', $user->id);
+				})->first();
 		
 		if ($registedUser) {
-			if ($registedUser->delele_flg != Config::get('constants.FLG_OFF')) { // User is deleted
-				// TODO: Error Page User Can not Use
+			if ($registedUser->delete_flg == Config::get('constants.FLG_ON')) { // User is deleted
+				return redirect()->route('login_page')->with('error', 400);
 			}
 			
-			if ($registedUser->confirm_flg != Config::get('constants.FLG_ON')) { // Email is not confirmed
-				// TODO: Redirect Confirm Email Page
+			if ($registedUser->confirm_flg == Config::get('constants.FLG_OFF')) { // Email is not confirmed
+				return redirect()->route('login_page')->with('error', 406);
 			}
 		} else {
 			// Create new user
@@ -53,12 +55,13 @@ class SocialAuthController extends Controller
 		
 		// Login
 		Auth::login($registedUser);
+		LoginController::createWalletForOldAcc($registedUser->id);
 		
 		// Get image from Socialite
 		$data = file_get_contents($user->getAvatar());
 		FileController::saveAvatar($data);
 		
-		return LoginController::redirectPath();
+		return LoginController::redirectPath($request);
 	}
 
 	private function create($user, $socialNetwork = 0) {

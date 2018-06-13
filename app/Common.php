@@ -61,18 +61,14 @@ class Common extends Model
 	}
 
 	/**
-	 * Get city list for ajax
-	 * 
-	 * @return unknown
+	 * Get city list by ajax
 	 */
 	public function getCityList() {
 		return $this->getByKey(Config::get('constants.KEY_CITY'));
 	}
 
 	/**
-	 * Get district list for ajax
-	 *
-	 * @return unknown
+	 * Get district list by ajax
 	 */
 	public function getDistList($cityCode = null) {
 		if (!$cityCode) {

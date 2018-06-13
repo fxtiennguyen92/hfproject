@@ -13,7 +13,8 @@ $(document).ready(function() {
 		</div>
 	</div>
 	<div class="margin-30 row">
-		<div class="col-md-7">
+		<div class="col-md-1"></div>
+		<div class="col-md-6 col-sm-7">
 			@if (sizeof($blogs) == 0)
 			<div class="row">
 				<div class="common-text">Chưa có bài viết nào</div>
@@ -31,16 +32,13 @@ $(document).ready(function() {
 			@endforeach
 			@endif
 		</div>
-		<div class="col-md-5">
+		<div class="col-md-4 col-sm-5">
 			@if (sizeof($highlights) > 0)
 			<div class="highlight-row">
-				<h3 class="margin-bottom-20">Nổi bật</h3>
+				<h3 class="margin-bottom-10">Nổi bật</h3>
 				@foreach ($highlights as $h)
-				<div class="margin-bottom-10 row">
-					<div class="col-xs-8"><a href="{{ route('blog_page', ['urlName' => $h->url_name]) }}">{{ $h->title }}</a></div>
-					<div class="col-xs-4">
-						<img src="{{ env('CDN_HOST') }}/img/blog/{{ $h->image }}" />
-					</div>
+				<div>
+					<a href="{{ route('blog_page', ['urlName' => $h->url_name]) }}">{{ $h->title }}</a>
 				</div>
 				@endforeach
 			</div>

@@ -6,6 +6,7 @@ use App\User;
 use App\Blog;
 use App\ProProfile;
 use App\Service;
+use Illuminate\Support\Facades\Storage;
 
 class FileController
 {
@@ -18,10 +19,10 @@ class FileController
 		}
 		$user = User::where('id', $userId)->first();
 		if ($user->avatar) {
-			\Storage::delete($directoryName.'/'.$user->avatar);
+			Storage::delete($directoryName.'/'.$user->avatar);
 		}
 		
-		$fileSrc = \Storage::put($directoryName.'/'. $fileName, $data);
+		$fileSrc = Storage::put($directoryName.'/'. $fileName, $data);
 		
 		$user->avatar = $fileName;
 		$user->save();
@@ -33,10 +34,10 @@ class FileController
 		
 		$blog = Blog::where('id', $blogId)->first();
 		if ($blog->image) {
-			\Storage::delete($directoryName.'/'.$blog->image);
+			Storage::delete($directoryName.'/'.$blog->image);
 		}
 		
-		$fileSrc = \Storage::put($directoryName.'/'. $fileName, $data);
+		$fileSrc = Storage::put($directoryName.'/'. $fileName, $data);
 		
 		$blog->image = $fileName;
 		$blog->save();
@@ -47,15 +48,15 @@ class FileController
 		
 		$blog = Blog::where('id', $blogId)->first();
 		if ($blog->image) {
-			\Storage::delete($directoryName.'/'.$blog->image);
+			Storage::delete($directoryName.'/'.$blog->image);
 		}
 	}
 
 	public static function saveCompanyCoverImage($data, $fileName) {
 		$directoryName = 'img/comp/cover';
 		
-		\Storage::delete($directoryName.'/'.$fileName);
-		$fileSrc = \Storage::put($directoryName.'/'. $fileName, $data);
+		Storage::delete($directoryName.'/'.$fileName);
+		$fileSrc = Storage::put($directoryName.'/'. $fileName, $data);
 	}
 
 	public static function saveGovEnvidence($data, $proId) {
@@ -63,9 +64,9 @@ class FileController
 		$directoryName = 'u'.'/'. $proId;
 		
 		$pro = ProProfile::where('id', $proId)->first();
-		\Storage::delete($directoryName.'/'.$pro->gov_evidence);
+		Storage::delete($directoryName.'/'.$pro->gov_evidence);
 		
-		$fileSrc = \Storage::put($directoryName.'/'. $fileName, $data);
+		$fileSrc = Storage::put($directoryName.'/'. $fileName, $data);
 		
 		$pro->gov_evidence = $fileName;
 		$pro->save();
@@ -77,10 +78,10 @@ class FileController
 		
 		$service = Service::where('id', $serviceId)->first();
 		if ($service->image) {
-			\Storage::delete($directoryName.'/'.$service->image);
+			Storage::delete($directoryName.'/'.$service->image);
 		}
 		
-		$fileSrc = \Storage::put($directoryName.'/'. $fileName, $data);
+		$fileSrc = Storage::put($directoryName.'/'. $fileName, $data);
 		
 		$service->image = $fileName;
 		$service->save();

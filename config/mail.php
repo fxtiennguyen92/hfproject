@@ -84,12 +84,9 @@ return [
     |
     */
 
-//     'username' => env('MAIL_USERNAME'),
+    'username' => env('MAIL_USERNAME'),
+    'password' => env('MAIL_PASSWORD'),
 
-//     'password' => env('MAIL_PASSWORD'),
-
-	'username' => 'info@handfree.co',
-	'password' => 'Hand*#0000',
     /*
     |--------------------------------------------------------------------------
     | Sendmail System Path

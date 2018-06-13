@@ -16,7 +16,6 @@
 			});
 		@endif
 		
-		autosize($('textarea'));
 		$('.mng-list').DataTable({
 			responsive: true,
 			info: false,
@@ -136,7 +135,7 @@
 	<div class="form-wrapper">
 		<div class="text-right">
 			<button class="btn btn-primary" type="button" onclick="location.href='{{ route('mng_service_new') }}'">
-				<i class="material-icons">&#xE7F0;</i></button>
+				<i class="material-icons">playlist_add</i></button>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
@@ -227,22 +226,25 @@
 										<a class="dropdown-item" href="{{ route('mng_service_edit', ['id' => $child->id]) }}">
 											<i class="icmn-grid6"></i> Chi tiết
 										</a>
-										<a class="dropdown-item" href="javascript:void(0);" onclick="publishService('{{ $child->id }}')">
+										<a class="dropdown-item" href="{{ route('mng_survey_list', ['id' => $child->id]) }}">
+											<i class="icmn-clipboard2"></i> Câu hỏi
+										</a>
+										<a class="dropdown-item @if ($child->serve_flg == 1) disabled @endif" href="javascript:void(0);" onclick="publishService('{{ $child->id }}')">
 											<i class="icmn-eye"></i> Hiển thị
 										</a>
-										<a class="dropdown-item" href="javascript:void(0);" onclick="unpublishService('{{ $child->id }}')">
+										<a class="dropdown-item @if ($child->serve_flg == 0) disabled @endif" href="javascript:void(0);" onclick="unpublishService('{{ $child->id }}')">
 											<i class="icmn-eye-blocked"></i> Ẩn đi
 										</a>
-										<a class="dropdown-item" href="javascript:void(0);" onclick="popularService('{{ $child->id }}')">
+										<a class="dropdown-item @if ($child->popular_flg == 1) disabled @endif" href="javascript:void(0);" onclick="popularService('{{ $child->id }}')">
 											<i class="icmn-earth2"></i> Phổ biến
 										</a>
-										<a class="dropdown-item" href="javascript:void(0);" onclick="unpopularService('{{ $child->id }}')">
+										<a class="dropdown-item @if ($child->popular_flg == 0) disabled @endif" href="javascript:void(0);" onclick="unpopularService('{{ $child->id }}')">
 											<i class="icmn-earth3"></i> Hủy phổ biến
 										</a>
-										<a class="dropdown-item" href="javascript:void(0);" onclick="deleteService('{{ $child->id }}')">
+										<a class="dropdown-item @if ($child->delete_flg == 1) disabled @endif" href="javascript:void(0);" onclick="deleteService('{{ $child->id }}')">
 											<i class="icmn-lock"></i> Xóa
 										</a>
-										<a class="dropdown-item" href="javascript:void(0);" onclick="activeService('{{ $child->id }}')">
+										<a class="dropdown-item @if ($child->delete_flg == 0) disabled @endif" href="javascript:void(0);" onclick="activeService('{{ $child->id }}')">
 											<i class="icmn-undo2"></i> Phục hồi
 										</a>
 									</ul>

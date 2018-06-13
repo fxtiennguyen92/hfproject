@@ -29,10 +29,10 @@ return [
 	'MNG_CONTROL_PAGE' => 'mng.control',
 	'MNG_ACC_LIST_PAGE' => 'mng.accounts',
 	'MNG_PRO_LIST_PAGE' => 'mng.pros',
-				
+	
 	'MNG_PRO_PAGE' => 'mng.pro',
 	'MNG_PRO_PROFILE_PAGE' => 'mng.pro-profile',
-				
+	
 	'MNG_COMPANY_PAGE' => 'mng.company',
 	'MNG_COMPANY_LIST_PAGE' => 'mng.companies',
 	'MNG_BLOG_LIST_PAGE' => 'mng.blogs',
@@ -43,6 +43,9 @@ return [
 	'MNG_DOC_LIST_PAGE' => 'mng.docs',
 	'MNG_SERVICE_PAGE' => 'mng.service',
 	'MNG_SERVICE_LIST_PAGE' => 'mng.services',
+	'MNG_SURVEY_PAGE' => 'mng.survey',
+	'MNG_VIDEO_PAGE' => 'mng.video',
+	'MNG_VIDEO_LIST_PAGE' => 'mng.videos',
 	
 	'PA_COMPANY_LIST_PAGE' => 'mng.pa.companies',
 	'PA_COMPANY_PAGE' => 'mng.pa.company',
@@ -54,9 +57,9 @@ return [
 	'404_PAGE' => 'error.404',
 	
 	/** MAIL **/
-	'VERIFY_MAIL_SUBJECT' => '[HANDFREE APP] Xác nhận Email',
-	'ACTIVE_PRO_ACCOUNT_MAIL_SUBJECT' => '[HANDFREE APP] Kích hoạt tài khoản Đối tác',
-	'OUT_LOCATION_MAIL_SUBJECT' => '[HANDFREE APP] Địa điểm chưa được hỗ trợ',
+	'VERIFY_MAIL_SUBJECT' => '[HAND FREE] Xác nhận Email',
+	'ACTIVE_PRO_ACCOUNT_MAIL_SUBJECT' => '[HAND FREE] Kích hoạt tài khoản Đối tác',
+	'OUT_LOCATION_MAIL_SUBJECT' => '[HAND FREE] Địa điểm chưa được hỗ trợ',
 	
 	/** ENUM **/
 	'COMMON_ROOT' => '*ROOT',
@@ -106,4 +109,6 @@ return [
 	'BLOG_PRO' => '1',
 	
 	'SERVICE_ROOT' => '0',
+	
+	'LOG_SMS_KEY' => 'SMS',
 ];

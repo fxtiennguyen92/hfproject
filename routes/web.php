@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -209,7 +211,13 @@ Route::middleware('cs.officer')->group(function() {
 	Route::post('/mng/blog/{id}/unhighlight', 'Mng\BlogController@unhighlight')
 		->name('mng_blog_unhighlight');
 
-	// Services
+	// Video
+	Route::get('/mng/video', 'Mng\VideoController@viewList')
+		->name('mng_video_list');
+	Route::get('/mng/video/new', 'Mng\VideoController@newVideo')
+		->name('mng_video_new');
+
+	// Service
 	Route::get('/mng/service', 'Mng\ServiceController@viewList')
 		->name('mng_service_list');
 	Route::get('/mng/service/new', 'Mng\ServiceController@newService')
@@ -232,8 +240,28 @@ Route::middleware('cs.officer')->group(function() {
 		->name('mng_service_popular');
 	Route::post('/mng/service/{id}/unpopular', 'Mng\ServiceController@unpopular')
 		->name('mng_service_unpopular');
+	
+	// Survey
+	Route::get('/mng/service/{id}/survey', 'Mng\ServiceController@viewSurveyList')
+		->name('mng_survey_list');
+	Route::post('/mng/service/{id}/survey', 'Mng\ServiceController@createQuestion')
+		->name('mng_survey_question_create');
+	Route::get('/mng/survey/question/{id}', 'Mng\ServiceController@editQuestion')
+		->name('mng_survey_question_edit');
+	Route::post('/mng/survey/question/{id}/update', 'Mng\ServiceController@updateQuestion')
+		->name('mng_survey_question_update');
+	Route::post('/mng/survey/question/{id}/delete', 'Mng\ServiceController@deleteQuestion')
+		->name('mng_survey_question_delete');
+	Route::post('/mng/survey/question/{id}/answer', 'Mng\ServiceController@createAnswer')
+		->name('mng_survey_answer_create');
+	Route::get('/mng/survey/answer/{id}', 'Mng\ServiceController@editAnswer')
+		->name('mng_survey_answer_edit');
+	Route::post('/mng/survey/answer/{id}/update', 'Mng\ServiceController@updateAnswer')
+		->name('mng_survey_answer_update');
+	Route::post('/mng/survey/answer/{id}/delete', 'Mng\ServiceController@deleteAnswer')
+		->name('mng_survey_answer_delete');
 
-	// Common parameters
+	// Common
 	Route::get('/mng/common/{key?}', 'Mng\CommonController@viewList')
 		->name('mng_common_list');
 	Route::post('/mng/common/{key}', 'Mng\CommonController@createCommon')
@@ -260,7 +288,7 @@ Route::middleware('cs.officer')->group(function() {
 });
 /** Management - END **/
 
-// Route::get('/outlocation', 'MailController@outlocation');
+// Route::get('/test', 'SMSController@test');
 	
 // Route::get('/test2', function () { return view('mail.out-location'); });
 // Route::get('/test3', function () { return view('test3'); });

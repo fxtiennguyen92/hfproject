@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 
 class ProAuthenticate

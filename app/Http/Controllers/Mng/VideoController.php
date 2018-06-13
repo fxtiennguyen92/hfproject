@@ -12,31 +12,26 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class BlogController extends Controller
+class VideoController extends Controller
 {
 	protected function validator(array $data) {
 		return Validator::make($data, [
 						'title' => 'required|string|max:150',
 						'urlName' => 'required|string|max:150',
-						'content' => 'required|string',
 		]);
 	}
 
 	public function viewList() {
 		$blogModel = new Blog();
-		$blogs = $blogModel->getAllBlogsForMng();
+		$videos = $blogModel->getAllVideosForMng();
 		
-		return view(Config::get('constants.MNG_BLOG_LIST_PAGE'), array(
-						'blogs' => $blogs,
+		return view(Config::get('constants.MNG_VIDEO_LIST_PAGE'), array(
+						'videos' => $videos,
 		));
 	}
 
-	public function newBlog() {
-		$blogModel = new Blog();
-		$categories = $blogModel->getCategories();
-		
-		return view(Config::get('constants.MNG_BLOG_PAGE'), array(
-						'categories' => $categories
+	public function newVideo() {
+		return view(Config::get('constants.MNG_VIDEO_PAGE'), array(
 		));
 	}
 
@@ -73,8 +68,8 @@ class BlogController extends Controller
 			],[
 					'title' => $request->title,
 					'url_name' => $request->urlName,
-					'category' => $request->category,
-					'content' => $request->content,
+					'content' => '',
+					'video_flg' => Config::get('constants.FLG_ON'),
 					'updated_by' => auth()->user()->id
 			]);
 			

@@ -15,13 +15,6 @@ class Material extends Model
 			->first();
 	}
 	
-	/**
-	 * Get all for view customer page
-	 * 
-	 * @param string $orderCol
-	 * @param string $sorting
-	 * @return unknown
-	 */
 	public function getAll() {
 		return $this
 			->available()

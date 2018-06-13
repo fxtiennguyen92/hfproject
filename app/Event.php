@@ -11,8 +11,6 @@ class Event extends Model
 
 	/**
 	 * get all events for view customer page
-	 * 
-	 * @return unknown
 	 */
 	public function getAll() {
 		return $this

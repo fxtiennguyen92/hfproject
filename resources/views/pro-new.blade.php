@@ -77,6 +77,13 @@
 					}
 				}
 			});
+
+			$('#chosenService').html('...');
+			var chosenServices = '';
+			$('.icmn-checkbox-checked2').each(function() {
+				chosenServices = chosenServices + $(this).attr('service-name') + ', ';
+				$('#chosenService').html(chosenServices);
+			});
 		});
 
 		$('input[name=email]').on('change', function() {
@@ -247,7 +254,7 @@
 							</div>
 							<div class="col-sm-6 col-xs-6">
 								<div class="form-group">
-									<select class="form-control selectpicker ddDist hf-select" data-live-search="true"  name="dist">
+									<select class="form-control selectpicker ddDist hf-select" data-live-search="true"	name="dist">
 										@foreach($districts as $dist)
 										<option value="{{ $dist->code }}">{{ $dist->name }}</option>
 										@endforeach
@@ -314,19 +321,39 @@
 		</div>
 		<h5 class="padding-top-30">Dịch vụ tham gia</h5>
 		<div class="padding-bottom-10"><span class="header-info">HandFree sẽ kiểm tra kinh nghiệm và bằng cấp chuyên môn của bạn vào buổi training</span></div>
-		<div class="padding-20 hf-card">
-			<div class="row">
+		<div class="hf-card">
+			<div class="panel-group accordion" id="accordion" role="tablist" aria-multiselectable="true">
 				@foreach ($services as $service)
-				<div data-toggle="buttons" class="col-md-6 col-sm-6 col-xs-6">
-					<label class="btn">
-						<input type="checkbox"
-							name="services[]"
-							value="{{ $service->id }}">
-							<span class="icon icmn-checkbox-unchecked2"></span> {{ $service->name }}
-					</label>
+				<div class="panel panel-default">
+					<div class="panel-heading collapsed" role="tab" id="heading{{ $service->id }}" data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{ $service->id }}" aria-expanded="true" aria-controls="collapse{{ $service->id }}">
+						<div class="panel-title">
+							<span class="accordion-indicator pull-right">
+								<i class="plus fa fa-plus"></i>
+								<i class="minus fa fa-minus"></i>
+							</span>
+							<a>{{ $service->name }}</a>
+						</div>
+					</div>
+					<div id="collapse{{ $service->id }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ $service->id }}">
+						<div class="panel-body padding-left-10 row">
+							@foreach ($service->children as $child)
+							<div data-toggle="buttons" class="col-md-6 col-sm-6 col-xs-12">
+								<label class="btn">
+									<input type="checkbox"
+										name="services[]"
+										value="{{ $child->id }}">
+										<span class="icon icmn-checkbox-unchecked2" service-name="{{ $child->name }}"></span> {{ $child->name }}
+								</label>
+							</div>
+							@endforeach
+						</div>
+					</div>
 				</div>
 				@endforeach
 			</div>
+		</div>
+		<div class="padding-top-10">
+			<small><b>Dịch vụ đã chọn: </b><span class="header-info" id="chosenService">...</span></small>
 		</div>
 		<h5 class="padding-top-30">Buổi training</h5>
 		<div class="padding-20 margin-bottom-30 hf-card">

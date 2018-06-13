@@ -96,7 +96,7 @@ $(document).ready(function() {
 		@endif
 			<div class="search-service row">
 				@foreach ($services as $service)
-				<div class="col-md-3 col-sm-4 col-xs-6">
+				<div class="col-md-3 col-sm-4 col-xs-6 service-obj" onclick="location.href='{{ route('service_view', ['urlName' => $service->url_name]) }}'">
 					<div class="service-img" style="background-image: url('{{ env('CDN_HOST') }}/img/service/{{ $service->image }}')"></div>
 					<div class="text-center padding-top-10 padding-bottom-20">
 						<span class="service-name">{{ $service->name }}</span>
@@ -111,7 +111,7 @@ $(document).ready(function() {
 		<h3>Tất cả</h3>
 		<div id="roots" class="owl-carousel owl-theme">
 			@foreach ($roots as $key=>$root)
-			<div class="item" onclick="location.href='{{ route('service_view', ['urlName' => $root->url_name]) }}'">
+			<div class="item service-obj" onclick="location.href='{{ route('service_view', ['urlName' => $root->url_name]) }}'">
 				<div style="margin: 10px 0px 10px 10px; padding-right: 10px; border-right: 1px solid #e1e1e1">
 					<img class="service-img" style="width: 120px;" src="{{ env('CDN_HOST') }}/img/service/{{ $root->image }}">
 				</div>
@@ -126,7 +126,7 @@ $(document).ready(function() {
 		<h3>Đặt nhiều nhất</h3>
 		<div id="most-popular-services" class="service-carousel owl-carousel owl-theme">
 			@foreach ($popularServices as $popService)
-			<div class="item">
+			<div class="item service-obj" onclick="location.href='{{ route('service_view', ['urlName' => $popService->url_name]) }}'">
 				<div>
 					<img class="service-img" src="{{ env('CDN_HOST') }}/img/service/{{ $popService->image }}">
 				</div>

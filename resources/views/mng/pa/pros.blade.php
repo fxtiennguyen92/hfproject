@@ -150,7 +150,7 @@
 	<div class="form-wrapper">
 		<div class="text-right">
 			<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalNewPro">
-				<i class="material-icons">create</i></button>
+				<i class="material-icons">person_add</i></button>
 		</div>
 		<div class="row">
 			<div class="col-sm-12">

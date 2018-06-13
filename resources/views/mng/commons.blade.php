@@ -169,7 +169,7 @@
 	<div class="form-wrapper">
 		<div class="text-right">
 			<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalNewCommon">
-				<i class="material-icons">&#xE7F0;</i></button>
+				<i class="material-icons">playlist_add</i></button>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
@@ -199,6 +199,7 @@
 								@endif
 							</td>
 							<td class="text-center">
+								<span class='hide'>{{ Carbon\Carbon::parse($common->created_at)->format('YmdHi') }}</span>
 								{{ Carbon\Carbon::parse($common->created_at)->format('d/m/Y H:i') }}
 							</td>
 							<td class="text-right">

@@ -173,12 +173,8 @@ class ProController extends Controller
 			
 			DB::commit();
 			
-			// send mail
-// 			$pro = $userModel->getProOrProManager($id);
-// 			if ($pro->email) {
-// 				$mail = new MailController();
-// 				$mail->sendActiveProAccountMail($pro->name, $pro->email, $pro->password_temp);
-// 			}
+			// send message and email
+			$this->sendMessageAndEmail($id);
 			
 			return redirect()->route('mng_pro_list');
 		} catch (\Exception $e) {
@@ -206,7 +202,6 @@ class ProController extends Controller
 	}
 
 	/** Partner Acquisition **/
-	
 	public function viewListForPA() {
 		$userModel = new User();
 		$compModel = new Company();
@@ -289,5 +284,14 @@ class ProController extends Controller
 		$eventUser->created_by = (auth()->check()) ? auth()->user()->id : null;
 		
 		$eventUser->save();
+	}
+	
+	private function sendMessageAndEmail($id) {
+		$userModel = new User();
+		$pro = $userModel->getProOrProManager($id);
+		if ($pro->email) {
+			$mail = new MailController();
+			$mail->sendActiveProAccountMail($pro->name, $pro->email, $pro->password_temp);
+		}
 	}
 }

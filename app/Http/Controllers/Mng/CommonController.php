@@ -6,7 +6,6 @@ use App\Common;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CommonController
 {

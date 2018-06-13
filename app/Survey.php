@@ -9,10 +9,9 @@ class Survey extends Model
 	// table name
 	protected $table = 'survey_questions';
 
-	public function getByQuestion($questionId) {
+	public function getById($id) {
 		return $this::with('answers')
-			->where('id', $questionId)
-			->available()
+			->where('id', $id)
 			->first();
 	}
 
@@ -20,6 +19,7 @@ class Survey extends Model
 		return $this::with('answers')
 			->where('service_id', $serviceId)
 			->available()
+			->orderBy('order_dsp')
 			->get();
 	}
 

@@ -111,6 +111,7 @@
 									@endif
 							</td>
 							<td class="text-center">
+								<span class='hide'>{{ Carbon\Carbon::parse($pro->created_at)->format('YmdHi') }}</span>
 								{{ Carbon\Carbon::parse($pro->created_at)->format('d/m/Y H:i') }}
 							</td>
 							<td class="text-center col-label-profile-state">

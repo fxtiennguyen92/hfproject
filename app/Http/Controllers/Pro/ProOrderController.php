@@ -8,7 +8,6 @@ use App\Order;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Http\Request;
 use App\QuotedPrice;
-use App\User;
 use App\Http\Controllers\CommonController;
 
 class ProOrderController extends Controller

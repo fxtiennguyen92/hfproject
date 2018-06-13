@@ -11,25 +11,22 @@ class User extends Authenticatable
 {
 	use Notifiable;
 
-	/**
-	 * The attributes that are mass assignable.
-	 *
-	 * @var array
-	 */
 	protected $fillable = [
 		'name', 'email', 'phone', 'password', 'role', 'delete_flg',
 		'confirm_code', 'confirm_flg',
 		'google_id', 'facebook_id', 'avatar'
 	];
 
-	/**
-	 * The attributes that should be hidden for arrays.
-	 *
-	 * @var array
-	 */
 	protected $hidden = [
 		'password', 'remember_token',
 	];
+
+	public function getAvailableAcc($id) {
+		return $this::with('wallet', 'profile', 'profile.company')
+			->where('id', $id)
+			->available()
+			->first();
+	}
 
 	public function getAllAcc() {
 		return $this->get();
@@ -102,7 +99,8 @@ class User extends Authenticatable
 
 	public function activeProAccount($id) {
 		$passwordTemp = str_random(12);
-		return User::where('id', $id)->update([
+		return User::where('id', $id)
+		->update([
 						'password_temp' => $passwordTemp,
 						'password' => bcrypt($passwordTemp),
 						'confirm_flg' => Config::get('constants.FLG_ON'),
@@ -111,7 +109,8 @@ class User extends Authenticatable
 	}
 
 	public function updateDeleteFlg($id, $deleteFlg) {
-		return User::where('id', $id)->update([
+		return User::where('id', $id)
+		->update([
 						'delete_flg' => $deleteFlg
 		]);
 	}
@@ -119,13 +118,15 @@ class User extends Authenticatable
 	public function updatePassword($id, $password = null) {
 		if (!$password) {
 			$passwordNew = str_random(12);
-			return User::where('id', $id)->update([
+			return User::where('id', $id)
+			->update([
 							'password' => bcrypt($passwordNew),
 							'password_temp' => $passwordNew,
 			]);
 		} else {
 			return User::where('id', $id)->update([
-							'password' => bcrypt($password)
+							'password' => bcrypt($password),
+							'password_temp' => null,
 			]);
 		}
 	}
@@ -133,30 +134,25 @@ class User extends Authenticatable
 	public static function checkLoginAccount($account) {
 		// get with username is phone
 		$user = User::where('phone', $account->username)
-			->available()
+			->orWhere('email', $account->username)
 			->first();
 		
-		if (!$user) {
-			// get with username is email
-			$user = User::where('email', $account->username)
-				->available()
-				->first();
+		if ($user) {
+			// check password
+			if (Hash::check($account->password, $user->password)) {
+				return $user;
+			}
 		}
 		
-		if (!$user) {
-			return null;
-		}
-		
-		// check password
-		if (!(Hash::check($account->password, $user->password))) {
-			return null;
-		}
-		
-		return $user;
+		return null;
 	}
 
 	public function profile() {
 		return $this->hasOne('App\ProProfile', 'id');
+	}
+	
+	public function wallet() {
+		return $this->hasOne('App\Wallet', 'id');
 	}
 	
 	public function scopeMember($query) {

@@ -42,7 +42,7 @@ class ProProfileController extends Controller
 	 * Change password.
 	 * 
 	 * @param Request $request
-	 * @return \Illuminate\Http\JsonResponse|unknown
+	 * @return \Illuminate\Http\JsonResponse
 	 */
 	public function changePassword(Request $request) {
 		// Check current password
@@ -94,7 +94,7 @@ class ProProfileController extends Controller
 	 * Get a validator.
 	 * 
 	 * @param array $data
-	 * @return unknown
+	 * @return validator
 	 */
 	protected function validator(array $data) {
 		return Validator::make($data, [

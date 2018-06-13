@@ -7,7 +7,7 @@
 $(document).ready(function() {
 	$('#inpUsername').focus();
 	
-	@if (session('error'))
+	@if (session('error') == 401)
 	swal({
 		title: 'Thất bại',
 		text: 'Tài khoản đăng nhập chưa đúng',
@@ -15,6 +15,22 @@ $(document).ready(function() {
 		confirmButtonClass: 'btn-danger',
 		confirmButtonText: 'Quay lại',
 	});
+	@elseif (session('error') == 400)
+		swal({
+			title: 'Tài khoản vô hiệu',
+			text: 'Vui lòng liên hệ Bộ phận CSKH',
+			type: 'error',
+			confirmButtonClass: 'btn-danger',
+			confirmButtonText: 'Quay lại',
+		});
+	@elseif (session('error') == 406)
+		swal({
+			title: 'Chưa kích hoạt',
+			text: 'Vui lòng xác nhận tài khoản tại email đăng ký',
+			type: 'error',
+			confirmButtonClass: 'btn-danger',
+			confirmButtonText: 'Quay lại',
+		});
 	@endif
 
 	$('#frmMain').validate({

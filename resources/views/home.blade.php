@@ -182,7 +182,7 @@ $(document).ready(function() {
 		<h3>Đặt nhiều nhất</h3>
 		<div id="most-popular-services" class="owl-carousel owl-theme">
 			@foreach ($services as $service)
-			<div class="item">
+			<div class="item service-obj" onclick="location.href='{{ route('service_view', ['urlName' => $service->url_name]) }}'">
 				<div>
 					<img class="service-img" src="{{ env('CDN_HOST') }}/img/service/{{ $service->image }}">
 				</div>
@@ -199,7 +199,7 @@ $(document).ready(function() {
 		<h3>Tin tức mới nhất</h3>
 		<div id="newest-blogs" class="owl-carousel owl-theme">
 			@foreach ($blogs as $blog)
-			<div class="item" >
+			<div class="item blog-obj" onclick="location.href='{{ route('blog_page', ['urlName' => $blog->url_name]) }}'">
 				<div><img class="blog-img" src="{{ env('CDN_HOST') }}/img/blog/{{ $blog->image }}"></div>
 				<div class="text-left padding-top-10">
 					<span class="margin-right-10 text-uppercase label label-danger" style="font-size: 13px;">{{ $blog->category }}</span>

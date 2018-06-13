@@ -80,6 +80,7 @@
 							<td>{{ '/'.$doc->url_name }}</td>
 							<td title="{{ $doc->title }}"><span class="doc-title">{{ $doc->title }}</span></td>
 							<td class="text-center">
+								<span class='hide'>{{ Carbon\Carbon::parse($doc->updated_at)->format('YmdHi') }}</span>
 								{{ Carbon\Carbon::parse($doc->updated_at)->format('d/m/Y H:i') }}
 							</td>
 							<td class="text-right">
