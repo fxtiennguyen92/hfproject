@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Config;
 
 class MailController extends Controller
 {
+	public function test() {
+		$this->sendVerifyMail('Tiến', 'thanhtien_92@yahoo.com.vn', 'abc');
+	}
+	
 	public function sendVerifyMail($name, $email, $confirmCode) {
 		Mail::send('mail.verify', array(
 						'name' => $name,

@@ -457,8 +457,8 @@ a {
 .single-page-login-alpha .single-page-block .single-page-block-inner,
 .page-title .signup-form-wrapper .single-page-block-inner,
 .login-form-wrapper .single-page-block-inner {
-  padding: 40px!important;
-  border-radius: 2px!important;
+  padding: 40px !important;
+  border-radius: 2px !important;
 }
 
 .page-title {
@@ -1584,10 +1584,6 @@ body.single-page .single-page-block .single-page-block-inner {
 #positionAndTime .address-history .item .right-content > div:last-child {
   color: #aaa;
   font-size: 13px;
-}
-
-.page-content {
-  margin-left: 240px;
 }
 
 /*

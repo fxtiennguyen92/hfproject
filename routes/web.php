@@ -72,14 +72,15 @@ Route::get('/callback/google', 'Auth\SocialAuthController@callbackGG')
 	->name('callback_gg');
 /** Login and Logout - END **/
 
-/** Sign Up - STA **/
+// Sign Up
 Route::get('/signup', 'Auth\RegisterController@view')
 	->name('signup_page');
 Route::post('/signup', 'Auth\RegisterController@authenticate')
 	->name('signup');
+Route::post('/signup/sac', 'Auth\RegisterController@getSAC')
+	->name('signup_get_sac');
 Route::get('/verify/{confirmCode}', 'Auth\RegisterController@verify')
-	->name('verify');
-/** Sign Up - END **/
+	->name('signup_verify');
 
 /** Service - Order - STA **/
 Route::post('/order/submit', 'ServiceController@submit')
@@ -288,7 +289,7 @@ Route::middleware('cs.officer')->group(function() {
 });
 /** Management - END **/
 
-// Route::get('/test', 'SMSController@test');
+// Route::get('/test', 'MailController@test');
 	
 // Route::get('/test2', function () { return view('mail.out-location'); });
 // Route::get('/test3', function () { return view('test3'); });

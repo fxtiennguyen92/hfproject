@@ -44,7 +44,6 @@
 		@endif
 
 		$('#btnCreateService').on('click', function(e) {
-			e.preventDefault();
 			$('input[name=image]').val($('span.dropify-render').find('img').attr('src'));
 			$('#frmMain').attr('action', '{{ route("mng_service_create") }}');
 			$('#frmMain').submit();
@@ -52,7 +51,6 @@
 
 		@if (isset($service))
 		$('#btnUpdateService').on('click', function(e) {
-			e.preventDefault();
 			$('input[name=image]').val($('span.dropify-render').find('img').attr('src'));
 			$('#frmMain').attr('action', '{{ route("mng_service_update", ["id" => $service->id]) }}');
 			$('#frmMain').submit();

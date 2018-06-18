@@ -2,62 +2,62 @@
 <html>
 
 <head lang="en">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Hand Free | @yield('title')</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>Hand Free | @yield('title')</title>
 
-  <base href="{{ asset('') }}">
-  <link href="{{ env('CDN_HOST') }}/img/icon/icon-144x144.png" rel="icon" type="image/png">
-  <link href="{{ env('CDN_HOST') }}/img/icon/icon-144x144.png" rel="apple-touch-icon" type="image/png" sizes="144x144">
-  <link href="{{ env('CDN_HOST') }}/img/icon/icon-128x128.png" rel="apple-touch-icon" type="image/png" sizes="128x128">
+	<link href="{{ env('CDN_HOST') }}/img/icon/icon-144x144.png" rel="shortcut icon">
+	<link href="{{ env('CDN_HOST') }}/img/icon/icon-144x144.png" rel="apple-touch-icon" type="image/png" sizes="144x144">
+	<link href="{{ env('CDN_HOST') }}/img/icon/icon-128x128.png" rel="apple-touch-icon" type="image/png" sizes="128x128">
+	
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<base href="{{ asset('') }}">
 
-  <link href="{{ env('CDN_HOST') }}/img/icon/icon-144x144.png" rel="shortcut icon">
+	<link rel="stylesheet" type="text/css" href="assets/vendors/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendors/select2/dist/css/select2.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendors/bootstrap-sweetalert/dist/sweetalert.css">
 
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="assets/vendors/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="assets/vendors/select2/dist/css/select2.min.css">
-  <link rel="stylesheet" type="text/css" href="assets/vendors/bootstrap-sweetalert/dist/sweetalert.css">
+	<link rel="stylesheet" type="text/css" href="assets/common/css/source/main.css">
+	<link rel="stylesheet" type="text/css" href="css/app.css">
+	<link rel="stylesheet" type="text/css" href="css/hf-style.css">
 
-  <link rel="stylesheet" type="text/css" href="assets/common/css/source/main.css">
-  <link rel="stylesheet" type="text/css" href="css/app.css">
-  <link rel="stylesheet" type="text/css" href="css/hf-style.css">
+	<!-- Vendors Scripts -->
+	<script src="assets/vendors/jquery/jquery.min.js"></script>
+	<script src="assets/vendors/tether/dist/js/tether.min.js"></script>
+	<script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="assets/vendors/bootstrap-show-password/bootstrap-show-password.min.js"></script>
+	<script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
+	<script src="assets/vendors/html5-form-validation/dist/jquery.validation.min.js"></script>
+	<script src="assets/vendors/bootstrap-sweetalert/dist/sweetalert.min.js"></script>
+	<script src="assets/vendors/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js"></script>
+	<script src="assets/vendors/slick/slick.min.js"></script>
+	<script src="assets/vendors/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
 
-  <!-- Vendors Scripts -->
-  <script src="assets/vendors/jquery/jquery.min.js"></script>
-  <script src="assets/vendors/tether/dist/js/tether.min.js"></script>
-  <script src="assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="assets/vendors/bootstrap-show-password/bootstrap-show-password.min.js"></script>
-  <script src="assets/vendors/select2/dist/js/select2.full.min.js"></script>
-  <script src="assets/vendors/html5-form-validation/dist/jquery.validation.min.js"></script>
-  <script src="assets/vendors/bootstrap-sweetalert/dist/sweetalert.min.js"></script>
-  <script src="assets/vendors/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js"></script>
-  <script src="assets/vendors/slick/slick.min.js"></script>
+	<!-- Clean UI Scripts -->
+	<script src="assets/common/js/common.js"></script>
+	<script src="assets/common/js/demo.temp.js"></script>
+	<script src="js/hf-script.js"></script>
+	<style type="text/css">
+		.single-page-block-inner {
+			margin-top: 0px;
+		}
 
-  <!-- Clean UI Scripts -->
-  <script src="assets/common/js/common.js"></script>
-  <script src="assets/common/js/demo.temp.js"></script>
-  <script src="js/hf-script.js"></script>
-  <style type="text/css">
-    .single-page-block-inner {
-      margin-top: 0px;
-    }
+		@media only screen and (min-width: 540px) {
+			.single-page-block-inner {
+				margin-top: 100px;
+			}
+		}
 
-    @media only screen and (min-width: 540px) {
-      .single-page-block-inner {
-        margin-top: 100px;
-      }
-    }
+	</style>
 
-  </style>
-
-  <!-- Page Scripts -->
-  @stack('stylesheets')
-  <!-- End Page Scripts -->
+	<!-- Page Scripts -->
+	@stack('stylesheets')
+	<!-- End Page Scripts -->
 </head>
 
 <body class="theme-default single-page">
-  @yield('content')
+	@yield('content')
 </body>
 
 </html>

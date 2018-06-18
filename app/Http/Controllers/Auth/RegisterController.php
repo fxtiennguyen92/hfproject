@@ -9,8 +9,11 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\MailController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use App\Http\Controllers\SMSController;
+use App\Http\Controllers\SACController;
 
 class RegisterController extends Controller
 {
@@ -27,21 +30,10 @@ class RegisterController extends Controller
 
 	use RegistersUsers;
 
-	/**
-	 * Create a new controller instance.
-	 *
-	 * @return void
-	 */
 	public function __construct() {
 		$this->middleware('guest');
 	}
 
-	/**
-	 * Get a validator for an incoming registration request.
-	 *
-	 * @param  array  $data
-	 * @return \Illuminate\Contracts\Validation\Validator
-	 */
 	protected function validator(array $data) {
 		return Validator::make($data, [
 			'name' => 'required|string|max:255',
@@ -51,12 +43,12 @@ class RegisterController extends Controller
 		]);
 	}
 
-	/**
-	 * Create a new user instance after a valid registration.
-	 *
-	 * @param  array  $data
-	 * @return \App\User
-	 */
+	protected function phone_validator(array $data) {
+		return Validator::make($data, [
+			'phone' => 'required|numeric|unique:users',
+		]);
+	}
+
 	protected function create(array $data) {
 		return User::create([
 			'name' => $data['name'],
@@ -67,22 +59,34 @@ class RegisterController extends Controller
 		]);
 	}
 
-	/**
-	 * View partner sign up page
-	 *
-	 * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
-	 */
 	public function view() {
-		return view(Config::get('constants.SIGNUP_PAGE'), array(
-		));
+		return view(Config::get('constants.SIGNUP_PAGE'));
 	}
 
-	/**
-	 * Handle a registration request for the application.
-	 * 
-	 * @param Request $request
-	 * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
-	 */
+	public function getSAC(Request $request) {
+		if (!$request->phone) {
+			return response()->json('', 400);
+		}
+		$validator = $this->phone_validator($request->all());
+		if ($validator->fails()) {
+			$errors = $validator->errors()->getMessages();
+			return response()->json($errors, 409);
+		}
+		
+		try {
+			$sac = SACController::getSAC($request->phone);
+			$result = SMSController::sendSMSActivateCode($sac->id, $sac->sac);
+			
+			if ($result) {
+				return response()->json('', 200);
+			} else {
+				return response()->json('', 503);
+			}
+		} catch (\Exception $e) {
+			return response()->json($e->getMessage(), 500);
+		}
+	}
+
 	public function authenticate(Request $request) {
 		// check reCaptcha
 		$reCaptcha = new ReCaptcha();
@@ -91,25 +95,36 @@ class RegisterController extends Controller
 			$_POST['g-recaptcha-response']
 		);
 		if ($chkCaptcha == null || !$chkCaptcha->success) {
-			return response()->json('', 400);
+			return response()->json('CAPTCHA error', 429);
 		}
 		
 		// validate
-		$req = $request->all();
-		$validator = $this->validator($req);
+		$validator = $this->validator($request->all());
 		if ($validator->fails()) {
 			$errors = $validator->errors()->getMessages();
-			
-			return response()->json('', 409);
+			return response()->json($errors, 409);
 		}
 		
-		// registration
-		$user = $this->create($request->all());
-		// send mail to confirm
-		$mail = new MailController();
-		$mail->sendVerifyMail($user->name, $user->email, $user->confirm_code);
+		if (!SACController::checkSAC($request->phone, $request->sac)) {
+			return response()->json('', 401);
+		}
 		
-		return response()->json('', 200);
+		try {
+			DB::beginTransaction();
+			
+			$user = $this->create($request->all());
+			SACController::deleteSAC($user->phone);
+			if ($user->email) {
+				$mail = new MailController();
+				$mail->sendVerifyMail($user->name, $user->email, $user->confirm_code);
+			}
+		
+			DB::commit();
+			return response()->json('', 200);
+		} catch (\Exception $e) {
+			DB::rollback();
+			return response()->json($e->getMessage(), 500);
+		}
 	}
 
 	public function verify($confirmCode) {
