@@ -38,14 +38,14 @@ class RegisterController extends Controller
 		return Validator::make($data, [
 			'name' => 'required|string|max:255',
 			'email' => 'required|string|email|max:255|unique:users',
-			'phone' => 'required|numeric|unique:users',
+			'phone' => 'required|string|unique:users',
 			'password' => 'required|string|min:6|max:100',
 		]);
 	}
 
 	protected function phone_validator(array $data) {
 		return Validator::make($data, [
-			'phone' => 'required|numeric|unique:users',
+			'phone' => 'required|string|unique:users',
 		]);
 	}
 
@@ -75,7 +75,7 @@ class RegisterController extends Controller
 		
 		try {
 			$sac = SACController::getSAC($request->phone);
-			$result = SMSController::sendSMSActivateCode($sac->id, $sac->sac);
+			$result = SMSController::sendSMSActivateCode($request->phone, $sac->sac);
 			
 			if ($result) {
 				return response()->json('', 200);
@@ -105,7 +105,7 @@ class RegisterController extends Controller
 			return response()->json($errors, 409);
 		}
 		
-		if (!SACController::checkSAC($request->phone, $request->sac)) {
+		if (SACController::checkSAC($request->phone, $request->sac) == false) {
 			return response()->json('', 401);
 		}
 		

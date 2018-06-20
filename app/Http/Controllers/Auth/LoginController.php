@@ -27,7 +27,6 @@ class LoginController extends Controller
 	use AuthenticatesUsers;
 
 	public function __construct() {
-		$this->middleware('guest')->except('logout');
 	}
 
 	public function username() {
@@ -35,11 +34,11 @@ class LoginController extends Controller
 	}
 
 	public function view() {
-		if (Auth::check()) {
-			return redirect()->back();
+		if (session('error') || !Auth::check()) {
+			return view(Config::get('constants.LOGIN_PAGE'));
 		}
 		
-		return view(Config::get('constants.LOGIN_PAGE'));
+		return redirect()->route('home_page');
 	}
 
 	public function authenticate(Request $request) {
@@ -49,13 +48,17 @@ class LoginController extends Controller
 				return Redirect::back()->withInput()->with('error', 400);
 			}
 			
+			if (!$user->phone) { // No phone
+				Auth::login($user);
+				return Redirect::back()->withInput()->with('error', 428);
+			}
+			
 			if ($user->confirm_flg == Config::get('constants.FLG_OFF')) { // Email is not confirmed
+				Auth::login($user);
 				return Redirect::back()->withInput()->with('error', 406);
 			}
 			
 			Auth::login($user);
-			$this->createWalletForOldAcc($user->id);
-			
 			return $this->redirectPath($request);
 		} else {
 			return Redirect::back()->withInput()->with('error', 401);
@@ -89,18 +92,5 @@ class LoginController extends Controller
 	public static function relogin() {
 		Auth::logout();
 		return redirect()->route('login_page');
-	}
-
-	public static function createWalletForOldAcc($id) {
-		$walletModel = new Wallet();
-		$wallet = $walletModel->getById($id);
-		if ($wallet) {
-			return true;
-		}
-		
-		$wallet = new Wallet();
-		$wallet->id = $id;
-		$wallet->save();
-		return true;
 	}
 }

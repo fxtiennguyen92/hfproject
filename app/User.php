@@ -124,11 +124,19 @@ class User extends Authenticatable
 							'password_temp' => $passwordNew,
 			]);
 		} else {
-			return User::where('id', $id)->update([
+			return User::where('id', $id)
+			->update([
 							'password' => bcrypt($password),
 							'password_temp' => null,
 			]);
 		}
+	}
+
+	public function updatePhone($id, $phone) {
+		return User::where('id', $id)
+		->update([
+						'phone' => $phone,
+		]);
 	}
 
 	public static function checkLoginAccount($account) {

@@ -45,21 +45,28 @@ class SocialAuthController extends Controller
 				return redirect()->route('login_page')->with('error', 400);
 			}
 			
+			if (!$user->phone) { // No phone
+				Auth::login($user);
+				return redirect()->route('login_page')->with('error', 428);
+			}
+			
 			if ($registedUser->confirm_flg == Config::get('constants.FLG_OFF')) { // Email is not confirmed
+				Auth::login($user);
 				return redirect()->route('login_page')->with('error', 406);
 			}
 		} else {
 			// Create new user
 			$registedUser = $this->create($user, $socialNetwork);
+			// Get image from Socialite
+			$data = file_get_contents($user->getAvatar());
+			FileController::saveAvatar($data);
 		}
 		
 		// Login
 		Auth::login($registedUser);
-		LoginController::createWalletForOldAcc($registedUser->id);
-		
-		// Get image from Socialite
-		$data = file_get_contents($user->getAvatar());
-		FileController::saveAvatar($data);
+		if (!$registedUser->phone) {
+			return redirect()->route('login_page')->with('error', 428);
+		}
 		
 		return LoginController::redirectPath($request);
 	}

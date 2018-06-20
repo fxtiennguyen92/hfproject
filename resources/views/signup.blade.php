@@ -1,13 +1,6 @@
 @extends('template.index-no-nav') @push('stylesheets')
 <script src='https://www.google.com/recaptcha/api.js?hl=vi'></script>
 <style>
-	.btnSendSAC, .btnSendSAC:hover {
-		margin-bottom: -20px;
-		font-size: 12px;
-		background-color: #01a8fe;
-		border-color: #01a8fe;
-		color: #fff;
-	}
 </style>
 <script>
 	$(document).ready(function() {
@@ -42,7 +35,7 @@
 						setTimeout(function() {
 							$('#btnSendSAC').removeClass('disabled');
 							$('#btnSendSAC').html('Gửi lại Mã PIN');
-						}, 30000);
+						}, 60000);
 					},
 					error: function(xhr) {
 						if (xhr.status == 400) {
@@ -182,7 +175,7 @@
 							</div>
 							<div class="margin-bottom-10 row">
 								<div class="col-xs-12">
-									<input id="inpPhone" maxlength="25" class="form-control phone" placeholder="Số điện thoại" name="phone" type="text" data-validation="[NOTEMPTY, INTEGER]">
+									<input id="inpPhone" maxlength="25" class="form-control phone" placeholder="Số điện thoại" name="phone" type="text" data-validation="[NOTEMPTY]">
 								</div>
 							</div>
 							<div class="margin-bottom-10 row">

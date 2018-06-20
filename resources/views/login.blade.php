@@ -6,6 +6,147 @@
 <script>
 $(document).ready(function() {
 	$('#inpUsername').focus();
+
+	// update phone
+	@if (session('error') == 428)
+	$('.phone').mask('0000000000000');
+	$('.sac').mask('0000');
+	$('#frmPhone').validate({
+		submit: {
+			settings: {
+				inputContainer: '.form-group',
+				errorListClass: 'form-control-error',
+				errorClass: 'has-danger',
+			},
+			callback: {
+				onSubmit: function() {
+					loadingBtnSubmit('btnUpdate');
+					
+					$.ajax({
+						type: 'POST',
+						url: '{{ route("profile_phone_update") }}',
+						data: $('#frmPhone').serialize(),
+						success: function(response) {
+							$('#modalPhone').modal('hide');
+							swal({
+								title: 'Thành công',
+								text: 'Cập nhật Số điện thoại hoàn tất',
+								type: 'success',
+								confirmButtonClass: 'btn-primary',
+								confirmButtonText: 'Tiếp tục',
+							},
+							function() {
+								location.href = "{{ route('home_page') }}";
+							});
+						},
+						error: function(xhr) {
+							if (xhr.status == 401) {
+								swal({
+									title: 'PIN Code!',
+									text: 'Mã xác thực không đúng.',
+									type: 'error',
+									confirmButtonClass: 'btn-default',
+									confirmButtonText: 'Quay lại',
+								});
+							} else if (xhr.status == 409) {
+								swal({
+									title: 'Thất bại',
+									text: 'Số điện thoại đã được sử dụng.',
+									type: 'error',
+									confirmButtonClass: 'btn-default',
+									confirmButtonText: 'Quay lại',
+								});
+							} else {
+								swal({
+									title: 'Thất bại',
+									text: 'Cập nhật không thành công',
+									type: 'error',
+									confirmButtonClass: 'btn-default',
+									confirmButtonText: 'Thử lại',
+								});
+							};
+							resetBtnSubmit('btnUpdate', 'Cập nhật');
+						}
+					});
+				}
+			}
+		}
+	});
+	$('#modalPhone').modal({backdrop: 'static', keyboard: false});
+	$('#btnSendSAC').on('click', function() {
+		if ($('input[name=phone]').val() == '') {
+			$('input[name=phone]').focus();
+			$.notify({
+				title: '<strong>Lỗi! </strong>',
+				message: 'Chưa có thông tin về Số điện thoại.'
+			}, {
+				type: 'danger',
+				z_index: 1051,
+			});
+		} else {
+			$('#btnSendSAC').addClass('disabled');
+			$('#btnSendSAC').html('<i class="fa fa-spinner fa-spin"></i> Đang gửi')
+			
+			$.ajax({
+				type: 'POST',
+				url: '{{ route("signup_get_sac") }}',
+				data: $('#frmPhone').serialize(),
+				success: function(response) {
+					$('#btnSendSAC').html('Đã gửi mã PIN');
+					setTimeout(function() {
+						$('#btnSendSAC').removeClass('disabled');
+						$('#btnSendSAC').html('Gửi lại Mã PIN');
+					}, 60000);
+				},
+				error: function(xhr) {
+					if (xhr.status == 400) {
+						$.notify({
+							title: '<strong>Lỗi! </strong>',
+							message: 'Chưa có thông tin về Số điện thoại.'
+						}, {
+							type: 'danger',
+							z_index: 1051,
+						});
+					} else if (xhr.status == 409) {
+						$.notify({
+							title: '<strong>Đã sử dụng! </strong>',
+							message: 'Số điện thoại đã được đăng ký.'
+						}, {
+							type: 'danger',
+							z_index: 1051,
+						});
+					} else if (xhr.status == 503) {
+						$.notify({
+							title: '<strong>Lỗi SMS! </strong>',
+							message: 'Gửi tin nhắn thất bại, mời thử lại.'
+						}, {
+							type: 'danger',
+							z_index: 1051,
+						});
+					} else {
+						$.notify({
+							title: '<strong>Thất bại! </strong>',
+							message: 'Có lỗi phát sinh, mời thử lại.'
+						}, {
+							type: 'danger',
+							z_index: 1051,
+						});
+					}
+
+					setTimeout(function() {
+						$('#btnSendSAC').removeClass('disabled');
+						$('#btnSendSAC').html('Gửi lại Mã PIN');
+					}, 2000);
+				}
+			});
+			
+		}
+	});
+	@endif
+	
+	@if (session('error'))
+		loadingBtnSubmit('btnLogin');
+	@endif
 	
 	@if (session('error') == 401)
 	swal({
@@ -25,14 +166,17 @@ $(document).ready(function() {
 		});
 	@elseif (session('error') == 406)
 		swal({
-			title: 'Chưa kích hoạt',
-			text: 'Vui lòng xác nhận tài khoản tại email đăng ký',
-			type: 'error',
-			confirmButtonClass: 'btn-danger',
-			confirmButtonText: 'Quay lại',
+			title: 'Email chưa xác thực',
+			text: 'Xác nhận Email để nhận thêm thông tin từ HandFree',
+			type: 'warning',
+			confirmButtonClass: 'btn-warning',
+			confirmButtonText: 'Tiếp tục',
+		},
+		function() {
+			location.href = "{{ route('home_page') }}";
 		});
 	@endif
-
+	
 	$('#frmMain').validate({
 		submit: {
 			settings: {
@@ -40,6 +184,11 @@ $(document).ready(function() {
 				errorListClass: 'form-control-error',
 				errorClass: 'has-danger',
 			}
+		},
+		callback: {
+			onBeforeSubmit: function() {
+				loadingBtnSubmit('btnLogin');
+			},
 		}
 	});
 	
@@ -56,10 +205,10 @@ $(document).ready(function() {
 <section class="page-content" style="margin:0">
 	<div class="page-content-inner single-page-login-alpha" style="background-image:url({{ env('CDN_HOST') }}/img/banner/bg_auth_page.png);">
 		<div class="single-page-block">
-			<div class="">
+			<div class="@if (auth()->check()) hide @endif">
 				<div class="login-form-wrapper">
 					<div class="single-page-block-inner">
-						<div class="logo text-center" style="margin-bottom: 30px;">
+						<div class="logo" style="margin-bottom: 30px;">
 							<a href="javascript: history.back();">
 								<img src="{{ env('CDN_HOST') }}/img/logo/logoh.png" alt="HandFree" width="150"/>
 							</a>
@@ -99,7 +248,7 @@ $(document).ready(function() {
 								</div>
 <!--								<a href="javascript: void(0);" class="pull-right link-blue" style="font-size: 12px">Quên mật khẩu?</a>	-->
 								<br>
-								<div class="form-group" style="text-align: center; margin-top: 10px; margin-bottom: 0">
+								<div class="form-group" style="text-align: center; margin-top: 34px; margin-bottom: 0">
 									<button id="btnLogin" type="submit" class="btn btn-primary width-150">ĐĂNG NHẬP</button>
 									<br>
 									<a href="{{ route('signup_page') }}" type="button" class="btn btn-link" style="color: #02B3E4 !important;">Chưa có tài khoản, Đăng ký!</a>
@@ -110,6 +259,41 @@ $(document).ready(function() {
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+	
+	<div id="modalPhone" class="modal modal-size-small fade" role="dialog">
+		<div class="modal-dialog">
+			<form id="frmPhone" method="post" name="form-validation" enctype="multipart/form-data" action="{{ route('profile_phone_update') }}">
+			<div class="modal-content">
+				<div class="modal-body margin-top-10 padding-top-30 padding-bottom-30">
+					<div class="logo" style="margin-bottom: 30px;">
+						<a href="javascript: void(0);">
+							<img src="{{ env('CDN_HOST') }}/img/logo/logoh.png" alt="HandFree" width="150"/>
+						</a>
+					</div>
+					<h1 class="padding-top-30 text-center" style="font-weight: normal;">Cập nhật Thông tin</h1>
+					<small>Hiện tại Thông tin tài khoản của bạn chưa có Số điện thoại, vui lòng cập nhật để tham gia cùng HANDFREE.</small>
+					<div class="margin-top-30 margin-bottom-20 row">
+						<div class="col-xs-12">
+							<input id="inpPhone" maxlength="25" class="form-control phone" placeholder="Số điện thoại" name="phone" type="text" data-validation="[NOTEMPTY]">
+						</div>
+					</div>
+					<div class="margin-bottom-30 row">
+						<div class="col-xs-8">
+							<input id="inpSAC" maxlength="4" class="form-control sac" placeholder="Mã kích hoạt" name="sac" type="text" data-validation="[NOTEMPTY, INTEGER]">
+						</div>
+						<div class="col-xs-4 text-right">
+							<span id="btnSendSAC" class="btnSendSAC btn">Gửi mã PIN</span>
+						</div>
+					</div>
+					<div class="padding-top-30 padding-bottom-30 text-center">
+						<button id="btnUpdate" type="submit" class="btn btn-primary width-150">Cập nhật</button>
+						<input type="hidden" name="_token" value="{{ csrf_token() }}" />
+					</div>
+				</div>
+			</div>
+			</form>
 		</div>
 	</div>
 </section>

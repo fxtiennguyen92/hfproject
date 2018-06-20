@@ -21,6 +21,10 @@ class InitPageController extends Controller
 	}
 	
 	public function viewHomePage() {
+		if (auth()->check() && !auth()->user()->phone) {
+			return redirect()->route('login_page')->with('error', 428);
+		}
+		
 		if (auth()->check() && auth()->user()->role == Config::get('constants.ROLE_PRO')) {
 			return $this->viewDashboardPage();
 		}

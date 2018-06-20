@@ -10,6 +10,8 @@ class Wallet extends Model
 	// table name
 	protected $table = 'wallets';
 	
+	protected $fillable = ['id', 'wallet_1', 'wallet_2', 'wallet_3', 'style', 'delete_flg', 'created_at', 'updated_at'];
+	
 	public function getById($id) {
 		return $this
 			->where('id', $id)

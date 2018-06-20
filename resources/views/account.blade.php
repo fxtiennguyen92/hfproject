@@ -8,9 +8,9 @@ $(document).ready(function() {
 	$('#btnFillWallet').on('click', function() {
 		swal({
 			title: 'Tài khoản',
-			text: 'Hiện tại chúng tôi chỉ nhận nạp thêm tài khoản tại Văn phòng 4/2 Đinh Bộ Lĩnh, P104',
+			text: 'Hiện tại chúng tôi chưa cung cấp dịch vụ này',
 			type: 'warning',
-			confirmButtonClass: 'btn-primary',
+			confirmButtonClass: 'btn-warning',
 			confirmButtonText: 'Quay lại',
 		});
 	});
@@ -35,10 +35,10 @@ $(document).ready(function() {
 		</div>
 		<div class="margin-top-20 padding-bottom-20 row">
 			<div class="margin-bottom-10 col-xs-12 text-center">
-				<button class="btn-deposit btn color-primary text-uppercase">Nạp thêm</button>
+				<button id="btnFillWallet" class="btn-deposit btn color-primary text-uppercase">Nạp thêm</button>
 			</div>
 			<div class="col-xs-12 text-center">
-				<button class="btn-withdraw btn text-uppercase">Rút ra</button>
+				<button class="btn-withdraw btn text-uppercase disabled">Rút ra</button>
 			</div>
 		</div>
 	</div>
@@ -47,10 +47,10 @@ $(document).ready(function() {
 		<h3 class="padding-top-20">Tài khoản</h3>
 		<div class="padding-20 hf-card">
 			<div class="row">
-				<div class="col-xs-5 text-right">
+				<div class="col-xs-4 text-right">
 					<img class="avt" src="{{ env('CDN_HOST') }}/u/{{ auth()->user()->id }}/{{ auth()->user()->avatar }}">
 				</div>
-				<div class="col-xs-7">
+				<div class="col-xs-8">
 					<div class="name text-uppercase">{{ auth()->user()->name }}</div>
 					
 					@if (!auth()->user()->phone)
@@ -62,16 +62,24 @@ $(document).ready(function() {
 					@if (!auth()->user()->email)
 					<div class="no-info color-warning">(Chưa cập nhật Email)</div>
 					@else
-					<div class="email">{{ auth()->user()->email }}</div>
+						@if (auth()->user()->confirm_flg == '0')
+						<div class="color-warning email"><span>{{ auth()->user()->email }}</span>
+							<i class="icmn-warning2" data-toggle="tooltip" data-placement="top"
+								title="Chưa xác thực"></i></div>
+						@else
+						<div class="email"><span>{{ auth()->user()->email }}</span></div>
+						@endif
 					@endif
 				</div>
 			</div>
 			<div class="row">
+				@if (auth()->user()->role == '1')
 				<div class="margin-top-20 margin-bottom-20 col-xs-12 text-center">
 					<button type="button" class="btn btn-primary-outline" style="width: 80%"
-						onclick="window.open('https://handfree.co/pro/{{ auth()->user()->id }}')">handfree.co/pro/{{ auth()->user()->id }}</button>
+						onclick="window.open('{{ route('pro_page', ['id' => auth()->user()->id]) }}')">{{ route('pro_page', ['id' => auth()->user()->id]) }}</button>
 				</div>
-				<div class="padding-top-10 padding-right-12 col-xs-12 text-right">
+				@endif
+				<div class="padding-top-10 padding-right-12 col-xs-12 text-right control">
 					<a class="padding-right-10 color-primary" href="{{ route('password_edit') }}" style="border-right: 1px solid #01a8fe">Đổi Mật khẩu</a>
 					<a class="padding-left-10 color-primary" href="{{ route('logout') }}">Đăng xuất</a>
 				</div>
@@ -80,15 +88,18 @@ $(document).ready(function() {
 		
 		<h3 class="padding-top-30">Cấp độ</h3>
 		<div class="padding-20 hf-card">
-			<h3 class="color-primary">Cấp độ 6 - {{ auth()->user()->point }}</h3>
-			<progress class="progress progress-primary" value="74" max="100"></progress>
-			<div class="margin-top-10 info">Còn 12300 điểm để đạt cấp độ tiếp theo</div>
-			<div class="margin-top-30 text-center">
-				<a class="margin-right-30 color-primary" href="javacript:void(0);">Xem lịch sử</a>
-				<a class="color-primary" href="javacript:void(0);" data-toggle="modal" data-target="#modalNewCommon">Hệ thống cấp độ</a>
+			@php $userLevel = -1 @endphp
+			@foreach ($levels as $key=>$level) @if ($level->value <= auth()->user()->point) $userLevel = $key @endif @endforeach
+			<h3 class="color-primary">Cấp độ {{ $userLevel+1 }} - {{ auth()->user()->point }} điểm</h3>
+			<progress class="progress progress-primary" value="{{ auth()->user()->point }}" max="{{ $levels[$userLevel+1]->value }}"></progress>
+			<div class="margin-top-10 info">Còn <b>{{ $levels[$userLevel+1]->value - auth()->user()->point }} điểm</b> để đạt cấp độ tiếp theo</div>
+			<div class="margin-top-30 text-right control">
+				<a class="padding-right-10 color-primary" href="javacript:void(0);" data-toggle="modal" data-target="#modalLevel" style="border-right: 1px solid #01a8fe">Hệ thống cấp độ</a>
+				<a class="padding-left-10 color-primary" href="javacript:void(0);">Lịch sử</a>
 			</div>
 		</div>
 		
+		@if (auth()->user()->role == '1')
 		<h3 class="padding-top-30">Đánh giá</h3>
 		<div class="padding-20 hf-card">
 			<div class="row">
@@ -128,7 +139,7 @@ $(document).ready(function() {
 					<progress class="progress progress-danger" value="1" max="100"></progress>
 				</div>
 			</div>
-			<div class="margin-top-30 row text-center">
+			<div class="margin-top-30 row text-center control">
 				<a class="color-primary" href="javacript:void(0);">Cách để tăng điểm đánh giá</a>
 			</div>
 		</div>
@@ -141,10 +152,11 @@ $(document).ready(function() {
 					<h3 class="color-primary"><span class="margin-right-5 total-review-number">158</span> nhận xét</h3>
 				</div>
 			</div>
-			<div class="margin-top-30 row text-center">
+			<div class="margin-top-30 row text-center control">
 				<a class="color-primary" href="javacript:void(0);">Xem tất cả nhận xét</a>
 			</div>
 		</div>
+		@endif
 		
 		<h3 class="padding-top-30">Hỗ trợ</h3>
 		<div class="padding-20 hf-card">
@@ -168,30 +180,66 @@ $(document).ready(function() {
 		
 		<h3 class="padding-top-30">Thông tin Hand Free</h3>
 		<div class="padding-20 hf-card">
-			<div class="row">
-				<div class="margin-top-10 col-xs-4 text-center">
+			<div class="hf-info row">
+				<div class="margin-top-10 col-xs-4 text-center cursor-pointer">
 					<div><i class="material-icons">perm_identity</i></div>
 					<div>Về chúng tôi</div>
 				</div>
-				<div class="margin-top-10 col-xs-4 text-center">
+				<div class="margin-top-10 col-xs-4 text-center cursor-pointer">
 					<div><i class="material-icons">work_outline</i></div>
 					<div>Tuyển dụng</div>
 				</div>
-				<div class="margin-top-10 col-xs-4 text-center">
-					<div><i class="material-icons">live_help</i></div>
+				<div class="margin-top-10 col-xs-4 text-center cursor-pointer">
+					<div><i class="material-icons">help_outline</i></div>
 					<div>Câu hỏi <span style="white-space: nowrap;">thường gặp</span></div>
 				</div>
-				<div class="margin-top-10 col-xs-4 text-center">
+				<div class="margin-top-20 col-xs-4 text-center cursor-pointer" onclick="location.href = 'https://handfree.co/doc/privacy'">
 					<div><i class="material-icons">security</i></div>
 					<div>Chính sách <span style="white-space: nowrap;">bảo mật</span></div>
 				</div>
-				<div class="margin-top-10 col-xs-4 text-center">
+				<div class="margin-top-20 col-xs-4 text-center cursor-pointer">
 					<div><i class="material-icons">description</i></div>
-					<div>Điều khoản</div>
+					<div>Điều khoản <span style="white-space: nowrap;">sử dụng</span></div>
 				</div>
-				<div class="margin-top-10 col-xs-4 text-center">
+				<div class="margin-top-20 col-xs-4 text-center cursor-pointer">
 					<div><i class="material-icons">verified_user</i></div>
 					<div>An ninh</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="modalLevel" class="modal modal-size-small fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="panel">
+						<div class="panel-heading">
+							<h3 class="padding-top-20 padding-bottom-20 text-center" style="font-weight: normal; white-space: nowrap;">Hệ thống Cấp độ</h3>
+							<div class="row">
+								@foreach ($levels as $key=>$level)
+								<div class="col-lg-12">
+									<div class="step-block
+										@if ($key == 0) step-primary
+										@elseif ($key == 1) step-info
+										@elseif ($key == 2) step-success
+										@elseif ($key == 3) step-warning
+										@elseif ($key == 4) step-danger
+										@elseif ($key == 5) step-secondary
+										@else step-default
+										@endif
+									">
+										<span class="step-digit">{{ $key+1 }}</span>
+										<div class="step-desc">
+											<span class="step-title">{{ $level->value }} điểm</span>
+											<p>{{ $level->name }}</p>
+										</div>
+									</div>
+								</div>
+								@endforeach
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

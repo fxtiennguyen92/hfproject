@@ -21,8 +21,35 @@ a {
   cursor: pointer;
 }
 
+.modal {
+  text-align: center;
+  padding: 0!important;
+}
+
+.modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  margin-right: -4px;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.modal.modal-size-small .modal-dialog {
+  max-width: 480px;
+}
+
 .hide {
   display: none;
+}
+
+.cursor-pointer * {
+  cursor: pointer;
 }
 
 .clearfix:after {
@@ -227,9 +254,15 @@ a {
   font-weight: bold;
 }
 
-.hf-card .email {
-  font-size: 14px;
+.hf-card .email span {
+  font-size: 13px;
   line-height: 25px;
+}
+
+.hf-card .email i {
+  font-size: 13px;
+  display: inline-block;
+  vertical-align: top;
 }
 
 .hf-card .phone {
@@ -277,6 +310,19 @@ a {
 .hf-card .acc-balance,
 .hf-card .acc-point {
   font-size: 24px;
+}
+
+.hf-card .control {
+  font-size: 13px;
+}
+
+.hf-card .hf-info {
+  font-size: 14px;
+}
+
+.hf-card .hf-info i {
+  font-size: 40px;
+  margin-bottom: 10px;
 }
 
 #listTab .hf-card,
@@ -956,7 +1002,7 @@ nav.top-menu .menu .menu-info-block {
 
 body.single-page .single-page-block .single-page-block-inner {
   margin-bottom: 0;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .hf-select > button,
@@ -2534,6 +2580,16 @@ span.header-info {
   padding: 0px;
   color: #01a8fe !important;
 }
+
+.btnSendSAC, .btnSendSAC:hover {
+	margin-bottom: -20px;
+	font-size: 12px;
+	background-color: #01a8fe;
+	border-color: #01a8fe;
+	color: #fff;
+}
+
+
 /*
 * RESPONSIVE
 */
@@ -2703,6 +2759,9 @@ span.header-info {
   .search-service .service-img {
     height: 95px;
   }
+  .modal:before {
+    display: none;
+  }
 }
 
 @media only screen and (min-width: 540px) {
@@ -2800,6 +2859,15 @@ span.header-info {
   .service-section .service-banner {
     height: 210px;
   }
+  
+  .hf-card .email span {
+    font-size: 13px;
+    display: inline-block;
+    width: 170px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+  }
 }
 
 @media only screen and (max-width: 376px) {
@@ -2824,5 +2892,9 @@ span.header-info {
   .page-banner,
   .service-section .service-banner {
     height: 160px;
+  }
+  
+  .hf-card .email span {
+    width: 130px;
   }
 }

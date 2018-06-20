@@ -19,7 +19,7 @@ Route::get('/redirect', 'Auth\LoginController@redirectPath')
 	->name('redirect');
 Route::get('/account', 'InitPageController@control')
 	->name('control');
-Route::get('/pro/{proId}/info', 'InitPageController@viewProPage')
+Route::get('/pro/{id}/info', 'InitPageController@viewProPage')
 	->name('pro_page');
 Route::get('/blog/{urlName?}', 'InitPageController@viewBlogPage')
 	->name('blog_page');
@@ -54,7 +54,7 @@ Route::post('/password/update', 'Auth\PasswordController@update')
 Route::post('/password/reset', 'Auth\PasswordController@reset')
 	->name('password_reset');
 
-/** Login and Logout - STA **/
+// Login
 Route::get('/login', 'Auth\LoginController@view')
 	->name('login_page');
 Route::post('/login', 'Auth\LoginController@authenticate')
@@ -70,7 +70,6 @@ Route::get('/redirect/google', 'Auth\SocialAuthController@redirectGG')
 	->name('redirect_gg');
 Route::get('/callback/google', 'Auth\SocialAuthController@callbackGG')
 	->name('callback_gg');
-/** Login and Logout - END **/
 
 // Sign Up
 Route::get('/signup', 'Auth\RegisterController@view')
@@ -81,6 +80,11 @@ Route::post('/signup/sac', 'Auth\RegisterController@getSAC')
 	->name('signup_get_sac');
 Route::get('/verify/{confirmCode}', 'Auth\RegisterController@verify')
 	->name('signup_verify');
+
+// Profile
+Route::post('/profile/phone/update', 'ProfileController@updatePhone')
+	->name('profile_phone_update');
+	
 
 /** Service - Order - STA **/
 Route::post('/order/submit', 'ServiceController@submit')

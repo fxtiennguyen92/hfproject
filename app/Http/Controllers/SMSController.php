@@ -8,13 +8,12 @@ use Illuminate\Support\Facades\Config;
 class SMSController extends Controller
 {
 	public static function sendSMSActivateCode($phone, $sac) {
-		$content = 'Ma kich hoat tai khoan Hand Free cua ban la '.$sac;
+		$content = 'Ma kich hoat tai khoan cua ban la '.$sac;
 		return SMSController::sendSMS($phone, $content);
 	}
 	
 	public function sendActiveProAccountSMS($phone, $password) {
-// 		$content = 'Tai khoan cua ban da duoc kich hoat. Mat khau cua ban la '.$password;
-		$content = 'test';
+		$content = 'Tai khoan cua ban da duoc kich hoat. Mat khau cua ban la '.$password;
 		$this->sendSMS($phone, $content);
 	}
 	

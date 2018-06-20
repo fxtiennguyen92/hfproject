@@ -15,10 +15,10 @@ class SACController extends Controller
 		);
 	}
 
-	public static function checkSAC($id, $sac) {
+	public static function checkSAC($id, $code) {
 		$sac = SAC::find($id);
 		if ($sac) {
-			if ($sac->sac == $sac) {
+			if ($sac->sac == $code) {
 				return true;
 			}
 		}
