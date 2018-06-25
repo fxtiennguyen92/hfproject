@@ -157,6 +157,10 @@ Route::middleware('cs.pa')->group(function() {
 		->name('pa_pro_create');
 	Route::post('/pa/pro/{id}/delete', 'Mng\ProController@deleteForPA')
 		->name('pa_pro_delete');
+	
+	// PA
+	Route::get('/pa/pa', 'Mng\PAController@viewList')
+		->name('pa_pa_list');
 });
 /** Partner Acquisition - END **/
 	
@@ -293,7 +297,7 @@ Route::middleware('cs.officer')->group(function() {
 });
 /** Management - END **/
 
-// Route::get('/test', 'MailController@test');
+// Route::get('/test', 'Mng\OrderController@test');
 	
 // Route::get('/test2', function () { return view('mail.out-location'); });
 // Route::get('/test3', function () { return view('test3'); });

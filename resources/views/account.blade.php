@@ -1,10 +1,40 @@
-@extends('template.index') @push('stylesheets')
+@extends('template.index')
+@push('stylesheets')
+<style>
+.acc-update-row i {
+	font-size: 9px;
+}
+
+.avatar {
+	height: 80px;
+	width: 80px;
+	position: relative;
+}
+
+.avatar:before {
+	position: absolute;
+	font-family: FontAwesome;
+	content: '\f030';
+	width: 100%;
+	height: 100%;
+	line-height: 80px;
+	background: rgba(0, 0, 0, .3);
+	color: #fafbfc;
+	text-align: center;
+}
+
+.btn-acc-update {
+	font-size: 11px;
+	margin-top: -5px;
+}
+</style>
+
 <script>
 $(document).ready(function() {
 	$('.price').each(function() {
 		$(this).html(accounting.formatMoney($(this).html()));
 	});
-	$("[data-toggle=tooltip]").tooltip();
+	$('[data-toggle=tooltip]').tooltip();
 	$('#btnFillWallet').on('click', function() {
 		swal({
 			title: 'Tài khoản',
@@ -14,9 +44,19 @@ $(document).ready(function() {
 			confirmButtonText: 'Quay lại',
 		});
 	});
+	$('#btnUpdateAcc').on('click', function() {
+		$('.acc-update-row').show();
+		$('.acc-info-row').hide();
+	});
+	$('#btnCompleteUpdateAcc').on('click', function() {
+		$('.acc-info-row').show();
+		$('.acc-update-row').hide();
+	});
 });
 </script>
-@endpush @section('title') Tài khoản @endsection @section('content')
+@endpush
+@section('title') Tài khoản @endsection
+@section('content')
 <section class="content-body content-template-1 has-bottom-menu">
 	<div class="hf-bg-gradient wallet">
 		<div class="padding-20 row">
@@ -46,12 +86,13 @@ $(document).ready(function() {
 	<div class="form-wrapper">
 		<h3 class="padding-top-20">Tài khoản</h3>
 		<div class="padding-20 hf-card">
-			<div class="row">
+			<div class="acc-info-row row">
 				<div class="col-xs-4 text-right">
 					<img class="avt" src="{{ env('CDN_HOST') }}/u/{{ auth()->user()->id }}/{{ auth()->user()->avatar }}">
 				</div>
 				<div class="col-xs-8">
-					<div class="name text-uppercase">{{ auth()->user()->name }}</div>
+					<div id="btnUpdateAcc" class="pull-right color-default cursor-pointer btn-acc-update"><span><i class="icmn-pencil7"></i> Cập nhật</span></div>
+					<div class="name">{{ auth()->user()->name }}</div>
 					
 					@if (!auth()->user()->phone)
 					<div class="no-info color-warning">(Chưa cập nhật Số điện thoại)</div>
@@ -72,6 +113,30 @@ $(document).ready(function() {
 					@endif
 				</div>
 			</div>
+			
+			<div class="acc-update-row row hide">
+				<div class="col-xs-4 text-right">
+					<a class="avatar" href="javascript:void(0);" data-toggle="modal" data-target="#modalAvatar">
+						<img class="avt" src="{{ env('CDN_HOST') }}/u/{{ auth()->user()->id }}/{{ auth()->user()->avatar }}">
+					</a>
+				</div>
+				<div class="col-xs-8">
+					<div id="btnCompleteUpdateAcc" class="pull-right color-default cursor-pointer btn-acc-update"><span><i class="icmn-checkmark"></i> Hoàn tất</span></div>
+					<div class="cursor-pointer" data-toggle="modal" data-target="#modalName">
+						<span class="name">{{ auth()->user()->name }}</span>
+						<span><i class="icmn-pencil2"></i></span>
+					</div>
+					<div class="cursor-pointer" data-toggle="modal" data-target="#modalPhone">
+						<span class="phone">{{ auth()->user()->phone }}</span>
+						<span><i class="icmn-pencil2"></i></span>
+					</div>
+					<div class="cursor-pointer" data-target="#modalEmail">
+						<span class="phone">{{ auth()->user()->email }}</span>
+						<span><i class="icmn-pencil2"></i></span>
+					</div>
+				</div>
+			</div>
+			
 			<div class="row">
 				@if (auth()->user()->role == '1')
 				<div class="margin-top-20 margin-bottom-20 col-xs-12 text-center">
@@ -160,7 +225,7 @@ $(document).ready(function() {
 		
 		<h3 class="padding-top-30">Hỗ trợ</h3>
 		<div class="padding-20 hf-card">
-			<div class="row">
+			<div class="row" style="font-size: 14px; white-space: nowrap;">
 				<div class="col-xs-4 text-center"
 					onclick="window.open('https://zalo.me/1699928395940319098', '_blank');">
 					<img class="social-icon" src="{{ env('CDN_HOST') }}/img/social/zalo.png">
@@ -202,8 +267,8 @@ $(document).ready(function() {
 					<div>Điều khoản <span style="white-space: nowrap;">sử dụng</span></div>
 				</div>
 				<div class="margin-top-20 col-xs-4 text-center cursor-pointer">
-					<div><i class="material-icons">verified_user</i></div>
-					<div>An ninh</div>
+					<div><i class="material-icons">report</i></div>
+					<div>SOS</div>
 				</div>
 			</div>
 		</div>
@@ -240,6 +305,16 @@ $(document).ready(function() {
 							</div>
 						</div>
 					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="modalName" class="modal modal-size-small fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body">
+					<h3 class="padding-top-20 padding-bottom-20 text-center">abc</h3>
 				</div>
 			</div>
 		</div>

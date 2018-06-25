@@ -46,7 +46,8 @@ return [
 	'MNG_SURVEY_PAGE' => 'mng.survey',
 	'MNG_VIDEO_PAGE' => 'mng.video',
 	'MNG_VIDEO_LIST_PAGE' => 'mng.videos',
-	
+	'MNG_PA_LIST_PAGE' => 'mng.pas',
+
 	'PA_COMPANY_LIST_PAGE' => 'mng.pa.companies',
 	'PA_COMPANY_PAGE' => 'mng.pa.company',
 	'PA_PRO_LIST_PAGE' => 'mng.pa.pros',
@@ -68,10 +69,11 @@ return [
 	'ROLE_PRO' => '1',
 	'ROLE_PRO_MNG' => '2', // Pro Manager
 	
-	'ROLE_CSO' => '90', // Customer Service Officer
+	'ROLE_CSO' => '90', // Customer Service Administrator
+	
 	'ROLE_PA' => '91',  // Partner Acquisition
 	
-	'ROLE_ADM' => '99',
+	'ROLE_ADM' => '99', // Administrator
 	
 	'FLG_OFF' => '0',
 	'FLG_ON' => '1',

@@ -60,21 +60,18 @@ class User extends Authenticatable
 			->first();
 	}
 
-	public function getProsByProManager($proManagerId) {
+	public function getProsForProManager($proManagerId) {
 		return $this::with('profile')
 			->where('created_by', $proManagerId)
 			->pro()
 			->available()
 			->get();
 	}
-	
-	public function getProByProManager($proId, $proManagerId) {
+
+	public function getAllPAForMng() {
 		return $this::with('profile')
-			->where('id', $proId)
-			->where('created_by', $proManagerId)
-			->pro()
-			->available()
-			->first();
+			->pa()
+			->get();
 	}
 
 	public function existPhone($phone, $id = null) {
@@ -178,6 +175,10 @@ class User extends Authenticatable
 	public function scopeProAndProManager($query) {
 		return $query->where('role', Config::get('constants.ROLE_PRO_MNG'))
 					->orWhere('role', Config::get('constants.ROLE_PRO'));
+	}
+	
+	public function scopePa($query) {
+		return $query->where('role', Config::get('constants.ROLE_PA'));
 	}
 	
 	public function scopeAvailable($query) {

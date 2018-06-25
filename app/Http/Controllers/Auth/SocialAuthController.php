@@ -45,13 +45,13 @@ class SocialAuthController extends Controller
 				return redirect()->route('login_page')->with('error', 400);
 			}
 			
-			if (!$user->phone) { // No phone
-				Auth::login($user);
+			if (!$registedUser->phone) { // No phone
+				Auth::login($registedUser);
 				return redirect()->route('login_page')->with('error', 428);
 			}
 			
 			if ($registedUser->confirm_flg == Config::get('constants.FLG_OFF')) { // Email is not confirmed
-				Auth::login($user);
+				Auth::login($registedUser);
 				return redirect()->route('login_page')->with('error', 406);
 			}
 		} else {

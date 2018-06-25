@@ -11,7 +11,7 @@ class ProManagerController extends Controller
 
 	public function viewProListPage() {
 		$userModel = new User();
-		$pros = $userModel->getProsByProManager(auth()->user()->id);
+		$pros = $userModel->getProsForProManager(auth()->user()->id);
 		
 		return view(Config::get('constants.PRO_MNG_PAGE'), array(
 						'pros' => $pros,
@@ -20,7 +20,7 @@ class ProManagerController extends Controller
 
 	public function deleteByProManager($proId) {
 		$userModel = new User();
-		$pro = $userModel->getProByProManager($proId, auth()->user()->id);
+		$pro = $userModel->getProForProManager($proId, auth()->user()->id);
 		if (!$pro) {
 			response()->json('', 400);
 		}
