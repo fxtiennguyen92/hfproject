@@ -113,6 +113,14 @@
 					}
 				}
 			});
+
+			$('#chosenService').html('...');
+			var chosenServices = '';
+			$('.icmn-checkbox-checked2').each(function() {
+				chosenServices = chosenServices + $(this).attr('service-name') + ', ';
+			});
+			$('#chosenService').html(chosenServices.substring(0, chosenServices.length - 2));
+			$('input[name=service_str]').val($('#chosenService').html());
 		});
 
 		$('input[name=email]').on('change', function() {
@@ -377,46 +385,60 @@
 		</div>
 		<h5 class="padding-top-30">Dịch vụ tham gia</h5>
 		<div class="padding-20 hf-card">
-			<div class="row">
-				<div class="form-group col-sm-12 col-xs-12" style="margin-bottom: 0px;">
-					<label>Dịch vụ</label>
-				</div>
+			<div class="panel-group accordion" id="accordion" role="tablist" aria-multiselectable="true">
 				@foreach ($services as $service)
-				<div data-toggle="buttons" class="padding-left-20 col-sm-6 col-xs-6">
-					@if (in_array($service->id, json_decode($pro->profile->services)))
-					<label class="btn active">
-						<input type="checkbox"
-							name="services[]"
-							value="{{ $service->id }}" checked>
-							<span class="icon icmn-checkbox-checked2"></span> {{ $service->name }}
-					</label>
-					@else
-					<label class="btn">
-						<input type="checkbox"
-							name="services[]"
-							value="{{ $service->id }}">
-							<span class="icon icmn-checkbox-unchecked2"></span> {{ $service->name }}
-					</label>
-					@endif
+				<div class="panel panel-default">
+					<div class="panel-heading collapsed" role="tab" id="heading{{ $service->id }}" data-toggle="collapse" data-parent="#accordion" data-target="#collapse{{ $service->id }}" aria-expanded="true" aria-controls="collapse{{ $service->id }}">
+						<div class="panel-title">
+							<span class="accordion-indicator pull-right">
+								<i class="plus fa fa-plus"></i>
+								<i class="minus fa fa-minus"></i>
+							</span>
+							<a>{{ $service->name }}</a>
+						</div>
+					</div>
+					<div id="collapse{{ $service->id }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ $service->id }}">
+						<div class="panel-body padding-left-10 row">
+							@foreach ($service->children as $child)
+							<div data-toggle="buttons" class="col-md-6 col-sm-6 col-xs-12">
+								<label class="btn @if (in_array($child->id, json_decode($pro->profile->services))) active @endif">
+									<input type="checkbox"
+										name="services[]"
+										value="{{ $child->id }}" @if (in_array($child->id, json_decode($pro->profile->services))) checked @endif>
+										@if (in_array($child->id, json_decode($pro->profile->services)))
+										<span class="icon icmn-checkbox-checked2" service-name="{{ $child->name }}"></span> {{ $child->name }}
+										@else
+										<span class="icon icmn-checkbox-unchecked2" service-name="{{ $child->name }}"></span> {{ $child->name }}
+										@endif
+								</label>
+							</div>
+							@endforeach
+						</div>
+					</div>
 				</div>
 				@endforeach
 			</div>
+		</div>
+		<div class="padding-top-10">
+			<small><b>Dịch vụ đã chọn: </b><span class="header-info" id="chosenService">{{ $pro->profile->service_str }}</span></small>
+		</div>
+		
+		<h5 class="padding-top-30">Hình thức kinh doanh</h5>
+		<div class="padding-20 margin-bottom-30 hf-card">
 			<div class="row">
-				<div class="form-group col-sm-12 col-xs-12">
-					<label>Hình thức kinh doanh</label>
-					<select class="form-control selectpicker hf-select" data-live-search="true" name="company">
-						<optgroup label="Cá nhân">
-							<option value="">Kinh doanh Cá nhân</option>
-						</optgroup>
-						<optgroup label="Doanh nghiệp">
-							@foreach($companies as $company)
-							<option value="{{ $company->id }}" @if ($pro->profile->company_id == $company->id) selected @endif>{{ $company->name }}</option>
-							@endforeach
-						</optgroup>
-					</select>
-				</div>
+				<select class="form-control selectpicker hf-select" data-live-search="true" name="company">
+					<optgroup label="Cá nhân">
+						<option value="">Kinh doanh Cá nhân</option>
+					</optgroup>
+					<optgroup label="Doanh nghiệp">
+						@foreach($companies as $company)
+						<option value="{{ $company->id }}" @if ($pro->profile->company_id == $company->id) selected @endif>{{ $company->name }}</option>
+						@endforeach
+					</optgroup>
+				</select>
 			</div>
 		</div>
+		
 		<h5 class="padding-top-30">Buổi training</h5>
 		<div class="padding-20 margin-bottom-30 hf-card">
 			<div class="row">
@@ -439,9 +461,9 @@
 			
 			<input type="hidden" name="govEvidence" value=""/>
 			<input type="hidden" name="avatar" value=""/>
+			<input type="hidden" name="service_str" value="" />
 			<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 		</div>
 	</form>
-	<!-- MODAL -->
 </section>
 @endsection

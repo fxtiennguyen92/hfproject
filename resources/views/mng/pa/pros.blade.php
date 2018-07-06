@@ -60,7 +60,6 @@
 							url: '{{ route("pa_pro_create") }}',
 							data: $('#frmNewPro').serialize(),
 							success: function(response) {
-								$('#modalNewPro').modal('toggle');
 								swal({
 									title: 'Hoàn thành',
 									text: 'Đăng ký thành công',
@@ -73,7 +72,6 @@
 								});
 							},
 							error: function(xhr) {
-								$('#modalNewPro').modal('toggle');
 								if (xhr.status == 400) {
 									swal({
 										title: 'Thất bại',
@@ -100,7 +98,6 @@
 									});
 								};
 								resetBtnSubmit('btnSubmit', 'Đăng ký');
-								$('#modalNewPro').modal('show');
 							}
 						});
 					}

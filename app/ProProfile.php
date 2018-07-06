@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class ProProfile extends Model
 {
@@ -31,11 +32,19 @@ class ProProfile extends Model
 		return $this->hasOne('App\Company', 'id', 'company_id');
 	}
 	
+	public function reviews() {
+		return $this->hasMany('App\Review', 'to_id', 'id');
+	}
+	
 	public function district_info() {
 		return $this->hasOne('App\Common', 'code', 'district');
 	}
 	
 	public function city_info() {
 		return $this->hasOne('App\Common', 'code', 'city');
+	}
+	
+	public function getAgeAttribute() {
+		return Carbon::parse($this->attributes['date_of_birth'])->age;
 	}
 }

@@ -188,7 +188,7 @@
 					<tbody>
 						@foreach ($commons as $common)
 						<tr class="@if ($common->delete_flg == '1') row-deleted-flg color-danger @endif">
-							<td class="text-center">{{ $common->order_dsp }}</td>
+							<td class="text-center">@if ($common->order_dsp != 0) {{ $common->order_dsp }} @endif</td>
 							<td class="font-weight-700">{{ $common->key }}</td>
 							<td>{{ $common->code }}</td>
 							<td>{{ $common->value }}</td>
@@ -204,7 +204,7 @@
 							</td>
 							<td class="text-right">
 								<div class="dropdown">
-									<span class="btn btn-sm " data-toggle="dropdown">
+									<span class="btn" data-toggle="dropdown">
 									<i class="icmn-cog3"></i>
 									</span>
 									<ul class="dropdown-menu dropdown-menu-right" role="menu">

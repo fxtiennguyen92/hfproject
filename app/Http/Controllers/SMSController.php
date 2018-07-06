@@ -7,14 +7,19 @@ use Illuminate\Support\Facades\Config;
 
 class SMSController extends Controller
 {
-	public static function sendSMSActivateCode($phone, $sac) {
-		$content = 'Ma kich hoat tai khoan cua ban la '.$sac;
+	public static function sendPINCodeSMS($phone, $sac) {
+		$content = 'Ma PIN cua ban la '.$sac;
 		return SMSController::sendSMS($phone, $content);
 	}
 	
-	public function sendActiveProAccountSMS($phone, $password) {
+	public static function sendActiveProAccountSMS($phone, $password) {
 		$content = 'Tai khoan cua ban da duoc kich hoat. Mat khau cua ban la '.$password;
-		$this->sendSMS($phone, $content);
+		return SMSController::sendSMS($phone, $content);
+	}
+	
+	public static function sendNewPasswordSMS($phone, $password) {
+		$content = 'Mat khau moi cua ban la '.$password;
+		return SMSController::sendSMS($phone, $content);
 	}
 	
 	private static function sendSMS($phone, $content, $smsType = 2, $brandName = 'HANDFREE') {

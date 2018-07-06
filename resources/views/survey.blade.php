@@ -170,6 +170,10 @@
 			}
 		});
 
+		$('#btnDisCode').on('click', function() {
+			$('#modalDisCode').modal('show');
+		});
+
 		$('#btnSubmit').on('click', function() {
 			if ($('input[name=location]').val() == '') {
 				$.notify({
@@ -181,56 +185,63 @@
 				});
 				$('#orderAddress').focus();
 			} else {
-						$.ajax({
-							type: 'POST',
-							url: '{{ route("submit_order") }}',
-							data: $('#frmMain').serialize(),
-							success: function(orderId) {
-								swal({
-									title: 'Thành công',
-									text: 'Bạn đã đặt đơn hàng thành công!',
-									type: 'success',
-									showCancelButton: false,
-									confirmButtonClass: 'btn-primary',
-									confirmButtonText: 'Xem đơn hàng',
-								},
-								function() {
-									var url = '{{ route("order_page", ["orderId" => "orderId"]) }}';
-									url = url.replace('orderId', orderId);
-									location.href = url;
-								});
-							},
-							error: function(xhr) {
-								if (xhr.status == 400) {
-									$.notify({
-										title: '<strong>Thất bại! </strong>',
-										message: 'Đã có lỗi xảy ra, mời chọn lại dịch vụ.'
-									}, {
-										type: 'danger',
-										z_index: 1051,
-									});
-								} else if (xhr.status == 403) {
-									$.notify({
-										title: '<strong>Thất bại! </strong>',
-										message: 'Thời gian thực hiện không đúng, mời chọn lại.'
-									}, {
-										type: 'danger',
-										z_index: 1051,
-									});
-								} else {
-									$.notify({
-										title: '<strong>Thất bại! </strong>',
-										message: 'Không thể thực hiện đặt đơn hàng.'
-									}, {
-										type: 'danger',
-										z_index: 1051,
-									});
-								};
-							}
+				$.ajax({
+					type: 'POST',
+					url: '{{ route("submit_order") }}',
+					data: $('#frmMain').serialize(),
+					success: function(orderId) {
+						swal({
+							title: 'Thành công',
+							text: 'Bạn đã đặt đơn hàng thành công!',
+							type: 'success',
+							showCancelButton: false,
+							confirmButtonClass: 'btn-primary',
+							confirmButtonText: 'Xem đơn hàng',
+						},
+						function() {
+							var url = '{{ route("order_page", ["orderId" => "orderId"]) }}';
+							url = url.replace('orderId', orderId);
+							location.href = url;
 						});
+					},
+					error: function(xhr) {
+						if (xhr.status == 400) {
+							$.notify({
+								title: '<strong>Thất bại! </strong>',
+								message: 'Đã có lỗi xảy ra, mời chọn lại dịch vụ.'
+							}, {
+								type: 'danger',
+								z_index: 1051,
+							});
+						} else if (xhr.status == 403) {
+							$.notify({
+								title: '<strong>Thất bại! </strong>',
+								message: 'Thời gian thực hiện không đúng, mời chọn lại.'
+							}, {
+								type: 'danger',
+								z_index: 1051,
+							});
+						} else {
+							$.notify({
+								title: '<strong>Thất bại! </strong>',
+								message: 'Không thể thực hiện đặt đơn hàng.'
+							}, {
+								type: 'danger',
+								z_index: 1051,
+							});
+						};
+					}
+				});
 			}
 		});
 	});
+
+	function setDisCode(code) {
+		$('input[name=disCode]').val(code);
+		$('#btnDisCode').addClass('active');
+		$('#btnDisCode').html('<i class="icmn-ticket2" aria-hidden="true"></i>' + code);
+		$('#modalDisCode').modal('hide');
+	}
 </script>
 @endpush @section('title') Đơn hàng @endsection @section('content')
 <section class="content-body">
@@ -353,13 +364,17 @@
 			</div>
 			<div class="row-complete clearfix">
 				<button id="btnBack" type="button" class="btn"><i class="material-icons">&#xE314;</i></button>
-				<button id="btnSubmit" type="button" class="btn btn-primary" style="padding: 16px;"><i class="material-icons">&#xE876;</i></button>
+				<button id="btnDisCode" type="button" class="btn" style="width: 30%"><i class="icmn-ticket2" aria-hidden="true"></i> Mã khuyến mãi</button>
+				<button id="btnSubmit" type="button" class="btn btn-primary" style="padding: 16px; width: 40%"><i class="material-icons">&#xE876;</i></button>
 				<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 				<input type="hidden" name="address" value="" />
 				<input type="hidden" name="location" value="" />
+				<input type="hidden" name="disCode" value="" />
 			</div>
 		</div>
 	</form>
+	
+	@include('order.discount-code')
 </section>
 
 <script>

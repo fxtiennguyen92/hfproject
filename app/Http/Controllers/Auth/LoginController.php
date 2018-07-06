@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use App\User;
 use Illuminate\Support\Facades\Redirect;
-use App\Wallet;
 
 class LoginController extends Controller
 {

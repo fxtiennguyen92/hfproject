@@ -49,6 +49,7 @@
 	<!-- Clean UI Styles -->
 	<link rel="stylesheet" type="text/css" href="assets/common/css/source/main.css">
 	<link rel="stylesheet" type="text/css" href="css/app.css">
+	<link rel="stylesheet" type="text/css" href="css/countdown.css">
 	
 	<link rel="stylesheet" type="text/css" href="css/hf-style.css">
 
@@ -111,6 +112,8 @@
 	
 	<!-- Clean UI Scripts -->
 	<script src="assets/common/js/common.js"></script>
+	<script src="js/countdown.js"></script>
+	
 	<script src="js/hf-script.js"></script>
 	
 	<!-- Global site tag (gtag.js) - Google Analytics -->

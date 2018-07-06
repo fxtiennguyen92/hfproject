@@ -10,13 +10,10 @@ use Illuminate\Support\Facades\Storage;
 
 class FileController
 {
-	public static function saveAvatar($data, $userId = null) {
+	public static function saveAvatar($data, $userId) {
 		$fileName = str_random(6).'.png';
 		$directoryName = 'u'.'/'. $userId;
 		
-		if (!$userId) {
-			$userId = auth()->user()->id;
-		}
 		$user = User::where('id', $userId)->first();
 		if ($user->avatar) {
 			Storage::delete($directoryName.'/'.$user->avatar);

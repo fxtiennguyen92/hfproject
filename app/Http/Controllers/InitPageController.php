@@ -34,7 +34,10 @@ class InitPageController extends Controller
 		$services = $serviceModel->getMostPopular();
 		
 		$commonModel = new Common();
+		$banners = $commonModel->getByKey(Config::get('constants.BANNER'));
+		$mbBanners = $commonModel->getByKey(Config::get('constants.BANNER_MB'));
 		$parts = $commonModel->getByKey(Config::get('constants.HOME_PAGE'));
+		
 		
 		$blogModel = new Blog();
 		$blogs = $blogModel->getNewestBlogs();
@@ -44,6 +47,8 @@ class InitPageController extends Controller
 						'services' => $services,
 						'blogs' => $blogs,
 						'parts' => $parts,
+						'banners' => $banners,
+						'mbbanners' => $mbBanners,
 		));
 	}
 	
@@ -62,9 +67,6 @@ class InitPageController extends Controller
 		if (!$pro) {
 			throw new NotFoundHttpException();
 		}
-		
-		$reviewModel = new Review();
-		$pro->reviews = $reviewModel->getByPro($proId);
 		
 		$page = new \stdClass();
 		$page->name = 'Đối tác';

@@ -36,7 +36,7 @@ class RegisterController extends Controller
 	protected function validator(array $data) {
 		return Validator::make($data, [
 			'name' => 'required|string|max:255',
-			'email' => 'required|string|email|max:255|unique:users',
+			'email' => 'required|string|email|max:100|unique:users',
 			'phone' => 'required|string|unique:users',
 			'password' => 'required|string|min:6|max:100',
 		]);
@@ -74,11 +74,12 @@ class RegisterController extends Controller
 		
 		try {
 			$sac = SACController::getSAC($request->phone);
-			$result = SMSController::sendSMSActivateCode($request->phone, $sac->sac);
+			$result = SMSController::sendPINCodeSMS($request->phone, $sac->sac);
 			
 			if ($result) {
 				return response()->json('', 200);
 			} else {
+				SACController::deleteSAC($request->phone);
 				return response()->json('', 503);
 			}
 		} catch (\Exception $e) {
@@ -114,8 +115,7 @@ class RegisterController extends Controller
 			$user = $this->create($request->all());
 			SACController::deleteSAC($user->phone);
 			if ($user->email) {
-				$mail = new MailController();
-				$mail->sendVerifyMail($user->name, $user->email, $user->confirm_code);
+				MailController::sendVerifyMail($user->name, $user->email, $user->confirm_code);
 			}
 		
 			DB::commit();
@@ -126,8 +126,8 @@ class RegisterController extends Controller
 		}
 	}
 
-	public function verify($confirmCode) {
-		$user = User::where('confirm_code', $confirmCode)->first();
+	public function verify($code) {
+		$user = User::where('confirm_code', $code)->first();
 		if (!$user) {
 			throw new NotFoundHttpException();
 		}

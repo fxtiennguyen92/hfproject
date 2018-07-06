@@ -11,6 +11,8 @@ use App\User;
 use Illuminate\Support\Facades\DB;
 use App\Review;
 use Illuminate\Support\Facades\Redirect;
+use App\ProProfile;
+use App\DiscountCode;
 
 class OrderController extends Controller
 {
@@ -65,7 +67,7 @@ class OrderController extends Controller
 	public function accept($proId, Request $request) {
 		// get orderId from session
 		if (!$request->session()->has('order')) {
-			response()->json('', 400);
+			return response()->json('', 400);
 		}
 		$orderId = $request->session()->get('order');
 		
@@ -73,7 +75,7 @@ class OrderController extends Controller
 		$orderModel = new Order();
 		$order = $orderModel->getByIdAndUserId($orderId, auth()->user()->id);
 		if (!$order) {
-			response()->json('', 400);
+			return response()->json('', 400);
 		}
 		
 		// get and check quoted price
@@ -81,12 +83,12 @@ class OrderController extends Controller
 		$quotedPriceModel = new QuotedPrice();
 		$quotedPrice = $quotedPriceModel->getById($qpId);
 		if (!$quotedPrice) {
-			response()->json('', 400);
+			return response()->json('', 400);
 		}
 		
 		if (!$order->est_excute_at) {
-			$order->est_excute_at = $quotedPrice->est_excute_at;
-			$order->est_excute_at_string = $quotedPrice->est_excute_at_string;
+			$order->est_excute_at = date('Y-m-d H:i', strtotime('+'.env('ASAP_EXCUTE_DATE').'minutes'));
+			$order->est_excute_at_string = CommonController::getStringAsapExcuteDateTime();
 		}
 		
 		$order->id = $orderId;
@@ -100,10 +102,13 @@ class OrderController extends Controller
 			$quotedPriceModel->updateState($qpId, Config::get('constants.QPRICE_SUCCESS'));
 		
 			DB::commit();
-			response()->json('', 200);
+			
+			$this->sendOrderInfoMail(auth()->user()->mail, $order->id);
+			
+			return response()->json('', 200);
 		} catch (\Exception $e) {
 			DB::rollback();
-			response()->json('', 400);
+			return response()->json('', 500);
 		}
 	}
 
@@ -146,41 +151,41 @@ class OrderController extends Controller
 			
 			$order = $orderModel->getById($orderId);
 			
-			$pro = User::where('id', $order->pro_id)->first();
-			$pro->total_orders = $pro->total_orders + 1;
-			$pro->total_order_price = $pro->total_order_price + $order->total_price;
+			$pro = User::find($order->pro_id);
 			$pro->point = $pro->point + ($order->total_price / 1000);
 			$pro->save();
 			
-			$user = User::where('id', $order->user_id)->first();
-			$user->total_orders = $user->total_orders + 1;
-			$user->total_order_price = $user->total_order_price + $order->total_price;
+			$proProfile = ProProfile::find($order->pro_id);
+			$proProfile->total_orders = $proProfile->total_orders + 1;
+			$proProfile->save();
+			
+			$user = User::find($order->user_id);
 			$user->point = $user->point + ($order->total_price / 1000);
 			$user->save();
 			
 			DB::commit();
+			
+			if (auth()->user()->role == Config::get('constants.ROLE_USER')) {
+				return Redirect::back()->with('review', true);
+			}
+			return Redirect::back();
 		} catch (\Exception $e) {
 			DB::rollback();
+			return Redirect::back()->with('error', $e->getMessage());
 		}
-		
-		return Redirect::back();
 	}
 
 	public function cancel(Request $request) {
 		// get orderId from session
 		if (!$request->session()->has('order')) {
-			response()->json('', 400);
+			throw new NotFoundHttpException();
 		}
 		$orderId = $request->session()->get('order');
 		
 		$orderModel = new Order();
-		$isUpdated = $orderModel->updateState($orderId, Config::get('constants.ORD_CANCEL'));
+		$orderModel->updateState($orderId, Config::get('constants.ORD_CANCEL'));
 		
-		if ($isUpdated) {
-			response()->json('', 200);
-		} else {
-			response()->json('', 400);
-		}
+		return Redirect::back();
 	}
 
 	public function viewProPage($proId, Request $request) {
@@ -223,5 +228,66 @@ class OrderController extends Controller
 						'pro' => $pro,
 						'orderId' => $orderId,
 		));
+	}
+
+	public function review(Request $request) {
+		// get orderId from session
+		if (!$request->session()->has('order')) {
+			return response()->json('', 400);
+		}
+		$orderId = $request->session()->get('order');
+		
+		$orderModel = new Order();
+		$order = $orderModel->getById($orderId);
+		
+		$review = new Review();
+		$review->id = $order->user_id.'#'.$order->no;
+		$review->from_id = $order->user_id;
+		$review->to_id = $order->pro_id;
+		$review->order_id = $order->id;
+		$review->rating = $request->rating;
+		$review->content = $request->content;
+		$review->save();
+		
+		$proProfile = ProProfile::find($order->pro_id);
+		$proProfile->rating = (($proProfile->rating * $proProfile->total_review) + $request->rating) / ($proProfile->total_review + 1);
+		$proProfile->total_review = $proProfile->total_review + 1;
+		
+		$levelArr = array();
+		if (!$proProfile->lvl_total_review) {
+			$levelArr = array(0,0,0,0,0);
+		} else {
+			$levelArr = json_decode($proProfile->lvl_total_review);
+		}
+		
+		$levelArr[$request->rating - 1]++;
+		$proProfile->lvl_total_review = json_encode($levelArr);
+		$proProfile->save();
+		
+		return response()->json('', 200);
+	}
+
+	public function viewDiscountCodeList(Request $request) {
+// 		if (!auth()->check()) {
+// 			return response()->json('', 400);
+// 		}
+		
+		$searchCode = $request->search;
+		
+		$disCodeModel = new DiscountCode();
+		$codes = $disCodeModel->getUseableCodesByCode($searchCode ,0);
+		
+		return response()->json($codes);
+	}
+
+	private function sendOrderInfoMail($email, $orderId) {
+		if (!$email) {
+			return;
+		}
+		
+		$orderModel = new Order();
+		$order = $orderModel->getById($orderId);
+		
+		MailController::sendOrderInfoMail($email, $order);
 	}
 }

@@ -59,7 +59,7 @@ class SocialAuthController extends Controller
 			$registedUser = $this->create($user, $socialNetwork);
 			// Get image from Socialite
 			$data = file_get_contents($user->getAvatar());
-			FileController::saveAvatar($data);
+			FileController::saveAvatar($data, $registedUser->id);
 		}
 		
 		// Login

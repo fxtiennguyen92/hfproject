@@ -10,7 +10,7 @@
 		body {
 			font-family: "Roboto", Tahoma, Sans-Serif;
 		}
-		.example-emails {
+		.wrapper {
 			background: #f5f5f5;
 			min-height: 600px;
 			color: #000;
@@ -18,7 +18,7 @@
 	</style>
 </head>
 <body>
-	<div class="example-emails">
+	<div class="wrapper">
 		<!-- Start Letter -->
 		<div width="100%" style="background: #eceff4; padding: 50px 20px; color: #000;">
 			<div style="max-width: 700px; margin: 0px auto; font-size: 14px">
@@ -36,7 +36,7 @@
 								<h3 style="margin-bottom: 20px; font-weight: bold;">Xác thực Email</h3>
 								<p>Chào <b>{{ $name }}</b>, để nhận được các thông báo về đơn hàng và khuyến mãi, hãy xác nhận Email của bạn bằng link bên dưới.</p>
 								<div style="text-align: center">
-									<a href="{{ URL::to('partner/verify/' . $confirm_code) }}" style="display: inline-block; padding: 11px 30px; margin: 20px 0px 30px; font-size: 15px; color: #fff; background: #01a8fe; border-radius: 5px; text-decoration: none;">
+									<a href="{{ route('signup_verify', ['code' => $confirmCode]) }}" style="display: inline-block; padding: 11px 30px; margin: 20px 0px 30px; font-size: 15px; color: #fff; background: #01a8fe; border-radius: 5px; text-decoration: none;">
 										Xác nhận EMAIL
 									</a>
 								</div>

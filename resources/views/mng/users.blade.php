@@ -52,11 +52,11 @@
 </script>
 @endpush
 
-@section('title') Đối tác @endsection
+@section('title') Khách hàng @endsection
 
 @section('content')
 <section class="content-body-full-page content-template-1">
-	<div class="page-header hf-bg-gradient text-capitalize">Đối tác</div>
+	<div class="page-header hf-bg-gradient text-capitalize">Khách hàng</div>
 	<div class="form-wrapper">
 		<div class="row">
 			<div class="col-sm-12">
@@ -64,96 +64,62 @@
 					<thead>
 						<tr>
 							<th class="text-center">Họ tên</th>
-							<th class="text-center">Địa chỉ</th>
+							<th class="text-center"></th>
 							<th class="text-center">Ngày đăng ký</th>
 							<th class="text-center">Trạng thái</th>
 							<th>&nbsp;</th>
 						</tr>
 					</thead>
 					<tbody>
-						@foreach ($pros as $pro)
+						@foreach ($users as $user)
 						<tr>
 							<td class="col-pro-info"">
-								<div class="@if ($pro->role == 2) color-danger @endif pro-name">
-									{{ $pro->name }}
+								<div class="@if ($user->role == 2) color-danger @endif pro-name">
+									{{ $user->name }}
 								</div>
-								<div class="padding-left-5">
-									@if (isset($pro->profile) && isset($pro->profile->company))
-									<i class="material-icons">store</i> {{ $pro->profile->company->name }}
-									@else
-									<i class="material-icons">build</i> Kinh doanh cá nhân
-									@endif
-								</div>
-							</td>
-							<td>
 								<div>
 									<i class="material-icons">phone</i>
-									@if ($pro->phone){{ $pro->phone }}
+									@if ($user->phone){{ $user->phone }}
 									@else
 										<span class="no-info">Chưa cập nhật</span>
 									@endif
 								</div>
 								<div>
 									<i class="material-icons">mail</i>
-									@if ($pro->email){{ $pro->email }}
-									@else
-										<span class="no-info">Chưa cập nhật</span>
-									@endif
-								</div>
-								<div>
-									<i class="material-icons">person_pin_circle</i> 
-									@if ($pro->profile->address_2) {{ $pro->profile->address_1.' '.$pro->profile->address_2 }}
-										@if ($pro->profile->city && $pro->profile->district)
-										{{ $pro->profile->district_info->name.', '.$pro->profile->city_info->name }}
-										@endif
+									@if ($user->email){{ $user->email }}
 									@else
 										<span class="no-info">Chưa cập nhật</span>
 									@endif
 								</div>
 							</td>
 							<td class="text-center">
-								<span class='hide'>{{ Carbon\Carbon::parse($pro->created_at)->format('YmdHi') }}</span>
-								{{ Carbon\Carbon::parse($pro->created_at)->format('d/m/Y H:i') }}
+								@if ($user->password) <i class="icmn-circles2"></i> @endif
+								@if ($user->facebook_id) <i class="icmn-facebook"></i> @endif
+								@if ($user->google_id) <i class="icmn-google-plus"></i> @endif
+							</td>
+							<td class="text-center">
+								<span class='hide'>{{ Carbon\Carbon::parse($user->created_at)->format('YmdHi') }}</span>
+								{{ Carbon\Carbon::parse($user->created_at)->format('d/m/Y H:i') }}
 							</td>
 							<td class="text-center col-label-profile-state">
-								@if ($pro->delete_flg == 1)
-									<span class="label label-secondary">Đã xóa</span>
-								@elseif ($pro->profile->state == '1')
-									<span class="label label-primary">Sẵn Sàng</span>
-								@elseif ($pro->profile->state == '2')
-									<span class="label label-default">Treo</span>
-								@elseif ($pro->profile->state == '3')
-									<span class="label label-warning">Cảnh cáo</span>
-								@elseif ($pro->profile->state == '4')
-									<span class="label label-danger">Khóa</span>
-								@elseif ($pro->profile->state == '5')
-									<span class="label label-secondary">Cấm vĩnh viễn</span>
+								@if ($user->delete_flg == 1)
+									<span class="label label-danger">Đã xóa</span>
+								@elseif ($user->confirm_flg == 0)
+									<span class="label label-warning">Email vô hiệu</span>
 								@else
-									<span class="label label-success">Chờ Duyệt</span>
+									<span class="label label-success">Hoạt động</span>
 								@endif
 							</td>
 							<td class="text-right">
 								<div class="dropdown">
-									<span class="btn btn-sm " data-toggle="dropdown">
+									<span class="btn" data-toggle="dropdown">
 									<i class="icmn-cog3"></i>
 									</span>
 									<ul class="dropdown-menu dropdown-menu-right" role="menu">
-										<a class="dropdown-item" href="{{ route('mng_pro_edit', ['id' => $pro->id]) }}">
-											<i class="icmn-grid6"></i> Chi tiết
+										<a class="dropdown-item" href="javascript:void(0);">
+											<i class="icmn-loop2"></i> Cấp lại Mật khẩu
 										</a>
 										<a class="dropdown-item" href="javascript:void(0);">
-											<i class="icmn-user-minus2"></i> Treo
-										</a>
-										<a class="dropdown-item" href="javascript:void(0);">
-											<i class="icmn-user-cancel2"></i> Cảnh cáo
-										</a>
-										<a class="dropdown-item" href="javascript:void(0);">
-											<i class="icmn-user-lock2"></i> Khóa
-										</a>
-										<a class="dropdown-item" href="javascript:void(0);">
-											<i class="icmn-user-block"></i> Cấm vĩnh viễn
-										</a>
-										<a class="dropdown-item" href="javascript:void(0);" onclick="return deletePro('{{ $pro->id }}')">
 											<i class="icmn-bin"></i> Xóa
 										</a>
 										<a class="dropdown-item" href="javascript:void(0);">

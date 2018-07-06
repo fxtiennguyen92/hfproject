@@ -53,6 +53,8 @@ Route::post('/password/update', 'Auth\PasswordController@update')
 	->name('password_update');
 Route::post('/password/reset', 'Auth\PasswordController@reset')
 	->name('password_reset');
+Route::post('/password/reset/sac', 'Auth\PasswordController@getSAC')
+	->name('password_reset_get_sac');
 
 // Login
 Route::get('/login', 'Auth\LoginController@view')
@@ -78,12 +80,18 @@ Route::post('/signup', 'Auth\RegisterController@authenticate')
 	->name('signup');
 Route::post('/signup/sac', 'Auth\RegisterController@getSAC')
 	->name('signup_get_sac');
-Route::get('/verify/{confirmCode}', 'Auth\RegisterController@verify')
+Route::get('/verify/{code}', 'Auth\RegisterController@verify')
 	->name('signup_verify');
 
 // Profile
 Route::post('/profile/phone/update', 'ProfileController@updatePhone')
 	->name('profile_phone_update');
+Route::post('/profile/account/update', 'ProfileController@updateAccount')
+	->name('profile_account_update');
+
+// Discount Code
+Route::get('/order/discount-code', 'OrderController@viewDiscountCodeList')
+	->name('order_discount_code_list');
 	
 
 /** Service - Order - STA **/
@@ -105,6 +113,8 @@ Route::post('/order/complete', 'OrderController@complete')
 	->name('complete_order');
 Route::post('/order/cancel', 'OrderController@cancel')
 	->name('cancel_order');
+Route::post('/order/review', 'OrderController@review')
+	->name('order_review');
 /** Service - Order - END **/
 
 /** Pro - STA **/
@@ -158,15 +168,15 @@ Route::middleware('cs.pa')->group(function() {
 	Route::post('/pa/pro/{id}/delete', 'Mng\ProController@deleteForPA')
 		->name('pa_pro_delete');
 	
-	// PA
-	Route::get('/pa/pa', 'Mng\PAController@viewList')
-		->name('pa_pa_list');
 });
 /** Partner Acquisition - END **/
 	
 /** Management - STA **/
 Route::middleware('cs.officer')->group(function() {
-
+	// User
+	Route::get('/mng/user', 'Mng\UserController@viewList')
+		->name('mng_user_list');
+	
 	// Pro
 	Route::get('/mng/pro', 'Mng\ProController@viewList')
 		->name('mng_pro_list');
@@ -179,7 +189,6 @@ Route::middleware('cs.officer')->group(function() {
 	Route::post('/mng/pro/{id}/delete','Mng\ProController@delete')
 		->name('mng_pro_delete');
 	
-		
 	Route::post('/mng/pro/avatar', 'Mng\ProController@approveAvatar')
 		->name('approve_pro_avatar');
 	Route::post('/mng/pro/update_cv', 'Mng\ProController@updateCV')
@@ -294,10 +303,16 @@ Route::middleware('cs.officer')->group(function() {
 	Route::post('/mng/doc/{id}/delete', 'Mng\DocController@delete')
 		->name('mng_doc_delete');
 
+	// PA
+	Route::get('/mng/pa', 'Mng\PAController@viewList')
+		->name('mng_pa_list');
+	Route::post('/mng/pa', 'Mng\PAController@create')
+		->name('mng_pa_create');
+	Route::post('/mng/pa/{id}/delete', 'Mng\PAController@delete')
+		->name('mng_pa_delete');
 });
 /** Management - END **/
-
-// Route::get('/test', 'Mng\OrderController@test');
+// 	Route::get('/test', 'API\UserController@generateAPI');
 	
 // Route::get('/test2', function () { return view('mail.out-location'); });
 // Route::get('/test3', function () { return view('test3'); });

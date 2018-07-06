@@ -1,24 +1,22 @@
 @extends('template.index')
 @push('stylesheets')
 <style>
-.acc-update-row i {
-	font-size: 9px;
-}
 
-.avatar {
+.acc-avatar {
 	height: 80px;
 	width: 80px;
 	position: relative;
 }
 
-.avatar:before {
+.acc-avatar:before {
 	position: absolute;
 	font-family: FontAwesome;
 	content: '\f030';
 	width: 100%;
-	height: 100%;
+	height: 80px;
+	border-radius: 100%;
 	line-height: 80px;
-	background: rgba(0, 0, 0, .3);
+	background: rgba(0, 0, 0, .2);
 	color: #fafbfc;
 	text-align: center;
 }
@@ -34,6 +32,8 @@ $(document).ready(function() {
 	$('.price').each(function() {
 		$(this).html(accounting.formatMoney($(this).html()));
 	});
+	$('.phone').mask('0000000000000');
+	$('.sac').mask('0000');
 	$('[data-toggle=tooltip]').tooltip();
 	$('#btnFillWallet').on('click', function() {
 		swal({
@@ -44,13 +44,215 @@ $(document).ready(function() {
 			confirmButtonText: 'Quay lại',
 		});
 	});
-	$('#btnUpdateAcc').on('click', function() {
-		$('.acc-update-row').show();
-		$('.acc-info-row').hide();
+	$('#btnEditAcc').on('click', function() {
+		@if (auth()->user()->role == 2)
+			swal({
+				title: 'Cập nhật Thông tin',
+				text: 'Hãy liên hệ Bộ phận CSKH để thay đổi thông tin cá nhân',
+				type: 'info',
+				confirmButtonClass: 'btn-info',
+				confirmButtonText: 'Quay lại',
+			});
+		@else
+			$('#modalInfo').modal('show');
+		@endif
 	});
-	$('#btnCompleteUpdateAcc').on('click', function() {
-		$('.acc-info-row').show();
-		$('.acc-update-row').hide();
+	$('#btnEditPassword').on('click', function() {
+		$('input[type=password]').each(function() {
+			$(this).val('');
+		});
+		$('#modalPassword').modal('show');
+	});
+
+	$('input[name=phone]').on('keyup', function() {
+		if ($(this).val() !== '{{ auth()->user()->phone }}') {
+			$('.sac-row').show();
+			$('input[name=sac]').addValidation('NOTEMPTY');
+		} else {
+			$('.sac-row').hide();
+			$('input[name=sac]').removeValidation('NOTEMPTY');
+		}
+	});
+	$('#btnSendSAC').on('click', function() {
+		if ($('input[name=phone]').val() == '') {
+			$('input[name=phone]').focus();
+			$.notify({
+				title: '<strong>Lỗi! </strong>',
+				message: 'Chưa có thông tin về Số điện thoại.'
+			}, {
+				type: 'danger',
+				z_index: 1051,
+			});
+		} else {
+			$('#btnSendSAC').addClass('disabled');
+			$('#btnSendSAC').html('<i class="fa fa-spinner fa-spin"></i> Đang gửi')
+			
+			$.ajax({
+				type: 'POST',
+				url: '{{ route("signup_get_sac") }}',
+				data: $('#frmInfo').serialize(),
+				success: function(response) {
+					$('#btnSendSAC').html('Đã gửi mã PIN');
+					setTimeout(function() {
+						$('#btnSendSAC').removeClass('disabled');
+						$('#btnSendSAC').html('Gửi lại Mã PIN');
+					}, 60000);
+				},
+				error: function(xhr) {
+					if (xhr.status == 400) {
+						$.notify({
+							title: '<strong>Lỗi! </strong>',
+							message: 'Chưa có thông tin về Số điện thoại.'
+						}, {
+							type: 'danger',
+							z_index: 1051,
+						});
+					} else if (xhr.status == 409) {
+						$.notify({
+							title: '<strong>Đã sử dụng! </strong>',
+							message: 'Số điện thoại đã được đăng ký.'
+						}, {
+							type: 'danger',
+							z_index: 1051,
+						});
+					} else if (xhr.status == 503) {
+						$.notify({
+							title: '<strong>Lỗi SMS! </strong>',
+							message: 'Gửi tin nhắn thất bại, mời thử lại.'
+						}, {
+							type: 'danger',
+							z_index: 1051,
+						});
+					} else {
+						$.notify({
+							title: '<strong>Thất bại! </strong>',
+							message: 'Có lỗi phát sinh, mời thử lại.'
+						}, {
+							type: 'danger',
+							z_index: 1051,
+						});
+					}
+
+					setTimeout(function() {
+						$('#btnSendSAC').removeClass('disabled');
+						$('#btnSendSAC').html('Gửi lại Mã PIN');
+					}, 2000);
+				}
+			});
+		}
+	});
+	$('#frmInfo').validate({
+		submit: {
+			settings: {
+				inputContainer: '.form-group',
+				errorListClass: 'form-control-error',
+				errorClass: 'has-danger',
+			},
+			callback: {
+				onSubmit: function() {
+					loadingBtnSubmit('btnUpdateAcc');
+					
+					$.ajax({
+						type: 'POST',
+						url: '{{ route("profile_account_update") }}',
+						data: $('#frmInfo').serialize(),
+						success: function(response) {
+							location.href = "{{ route('control') }}";
+						},
+						error: function(xhr) {
+							if (xhr.status == 401) {
+								swal({
+									title: 'PIN Code!',
+									text: 'Mã xác thực không đúng.',
+									type: 'error',
+									confirmButtonClass: 'btn-default',
+									confirmButtonText: 'Quay lại',
+								});
+							} else if (xhr.status == 409) {
+								swal({
+									title: 'Thất bại',
+									text: 'Số điện thoại hoặc Email đã được sử dụng.',
+									type: 'error',
+									confirmButtonClass: 'btn-default',
+									confirmButtonText: 'Thử lại',
+								});
+							} else if (xhr.status == 412) {
+								swal({
+									title: 'Lỗi định dạng',
+									text: 'Thông tin chưa đúng định dạng.',
+									type: 'error',
+									confirmButtonClass: 'btn-danger',
+									confirmButtonText: 'Kiểm tra lại',
+								});
+							} else {
+								swal({
+									title: 'Thất bại',
+									text: 'Cập nhật không thành công',
+									type: 'error',
+									confirmButtonClass: 'btn-default',
+									confirmButtonText: 'Thử lại',
+								});
+							};
+							resetBtnSubmit('btnUpdateAcc', 'Cập nhật');
+						}
+					});
+				}
+			}
+		}
+	});
+	$('#frmPassword').validate({
+		submit: {
+			settings: {
+				inputContainer: '.form-group',
+				errorListClass: 'form-control-error',
+				errorClass: 'has-danger',
+			},
+			callback: {
+				onSubmit: function() {
+					loadingBtnSubmit('btnUpdatePassword');
+					
+					$.ajax({
+						type: 'POST',
+						url: '{{ route("password_update") }}',
+						data: $('#frmPassword').serialize(),
+						success: function(response) {
+							location.href = "{{ route('control') }}";
+						},
+						error: function(xhr) {
+							if (xhr.status == 401) {
+								swal({
+									title: 'Thất bại',
+									text: 'Mật khẩu hiện tại không đúng',
+									type: 'error',
+									confirmButtonClass: 'btn-danger',
+									confirmButtonText: 'Quay lại',
+								});
+							} else if (xhr.status == 409) {
+								swal({
+									title: 'Thất bại',
+									text: 'Mật khẩu mới không đúng định dạng',
+									type: 'error',
+									confirmButtonClass: 'btn-danger',
+									confirmButtonText: 'Quay lại',
+								});
+							} else {
+								swal({
+									title: 'Thất bại',
+									text: 'Có lỗi phát sinh, mời thử lại',
+									type: 'error',
+									confirmButtonClass: 'btn-default',
+									confirmButtonText: 'Thử lại',
+								});
+							};
+							$('input[type=password]').each(function() {
+								$(this).val('');
+							});
+							resetBtnSubmit('btnUpdatePassword', 'Cập nhật');
+						}
+					});
+				}
+			}
+		}
 	});
 });
 </script>
@@ -83,7 +285,7 @@ $(document).ready(function() {
 		</div>
 	</div>
 	
-	<div class="form-wrapper">
+	<div class="form-wrapper account-info">
 		<h3 class="padding-top-20">Tài khoản</h3>
 		<div class="padding-20 hf-card">
 			<div class="acc-info-row row">
@@ -91,7 +293,7 @@ $(document).ready(function() {
 					<img class="avt" src="{{ env('CDN_HOST') }}/u/{{ auth()->user()->id }}/{{ auth()->user()->avatar }}">
 				</div>
 				<div class="col-xs-8">
-					<div id="btnUpdateAcc" class="pull-right color-default cursor-pointer btn-acc-update"><span><i class="icmn-pencil7"></i> Cập nhật</span></div>
+					<div id="btnEditAcc" class="pull-right color-default cursor-pointer btn-acc-update"><span><i class="icmn-pencil7"></i> Cập nhật</span></div>
 					<div class="name">{{ auth()->user()->name }}</div>
 					
 					@if (!auth()->user()->phone)
@@ -104,48 +306,32 @@ $(document).ready(function() {
 					<div class="no-info color-warning">(Chưa cập nhật Email)</div>
 					@else
 						@if (auth()->user()->confirm_flg == '0')
-						<div class="color-warning email"><span>{{ auth()->user()->email }}</span>
+						<div class="color-warning email">
+							<span>{{ auth()->user()->email }}
 							<i class="icmn-warning2" data-toggle="tooltip" data-placement="top"
-								title="Chưa xác thực"></i></div>
+								title="Chưa xác thực"></i>
+							</span>
+						</div>
 						@else
 						<div class="email"><span>{{ auth()->user()->email }}</span></div>
 						@endif
 					@endif
 				</div>
 			</div>
-			
-			<div class="acc-update-row row hide">
-				<div class="col-xs-4 text-right">
-					<a class="avatar" href="javascript:void(0);" data-toggle="modal" data-target="#modalAvatar">
-						<img class="avt" src="{{ env('CDN_HOST') }}/u/{{ auth()->user()->id }}/{{ auth()->user()->avatar }}">
-					</a>
-				</div>
-				<div class="col-xs-8">
-					<div id="btnCompleteUpdateAcc" class="pull-right color-default cursor-pointer btn-acc-update"><span><i class="icmn-checkmark"></i> Hoàn tất</span></div>
-					<div class="cursor-pointer" data-toggle="modal" data-target="#modalName">
-						<span class="name">{{ auth()->user()->name }}</span>
-						<span><i class="icmn-pencil2"></i></span>
-					</div>
-					<div class="cursor-pointer" data-toggle="modal" data-target="#modalPhone">
-						<span class="phone">{{ auth()->user()->phone }}</span>
-						<span><i class="icmn-pencil2"></i></span>
-					</div>
-					<div class="cursor-pointer" data-target="#modalEmail">
-						<span class="phone">{{ auth()->user()->email }}</span>
-						<span><i class="icmn-pencil2"></i></span>
-					</div>
-				</div>
-			</div>
-			
 			<div class="row">
 				@if (auth()->user()->role == '1')
 				<div class="margin-top-20 margin-bottom-20 col-xs-12 text-center">
-					<button type="button" class="btn btn-primary-outline" style="width: 80%"
+					<button type="button" class="btn btn-primary-outline" style="width: 80%; overflow: hidden !important; text-overflow: ellipsis;"
 						onclick="window.open('{{ route('pro_page', ['id' => auth()->user()->id]) }}')">{{ route('pro_page', ['id' => auth()->user()->id]) }}</button>
 				</div>
 				@endif
 				<div class="padding-top-10 padding-right-12 col-xs-12 text-right control">
-					<a class="padding-right-10 color-primary" href="{{ route('password_edit') }}" style="border-right: 1px solid #01a8fe">Đổi Mật khẩu</a>
+					<a id="btnEditPassword" class="padding-right-10 color-primary" href="javascript:void(0);" style="border-right: 1px solid #01a8fe">
+						Mật khẩu
+						@if ($user->password_temp)
+						<span class="icmn-warning2 color-warning"></span>
+						@endif
+					</a>
 					<a class="padding-left-10 color-primary" href="{{ route('logout') }}">Đăng xuất</a>
 				</div>
 			</div>
@@ -153,11 +339,9 @@ $(document).ready(function() {
 		
 		<h3 class="padding-top-30">Cấp độ</h3>
 		<div class="padding-20 hf-card">
-			@php $userLevel = -1 @endphp
-			@foreach ($levels as $key=>$level) @if ($level->value <= auth()->user()->point) $userLevel = $key @endif @endforeach
-			<h3 class="color-primary">Cấp độ {{ $userLevel+1 }} - {{ auth()->user()->point }} điểm</h3>
-			<progress class="progress progress-primary" value="{{ auth()->user()->point }}" max="{{ $levels[$userLevel+1]->value }}"></progress>
-			<div class="margin-top-10 info">Còn <b>{{ $levels[$userLevel+1]->value - auth()->user()->point }} điểm</b> để đạt cấp độ tiếp theo</div>
+			<h3 class="color-primary">Cấp độ {{ $user->pLevel }} - {{ auth()->user()->point }} điểm</h3>
+			<progress class="progress progress-primary" value="{{ auth()->user()->point }}" max="{{ $levels[$user->pLevel]->value }}"></progress>
+			<div class="margin-top-10 info">Còn <b>{{ $levels[$user->pLevel]->value - auth()->user()->point }} điểm</b> để đạt cấp độ tiếp theo</div>
 			<div class="margin-top-30 text-right control">
 				<a class="padding-right-10 color-primary" href="javacript:void(0);" data-toggle="modal" data-target="#modalLevel" style="border-right: 1px solid #01a8fe">Hệ thống cấp độ</a>
 				<a class="padding-left-10 color-primary" href="javacript:void(0);">Lịch sử</a>
@@ -170,38 +354,38 @@ $(document).ready(function() {
 			<div class="row">
 				<div class="col-xs-2"></div>
 				<div class="col-xs-10">
-					<span class="margin-right-20 rating-number color-primary">3.7 <i class="material-icons">star</i></span>
-					<span class="total-review">513 người</span>
+					<span class="margin-right-20 rating-number color-primary">{{ $user->profile->rating }} <i class="material-icons">star</i></span>
+					<span class="total-review">{{ $user->profile->total_review }} người</span>
 				</div>
 			</div>
 			<div class="margin-top-20 row">
 				<div class="col-xs-2 text-center">5</div>
 				<div class="margin-top-10 col-xs-8">
-					<progress class="progress progress-primary" value="74" max="100"></progress>
+					<progress class="progress progress-primary" value="{{ json_decode($user->profile->lvl_total_review)[4] }}" max="{{ $user->profile->total_review }}"></progress>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-xs-2 text-center">4</div>
 				<div class="margin-top-10 col-xs-8">
-					<progress class="progress progress-info" value="54" max="100"></progress>
+					<progress class="progress progress-info" value="{{ json_decode($user->profile->lvl_total_review)[3] }}" max="{{ $user->profile->total_review }}"></progress>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-xs-2 text-center">3</div>
 				<div class="margin-top-10 col-xs-8">
-					<progress class="progress progress-success" value="34" max="100"></progress>
+					<progress class="progress progress-success" value="{{ json_decode($user->profile->lvl_total_review)[2] }}" max="{{ $user->profile->total_review }}"></progress>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-xs-2 text-center">2</div>
 				<div class="margin-top-10 col-xs-8">
-					<progress class="progress progress-warning" value="10" max="100"></progress>
+					<progress class="progress progress-warning" value="{{ json_decode($user->profile->lvl_total_review)[1] }}" max="{{ $user->profile->total_review }}"></progress>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-xs-2 text-center">1</div>
 				<div class="margin-top-10 col-xs-8">
-					<progress class="progress progress-danger" value="1" max="100"></progress>
+					<progress class="progress progress-danger" value="{{ json_decode($user->profile->lvl_total_review)[0] }}" max="{{ $user->profile->total_review }}"></progress>
 				</div>
 			</div>
 			<div class="margin-top-30 row text-center control">
@@ -214,9 +398,34 @@ $(document).ready(function() {
 			<div class="row">
 				<div class="col-xs-2"></div> 
 				<div class="col-xs-10">
-					<h3 class="color-primary"><span class="margin-right-5 total-review-number">158</span> nhận xét</h3>
+					<h3 class="color-primary"><span class="margin-right-5 total-review-number">{{ $user->profile->total_review }}</span> nhận xét</h3>
 				</div>
 			</div>
+			@foreach ($user->profile->reviews as $review)
+			<div class="message row">
+				<div class=" col-md-2 col-sm-2 col-xs-2 text-center">
+					<img class="avatar" style="border-radius:100%" class="avt" src="{{ env('CDN_HOST') }}/u/{{ $review->user->id }}/{{ $review->user->avatar }}">
+				</div>
+				<div class="col-md-10 col-sm-10 col-xs-10">
+					<div class="clearfix">
+						<div class="pull-left author"><a href="#">{{ $review->user->name }}</a> <span>{{ $review->created_at->format('d/m/Y') }}</span></div>
+						<div class="author-rating pull-right">
+							<select id="rating" class="rating" data-current-rating="{{ $review->rating }}">
+								<option value=""></option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+						</div>
+					</div>
+					<div class="message-text">
+						{{ $review->content }}
+					</div>
+				</div>
+			</div>
+			@endforeach
 			<div class="margin-top-30 row text-center control">
 				<a class="color-primary" href="javacript:void(0);">Xem tất cả nhận xét</a>
 			</div>
@@ -258,11 +467,11 @@ $(document).ready(function() {
 					<div><i class="material-icons">help_outline</i></div>
 					<div>Câu hỏi <span style="white-space: nowrap;">thường gặp</span></div>
 				</div>
-				<div class="margin-top-20 col-xs-4 text-center cursor-pointer" onclick="location.href = 'https://handfree.co/doc/privacy'">
+				<div class="margin-top-20 col-xs-4 text-center cursor-pointer" onclick="window.open('https://handfree.co/doc/privacy', '_blank');">
 					<div><i class="material-icons">security</i></div>
 					<div>Chính sách <span style="white-space: nowrap;">bảo mật</span></div>
 				</div>
-				<div class="margin-top-20 col-xs-4 text-center cursor-pointer">
+				<div class="margin-top-20 col-xs-4 text-center cursor-pointer" onclick="window.open('https://handfree.co/doc/term-of-use', '_blank');">
 					<div><i class="material-icons">description</i></div>
 					<div>Điều khoản <span style="white-space: nowrap;">sử dụng</span></div>
 				</div>
@@ -310,13 +519,105 @@ $(document).ready(function() {
 		</div>
 	</div>
 	
-	<div id="modalName" class="modal modal-size-small fade" role="dialog">
+	<div id="modalInfo" class="modal fade" role="dialog">
 		<div class="modal-dialog">
+			<form id="frmInfo" method="post" name="form-validation" enctype="multipart/form-data" action="{{ route('profile_account_update') }}">
 			<div class="modal-content">
-				<div class="modal-body">
-					<h3 class="padding-top-20 padding-bottom-20 text-center">abc</h3>
+				<div class="modal-body padding-30">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h3 class="padding-top-20 padding-bottom-20 text-center">Thông tin cá nhân</h3>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<label>Họ và tên</label>
+								<input type="text" maxlength="225" class="form-control" name="name"
+									data-validation="[NOTEMPTY]" value="{{ auth()->user()->name }}">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<label>Số điện thoại</label>
+								<input id="inpPhone" type="text" maxlength="25" class="form-control phone" name="phone"
+									data-validation="[NOTEMPTY]" value="{{ auth()->user()->phone }}">
+							</div>
+						</div>
+					</div>
+					<div class="sac-row row hide">
+						<div class="col-xs-8">
+							<div class="form-group">
+								<label>Mã PIN</label>
+								<input id="inpSAC" maxlength="4" class="form-control sac" name="sac" type="text">
+							</div>
+						</div>
+						<div class="col-xs-4 text-right">
+							<span id="btnSendSAC" class="btnSendSAC btn" style="margin-top: 15px;">Gửi mã PIN</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<label>Email</label>
+								<input id="" type="text" maxlength="100" class="form-control" name="email"
+									data-validation="[NOTEMPTY, EMAIL]" value="{{ auth()->user()->email }}">
+								<div class="font-size-12 color-warning">Hand Free sẽ gửi mail kích hoạt về địa chỉ Email này. Vui lòng xác thực để kích hoạt.</div>
+							</div>
+						</div>
+					</div>
+					<div class="row row-complete margin-top-20">
+						<button id="btnUpdateAcc" type="submit" class="btn btn-primary" style="width: 100%">Cập nhật</button>
+						<input type="hidden" name="_token" value="{{ csrf_token() }}" />
+					</div>
 				</div>
 			</div>
+			</form>
+		</div>
+	</div>
+	
+	<div id="modalPassword" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<form id="frmPassword" method="post" name="form-validation" enctype="multipart/form-data" action="{{ route('password_update') }}">
+			<div class="modal-content">
+				<div class="modal-body padding-30">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h3 class="padding-top-20 text-center">Cập nhật Mật khẩu</h3>
+					<p class="font-size-12 text-center color-warning padding-bottom-20">
+						@if ($user->password_temp)
+						Hiện tại bạn đang sử dụng <b>Mật khẩu mặc định</b>
+						@endif
+					</p>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<label>Mật khẩu hiện tại</label>
+								<input type="password" maxlength="100" class="form-control password" name="current_password" data-validation="[NOTEMPTY]">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<label>Mật khẩu mới</label>
+								<input type="password" maxlength="100" class="form-control password" name="password" data-validation="[NOTEMPTY, L>=6]">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="form-group">
+								<label>Xác nhận lại Mật khẩu</label>
+								<input type="password" maxlength="100" class="form-control" name="password_confirmation" data-validation="[NOTEMPTY, V==password]">
+							</div>
+						</div>
+					</div>
+					<div class="row row-complete margin-top-20">
+						<button id="btnUpdatePassword" type="submit" class="btn btn-primary" style="width: 100%">Cập nhật</button>
+						<input type="hidden" name="_token" value="{{ csrf_token() }}" />
+					</div>
+				</div>
+			</div>
+			</form>
 		</div>
 	</div>
 </section>

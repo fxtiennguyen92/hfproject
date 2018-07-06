@@ -86,6 +86,7 @@ class ProController extends Controller
 			$pro->district = $request->dist;
 			$pro->city = $request->city;
 			$pro->services = json_encode($request->services);
+			$pro->service_str = $request->service_str;
 			$pro->training = $request->event;
 			$pro->created_by = $user->id;
 			if (auth()->check()) {

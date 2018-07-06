@@ -78,23 +78,16 @@ $(document).ready(function() {
 <section class="home-page has-bottom-menu">
 	<div id="banner" class="home-carousel carousel slide" data-ride="carousel">
 		<ol class="carousel-indicators">
-			<li data-target="banner" data-slide-to="0" class="active"></li>
-			<li data-target="banner" data-slide-to="1"></li>
-			<li data-target="banner" data-slide-to="2"></li>
+			@foreach ($banners as $key=>$li)
+			<li data-target="banner" data-slide-to="{{ $key }}" @if ($key == 0) class="active" @endif></li>
+			@endforeach
 		</ol>
 		<div class="carousel-inner" role="listbox">
-			<div class="carousel-item active">
-				<img src="{{ env('CDN_HOST') }}/img/banner/home/banner-home-001.png">
-	<!-- 				<div class="carousel-caption"> -->
-	<!-- 					<p>Title</p> -->
-	<!-- 				</div> -->
+			@foreach ($banners as $key=>$b)
+			<div class="carousel-item @if ($key == 0) active @endif">
+				<img src="{{ env('CDN_HOST') }}/img/banner/home/{{ $b->name }}">
 			</div>
-			<div class="carousel-item">
-				<img src="{{ env('CDN_HOST') }}/img/banner/home/banner-home-002.png">
-			</div>
-			<div class="carousel-item">
-				<img src="{{ env('CDN_HOST') }}/img/banner/home/banner-home-003.png">
-			</div>
+			@endforeach
 		</div>
 		<a class="left carousel-control" data-target="#banner" role="button" data-slide="prev">
 			<span class="icon-prev fa fa-arrow-left" aria-hidden="true"></span>
@@ -107,19 +100,16 @@ $(document).ready(function() {
 	</div>
 	<div id="banner-mb" class="home-carousel carousel slide" data-ride="carousel">
 		<ol class="carousel-indicators">
-			<li data-target="banner-mb" data-slide-to="1" class="active"></li>
-			<li data-target="banner-mb" data-slide-to="2"></li>
+			@foreach ($mbbanners as $key=>$mbli)
+			<li data-target="banner-mb" data-slide-to="{{ $key }}" @if ($key == 0) class="active" @endif></li>
+			@endforeach
 		</ol>
 		<div class="carousel-inner" role="listbox">
-			<div class="carousel-item active">
-				<img src="{{ env('CDN_HOST') }}/img/banner/home-mb/banner-mb-001.png">
-	<!-- 				<div class="carousel-caption"> -->
-	<!-- 					<p>Title</p> -->
-	<!-- 				</div> -->
+			@foreach ($mbbanners as $key=>$mbb)
+			<div class="carousel-item @if ($key == 0) active @endif">
+				<img src="{{ env('CDN_HOST') }}/img/banner/home-mb/{{ $mbb->name }}">
 			</div>
-			<div class="carousel-item">
-				<img src="{{ env('CDN_HOST') }}/img/banner/home-mb/banner-mb-002.png">
-			</div>
+			@endforeach
 		</div>
 		<a class="left carousel-control" data-target="#banner-mb" role="button" data-slide="prev">
 			<span class="icon-prev fa fa-arrow-left" aria-hidden="true"></span>

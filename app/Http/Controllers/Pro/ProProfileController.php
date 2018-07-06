@@ -33,7 +33,7 @@ class ProProfileController extends Controller
 		$baseToPhp = explode(',', $image['image']); // remove the "data:image/png;base64,"
 		
 		$data = base64_decode($baseToPhp[1]);
-		FileController::saveAvatar($data);
+		FileController::saveAvatar($data, auth()->user()->id);
 		
 		return redirect()->back();
 	}

@@ -24,6 +24,7 @@ class Service extends Model
 			->serving()
 			->popular()
 			->available()
+			->orderBy('order_dsp')
 			->orderBy('name')
 			->get();
 	}
@@ -55,6 +56,7 @@ class Service extends Model
 			->child()
 			->serving()
 			->available()
+			->orderBy('order_dsp')
 			->orderBy('name')
 			->get();
 	}
@@ -64,6 +66,7 @@ class Service extends Model
 			->root()
 			->serving()
 			->available()
+			->orderBy('order_dsp')
 			->orderBy('name')
 			->get();
 	}
@@ -73,6 +76,7 @@ class Service extends Model
 			->child()
 			->serving()
 			->available()
+			->orderBy('order_dsp')
 			->orderBy('name')
 			->get();
 	}

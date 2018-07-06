@@ -6,12 +6,12 @@
 <script>
 $(document).ready(function() {
 	$('#inpUsername').focus();
-
-	// update phone
-	@if (session('error') == 428)
 	$('.phone').mask('0000000000000');
 	$('.sac').mask('0000');
-	$('#frmPhone').validate({
+	
+	// update phone
+	@if (session('error') == 428)
+	$('#modalPhone #frmPhone').validate({
 		submit: {
 			settings: {
 				inputContainer: '.form-group',
@@ -25,7 +25,7 @@ $(document).ready(function() {
 					$.ajax({
 						type: 'POST',
 						url: '{{ route("profile_phone_update") }}',
-						data: $('#frmPhone').serialize(),
+						data: $('#modalPhone #frmPhone').serialize(),
 						success: function(response) {
 							$('#modalPhone').modal('hide');
 							swal({
@@ -73,6 +73,37 @@ $(document).ready(function() {
 		}
 	});
 	$('#modalPhone').modal({backdrop: 'static', keyboard: false});
+	@endif
+	
+	@if (session('error') == 401)
+	swal({
+		title: 'Thất bại',
+		text: 'Tài khoản đăng nhập không đúng',
+		type: 'error',
+		confirmButtonClass: 'btn-danger',
+		confirmButtonText: 'Quay lại',
+	});
+	@elseif (session('error') == 400)
+		swal({
+			title: 'Tài khoản vô hiệu',
+			text: 'Vui lòng liên hệ Bộ phận CSKH',
+			type: 'error',
+			confirmButtonClass: 'btn-danger',
+			confirmButtonText: 'Quay lại',
+		});
+	@elseif (session('error') == 406)
+		swal({
+			title: 'Email chưa xác thực',
+			text: 'Xác nhận Email để nhận thêm thông tin từ HandFree',
+			type: 'warning',
+			confirmButtonClass: 'btn-warning',
+			confirmButtonText: 'Tiếp tục',
+		},
+		function() {
+			location.href = "{{ route('home_page') }}";
+		});
+	@endif
+	
 	$('#btnSendSAC').on('click', function() {
 		if ($('input[name=phone]').val() == '') {
 			$('input[name=phone]').focus();
@@ -87,9 +118,14 @@ $(document).ready(function() {
 			$('#btnSendSAC').addClass('disabled');
 			$('#btnSendSAC').html('<i class="fa fa-spinner fa-spin"></i> Đang gửi')
 			
+			@if (auth()->check())
+			var url = '{{ route("signup_get_sac") }}';
+			@else
+			var url = '{{ route("password_reset_get_sac") }}';
+			@endif
 			$.ajax({
 				type: 'POST',
-				url: '{{ route("signup_get_sac") }}',
+				url: url,
 				data: $('#frmPhone').serialize(),
 				success: function(response) {
 					$('#btnSendSAC').html('Đã gửi mã PIN');
@@ -107,10 +143,18 @@ $(document).ready(function() {
 							type: 'danger',
 							z_index: 1051,
 						});
+					} else if (xhr.status == 406) {
+						$.notify({
+							title: '<strong>Không tồn tại!</strong>',
+							message: 'Số điện thoại chưa được đăng ký.'
+						}, {
+							type: 'danger',
+							z_index: 1051,
+						});
 					} else if (xhr.status == 409) {
 						$.notify({
-							title: '<strong>Đã sử dụng! </strong>',
-							message: 'Số điện thoại đã được đăng ký.'
+							title: '<strong>Vô hiệu!</strong>',
+							message: 'Số điện thoại này không đúng.'
 						}, {
 							type: 'danger',
 							z_index: 1051,
@@ -142,40 +186,6 @@ $(document).ready(function() {
 			
 		}
 	});
-	@endif
-	
-	@if (session('error'))
-		loadingBtnSubmit('btnLogin');
-	@endif
-	
-	@if (session('error') == 401)
-	swal({
-		title: 'Thất bại',
-		text: 'Tài khoản đăng nhập chưa đúng',
-		type: 'error',
-		confirmButtonClass: 'btn-danger',
-		confirmButtonText: 'Quay lại',
-	});
-	@elseif (session('error') == 400)
-		swal({
-			title: 'Tài khoản vô hiệu',
-			text: 'Vui lòng liên hệ Bộ phận CSKH',
-			type: 'error',
-			confirmButtonClass: 'btn-danger',
-			confirmButtonText: 'Quay lại',
-		});
-	@elseif (session('error') == 406)
-		swal({
-			title: 'Email chưa xác thực',
-			text: 'Xác nhận Email để nhận thêm thông tin từ HandFree',
-			type: 'warning',
-			confirmButtonClass: 'btn-warning',
-			confirmButtonText: 'Tiếp tục',
-		},
-		function() {
-			location.href = "{{ route('home_page') }}";
-		});
-	@endif
 	
 	$('#frmMain').validate({
 		submit: {
@@ -191,6 +201,75 @@ $(document).ready(function() {
 			},
 		}
 	});
+
+	@if (!auth()->check())
+	$('#btnResetPassword').on('click', function() {
+		$('#modalReset').find('input[type=text]').each(function() {
+			$(this).val('');
+		});
+		$('#modalReset').modal('show');
+	});
+
+	$('#modalReset #frmPhone').validate({
+		submit: {
+			settings: {
+				inputContainer: '.form-group',
+				errorListClass: 'form-control-error',
+				errorClass: 'has-danger',
+			},
+			callback: {
+				onSubmit: function() {
+					loadingBtnSubmit('btnUpdatePassword');
+					
+					$.ajax({
+						type: 'POST',
+						url: '{{ route("password_reset") }}',
+						data: $('#modalReset #frmPhone').serialize(),
+						success: function(response) {
+							swal({
+								title: 'Cấp lại Mật khẩu',
+								text: 'Đã gửi Mật khẩu mới, kiểm tra tin nhắn',
+								type: 'info',
+								confirmButtonClass: 'btn-primary',
+								confirmButtonText: 'Quay lại',
+							});
+							$('#modalReset').modal('hide');
+							resetBtnSubmit('btnUpdatePassword', 'Cấp lại Mật khẩu');
+						},
+						error: function(xhr) {
+							if (xhr.status == 401) {
+								swal({
+									title: 'Mã PIN',
+									text: 'Mã xác thực không đúng.',
+									type: 'error',
+									confirmButtonClass: 'btn-default',
+									confirmButtonText: 'Quay lại',
+								});
+							} else if (xhr.status == 503) {
+								swal({
+									title: 'Thất bại',
+									text: 'Gửi tin nhắn thất bại',
+									type: 'error',
+									confirmButtonClass: 'btn-default',
+									confirmButtonText: 'Quay lại',
+								});
+							} else {
+								swal({
+									title: 'Thất bại',
+									text: 'Có lỗi phát sinh, mời thử lại',
+									type: 'error',
+									confirmButtonClass: 'btn-default',
+									confirmButtonText: 'Thử lại',
+								});
+							};
+							resetBtnSubmit('btnUpdatePassword', 'Cấp lại Mật khẩu');
+						}
+					});
+				}
+			}
+		}
+	});
+	@endif
 	
 	// Show/Hide Password
 	$('.password').password({
@@ -246,7 +325,7 @@ $(document).ready(function() {
 								<div class="form-group">
 									<input id="inpPassword" class="form-control password" placeholder="Mật khẩu" name="password" type="password" data-validation="[L>=6]">
 								</div>
-<!--								<a href="javascript: void(0);" class="pull-right link-blue" style="font-size: 12px">Quên mật khẩu?</a>	-->
+									<a id="btnResetPassword" href="javascript: void(0);" class="pull-right link-blue" style="font-size: 12px">Quên mật khẩu?</a>	
 								<br>
 								<div class="form-group" style="text-align: center; margin-top: 34px; margin-bottom: 0">
 									<button id="btnLogin" type="submit" class="btn btn-primary width-150">ĐĂNG NHẬP</button>
@@ -262,6 +341,7 @@ $(document).ready(function() {
 		</div>
 	</div>
 	
+	@if (auth()->check())
 	<div id="modalPhone" class="modal modal-size-small fade" role="dialog">
 		<div class="modal-dialog">
 			<form id="frmPhone" method="post" name="form-validation" enctype="multipart/form-data" action="{{ route('profile_phone_update') }}">
@@ -273,7 +353,7 @@ $(document).ready(function() {
 						</a>
 					</div>
 					<h1 class="padding-top-30 text-center" style="font-weight: normal;">Cập nhật Thông tin</h1>
-					<small>Hiện tại Thông tin tài khoản của bạn chưa có Số điện thoại, vui lòng cập nhật để tham gia cùng HANDFREE.</small>
+					<p class="text-center"><small>Hiện tại Thông tin tài khoản của bạn chưa có Số điện thoại, vui lòng cập nhật để tham gia cùng HANDFREE.</small></p>
 					<div class="margin-top-30 margin-bottom-20 row">
 						<div class="col-xs-12">
 							<input id="inpPhone" maxlength="25" class="form-control phone" placeholder="Số điện thoại" name="phone" type="text" data-validation="[NOTEMPTY]">
@@ -281,7 +361,7 @@ $(document).ready(function() {
 					</div>
 					<div class="margin-bottom-30 row">
 						<div class="col-xs-8">
-							<input id="inpSAC" maxlength="4" class="form-control sac" placeholder="Mã kích hoạt" name="sac" type="text" data-validation="[NOTEMPTY, INTEGER]">
+							<input id="inpSAC" maxlength="4" class="form-control sac" placeholder="Mã PIN" name="sac" type="text" data-validation="[NOTEMPTY, INTEGER]">
 						</div>
 						<div class="col-xs-4 text-right">
 							<span id="btnSendSAC" class="btnSendSAC btn">Gửi mã PIN</span>
@@ -296,5 +376,41 @@ $(document).ready(function() {
 			</form>
 		</div>
 	</div>
+	@else
+	<div id="modalReset" class="modal modal-size-small fade" role="dialog">
+		<div class="modal-dialog">
+			<form id="frmPhone" method="post" name="form-validation" enctype="multipart/form-data" action="{{ route('password_reset') }}">
+			<div class="modal-content">
+				<div class="modal-body margin-top-10 padding-top-30 padding-bottom-30">
+					<div class="logo" style="margin-bottom: 30px;">
+						<a href="javascript: void(0);">
+							<img src="{{ env('CDN_HOST') }}/img/logo/logoh.png" alt="HandFree" width="150"/>
+						</a>
+					</div>
+					<h1 class="padding-top-30 text-center" style="font-weight: normal;">Cấp lại Mật khẩu</h1>
+					<p class="text-center"><small><b>Mật khẩu mới</b> sẽ được gửi đến Số điện thoại của bạn</small></p>
+					<div class="margin-top-30 margin-bottom-20 row">
+						<div class="col-xs-12">
+							<input id="inpPhone" maxlength="25" class="form-control phone" placeholder="Số điện thoại" name="phone" type="text" data-validation="[NOTEMPTY]">
+						</div>
+					</div>
+					<div class="margin-bottom-30 row">
+						<div class="col-xs-8">
+							<input id="inpSAC" maxlength="4" class="form-control sac" placeholder="Mã PIN" name="sac" type="text" data-validation="[NOTEMPTY, INTEGER]">
+						</div>
+						<div class="col-xs-4 text-right">
+							<span id="btnSendSAC" class="btnSendSAC btn">Gửi mã PIN</span>
+						</div>
+					</div>
+					<div class="padding-top-30 padding-bottom-30 text-center">
+						<button id="btnUpdatePassword" type=submit class="btn btn-primary width-150">Cấp lại Mật khẩu</button>
+						<input type="hidden" name="_token" value="{{ csrf_token() }}" />
+					</div>
+				</div>
+			</div>
+			</form>
+		</div>
+	</div>
+	@endif
 </section>
 @endsection

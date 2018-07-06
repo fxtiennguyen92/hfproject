@@ -82,8 +82,9 @@
 			var chosenServices = '';
 			$('.icmn-checkbox-checked2').each(function() {
 				chosenServices = chosenServices + $(this).attr('service-name') + ', ';
-				$('#chosenService').html(chosenServices);
 			});
+			$('#chosenService').html(chosenServices.substring(0, chosenServices.length - 2));
+			$('input[name=service_str]').val($('#chosenService').html());
 		});
 
 		$('input[name=email]').on('change', function() {
@@ -395,6 +396,7 @@
 		</div>
 		<div class="row-complete clearfix">
 			<button id="btnSubmit" type="submit" class="btn btn-primary" style="width: 100%">Đăng ký</button>
+			<input type="hidden" name="service_str" value="" />
 			<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 		</div>
 	</form>

@@ -1,0 +1,23 @@
+#clockdiv {
+	display: inline-block;
+	font-weight: 100;
+	text-align: center;
+	font-size: 35px;
+}
+
+#clockdiv > div {
+	padding-right: 10px;
+	color: #01a8fe;
+	display: inline-block;
+}
+
+#clockdiv div > span {
+	padding: 5px;
+	font-weight: bold;
+	display: inline-block;
+	height: 65px;
+}
+
+.smalltext {
+	font-size: 13px;
+}

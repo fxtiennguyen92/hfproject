@@ -19,8 +19,21 @@ $(document).ready(function () {
 			theme: 'fontawesome-stars-o',
 			readonly: true,
 			initialRating: $(this).data('current-rating'),
-			allowEmpty: null,
+			allowEmpty: true,
 		});
+	});
+
+	$('.rating-review').barrating('show', {
+		theme: 'fontawesome-stars-o',
+		initialRating: 4,
+		allowEmpty: null,
+		onSelect: function(value, text, event) {
+			if (value <= 3) {
+				$('.review-type').show();
+			} else {
+				$('.review-type').hide();
+			}
+		}
 	});
 
 	$('.cui-wizard-order').each(function () {

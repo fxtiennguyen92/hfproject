@@ -21,6 +21,18 @@ a {
   cursor: pointer;
 }
 
+.font-size-11 {
+  font-size: 11px !important;
+}
+
+.font-size-12 {
+  font-size: 12px !important;
+}
+
+.font-size-13 {
+  font-size: 13px !important;
+}
+
 .modal {
   text-align: center;
   padding: 0!important;
@@ -41,7 +53,11 @@ a {
 }
 
 .modal.modal-size-small .modal-dialog {
-  max-width: 480px;
+  min-width: 480px;
+}
+
+.modal-footer {
+  border-top: none;
 }
 
 .hide {
@@ -803,6 +819,11 @@ nav.top-menu .menu {
   overflow: none;
 }
 
+.pro-profile .pro-info p {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
 .order-info .order-service-content,
 .order-info .order-address,
 .order-info .order-time {
@@ -1561,10 +1582,33 @@ body.single-page .single-page-block .single-page-block-inner {
 
 .row-complete #btnBack {
   background: #ffffff;
-  color: #02b3e4;
+  color: #aaa;
   font-size: 18px;
   padding: 15px;
   width: 30%;
+}
+
+.row-complete #btnDisCode {
+  background: #ffffff;
+  border-left: 1px solid #aaa;
+  color: #000;
+  font-size: 10px;
+  padding: 42px 10px 10px 10px;
+  display: block;
+  text-align: center;
+}
+
+.row-complete #btnDisCode i {
+  display: block;
+  float: right;
+  margin-top: -25px;
+  margin-right: 53px;
+  font-size: 18px;
+}
+
+.row-complete #btnDisCode.active {
+  border-left: 1px solid #02b3e4;
+  color: #02b3e4;
 }
 
 .row-complete #btnComplete,
@@ -1977,6 +2021,7 @@ section.user-menu .list-menu a > i {
   color: #424242;
 }
 
+.modal-review .author-avt,
 .orders-item .author-avt {
   display: block;
   width: 80px;
@@ -1986,6 +2031,13 @@ section.user-menu .list-menu a > i {
   margin: auto;
 }
 
+.modal-review .author-avt img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 100%;
+  margin-bottom: 10px;
+}
 .orders-item .author-avt img {
   width: 100%;
   height: 100%;
@@ -2028,8 +2080,8 @@ section.user-menu .list-menu a > i {
   font-size: 22px;
   line-height: 32px;
   vertical-align: middle;
-  color: #000;
-  text-shadow: 0 1px 5px rgba(0, 0, 0, .4);
+  color: #fff;
+  text-shadow: 1px 2px 5px rgb(0, 0, 0);
 }
 
 .header-top-bar .navbar-title {
@@ -2092,28 +2144,33 @@ section.user-menu .list-menu a > i {
   color: #189eff;
 }
 
+.account-info .message,
 .pro-profile .message {
   border-bottom: solid 1px #e1e1e1;
   margin-bottom: 15px;
   padding-bottom: 15px;
 }
 
+.account-info .message .author a,
 .pro-profile .message .author a {
   color: #404040;
   font-weight: bold;
 }
 
+.account-info .message .author span,
 .pro-profile .message .author span {
   display: block;
   font-size: 13px;
   line-height: 1;
-  color: #ff0000;
+  color: #aaa;
 }
 
+.account-info .message .author-rating,
 .pro-profile .message .author-rating {
   color: #189eff;
 }
 
+.account-info .message .message-text,
 .pro-profile .message .message-text {
   padding: 20px 0;
   font-size: 13px;
@@ -2173,6 +2230,10 @@ label.label-outlined.label-success {
 
 .skill-rating {
   display: block;
+}
+
+.skill-rating .skill-title {
+  font-size: 13px;
 }
 
 .mb-btn-book {
@@ -2582,13 +2643,89 @@ span.header-info {
 }
 
 .btnSendSAC, .btnSendSAC:hover {
-	margin-bottom: -20px;
-	font-size: 12px;
-	background-color: #01a8fe;
-	border-color: #01a8fe;
-	color: #fff;
+  margin-bottom: -20px;
+  font-size: 12px;
+  background-color: #01a8fe;
+  border-color: #01a8fe;
+  color: #fff;
 }
 
+.modal-review .br-wrapper {
+  padding-top: 10px;
+}
+.modal-review .br-widget {
+  height: 30px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.modal-review .br-widget a {
+  font-size: 30px;
+  margin-right: 10px;
+}
+
+.review-type {
+  padding: 15px;
+}
+.review-type .btn {
+  width: 120px;
+  text-align: left;
+}
+
+.review-type .btn.active {
+  color: #fff;
+  background-color: #01a8fe;
+}
+.discount-code-wrapper-content {
+  font-size: 13px;
+  color: #aaa;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.discount-code-card {
+  background: #fff;
+  -webkit-box-shadow: 5px 5px 25px 0px rgba(46, 61, 73, 0.2);
+  box-shadow: 5px 5px 25px 0px rgba(46, 61, 73, 0.2);
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  border-bottom: 2px solid #01a8fe;
+  color: #000;
+  padding: 5px;
+  font-size: 10px;
+  margin-bottom: 10px;
+}
+
+.discount-code-card:hover .title {
+  background: #01a8fe;
+  color: #fff;
+}
+
+.discount-code-card * {
+  cursor: pointer;
+}
+
+.discount-code-card .image {
+  height: 100px;
+}
+
+.discount-code-card .description {
+  padding-top: 5px;
+  height: 50px;
+}
+
+.discount-code-card .title {
+  font-weight: bold;
+  font-size: 11px;
+  text-align: left;
+  padding-top: 5px;
+}
+
+.discount-code-card .code-blog {
+  padding-top: 5px;
+  text-align: right;
+  color: #aaa;
+}
 
 /*
 * RESPONSIVE
@@ -2659,6 +2796,10 @@ span.header-info {
   }
   #top-menu {
     display: none;
+  }
+  
+  .modal.modal-size-small .modal-dialog {
+    min-width: 0px;
   }
 }
 
@@ -2868,12 +3009,28 @@ span.header-info {
     overflow: hidden !important;
     text-overflow: ellipsis;
   }
+  
+  .modal-body {
+    min-width: 400px;
+  }
+  
+  .row-complete #btnDisCode i {
+    margin-right: 44px;
+  }
 }
 
 @media only screen and (max-width: 376px) {
   .page-banner,
   .service-section .service-banner {
     height: 180px;
+  }
+  
+  .modal-body {
+    min-width: 350px;
+  }
+  
+  .row-complete #btnDisCode i {
+    margin-right: 37px;
   }
 }
 
@@ -2896,5 +3053,13 @@ span.header-info {
   
   .hf-card .email span {
     width: 130px;
+  }
+  
+  .modal-body {
+    min-width: 300px;
+  }
+  
+  .row-complete #btnDisCode i {
+    margin-right: 30px;
   }
 }

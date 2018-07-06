@@ -97,7 +97,7 @@
     <div class="quoted-intro">
     <textarea class="form-control" name="introduction" rows="6" maxlength="200" placeholder="Ghi chú"></textarea>
     </div>
-    <button id="btnSubmit" type="submit" class="btn btn-primary width-150 btn-bottom-screen">Báo giá</button>
+    <button id="btnSubmit" type="submit" class="btn btn-primary width-150 btn-bottom-screen">Báo giá x</button>
     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
   </form>
   @elseif ($quotedPrice->state == 0)

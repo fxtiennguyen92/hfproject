@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\SMSController;
+use App\Http\Controllers\SACController;
 
 class PasswordController extends Controller
 {
@@ -19,46 +19,93 @@ class PasswordController extends Controller
 		]);
 	}
 	
+	protected function phone_validator(array $data) {
+		return Validator::make($data, [
+						'phone' => 'required|string',
+		]);
+	}
+	
 	public function edit() {
-		if (!auth()->check()) {
-			return redirect()->route('home_page');
-		}
-		
 		return view(Config::get('constants.PASSWORD_PAGE'));
 	}
 	
 	public function update(Request $request) {
 		if (!auth()->check()) {
-			throw new NotFoundHttpException();
+			return response()->json('', 400);
 		}
 		
 		if (auth()->user()->password) {
 			if (!(Hash::check($request->get('current_password'), auth()->user()->password))) {
-				return Redirect::back()->withInput()->with('error', 'Mật khẩu hiện tại không chính xác');
+				return response()->json('', 401);
 			}
 		}
 		
 		$validator = $this->validator($request->all());
 		if ($validator->fails()) {
 			$errors = $validator->errors()->getMessages();
-			
-			return Redirect::back()->withInput()->with('error', 'Mật khẩu không đúng định dạng');
+			return response()->json($errors, 409);
+		}
+		
+		try {
+			$userModel = new User();
+			$userModel->updatePassword(auth()->user()->id, $request->get('password'));
+		
+			return response()->json('', 200);
+		} catch (\Exception $e) {
+			return response()->json($e->getMessage(), 500);
+		}
+	}
+	
+	public function getSAC(Request $request) {
+		if (!$request->phone) {
+			return response()->json('', 400);
+		}
+		$validator = $this->phone_validator($request->all());
+		if ($validator->fails()) {
+			$errors = $validator->errors()->getMessages();
+			return response()->json($errors, 409);
 		}
 		
 		$userModel = new User();
-		$userModel->updatePassword(auth()->user()->id, $request->get('password'));
+		$user = $userModel->getAccByPhone($request->phone);
+		if (!$user) {
+			return response()->json('', 406);
+		}
 		
-		return redirect()->route('control');
+		try {
+			$sac = SACController::getSAC($request->phone);
+			$result = SMSController::sendPINCodeSMS($request->phone, $sac->sac);
+			
+			if ($result) {
+				return response()->json('', 200);
+			} else {
+				SACController::deleteSAC($request->phone);
+				return response()->json('', 503);
+			}
+		} catch (\Exception $e) {
+			return response()->json($e->getMessage(), 500);
+		}
 	}
 	
 	public function reset(Request $request) {
-		if (!auth()->check()) {
-			throw new NotFoundHttpException();
+		if (SACController::checkSAC($request->phone, $request->sac) == false) {
+			return response()->json('', 401);
 		}
 		
-		$userModel = new User();
-		$userModel->updatePassword(auth()->user()->id);
-		
-		return redirect()->route('control');
+		try {
+			$userModel = new User();
+			$user = $userModel->getAccByPhone($request->phone);
+			$userModel->updatePassword($user->id);
+			SACController::deleteSAC($request->phone);
+			
+			$user = User::find($user->id);
+			if (!SMSController::sendNewPasswordSMS($user->phone, $user->password_temp)) {
+				return response()->json('', 503);
+			}
+			
+			return response()->json('', 200);
+		} catch (\Exception $e) {
+			return response()->json($e->getMessage(), 500);
+		}
 	}
 }

@@ -36,16 +36,11 @@
 	</div>
 	</div>
 	@elseif ($order->state == 1)
-	<div class="row">
-	<div class="col-md-12">
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-			<h3>{{ Carbon\Carbon::parse($order->est_excute_at)->format('H:i') }}</h3>
-			<progress class="progress progress-primary" value="75" max="100"></progress>
-			</div>
-		</div>
+	<h5 style="margin-bottom: 15px;">Thời gian chờ</h5>
+	<div class="text-center">
+		@include('order.countdown')
 	</div>
-	</div>
+	<div class="common-text" style="padding-top: 30px;">Đối tác đang đến, vui lòng chờ</div>
 	@elseif ($order->state == 2)
 	<div class="common-text color-primary">Đơn hàng đang được thực hiện</div>
 	@elseif ($order->state == 3)

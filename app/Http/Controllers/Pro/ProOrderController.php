@@ -70,21 +70,23 @@ class ProOrderController extends Controller
 		if (!$order) {
 			response()->json('', 400);
 		}
-
+		
 		// check excute date
 		$estExcuteDate = null;
 		$estExcuteDateString = null;
 		if (!$order->est_excute_at_string) {
-			$estExcuteDateString = $request->estDate.' '.$request->estTime;
-			if (strlen($estExcuteDateString) < 16) {
-				return response()->json('', 403);
-			}
 			
-			$currDate = new \DateTime('now');
-			$estExcuteDate = CommonController::convertStringToDateTime(substr($estExcuteDateString, -16));
-			if ($estExcuteDate === null || $estExcuteDate <= $currDate) {
-				return response()->json('', 403);
-			}
+			
+// 			$estExcuteDateString = $request->estDate.' '.$request->estTime;
+// 			if (strlen($estExcuteDateString) < 16) {
+// 				return response()->json('', 403);
+// 			}
+			
+// 			$currDate = new \DateTime('now');
+// 			$estExcuteDate = CommonController::convertStringToDateTime(substr($estExcuteDateString, -16));
+// 			if ($estExcuteDate === null || $estExcuteDate <= $currDate) {
+// 				return response()->json('', 403);
+// 			}
 		}
 		
 		QuotedPrice::updateOrCreate([

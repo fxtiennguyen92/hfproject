@@ -19,23 +19,7 @@
 			},
 		});
 
-		$('label.btn').on('click', function() {
-			var span = $(this).find('span');
-			if (span.hasClass('icmn-radio-unchecked')) {
-				$(this).parent().find('span').each(function() {
-					$(this).addClass('icmn-radio-unchecked').removeClass('icmn-checkmark-circle');
-				});
-				span.addClass('icmn-checkmark-circle').removeClass('icmn-radio-unchecked');
-			}
-
-			if (span.attr('id') == 'spanNoCompany') {
-				$('.company-row').hide();
-			} else {
-				$('.company-row').show();
-			}
-		});
-
-		$('#frmNewPro').validate({
+		$('#frmNewPA').validate({
 			submit: {
 				settings: {
 					inputContainer: '.form-group',
@@ -43,24 +27,14 @@
 					errorClass: 'has-danger',
 				},
 				callback: {
-					onError: function (e) {
-						$.notify({
-							title: '<strong>Thất bại! </strong>',
-							message: 'Thông tin chưa đầy đủ.'
-						}, {
-							type: 'danger',
-							z_index: 1051,
-						});
-					},
 					onSubmit: function() {
 						loadingBtnSubmit('btnSubmit');
 						
 						$.ajax({
 							type: 'POST',
-							url: '{{ route("pa_pro_create") }}',
-							data: $('#frmNewPro').serialize(),
+							url: '{{ route("mng_pa_create") }}',
+							data: $('#frmNewPA').serialize(),
 							success: function(response) {
-								$('#modalNewPro').modal('toggle');
 								swal({
 									title: 'Hoàn thành',
 									text: 'Đăng ký thành công',
@@ -69,11 +43,10 @@
 									confirmButtonText: 'Quay lại',
 								},
 								function() {
-									location.href = '{{ route("pa_pro_list") }}';
+									location.href = '{{ route("mng_pa_list") }}';
 								});
 							},
 							error: function(xhr) {
-								$('#modalNewPro').modal('toggle');
 								if (xhr.status == 400) {
 									swal({
 										title: 'Thất bại',
@@ -100,7 +73,6 @@
 									});
 								};
 								resetBtnSubmit('btnSubmit', 'Đăng ký');
-								$('#modalNewPro').modal('show');
 							}
 						});
 					}
@@ -109,10 +81,10 @@
 		});
 	});
 	
-	function deletePro(proId) {
+	function deletePA(paId) {
 		swal({
-			title: 'Xóa Đối tác',
-			text: 'Bạn muốn xóa đối tác này?',
+			title: 'Xóa Cộng tác viên',
+			text: 'Dữ liệu sẽ không thể khôi phục',
 			type: 'warning',
 			showCancelButton: true,
 			cancelButtonClass: 'btn-default',
@@ -121,35 +93,33 @@
 			confirmButtonText: 'Xóa',
 			closeOnConfirm: false,
 		},
-		function(isConfirm) {
-			if (isConfirm) {
-				swal({
-					title: 'Đang xử lý yêu cầu',
-					text: 'Xin chờ trong giây lát!',
-					type: 'info',
-					showConfirmButton: false,
-					closeOnConfirm: false,
-				});
-				
-				var url = "{{ route('pa_pro_delete', ['id' => 'selectedProId']) }}";
-				url = url.replace('selectedProId', proId);
-				
-				$('#frmMain').attr('action', url);
-				$('#frmMain').submit();
-			}
+		function() {
+			swal({
+				title: 'Đang xử lý yêu cầu',
+				text: 'Xin chờ trong giây lát!',
+				type: 'info',
+				showConfirmButton: false,
+				closeOnConfirm: false,
+			});
+			
+			var url = "{{ route('mng_pa_delete', ['id' => 'paId']) }}";
+			url = url.replace('paId', paId);
+			
+			$('#frmMain').attr('action', url);
+			$('#frmMain').submit();
 		});
 	}
 </script>
 @endpush
 
-@section('title') Đối tác @endsection
+@section('title') Cộng tác viên @endsection
 
 @section('content')
 <section class="content-body-full-page content-template-1">
-	<div class="page-header hf-bg-gradient text-capitalize">Đối tác</div>
+	<div class="page-header hf-bg-gradient text-capitalize">Cộng tác viên</div>
 	<div class="form-wrapper">
 		<div class="text-right">
-			<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalNewPro">
+			<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalNewPA">
 				<i class="material-icons">person_add</i></button>
 		</div>
 		<div class="row">
@@ -169,38 +139,23 @@
 									{{ $pa->name }}
 								</div>
 								<div class="pro-phone padding-left-5">
-									<i class="material-icons">phone</i>
-									@if ($pa->phone){{ $pa->phone }}
-									@else
-										<span class="no-info">Chưa cập nhật</span>
-									@endif
+									<i class="material-icons">phone</i> {{ $pa->phone }}
 								</div>
 								<div class="pro-company padding-left-5">
-									@if (isset($pa->profile) && isset($pa->profile->company))
-									<i class="material-icons">store</i> {{ $pa->profile->company->name }}
-									@else
-									<i class="material-icons">build</i> Kinh doanh cá nhân
-									@endif
+									<i class="material-icons">alternate_email</i> {{ $pa->email }}
 								</div>
 								
-								@if ($pa->password_temp)
-								<div class="pro-company padding-left-5">
-									<i class="material-icons">vpn_key</i> {{ $pa->password_temp }}
-								</div>
-								@endif
 							</td>
 							<td class="text-right">
 								<div class="dropdown">
 									<span class="btn" data-toggle="dropdown">
 									<i class="icmn-cog3"></i>
 									</span>
-									@if ($pa->created_by == auth()->user()->id)
 									<ul class="dropdown-menu dropdown-menu-right" role="menu">
-										<a class="dropdown-item" href="javascript:void(0);" onclick="return deletePro('{{ $pa->id }}');">
+										<a class="dropdown-item" href="javascript:void(0);" onclick="return deletePA('{{ $pa->id }}');">
 											<i class="icmn-bin"></i> Xóa
 										</a>
 									</ul>
-									@endif
 								</div>
 							</td>
 						</tr>
@@ -215,15 +170,15 @@
 	</div>
 
 	<!-- MODAL -->
-	<div id="modalNewPro" class="modal fade" role="dialog">
+	<div id="modalNewPA" class="modal fade" role="dialog">
 		<div class="modal-dialog">
 			<!-- Modal content-->
-			<form id="frmNewPro" method="post" name="form-validation" enctype="multipart/form-data" action="">
+			<form id="frmNewPA" method="post" name="form-validation" enctype="multipart/form-data" action="">
 				<div class="modal-content">
 					<div class="modal-body">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<div class="form-wrapper">
-							<h1 class="page-title text-left">Tài khoản Đối tác</h1>
+							<h1 class="page-title text-left">Cộng tác viên</h1>
 							<div class="row">
 								<div class="col-sm-12">
 									<div class="form-group">
@@ -241,56 +196,18 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="form-group col-sm-12">
-									<label>Loại tài khoản</label>
-									<div class="row" style="margin: 0px 5px;">
-										<div class="btn-group" data-toggle="buttons" class="col-sm-12">
-											<label class="col-sm-12 btn active">
-												<input type="radio"
-													name="style"
-													value="1" checked>
-													<span class="icon icmn-checkmark-circle"></span> Doanh nghiệp
-											</label>
-											<label class="col-sm-12 btn">
-												<input type="radio"
-													name="style"
-													value="2">
-													<span class="icon icmn-radio-unchecked"></span> Quản lý Doanh nghiệp
-											</label>
-											<label class="col-sm-12 btn">
-												<input type="radio"
-													name="style"
-													value="0">
-													<span id="spanNoCompany" class="icon icmn-radio-unchecked"></span> Cá nhân
-											</label>
-										</div>
+								<div class="col-sm-12">
+									<div class="form-group">
+										<label>Email <span class="color-danger">*</span></label>
+										<input type="text" maxlength="100" class="form-control" name="email" data-validation="[NOTEMPTY, EMAIL]">
 									</div>
 								</div>
 							</div>
-							<div class="row company-row">
-								<div class="col-sm-12">
-									<div class="form-group">
-										<label>Doanh nghiệp</label>
-										<select class="form-control selectpicker hf-select" data-live-search="true" name="company">
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-sm-12">
-									<div class="form-group">
-										<label>Training</label>
-										<select class="form-control selectpicker hf-select" data-live-search="true" name="event">
-											<option value="" selected>Chưa tham gia</option>
-										</select>
-									</div>
-								</div>
+							<div class="row text-right padding-top-30" style="margin-bottom: -15px;">
+								<button id="btnSubmit" type="submit" class="btn btn-primary width-150">Tạo tài khoản</button>
+								<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 							</div>
 						</div>
-					</div>
-					<div class="row-complete">
-						<button id="btnSubmit" type="submit" class="btn btn-primary" style="width: 100%">Tạo tài khoản</button>
-						<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 					</div>
 				</div>
 			</form>

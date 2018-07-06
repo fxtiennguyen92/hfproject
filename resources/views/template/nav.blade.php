@@ -52,7 +52,11 @@ $(document).ready(function() {
 				</form>
 			</div>
 			<div class="menu-btn-wrapper col-sm-6 text-right">
+				@if (auth()->check() && auth()->user()->role == 1)
+				<button class="btn btn-menu" onclick="location.href = '{{ route('pro_order_list_page') }}'">Đơn hàng</button>
+				@else
 				<button class="btn btn-menu" onclick="location.href = '{{ route('order_list_page') }}'">Đơn hàng</button>
+				@endif
 				<button class="btn btn-menu" onclick="window.open('{{ route('blog_page') }}')">Blog</button>
 				<button class="btn btn-secondary-outline" onclick="location.href = '{{ route('pro_new') }}'">Trở Thành Đối tác</button>
 				@if (auth()->check())

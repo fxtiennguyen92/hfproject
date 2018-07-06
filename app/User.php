@@ -12,24 +12,32 @@ class User extends Authenticatable
 	use Notifiable;
 
 	protected $fillable = [
-		'name', 'email', 'phone', 'password', 'role', 'delete_flg',
+		'name', 'email', 'phone', 'password', 'password_temp', 'role', 'delete_flg',
 		'confirm_code', 'confirm_flg',
 		'google_id', 'facebook_id', 'avatar'
 	];
 
 	protected $hidden = [
-		'password', 'remember_token',
+		'password', 'remember_token', 'api_token'
 	];
 
 	public function getAvailableAcc($id) {
-		return $this::with('wallet', 'profile', 'profile.company')
+		return $this::with('wallet', 'profile', 'profile.company', 'profile.reviews')
 			->where('id', $id)
 			->available()
 			->first();
 	}
 
-	public function getAllAcc() {
-		return $this->get();
+	public function getAccByPhone($phone) {
+		return $this
+			->where('phone', $phone)
+			->first();
+	}
+
+	public function getAllUserForMng() {
+		return $this
+			->user()
+			->get();
 	}
 
 	public function getAllProForMng() {
@@ -38,8 +46,9 @@ class User extends Authenticatable
 			->get();
 	}
 
-	public function getAllProForPA() {
+	public function getAllProForPA($paId) {
 		return $this::with('profile', 'profile.company')
+			->where('created_by', $paId)
 			->proAndProManager()
 			->available()
 			->orderBy('updated_at', 'desc')
@@ -87,7 +96,27 @@ class User extends Authenticatable
 			return false;
 		}
 		
-		if ($comp->id === $id) {
+		if ($user->id === $id) {
+			return false;
+		}
+		
+		return true;
+	}
+
+	public function existEmail($email, $id = null) {
+		if (!$email) {
+			return false;
+		}
+		
+		$user = $this
+			->where('email', $email)
+			->first();
+		
+		if (!$user) {
+			return false;
+		}
+		
+		if ($user->id === $id) {
 			return false;
 		}
 		
@@ -95,13 +124,13 @@ class User extends Authenticatable
 	}
 
 	public function activeProAccount($id) {
-		$passwordTemp = str_random(12);
+		$passwordTemp = str_random(6);
 		return User::where('id', $id)
 		->update([
 						'password_temp' => $passwordTemp,
 						'password' => bcrypt($passwordTemp),
 						'confirm_flg' => Config::get('constants.FLG_ON'),
-						'delete_flg' => Config::get('constants.FLG_OFF')
+						'delete_flg' => Config::get('constants.FLG_OFF'),
 		]);
 	}
 
@@ -114,7 +143,7 @@ class User extends Authenticatable
 
 	public function updatePassword($id, $password = null) {
 		if (!$password) {
-			$passwordNew = str_random(12);
+			$passwordNew = str_random(6);
 			return User::where('id', $id)
 			->update([
 							'password' => bcrypt($passwordNew),
@@ -133,6 +162,22 @@ class User extends Authenticatable
 		return User::where('id', $id)
 		->update([
 						'phone' => $phone,
+		]);
+	}
+
+	public function updateName($id, $name) {
+		return User::where('id', $id)
+		->update([
+						'name' => $name,
+		]);
+	}
+
+	public function updateEmail($id, $email, $confirmCode) {
+		return User::where('id', $id)
+		->update([
+						'email' => $email,
+						'confirm_code' => $confirmCode,
+						'confirm_flg' => Config::get('constants.FLG_OFF')
 		]);
 	}
 
@@ -160,8 +205,8 @@ class User extends Authenticatable
 		return $this->hasOne('App\Wallet', 'id');
 	}
 	
-	public function scopeMember($query) {
-		return $query->where('role', Config::get('constants.ROLE_MEM'));
+	public function scopeUser($query) {
+		return $query->where('role', Config::get('constants.ROLE_USER'));
 	}
 
 	public function scopePro($query) {
@@ -183,5 +228,19 @@ class User extends Authenticatable
 	
 	public function scopeAvailable($query) {
 		return $query->where('delete_flg', Config::get('constants.FLG_OFF'));
+	}
+	
+	public function getPLevelAttribute() {
+		$commonModel = new Common();
+		$levels = $commonModel->getByKey(Config::get('constants.KEY_POINT_LEVEL'));
+		
+		$pointLevel = 0;
+		foreach ($levels as $key=>$level) {
+			if ($level->value < $this->attributes['point']) {
+				$pointLevel = $key + 1;
+			}
+		}
+		
+		return $pointLevel;
 	}
 }

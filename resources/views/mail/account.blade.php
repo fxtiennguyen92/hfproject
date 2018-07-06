@@ -32,12 +32,28 @@
 				<div style="padding: 40px 40px 20px 40px; background: #fff;">
 					<table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
 						<tr>
-							<td>
-								<h3 style="margin-bottom: 20px; font-weight: bold;">Xác thực Email</h3>
-								<p>Chào <b>{{ $name }}</b>, để nhận được các thông báo về đơn hàng và khuyến mãi, hãy xác nhận Email của bạn bằng link bên dưới.</p>
+							<td colspan="2">
+								<h3 style="margin-bottom: 20px; font-weight: bold;">Thông tin Tài khoản</h3>
+								<p>Chào <b>{{ $name }}</b>, thông tin tài khoản vừa được tạo của bạn là:</p>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 100px; padding-left: 10px;">Số điện thoại:</td>
+							<td><b>{{ $phone }}</b></td>
+						</tr>
+						<tr>
+							<td style="width: 100px; padding-left: 10px;">Email:</td>
+							<td><b>{{ $email }}</b></td>
+						</tr>
+						<tr>
+							<td style="width: 100px; padding-left: 10px;">Mật khẩu:</td>
+							<td><b>{{ $password }}</b></td>
+						</tr>
+						<tr>
+							<td colspan="2">
 								<div style="text-align: center">
-									<a href="{{ URL::to('partner/verify/' . $confirm_code) }}" style="display: inline-block; padding: 11px 30px; margin: 20px 0px 30px; font-size: 15px; color: #fff; background: #01a8fe; border-radius: 5px; text-decoration: none;">
-										Xác nhận EMAIL
+									<a href="{{ route('login') }}" style="display: inline-block; padding: 11px 30px; margin: 20px 0px 30px; font-size: 15px; color: #fff; background: #01a8fe; border-radius: 5px; text-decoration: none;">
+										Đăng nhập
 									</a>
 								</div>
 								<p>Thân,<br />Hand Free Team</p>

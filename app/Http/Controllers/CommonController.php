@@ -75,6 +75,13 @@ class CommonController
 		return $dates;
 	}
 
+	public static function getStringAsapExcuteDateTime() {
+		$date = date('d/m/Y H:i', strtotime('+'.env('ASAP_EXCUTE_DATE').'minutes'));
+		$weekday = CommonController::translateWeekday(date('l', strtotime('+'.env('ASAP_EXCUTE_DATE').'minutes')));
+		
+		return $weekday.', '.$date;
+	}
+
 	public static function getAllTimes() {
 		$times = array();
 		for ($i = 0; $i < 24; $i++) {

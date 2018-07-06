@@ -54,7 +54,7 @@ class ProController extends Controller
 		$cities = $commonModel->getCityList();
 		
 		$districts = $commonModel->getDistList($pro->city);
-		$services = $serviceModel->getAll();
+		$services = $serviceModel->getAllServingRoots();
 		$events = $eventModel->getAll();
 		$companies = $companyModel->getAll();
 		
@@ -144,6 +144,7 @@ class ProController extends Controller
 			$pro->city = $request->city;
 			$pro->company_id = $request->company;
 			$pro->services = json_encode($request->services);
+			$pro->service_str = $request->service_str;
 			$pro->training = $request->event;
 			
 			$pro->save();
@@ -207,7 +208,7 @@ class ProController extends Controller
 		$compModel = new Company();
 		$eventModel = new Event();
 		
-		$pros = $userModel->getAllProForPA();
+		$pros = $userModel->getAllProForPA(auth()->user()->id);
 		$companies = $compModel->getAll();
 		$events = $eventModel->getAll();
 		
@@ -229,19 +230,22 @@ class ProController extends Controller
 			return response()->json('Phone is registered', 409);
 		}
 		
+		DB::beginTransaction();
 		try {
 			// create user
 			$userId = $this->createUser($request);
 			// create pro profile
 			$this->createProProfile($userId, $request);
-			
-			if ($request->event !== '') {
+			// create event
+			if ($request->event) {
 				$this->createEventUser($userId, $request->event);
 			}
 			
+			DB::commit();
 			return response()->json('', 200);
 		} catch (\Exception $e) {
-			return response()->json($e->getMessage(), 400);
+			DB::rollback();
+			return response()->json($e->getMessage(), 500);
 		}
 	}
 	
@@ -256,7 +260,7 @@ class ProController extends Controller
 		$user = new User();
 		$user->name = $request->name;
 		$user->phone = $request->phone;
-		$user->password_temp = str_random(12);
+		$user->password_temp = str_random(6);
 		$user->password = bcrypt($user->password_temp);
 		$user->confirm_flg = Config::get('constants.FLG_ON');
 		$user->role = ($request->style == 2) ? Config::get('constants.ROLE_PRO_MNG') : Config::get('constants.ROLE_PRO');
@@ -290,8 +294,7 @@ class ProController extends Controller
 		$userModel = new User();
 		$pro = $userModel->getProOrProManager($id);
 		if ($pro->email) {
-			$mail = new MailController();
-			$mail->sendActiveProAccountMail($pro->name, $pro->email, $pro->password_temp);
+			MailController::sendActiveProAccountMail($pro->name, $pro->email, $pro->password_temp);
 		}
 	}
 }

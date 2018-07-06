@@ -27,7 +27,7 @@ return [
 	'PRO_MNG_PAGE' => 'pro.pros',
 	
 	'MNG_CONTROL_PAGE' => 'mng.control',
-	'MNG_ACC_LIST_PAGE' => 'mng.accounts',
+	'MNG_USER_LIST_PAGE' => 'mng.users',
 	'MNG_PRO_LIST_PAGE' => 'mng.pros',
 	
 	'MNG_PRO_PAGE' => 'mng.pro',
@@ -47,7 +47,7 @@ return [
 	'MNG_VIDEO_PAGE' => 'mng.video',
 	'MNG_VIDEO_LIST_PAGE' => 'mng.videos',
 	'MNG_PA_LIST_PAGE' => 'mng.pas',
-
+	
 	'PA_COMPANY_LIST_PAGE' => 'mng.pa.companies',
 	'PA_COMPANY_PAGE' => 'mng.pa.company',
 	'PA_PRO_LIST_PAGE' => 'mng.pa.pros',
@@ -60,12 +60,15 @@ return [
 	/** MAIL **/
 	'VERIFY_MAIL_SUBJECT' => '[HAND FREE] Xác nhận Email',
 	'ACTIVE_PRO_ACCOUNT_MAIL_SUBJECT' => '[HAND FREE] Kích hoạt tài khoản Đối tác',
+	'ACCOUNT_INFO_MAIL_SUBJECT' => '[HAND FREE] Thông tin tài khoản',
+	'ORDER_INFO_MAIL_SUBJECT' => '[HAND FREE] Thông tin Đơn hàng',
+	
 	'OUT_LOCATION_MAIL_SUBJECT' => '[HAND FREE] Địa điểm chưa được hỗ trợ',
 	
 	/** ENUM **/
 	'COMMON_ROOT' => '*ROOT',
 	
-	'ROLE_MEM' => '0',
+	'ROLE_USER' => '0',
 	'ROLE_PRO' => '1',
 	'ROLE_PRO_MNG' => '2', // Pro Manager
 	
@@ -113,4 +116,9 @@ return [
 	'SERVICE_ROOT' => '0',
 	
 	'LOG_SMS_KEY' => 'SMS',
+	
+	'PA_PRO_ACTIVE_COMMISSION' => 'PAPROACT',
+
+	'BANNER' => 'BANNER',
+	'BANNER_MB' => 'BANNER_MB',
 ];
