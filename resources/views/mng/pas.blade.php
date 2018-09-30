@@ -1,4 +1,4 @@
-@extends('template.index')
+@extends('template.mng.index')
 @push('stylesheets')
 <style>
 </style>
@@ -128,6 +128,7 @@
 					<thead>
 						<tr>
 							<th class="text-center col-name">Cộng tác viên</th>
+							<th class="text-center">SL Đối tác</th>
 							<th>&nbsp;</th>
 						</tr>
 					</thead>
@@ -146,6 +147,7 @@
 								</div>
 								
 							</td>
+							<td class="text-right">@if (sizeof($pa->proCount) > 0) {{ $pa->proCount[0]['count'] }} @endif</td>
 							<td class="text-right">
 								<div class="dropdown">
 									<span class="btn" data-toggle="dropdown">

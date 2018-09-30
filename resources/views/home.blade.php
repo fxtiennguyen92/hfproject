@@ -217,11 +217,11 @@ $(document).ready(function() {
 		<div class="row margin-top-10">
 			<div class="col-md-4 col-xs-12">
 				<ul class="info">
-					<li>99/1B Võ Văn Tần, Phường 6, Quận 3, Tp.HCM</li>
+					<li>157/1A Đường D2, Bình Thạnh, Tp.HCM</li>
 					<li><i class="icmn-envelop3"></i> info@handfree.co</li>
 					<li><a href="javascript:void(0);" onclick="window.open('https://m.me/handfreeco', '_blank');">
 						<i class="icmn-bubble-notification"></i> handfreeco</a></li>
-					<li><i class="icmn-phone-wave"></i> 024 7304 1114</li>
+					<li><i class="icmn-phone-wave"></i>0904 623 460</li>
 					
 				</ul>
 			</div>

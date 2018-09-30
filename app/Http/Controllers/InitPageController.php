@@ -13,6 +13,8 @@ use App\Blog;
 use App\Doc;
 use App\Wallet;
 use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InitPageController extends Controller
 {
@@ -27,6 +29,10 @@ class InitPageController extends Controller
 		
 		if (auth()->check() && auth()->user()->role == Config::get('constants.ROLE_PRO')) {
 			return $this->viewDashboardPage();
+		}
+		
+		if (auth()->check() && auth()->user()->role > 80) {
+			return $this->control();
 		}
 		
 		$serviceModel = new Service();
@@ -54,7 +60,7 @@ class InitPageController extends Controller
 	
 	public function viewDashboardPage() {
 		$orderModel = new Order();
-		$orders = $orderModel->getNewByPro(auth()->user()->id);
+		$orders = $orderModel->getNewByPro(auth()->user()->id, auth()->user()->profile->services);
 		
 		return view(Config::get('constants.DASHBOARD_PAGE'), array(
 						'orders' => $orders
@@ -121,14 +127,42 @@ class InitPageController extends Controller
 		));
 	}
 
+	public function viewSearchPage(Request $request) {
+		$commonModel = new Common();
+		$serviceModel = new Service();
+		
+		$cities = $commonModel->getCityList();
+		$districts = $commonModel->getDistList($request->city);
+		$services = $serviceModel->getAllServingRoots();
+		
+		$result = array();
+		if ($request->city) {
+			$result = $this->searchProAndComp($request);
+		}
+		
+		return view(Config::get('constants.SEARCH_PAGE'), array(
+						'cities' => $cities,
+						'districts' => $districts,
+						'services' => $services,
+						'result' => $result,
+		));
+	}
+
 	public function control() {
 		if (!auth()->check()) {
 			return redirect()->route('login_page');
 		}
 		
+		if (auth()->user()->role == Config::get('constants.ROLE_CSO')) {
+			return redirect()->route('mng_user_list');
+		}
+		
+		if (auth()->user()->role == Config::get('constants.ROLE_PA')) {
+			return redirect()->route('pa_pro_list');
+		}
+		
 		if (auth()->user()->role == Config::get('constants.ROLE_ADM')) {
-			return view(Config::get('constants.MNG_CONTROL_PAGE'), array(
-			));
+			return redirect()->route('mng_pa_list');
 		}
 		
 		$userModel = new User();
@@ -148,5 +182,59 @@ class InitPageController extends Controller
 				'user' => $user,
 			));
 // 		}
+	}
+	
+	private function searchProAndComp($request) {
+		$pdo = DB::connection('mysql')->getPdo();
+		
+		$query = "
+			SELECT * FROM (
+				SELECT id, companies.name as name, address_1, address_2
+					, companies.district, companies.city
+					, dist.name as district_name, city.name as city_name
+					, location, image
+					, style as services
+					, 'comp' as type FROM companies
+					LEFT JOIN commons as dist
+						ON dist.code = companies.district
+					LEFT JOIN commons as city
+						ON city.code = companies.city
+				UNION ALL
+				SELECT pro_profiles.id as id, users.name as name, address_1, address_2
+					, pro_profiles.district, pro_profiles.city
+					, dist.name as district_name, city.name as city_name
+					, location, users.avatar as image
+					, service_str as services
+					, 'pro' as type FROM pro_profiles
+					LEFT JOIN users
+						ON users.id = pro_profiles.id
+					LEFT JOIN commons as dist
+						ON dist.code = pro_profiles.district
+					LEFT JOIN commons as city
+						ON city.code = pro_profiles.city
+			) as items
+			WHERE 1=1 AND items.location IS NOT NULL
+		";
+		if ($request->name) {
+			$query .= " AND items.name LIKE '%".$request->name."%'";
+		}
+		if ($request->city) {
+			$query .= " AND items.city = '".$request->city."'";
+		}
+		if ($request->dist) {
+			$in = "('" . implode("','", $request->dist) ."')";
+			$query .= " AND items.district IN ".$in;
+		}
+		if ($request->service) {
+			$arr = "('" . implode("','", $request->service) ."')";
+			foreach ($request->service as $str) {
+				$query .= " AND items.services LIKE '%".$str."%'";
+			}
+		}
+		$query .= " ORDER BY items.name LIMIT 20";
+		
+		$stmt = $pdo->prepare($query);
+		$stmt->execute();
+		return $stmt->fetchAll((\PDO::FETCH_ASSOC));
 	}
 }

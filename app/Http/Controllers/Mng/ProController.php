@@ -18,6 +18,7 @@ use App\EventUser;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\CommonController;
+use App\Order;
 
 class ProController extends Controller
 {
@@ -29,12 +30,29 @@ class ProController extends Controller
 		]);
 	}
 
-	public function viewList() {
+	public function viewList(Request $request) {
 		$userModel = new User();
 		$pros = $userModel->getAllProForMng();
 		
+		// report
+		$frm = '';
+		$end = '';
+		if ($request->fromDate) {
+			$fromDate = CommonController::convertStringToDate($request->fromDate);
+			$frm = date('Y-m-01 00:00:00', strtotime($fromDate->format('Y-m-d')));
+		}
+		
+		$endDate = new \DateTime();
+		if ($request->endDate) {
+			$endDate = CommonController::convertStringToDate($request->endDate);
+		}
+		$end = date('Y-m-t 23:59:59', strtotime($endDate->format('Y-m-d')));
+		$orderModel = new Order();
+		$workProCountReport = $orderModel->reportWorkProByMonth($frm, $end);
+		
 		return view(Config::get('constants.MNG_PRO_LIST_PAGE'), array(
 						'pros' => $pros,
+						'workProCountReport' => $workProCountReport,
 		));
 	}
 
@@ -47,6 +65,7 @@ class ProController extends Controller
 		$userModel = new User();
 		
 		$pro = $userModel->getProOrProManager($id);
+		
 		if (!$pro) {
 			throw new NotFoundHttpException();
 		}
@@ -142,8 +161,9 @@ class ProController extends Controller
 			$pro->address_2 = $request->address_2;
 			$pro->district = $request->dist;
 			$pro->city = $request->city;
+			$pro->location = $request->location;
 			$pro->company_id = $request->company;
-			$pro->services = json_encode($request->services);
+			$pro->services = ($request->services) ? json_encode($request->services) : '[]';
 			$pro->service_str = $request->service_str;
 			$pro->training = $request->event;
 			
@@ -242,6 +262,7 @@ class ProController extends Controller
 			}
 			
 			DB::commit();
+			
 			return response()->json('', 200);
 		} catch (\Exception $e) {
 			DB::rollback();

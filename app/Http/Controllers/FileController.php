@@ -14,7 +14,7 @@ class FileController
 		$fileName = str_random(6).'.png';
 		$directoryName = 'u'.'/'. $userId;
 		
-		$user = User::where('id', $userId)->first();
+		$user = User::find($userId);
 		if ($user->avatar) {
 			Storage::delete($directoryName.'/'.$user->avatar);
 		}

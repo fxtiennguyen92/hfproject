@@ -32,9 +32,33 @@ $(document).ready(function() {
 	$('.price').each(function() {
 		$(this).html(accounting.formatMoney($(this).html()));
 	});
+	$('.inp-price').each(function() {
+		$(this).val(accounting.formatMoney($(this).val()));
+	});
 	$('.phone').mask('0000000000000');
 	$('.sac').mask('0000');
 	$('[data-toggle=tooltip]').tooltip();
+	$('#walletMoney').mask('000000000000');
+	$('#walletMoney').on('focusout', function() {
+		$(this).val(accounting.formatMoney($(this).val()));
+	});
+	$('#walletMoney').on('focus', function() {
+		if ($(this).val() !== '') {
+			$(this).val(accounting.unformat($(this).val()));
+		}
+	});
+	$('.trans-list').DataTable({
+		responsive: true,
+		info: false,
+		paging: true,
+		ordering: false,
+		language: {
+			lengthMenu: "Hiển thị _MENU_ dòng",
+			zeroRecords: "Chưa có thông tin",
+			search: "Tìm kiếm",
+		},
+	});
+	
 	$('#btnFillWallet').on('click', function() {
 		swal({
 			title: 'Tài khoản',
@@ -63,7 +87,20 @@ $(document).ready(function() {
 		});
 		$('#modalPassword').modal('show');
 	});
-
+	$('#btnTransHistory').on('click', function() {
+		@if (sizeof($user->walletTransactionRequest) == 0)
+			swal({
+				title: 'Lịch sử giao dịch',
+				text: 'Hiện chưa có giao dịch nào',
+				type: 'warning',
+				confirmButtonClass: 'btn-warning',
+				confirmButtonText: 'Quay lại',
+			});
+		@else
+			$('#modalTransaction').modal('show');
+		@endif
+	});
+	
 	$('input[name=phone]').on('keyup', function() {
 		if ($(this).val() !== '{{ auth()->user()->phone }}') {
 			$('.sac-row').show();
@@ -254,6 +291,48 @@ $(document).ready(function() {
 			}
 		}
 	});
+	$('#btnDeposit').on('click', function() {
+		$('#walletWallet').val(accounting.unformat($('#walletMoney').val()));
+		if ($('#walletWallet').val() == '0') {
+			swal({
+				title: 'Thất bại',
+				text: 'Số dư không hợp lệ',
+				type: 'error',
+				confirmButtonClass: 'btn-danger',
+				confirmButtonText: 'Quay lại',
+			});
+		} else {
+			loadingBtnSubmit('btnDeposit');
+			$.ajax({
+				type: 'POST',
+				url: '{{ route("wallet_deposit") }}',
+				data: $('#frmDeposit').serialize(),
+				success: function(response) {
+					location.reload();
+				},
+				error: function(xhr) {
+					if (xhr.status == 409) {
+						swal({
+							title: 'Thất bại',
+							text: 'Số dư không hợp lệ',
+							type: 'error',
+							confirmButtonClass: 'btn-danger',
+							confirmButtonText: 'Quay lại',
+						});
+					} else {
+						swal({
+							title: 'Thất bại',
+							text: 'Có lỗi phát sinh, mời thử lại',
+							type: 'error',
+							confirmButtonClass: 'btn-default',
+							confirmButtonText: 'Thử lại',
+						});
+					};
+					resetBtnSubmit('btnDeposit', 'Xác nhận yêu cầu');
+				}
+			});
+		}
+	});
 });
 </script>
 @endpush
@@ -275,12 +354,17 @@ $(document).ready(function() {
 				<div class="price">{{ $user->wallet->wallet_1 }}</div>
 			</div>
 		</div>
-		<div class="margin-top-20 padding-bottom-20 row">
+		<div class="margin-top-20 padding-bottom-10 row">
 			<div class="margin-bottom-10 col-xs-12 text-center">
 				<button id="btnFillWallet" class="btn-deposit btn color-primary text-uppercase">Nạp thêm</button>
 			</div>
 			<div class="col-xs-12 text-center">
-				<button class="btn-withdraw btn text-uppercase disabled">Rút ra</button>
+				<button class="btn-withdraw btn text-uppercase" data-toggle="modal" data-target="#modalDeposit">Rút ra</button>
+			</div>
+		</div>
+		<div class="padding-20 row text-right control">
+			<div class="col-xs-12 text-right">
+				<a id="btnTransHistory" style="color: #fff; font-size: 13px;" href="javacript:void(0);">Lịch sử giao dịch</a>
 			</div>
 		</div>
 	</div>
@@ -339,9 +423,11 @@ $(document).ready(function() {
 		
 		<h3 class="padding-top-30">Cấp độ</h3>
 		<div class="padding-20 hf-card">
-			<h3 class="color-primary">Cấp độ {{ $user->pLevel }} - {{ auth()->user()->point }} điểm</h3>
+			<h3 class="color-primary">Cấp độ {{ $user->pLevel + 1 }} - {{ auth()->user()->point }} điểm</h3>
 			<progress class="progress progress-primary" value="{{ auth()->user()->point }}" max="{{ $levels[$user->pLevel]->value }}"></progress>
+			@if ($levels[$user->pLevel]->value - auth()->user()->point > 0)
 			<div class="margin-top-10 info">Còn <b>{{ $levels[$user->pLevel]->value - auth()->user()->point }} điểm</b> để đạt cấp độ tiếp theo</div>
+			@endif
 			<div class="margin-top-30 text-right control">
 				<a class="padding-right-10 color-primary" href="javacript:void(0);" data-toggle="modal" data-target="#modalLevel" style="border-right: 1px solid #01a8fe">Hệ thống cấp độ</a>
 				<a class="padding-left-10 color-primary" href="javacript:void(0);">Lịch sử</a>
@@ -447,7 +533,7 @@ $(document).ready(function() {
 				</div>
 				<div class="col-xs-4 text-center">
 					<img class="social-icon" src="{{ env('CDN_HOST') }}/img/social/phone.png">
-					<label class="margin-top-10">024 7304 1114</label>
+					<label class="margin-top-10">0904 623 460</label>
 				</div>
 			</div>
 		</div>
@@ -618,6 +704,73 @@ $(document).ready(function() {
 				</div>
 			</div>
 			</form>
+		</div>
+	</div>
+	
+	<div id="modalDeposit" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<form id="frmDeposit" method="post" name="form-validation" action="{{ route('wallet_deposit') }}">
+			<div class="modal-content">
+				<div class="modal-body padding-30">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h3 class="padding-20 text-center">Yêu cầu Rút tiền</h3>
+					<div class="form-group row">
+						<div class="col-xs-4">
+							<label class="form-control-label">Số dư hiện tại</label>
+						</div>
+						<div class="col-xs-8">
+							<input type="text" class="form-control inp-price" value="{{ $user->wallet->wallet_1 }}" readonly>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col-xs-4">
+							<label class="form-control-label">Số tiền rút</label>
+						</div>
+						<div class="col-xs-8">
+							<input id="walletMoney" type="text" maxlength="16"
+								class="form-control">
+						</div>
+					</div>
+					<div class="row row-complete margin-top-20">
+						<button id="btnDeposit" type="submit" class="btn btn-primary" style="width: 100%">Xác nhận yêu cầu</button>
+						<input id="walletWallet" type="hidden" name="wallet" value="" />
+						<input type="hidden" name="_token" value="{{ csrf_token() }}" />
+					</div>
+				</div>
+			</div>
+			</form>
+		</div>
+	</div>
+	
+	<div id="modalTransaction" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-body padding-30">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h3 class="padding-top-20 text-center">Lịch sử giao dịch</h3>
+					<table class="table table-hover trans-list" width="100%">
+						<thead>
+							<tr>
+								<th>Thời gian</th>
+								<th>Nội dung</th>
+								<th class="text-center">Số tiền</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach($user->walletTransactionRequest as $transaction)
+							<tr>
+								<td>
+									<span class='hide'>{{ Carbon\Carbon::parse($transaction->created_at)->format('YmdHi') }}</span>
+									{{ Carbon\Carbon::parse($transaction->created_at)->format('d/m/Y H:i') }}
+								</td>
+								<td>Yêu cầu rút tiền</td>
+								<td class="price text-right">{{ $transaction->wallet }}</td>
+							</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
 </section>

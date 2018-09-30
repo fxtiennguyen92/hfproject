@@ -321,8 +321,8 @@
 				</div>
 				<div id="map" class="order-map"></div>
 				<div id="infowindow-content">
-				<span id="place-address"></span>
-			</div>
+					<span id="place-address"></span>
+				</div>
 				<div class="address-wrapper">
 					<div class="row">
 						<div class="col-md-12 col-sm-12 col-xs-12">

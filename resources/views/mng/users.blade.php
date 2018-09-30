@@ -1,4 +1,4 @@
-@extends('template.index')
+@extends('template.mng.index')
 @push('stylesheets')
 <style>
 </style>
@@ -17,38 +17,28 @@
 			order: [[2, 'desc']],
 			columnDefs: [ { orderable: false, targets: [4] } ]
 		});
-	});
-
-	function deletePro(proId) {
-		swal({
-			title: 'Xóa Đối tác?',
-			text: 'Thông tin này sẽ không thể phục hồi!',
-			type: 'warning',
-			showCancelButton: true,
-			cancelButtonClass: 'btn-default',
-			confirmButtonClass: 'btn-danger',
-			cancelButtonText: 'Quay lại',
-			confirmButtonText: 'Xóa',
-			closeOnConfirm: false,
-		},
-		function(isConfirm) {
-			if (isConfirm) {
-				swal({
-					title: 'Đang xử lý yêu cầu',
-					text: 'Xin chờ trong giây lát!',
-					type: 'info',
-					showConfirmButton: false,
-					closeOnConfirm: false,
-				});
-				
-				var url = "{{ route('mng_pro_delete', ['id' => 'selectedProId']) }}";
-				url = url.replace('selectedProId', proId);
-				
-				$('#frmMain').attr('action', url);
-				$('#frmMain').submit();
-			}
+		$('.owl-carousel').owlCarousel({
+			center: false,
+			loop: false,
+			nav: false,
+			margin: 10,
+			items: 5,
+			autoWidth: true,
 		});
-	}
+		$('.datepicker-only-init').datetimepicker({
+			widgetPositioning: {
+				horizontal: 'left'
+			},
+			locale: moment.locale('vi'),
+			icons: {
+				time: "fa fa-clock-o",
+				date: "fa fa-calendar",
+				up: "fa fa-arrow-up",
+				down: "fa fa-arrow-down"
+			},
+			format: 'DD/MM/YYYY',
+		});
+	});
 </script>
 @endpush
 
@@ -57,6 +47,44 @@
 @section('content')
 <section class="content-body-full-page content-template-1">
 	<div class="page-header hf-bg-gradient text-capitalize">Khách hàng</div>
+	<div class="margin-30 mng-report">
+		<form method="get" action="{{ route('mng_user_list') }}">
+		<div class="search-row">
+			<div class="form-group">
+				<input type="text" class="form-control datepicker-only-init"
+					name="fromDate"
+					value="{{ app('request')->input('fromDate') }}"
+					placeholder="DD/MM/YYYY" />
+				<input type="text" class="form-control datepicker-only-init"
+					name="endDate"
+					value="{{ app('request')->input('endDate') }}"
+					placeholder="DD/MM/YYYY" />
+				<button class="btn btn-primary" type="submit">Hiển thị</button>
+			</div>
+		</div>
+		</form>
+		@if (sizeof($usingUserCountReport) > 0)
+		<h5 class="margin-top-20">Số lượng Khách hàng Sử dụng</h5>
+		<div id="reportCarousel" class="owl-carousel owl-theme">
+			@foreach ($usingUserCountReport as $item)
+			<div class="item mng-report">
+				<div class="widget widget-seven widget-report">
+					<div class="widget-body">
+						<div class="widget-body-inner">
+							<h5 class="text-uppercase">Tháng {{ substr($item->yearmonth, -2) }}</h5>
+							<span class="counter-count">
+								<span class="counter-init">
+									{{ number_format($item->data, 0, ',', '.') }}
+								</span>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			@endforeach
+		</div>
+		@endif
+	</div>
 	<div class="form-wrapper">
 		<div class="row">
 			<div class="col-sm-12">
@@ -93,9 +121,8 @@
 								</div>
 							</td>
 							<td class="text-center">
-								@if ($user->password) <i class="icmn-circles2"></i> @endif
-								@if ($user->facebook_id) <i class="icmn-facebook"></i> @endif
-								@if ($user->google_id) <i class="icmn-google-plus"></i> @endif
+								@if ($user->facebook_id) <i class="icmn-facebook color-primary"></i> @endif
+								@if ($user->google_id) <i class="icmn-google-plus color-danger"></i> @endif
 							</td>
 							<td class="text-center">
 								<span class='hide'>{{ Carbon\Carbon::parse($user->created_at)->format('YmdHi') }}</span>

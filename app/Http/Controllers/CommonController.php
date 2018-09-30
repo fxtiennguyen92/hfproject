@@ -96,6 +96,12 @@ class CommonController
 		return $order->created_at->format('ymd').strtoupper(str_random(2)).$order->id;
 	}
 
+	public static function convertDatetimeFromApp($str) {
+		return \DateTime::createFromFormat('Y-m-d\TH:i:s.uP', $str)
+			->setTimeZone(new \DateTimeZone('Asia/Bangkok'))
+			->format('Y-m-d H:i');
+	}
+
 	private static function translateWeekday($en) {
 		switch ($en) {
 			case 'Monday':

@@ -9,11 +9,12 @@
 		$('.mng-list').DataTable({
 			responsive: true,
 			info: false,
-			paging: false,
+			paging: true,
 			ordering: false,
 			language: {
 				zeroRecords: "Chưa có thông tin",
-				search: "Tìm kiếm"
+				search: "Tìm kiếm",
+				lengthMenu: "Hiện _MENU_ dòng",
 			},
 		});
 	});
@@ -48,7 +49,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<table class="table table-hover nowrap mng-list" width="100%">
+				<table class="table table-hover mng-list" width="100%">
 					<thead>
 						<tr>
 							<th class="text-center">Doanh nghiệp</th>
@@ -113,5 +114,5 @@
 	</div>
 	<!-- MODAL -->
 </section>
-@endsection
 @include('template.mng.footer-menu')
+@endsection

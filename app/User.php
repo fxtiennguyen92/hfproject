@@ -2,27 +2,29 @@
 
 namespace App;
 
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
 	use Notifiable;
 
 	protected $fillable = [
 		'name', 'email', 'phone', 'password', 'password_temp', 'role', 'delete_flg',
-		'confirm_code', 'confirm_flg',
-		'google_id', 'facebook_id', 'avatar'
+		'confirm_code', 'confirm_flg', 'google_id', 'facebook_id', 'avatar',
+		'device_token', 'created_at'
 	];
 
 	protected $hidden = [
-		'password', 'remember_token', 'api_token'
+		'password', 'remember_token',
 	];
 
 	public function getAvailableAcc($id) {
-		return $this::with('wallet', 'profile', 'profile.company', 'profile.reviews')
+		return $this::with('wallet', 'profile', 'profile.company', 'profile.reviews', 'walletTransactionRequest')
 			->where('id', $id)
 			->available()
 			->first();
@@ -41,7 +43,7 @@ class User extends Authenticatable
 	}
 
 	public function getAllProForMng() {
-		return $this::with('profile', 'profile.company', 'profile.district_info', 'profile.city_info')
+		return $this::with('profile', 'profile.company', 'profile.district_info', 'profile.city_info', 'wallet')
 			->proAndProManager()
 			->get();
 	}
@@ -78,8 +80,22 @@ class User extends Authenticatable
 	}
 
 	public function getAllPAForMng() {
-		return $this::with('profile')
+		return $this::with('profile', 'proCount')
 			->pa()
+			->get();
+	}
+
+	public function reportNewProCountByMonth($from, $end) {
+		return DB::table('users')
+			->select(
+				DB::raw('count(id) data'),
+				DB::raw('DATE_FORMAT(created_at, "%Y%m") as yearmonth')
+			)
+			->where('role', Config::get('constants.ROLE_PRO'))
+			->where('created_at', '>=', $from)
+			->where('created_at', '<=', $end)
+			->groupBy('yearmonth')
+			->orderBy('yearmonth')
 			->get();
 	}
 
@@ -205,6 +221,11 @@ class User extends Authenticatable
 		return $this->hasOne('App\Wallet', 'id');
 	}
 	
+	public function walletTransactionRequest() {
+		return $this->hasMany('App\WalletTransactionRequest', 'id')
+			->orderBy('created_at');
+	}
+	
 	public function scopeUser($query) {
 		return $query->where('role', Config::get('constants.ROLE_USER'));
 	}
@@ -237,10 +258,61 @@ class User extends Authenticatable
 		$pointLevel = 0;
 		foreach ($levels as $key=>$level) {
 			if ($level->value < $this->attributes['point']) {
-				$pointLevel = $key + 1;
+				$pointLevel = $key;
 			}
 		}
 		
 		return $pointLevel;
+	}
+	
+	public function proCount() {
+		return $this->hasMany('App\ProProfile', 'created_by', 'id')
+			->selectRaw('created_by, count(*) as count')
+			->groupBy('created_by');
+	}
+	
+	/*=== API ===*/
+	public function getJWTIdentifier() {
+		return $this->getKey();
+	}
+	public function getJWTCustomClaims() {
+		return [];
+	}
+	
+	public static function api_getUserByPhone($phone) {
+		return User::where('phone', $phone)
+			->user()
+			->available()
+			->first();
+	}
+	
+	public static function api_getUserByFacebookAccount($email, $facebookId) {
+		return User::where('facebook_id', $facebookId)
+			->orWhere('email', $email)
+			->user()
+			->available()
+			->first();
+	}
+	
+	public static function api_getUserByGoogleAccount($email, $googleId) {
+		return User::where('google_id', $googleId)
+			->orWhere('email', $email)
+			->user()
+			->available()
+			->first();
+	}
+	
+	/* PRO */
+	public static function api_getProBasicInfo($id) {
+		return User::select('id', 'name', 'avatar')
+			->with([
+				'profile' => function($query) {
+					$query->select('date_of_birth', 'gender', 'rating', 'total_review', 'total_orders');
+				}
+			])
+			->where('id', $id)
+			->pro()
+			->available()
+			->first();
 	}
 }

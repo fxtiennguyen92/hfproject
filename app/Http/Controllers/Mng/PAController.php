@@ -55,8 +55,8 @@ class PAController extends Controller
 
 	public function delete($id) {
 		try {
-			$user = User::find($id);
-			$user->delete();
+			User::destroy($id);
+			
 		} catch (\Exception $e) {
 			
 		}

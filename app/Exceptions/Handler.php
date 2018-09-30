@@ -7,6 +7,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Support\Facades\Config;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -48,6 +49,11 @@ class Handler extends ExceptionHandler
 	{
 		if ($exception instanceof NotFoundHttpException) {
 			return response()->view(Config::get('constants.404_PAGE'), [], 404);
+		}
+		
+		// Token API
+		if ($exception instanceof UnauthorizedHttpException) {
+			return response()->json($exception->getMessage(), 401);
 		}
 
 		return parent::render($request, $exception);

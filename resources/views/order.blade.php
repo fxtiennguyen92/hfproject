@@ -80,47 +80,47 @@ $(document).ready(function() {
 				data: $('#frmQuotedPrice').serialize(),
 				success: function(response) {
 					swal({
-							title: 'Báo giá thành công',
-							text: 'Chờ khách hàng đồng ý',
-							type: 'success',
-							confirmButtonClass: 'btn-primary',
-							confirmButtonText: 'Kết thúc',
-						},
-						function() {
-							location.href = '{{ route("pro_order_list_page") }}';
-						});
+						title: 'Báo giá thành công',
+						text: 'Chờ khách hàng đồng ý',
+						type: 'success',
+						confirmButtonClass: 'btn-primary',
+						confirmButtonText: 'Kết thúc',
+					},
+					function() {
+						location.href = '{{ route("pro_order_list_page") }}';
+					});
 				},
 				error: function(xhr) {
 					if (xhr.status == 400) {
 						swal({
-								title: 'Thất bại',
-								text: 'Không thể báo giá cho đơn hàng này!',
-								type: 'error',
-								confirmButtonClass: 'btn-default',
-								confirmButtonText: 'Quay lại',
-							},
-							function() {
-								location.href = '{{ route("dashboard_page") }}';
-							});
+							title: 'Thất bại',
+							text: 'Không thể báo giá cho đơn hàng này!',
+							type: 'error',
+							confirmButtonClass: 'btn-default',
+							confirmButtonText: 'Quay lại',
+						},
+						function() {
+							location.href = '{{ route("dashboard_page") }}';
+						});
 					} else if (xhr.status == 403) {
 						swal({
-								title: 'Thất bại',
-								text: 'Thời gian thực hiện không đúng!',
-								type: 'error',
-								confirmButtonClass: 'btn-danger',
-								confirmButtonText: 'Báo giá lại',
-							});
+							title: 'Thất bại',
+							text: 'Thời gian thực hiện không đúng!',
+							type: 'error',
+							confirmButtonClass: 'btn-danger',
+							confirmButtonText: 'Báo giá lại',
+						});
 					} else {
 						swal({
-								title: 'Thất bại',
-								text: 'Có lỗi phát sinh!',
-								type: 'error',
-								confirmButtonClass: 'btn-default',
-								confirmButtonText: 'Quay lại',
-							},
-							function() {
-								location.href = '{{ route("dashboard_page") }}';
-							});
+							title: 'Thất bại',
+							text: 'Có lỗi phát sinh!',
+							type: 'error',
+							confirmButtonClass: 'btn-default',
+							confirmButtonText: 'Quay lại',
+						},
+						function() {
+							location.href = '{{ route("dashboard_page") }}';
+						});
 					};
 				}
 		});

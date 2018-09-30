@@ -28,7 +28,6 @@
 			});
 		@endif
 
-		
 		$('.dropify').dropify();
 		$('#inpDateOfBirth').datetimepicker({
 			format: 'DD/MM/YYYY',
@@ -297,6 +296,22 @@
 					</div>
 				</div>
 			</div>
+			<div class="row margin-top-20">
+				<div class="col-sm-12 col-xs-12">
+					<div class="form-group">
+						<h5 style="color: #000; font-weight: bold">Định vị Tọa độ</h5>
+						<input type="text" class="form-control" name="location" placeholder="Tọa độ" value="{{ $pro->profile->location }}" readonly>
+						
+						<input type="text" id="proAddress" class="form-control" name="address" placeholder="Nhập Địa chỉ để định vị">
+					</div>
+				</div>
+				<div class="col-sm-12 col-xs-12">
+					<div id="map" class="order-map"></div>
+					<div id="infowindow-content">
+						<span id="place-address"></span>
+					</div>
+				</div>
+			</div>
 		</div>
 		<h5 class="padding-top-30">CMND & Hộ khẩu</h5>
 		<div class="padding-20 hf-card">
@@ -446,7 +461,7 @@
 					<option value="" selected>Chưa tham gia</option>
 					@foreach ($events as $event)
 					<option value="{{ $event->id }}" name="{{ $event->name }}" @if ($pro->profile->training == $event->id) selected @endif>
-						{{ Carbon\Carbon::parse($event->date)->format('d/m/Y').' '.$event->from_time.' - '.$event->name.' - '.$event->place }}</option>
+						{{ Carbon\Carbon::parse($event->date)->format('d/m/Y').' '.$event->from_time.' - '.$event->name.' - '.$event->address }}</option>
 					@endforeach
 				</select>
 			</div>
@@ -466,4 +481,103 @@
 		</div>
 	</form>
 </section>
+
+<script>
+function initMap(lat = null, lng = null) {
+	var google_map_pos = null;
+	if ($('input[name=location]').val()) {
+		var location = $('input[name=location]').val().split(',');
+		lat = location[0];
+		lng = location[1];
+	}
+	
+	if (lat && lng) {
+		google_map_pos = new google.maps.LatLng(lat, lng);
+	} else {
+		google_map_pos = new google.maps.LatLng(10.762622, 106.660172);
+	}
+
+	var map = new google.maps.Map(document.getElementById('map'), {
+		center: google_map_pos,
+		zoom: 13,
+		disableDefaultUI: true
+	});
+
+	var input = document.getElementById('proAddress');
+	var autocomplete = new google.maps.places.Autocomplete(input);
+	autocomplete.bindTo('bounds', map);
+	autocomplete.setTypes(['address']);
+
+	var infowindow = new google.maps.InfoWindow();
+	var marker = new google.maps.Marker({
+		map: map,
+		position: google_map_pos,
+		visible: false,
+	});
+
+	// init map
+	if (lat && lng) {
+		marker.setVisible(true);
+		map.setZoom(17);
+	} else {
+		marker.setVisible(false);
+		map.setZoom(13);
+	}
+	infowindow.open(map);
+
+	var infowindowContent = document.getElementById('infowindow-content');
+	autocomplete.addListener('place_changed', function() {
+		infowindow.close();
+		marker.setVisible(false);
+		var place = autocomplete.getPlace();
+		if (!place.geometry) {
+			$.notify({
+				message: 'Không lấy được địa điểm của bạn. Hãy thử lại!'
+			}, {
+				type: 'danger',
+			});
+
+			$('#proAddress').focus();
+			return;
+		}
+
+		// If the place has a geometry, then present it on a map.
+		if (place.geometry.viewport) {
+			map.fitBounds(place.geometry.viewport);
+		} else {
+			map.setCenter(place.geometry.location);
+			map.setZoom(17);
+		}
+
+		marker.setPosition(place.geometry.location);
+		marker.setVisible(true);
+
+		$('input[name=address]').val(formatAddress(place.formatted_address));
+		$('input[name=location]').val(place.geometry.location.lat() + ',' + place.geometry.location.lng());
+
+		infowindowContent.children['place-address'].textContent = place.name;
+		infowindow.setContent(infowindowContent);
+		infowindow.open(map, marker);
+	});
+}
+
+function geolocation() {
+	// geolocation
+	if ($('input[name=location]').val() == '') {
+		initMap('', '');
+	} else {
+		
+	}
+}
+
+
+function formatAddress(address) {
+	address = address.replace(', Việt Nam','');
+	address = address.replace(', Vietnam', '');
+	address = address.replace(', VietNam', '');
+
+	return address;
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ env('MAP_API_KEY') }}&callback=initMap&languages=vi&libraries=places" async defer ></script>
 @endsection

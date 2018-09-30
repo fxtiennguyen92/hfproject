@@ -1,3 +1,6 @@
+@if (auth()->check() && auth()->user()->role >= 80)
+	@include('template.mng.footer-menu')
+@else
 <div id="footer-menu">
 	<ul class="list-inline clearfix ">
 		<li>
@@ -32,3 +35,4 @@
 		</li>
 	</ul>
 </div>
+@endif

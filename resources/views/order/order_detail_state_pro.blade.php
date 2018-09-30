@@ -1,7 +1,7 @@
 <div style="margin-right:0; padding:0">
 	@if (!$quotedPrice)
 	<form class="quoted-form" id="frmQuotedPrice" name="form-validation" method="POST" action="{{ route('quote_price') }}">
-		<input name="inpPrice" class="inp-quoted-price" value="100000" step="5000" min="100000" max="">
+		<input name="inpPrice" class="inp-quoted-price" value="100000" step="5000" min="10000" max="">
 		<input name="price" class="basic-inp-quoted-price" type="hidden"/>
 		<div class="padding-top-10 color-danger text-left" style="font-size: 13px">Giá trên là số tiền bạn thu của Khách</div>
 		<div class="color-danger text-left" style="font-size: 13px">Tiền Chiết khấu trả cho Hand Free là <span id="spanCM" style="font-weight: bold">15.000 đ</span></div>

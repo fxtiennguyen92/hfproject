@@ -1,4 +1,4 @@
-@extends('template.index')
+@extends('template.mng.index')
 @push('stylesheets')
 <style>
 </style>
@@ -42,7 +42,7 @@
 	<div class="page-header hf-bg-gradient text-capitalize">Doanh nghiệp</div>
 	<div class="form-wrapper">
 		<div class="text-right">
-			<button class="btn btn-primary" type="button" onclick="location.href='{{ route('mng_company_page') }}'">
+			<button class="btn btn-primary disabled" type="button" onclick="location.href='{{ route('mng_company_page') }}'">
 				<i class="material-icons">&#xE7F0;</i></button>
 		</div>
 		<div class="row">
@@ -50,17 +50,28 @@
 				<table class="table table-hover nowrap mng-list" width="100%">
 					<thead>
 						<tr>
-							<th class="text-center">Mã</th>
 							<th class="text-center">Doanh nghiệp</th>
+							<th class="text-center">Thông tin</th>
 							<th class="text-center">Trạng thái</th>
+							<th class="text-center">Người tạo</th>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach ($companies as $comp)
 						<tr onclick="modify('{{ route('modify_company', ['id' => $comp->id]) }}');">
-							<td class="text-center">{{ sprintf('#%04d', $comp->id) }}</td>
 							<td>
-								<span class="text-uppercase">{{ $comp->name }}</span>
+								<div>{{ sprintf('#%04d', $comp->id) }}</div>
+								<strong class="color-primary text-uppercase">{{ $comp->name }}</strong>
+								<div>
+								@if (!$comp->image)
+									<span class="label label-warning">No Image</span>
+								@endif
+								@if (!$comp->location)	
+									<span class="label label-danger">No Location</span>
+								@endif
+								</div>
+							</td>
+							<td>
 								<div><i class="material-icons">location_on</i>
 									@if ($comp->address) {{ $comp->address }} @else
 									<span class="no-info">Chưa cập nhật</span>
@@ -82,10 +93,14 @@
 							</td>
 							<td class="text-center col-label-company-state">
 								@if ($comp->state == 0)
-									<span class="label label-warning">New</span>
+									<div><span class="label label-primary">New</span></div>
 								@elseif ($comp->state == '1')
-									<span class="label label-primary">Active</span>
+									<div><span class="label label-success">Active</span></div>
 								@endif
+							</td>
+							<td class="text-right">
+								<strong>{{ '#'.$comp->created_by }}</strong>
+								<div>{{ Carbon\Carbon::parse($comp->created_at)->format('d/m/Y') }}</div>
 							</td>
 						</tr>
 						@endforeach

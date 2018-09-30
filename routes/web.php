@@ -23,6 +23,8 @@ Route::get('/pro/{id}/info', 'InitPageController@viewProPage')
 	->name('pro_page');
 Route::get('/blog/{urlName?}', 'InitPageController@viewBlogPage')
 	->name('blog_page');
+Route::get('/search', 'InitPageController@viewSearchPage')
+	->name('search_page');
 
 // Service
 Route::get('/service/search', 'ServiceController@search')
@@ -82,6 +84,10 @@ Route::post('/signup/sac', 'Auth\RegisterController@getSAC')
 	->name('signup_get_sac');
 Route::get('/verify/{code}', 'Auth\RegisterController@verify')
 	->name('signup_verify');
+
+// Wallet
+Route::post('/wallet/deposit', 'WalletController@depositRequest')
+	->name('wallet_deposit');
 
 // Profile
 Route::post('/profile/phone/update', 'ProfileController@updatePhone')
@@ -173,6 +179,23 @@ Route::middleware('cs.pa')->group(function() {
 	
 /** Management - STA **/
 Route::middleware('cs.officer')->group(function() {
+	// Transaction
+	Route::get('/mng/transaction/wallet', 'Mng\WalletController@viewTransactionList')
+	->name('mng_wallet_transaction');
+	
+	// Wallet
+	Route::post('/mng/wallet/{id}', 'Mng\WalletController@update')
+		->name('mng_wallet_update');
+	Route::post('/mng/wallet/{id}/deposit', 'Mng\WalletController@deposit')
+		->name('mng_wallet_deposit');
+	
+	Route::get('/mng/wallet/request', 'Mng\WalletController@viewRequestList')
+		->name('mng_wallet_request');
+	Route::post('/mng/wallet/request/{id}/deposit', 'Mng\WalletController@requestDeposit')
+		->name('mng_wallet_request_deposit');
+	Route::post('/mng/wallet/request/{id}/reject', 'Mng\WalletController@rejectDeposit')
+		->name('mng_wallet_reject_deposit');
+	
 	// User
 	Route::get('/mng/user', 'Mng\UserController@viewList')
 		->name('mng_user_list');
@@ -196,8 +219,9 @@ Route::middleware('cs.officer')->group(function() {
 	Route::post('/mng/pro/active', 'Mng\ProController@active')
 		->name('active_pro');
 	
+	// Company
 	Route::get('/mng/company', 'Mng\CompanyController@viewList')
-		->name('mng_company_list_page');
+		->name('mng_company_list');
 	Route::get('/mng/company/{id?}', 'Mng\CompanyController@view')
 		->name('mng_company_page');
 	Route::post('/mng/company/{id?}', 'Mng\CompanyController@modify')
@@ -206,8 +230,9 @@ Route::middleware('cs.officer')->group(function() {
 	Route::get('/mng/accounts', 'Mng\AccountController@viewList')
 		->name('mng_account_list_page');
 	
+	// Orders
 	Route::get('/mng/orders', 'Mng\OrderController@viewList')
-		->name('mng_order_list_page');
+		->name('mng_order_list');
 	Route::post('/mng/order/{orderNo}/cancel', 'Mng\OrderController@cancel')
 		->name('mng_cancel_order');
 
@@ -229,6 +254,14 @@ Route::middleware('cs.officer')->group(function() {
 	Route::post('/mng/blog/{id}/unhighlight', 'Mng\BlogController@unhighlight')
 		->name('mng_blog_unhighlight');
 
+	// Event
+	Route::get('/mng/event', 'Mng\EventController@viewList')
+		->name('mng_event_list');
+	Route::post('/mng/event', 'Mng\EventController@create')
+		->name('mng_event_create');
+	Route::post('/mng/event/{id}/delete', 'Mng\EventController@delete')
+		->name('mng_event_delete');
+	
 	// Video
 	Route::get('/mng/video', 'Mng\VideoController@viewList')
 		->name('mng_video_list');

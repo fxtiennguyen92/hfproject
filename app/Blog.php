@@ -11,7 +11,8 @@ class Blog extends Model
 	protected $table = 'blogs';
 	
 	protected $fillable = [
-		'id', 'title', 'url_name', 'category', 'image', 'content', 'video_flg', 'highlight_flg', 'updated_by', 'updated_at'
+		'id', 'title', 'url_name', 'category', 'image', 'content', 'video_flg', 'highlight_flg',
+		'updated_by', 'updated_at', 'published_at'
 	];
 
 	public function getByUrlName($urlName) {
@@ -89,5 +90,34 @@ class Blog extends Model
 
 	public function scopeAvailable($query) {
 		return $query->where('delete_flg', Config::get('constants.FLG_OFF'));
+	}
+	
+	
+	/*=== API ===*/
+	
+	public static function api_getCategoryList() {
+		return Blog::select('category')
+			->distinct()
+			->get();
+	}
+	
+	public static function api_get($url) {
+// 		$blog = Blog::where('url_name', $url)
+		return Blog::where('id', $url)
+			->blog()
+			->available()
+			->first();
+	}
+	
+	public static function api_getTop($page, $rowsPerPage) {
+		$offset = ($page - 1) * $rowsPerPage;
+		
+		return Blog::select('id', 'title', 'url_name', 'image', 'category', 'published_at')
+			->offset($offset)
+			->limit($rowsPerPage)
+			->blog()
+			->available()
+			->orderBy('published_at', 'desc')
+			->get();
 	}
 }

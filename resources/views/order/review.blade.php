@@ -5,11 +5,11 @@
 			<div class="page-header hf-bg-gradient">Đánh giá dịch vụ</div>
 			<div class="modal-body margin-top-10 padding-top-30 padding-bottom-30">
 				<div class="author-avt"><img src="{{ env('CDN_HOST') }}/u/{{ $order->pro->id }}/{{ $order->pro->avatar }}" /></div>
-				<select id="rating" class="text-center rating-review" name="rating" data-current-rating="">
+				<select id="rating" class="text-center rating-review" name="rating" data-current-rating="4">
 					<option value="1">1</option>
 					<option value="2">2</option>
 					<option value="3">3</option>
-					<option value="4">4</option>
+					<option value="4" selected>4</option>
 					<option value="5">5</option>
 				</select>
 				

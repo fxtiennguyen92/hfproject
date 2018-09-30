@@ -19,7 +19,7 @@ class CompanyController extends Controller
 						'name' => 'required|string|max:150',
 						'address_1' => 'required|string|max:150',
 						'address_2' => 'required|string|max:150',
-						'email' => 'nullable|string|email|max:100|unique:companies',
+						'email' => 'nullable|string|email|max:100',
 						'phone_1' => 'nullable|string|max:25',
 						'phone_2' => 'nullable|string|max:25',
 		]);
@@ -42,13 +42,11 @@ class CompanyController extends Controller
 		$comp = null;
 		$services = $serviceModel->getAll();
 		$cities = $commonModel->getCityList();
-		$districts = null;
+		$districts = $commonModel->getDistList();
 		
 		if ($id) {
 			$comp = $compModel->get($id);
 			$districts = $commonModel->getDistList($comp->city);
-		} else {
-			$districts = $commonModel->getDistList($cities->first()->code);
 		}
 		
 		return view(Config::get('constants.MNG_COMPANY_PAGE'), array(
@@ -64,19 +62,17 @@ class CompanyController extends Controller
 		$serviceModel = new Service();
 		$materialModel = new Material();
 		
-		$services = $serviceModel->getAll();
+		$services = $serviceModel->getAllServingRoots();
 		$materials = $materialModel->getAll();
 		
 		$cities = $commonModel->getCityList();
-		$cityCode = $cities->first()->code;
+		$districts = $commonModel->getDistList();
 		
 		$preAddress = null;
 		if ($request->session()->has('preAddress')) {
 			$preAddress = $request->session()->get('preAddress');
-			$cityCode = $preAddress['city'];
+			$districts = $commonModel->getDistList($preAddress['city']);
 		}
-		
-		$districts = $commonModel->getDistList($cityCode);
 		
 		return view(Config::get('constants.PA_COMPANY_PAGE'), array(
 						'cities' => $cities,
@@ -150,6 +146,7 @@ class CompanyController extends Controller
 			$comp->phone_2 = $request->phone_2;
 			$comp->style= json_encode($style);
 			$comp->description = $request->description;
+			$comp->location = $request->location;
 			$comp->created_by = (auth()->check()) ? auth()->user()->id : null;
 			
 			// set image name
@@ -343,9 +340,8 @@ class CompanyController extends Controller
 	 */
 	private function getServiceNameArray($arrServiceId) {
 		$arrServiceName = array();
-		$serviceModel = new Service();
 		foreach ($arrServiceId as $id) {
-			$service = $serviceModel->get($id);
+			$service = Service::find($id);
 			if ($service) {
 				array_push($arrServiceName, $service->name);
 			}

@@ -1,4 +1,4 @@
-@extends('template.index')
+@extends('template.mng.index')
 @push('stylesheets')
 <style>
 </style>
@@ -201,7 +201,7 @@
 						</tr>
 						@foreach ($service->children as $child)
 						<tr>
-							<td><span class="padding-left-20"><i class="icmn-circle-small"></i> {{ $child->name }}</span></td>
+							<td><span class="padding-left-20"><i class="icmn-circle-small"></i> {{ '#'.$child->id.'-'.$child->name }}</span></td>
 							<td>{{ '/'.$child->url_name }}</td>
 							<td class="text-center">
 								@if ($child->serve_flg == 1 && $child->popular_flg == 1)

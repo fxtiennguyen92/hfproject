@@ -67,4 +67,46 @@ class QuotedPrice extends Model
 	public function scopeFailed($query) {
 		return $query->where('state', Config::get('constants.QPRICE_FAILED'));
 	}
+	
+	/*=== API ===*/
+	public static function api_getQuotedPriceByOrder($orderId, $state = null) {
+		if (!$state) $state = Config::get('constants.QPRICE_NEW');
+		
+		return QuotedPrice::select('qp_id', 'order_id', 'pro_id', 'price', 'introduction', 'est_excute_at', 'created_at')
+			->with([
+				'pro' => function($query) {
+					$query->select('id', 'name', 'avatar');
+				},
+				'pro_profile' => function($query) {
+					$query->select('id', 'date_of_birth', 'gender', 'rating', 'total_review', 'total_orders');
+				}
+			])
+			->where('order_id', $orderId)
+			->where('state', $state)
+			->new()
+			->orderBy('created_at', 'desc')
+			->get();
+	}
+	
+	public static function api_getQuotedPriceByOrderAndPro($orderId, $proId, $state = null) {
+		if (!$state) $state = Config::get('constants.QPRICE_NEW');
+		
+		return QuotedPrice::select('qp_id', 'order_id', 'pro_id', 'price')
+			->where('order_id', $orderId)
+			->where('pro_id', $proId)
+			->where('state', $state)
+			->first();
+	}
+	
+	public static function api_acceptQuotedPrice($orderId, $proId) {
+		return QuotedPrice::where('qp_id', $orderId.'-'.$proId)
+			->new()
+			->update(['state' => Config::get('constants.QPRICE_SUCCESS')]);
+	}
+	
+	public static function api_rejectQuotedPrice($orderId, $acceptedProId = null) {
+		return QuotedPrice::where('order_id', $orderId)
+			->where('pro_id', '!=' , $acceptedProId)
+			->update(['state' => Config::get('constants.QPRICE_FAILED')]);
+	}
 }

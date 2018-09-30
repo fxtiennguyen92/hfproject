@@ -146,6 +146,8 @@
 	<div class="page-header hf-bg-gradient text-capitalize">Đối tác</div>
 	<div class="form-wrapper">
 		<div class="text-right">
+			<button class="btn btn-success" type="button" onclick="location.href = '{{ route('pro_new') }}'">
+				<i class="material-icons">assignment_ind</i></button>
 			<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalNewPro">
 				<i class="material-icons">person_add</i></button>
 		</div>
@@ -155,6 +157,7 @@
 					<thead>
 						<tr>
 							<th class="text-center col-name">Đối tác</th>
+							<th class="text-center">Trạng thái</th>
 							<th>&nbsp;</th>
 						</tr>
 					</thead>
@@ -180,10 +183,29 @@
 									@endif
 								</div>
 								
+								@if ($pro->profile->address_1)
+								<div class="pro-company padding-left-5">
+									<i class="material-icons">location_on</i> {{ $pro->profile->address_1.'_'.$pro->profile->address_2 }}
+								</div>
+								@endif
+								
 								@if ($pro->password_temp)
 								<div class="pro-company padding-left-5">
 									<i class="material-icons">vpn_key</i> {{ $pro->password_temp }}
 								</div>
+								@endif
+								
+							</td>
+							<td class="text-center col-label-profile-state">
+								<div class="padding-bottom-5">
+								@if ($pro->profile->state == '0')
+									<span class="label label-success">Chờ Duyệt</span>
+								@else
+									<span class="label label-primary">Đã hoạt động</span>
+								@endif
+								</div>
+								@if ($pro->profile->training_flg == '0')
+									<span class="label label-danger">Chưa training</span>
 								@endif
 							</td>
 							<td class="text-right">
@@ -300,5 +322,5 @@
 		</div>
 	</div>
 </section>
-@endsection
 @include('template.mng.footer-menu')
+@endsection

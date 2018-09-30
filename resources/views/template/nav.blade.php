@@ -58,7 +58,9 @@ $(document).ready(function() {
 				<button class="btn btn-menu" onclick="location.href = '{{ route('order_list_page') }}'">Đơn hàng</button>
 				@endif
 				<button class="btn btn-menu" onclick="window.open('{{ route('blog_page') }}')">Blog</button>
+				@if ((auth()->check() && auth()->user()->role == 0) || (!auth()->check()))
 				<button class="btn btn-secondary-outline" onclick="location.href = '{{ route('pro_new') }}'">Trở Thành Đối tác</button>
+				@endif
 				@if (auth()->check())
 				<a href="{{ route('control') }}"><img class="avt" src="{{ env('CDN_HOST') }}/u/{{ auth()->user()->id }}/{{ auth()->user()->avatar }}"></a>
 				@else

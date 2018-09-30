@@ -29,14 +29,14 @@ class OrderController extends Controller
 		$orderModel = new Order();
 		$currentOrders = $orderModel->getCurrentByMember(auth()->user()->id);
 		
-		//$newOrders = $orderModel->getNewByMember(auth()->user()->id);
+		$newOrders = $orderModel->getNewByMember(auth()->user()->id);
 		
 		$request->session()->forget('order'); // clear session
 		
 		return view(Config::get('constants.ORDER_LIST_PAGE'), array(
 						'nav' => 'order',
 						'currentOrders' => $currentOrders,
-						//'newOrders' => $newOrders,
+						'newOrders' => $newOrders,
 		));
 	}
 
@@ -143,14 +143,19 @@ class OrderController extends Controller
 			throw new NotFoundHttpException();
 		}
 		$orderId = $request->session()->get('order');
+		$orderModel = new Order();
+		$order = $orderModel->getById($orderId);
+		if ($order->state === Config::get('constants.ORD_COMPLETE')) {
+			if (auth()->user()->role == Config::get('constants.ROLE_USER')) {
+				return Redirect::back()->with('review', true);
+			}
+			return Redirect::back();
+		}
 		
 		try {
 			DB::beginTransaction();
-			$orderModel = new Order();
 			$orderModel->updateState($orderId, Config::get('constants.ORD_COMPLETE'));
-			
-			$order = $orderModel->getById($orderId);
-			
+
 			$pro = User::find($order->pro_id);
 			$pro->point = $pro->point + ($order->total_price / 1000);
 			$pro->save();

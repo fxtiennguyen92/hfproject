@@ -136,6 +136,10 @@ class Service extends Model
 	public function children() {
 		return $this->hasMany('App\Service', 'parent_id', 'id')->orderBy('name');
 	}
+	
+	public function parent() {
+		return $this->hasOne('App\Service', 'id', 'parent_id');
+	}
 
 	public function scopeRoot($query) {
 		return $query->where('parent_id', Config::get('constants.SERVICE_ROOT'));
@@ -155,5 +159,62 @@ class Service extends Model
 
 	public function scopeAvailable($query) {
 		return $query->where('delete_flg', Config::get('constants.FLG_OFF'));
+	}
+
+	/** API **/
+	public function childrenCount() {
+		return $this->hasMany('App\Service', 'parent_id', 'id')
+			->selectRaw('parent_id, count(*) as count')
+			->groupBy('parent_id');
+	}
+	
+	public static function api_getRootServices() {
+		return Service::select(['id', 'parent_id', 'name', 'image'])
+			->with('childrenCount')
+			->root()
+			->serving()
+			->available()
+			->orderBy('order_dsp')
+			->orderBy('name')
+			->get();
+	}
+	
+	public static function api_getPopularServices() {
+		return Service::select(['id', 'parent_id', 'name', 'image'])
+			->child()
+			->serving()
+			->popular()
+			->available()
+			->orderBy('order_dsp')
+			->orderBy('name')
+			->get();
+	}
+	
+	public static function api_get($id) {
+		return Service::with('children', 'parent')
+			->where('id', $id)
+			->select(['id', 'name', 'parent_id'])
+			->serving()
+			->available()
+			->first();
+	}
+	
+	public static function api_getByHint($hints) {
+		$services = [];
+		foreach ($hints as $hint) {
+			$result = Service::select(['id', 'name', 'parent_id'])
+							->with('parent')
+							->where('hint', 'LIKE', '%'.trim($hint).'%')
+							->orWhere('name', 'LIKE', '%'.trim($hint).'%')
+							->child()
+							->orderBy('parent_id')
+							->orderBy('name')
+							->get()
+							->toArray();
+			
+			$services = array_merge($services, $result);
+		}
+		
+		return $services;
 	}
 }

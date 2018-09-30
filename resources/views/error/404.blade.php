@@ -15,6 +15,8 @@ $(document).ready(function() {
 	<h1 class="color-info">404</h1>
 	<div><span>Không tìm thấy trang này</span></div>
 	
-	<button type="button" class="margin-top-50 text-center btn btn-primary width-150" onclick="">Trở về trang chủ</button>
+	<button type="button"
+		class="margin-top-50 text-center btn btn-primary width-150"
+		onclick="location.href = '{{ route('home_page') }}'">Trở về trang chủ</button>
 </div>
 @endsection

@@ -1,4 +1,4 @@
-@extends('template.index')
+@extends('template.mng.index')
 @push('stylesheets')
 <style>
 	.content-template-1 .btn-group {

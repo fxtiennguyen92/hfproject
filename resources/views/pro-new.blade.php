@@ -362,8 +362,8 @@
 				<select id="eventSelect" class="form-control selectpicker hf-select" name="event">
 					<option value="" selected>Chưa tham gia</option>
 					@foreach ($events as $event)
-					<option value="{{ $event->id }}" name="{{ $event->name }}" time="{{ $event->from_time }}" date="{{ Carbon\Carbon::parse($event->date)->format('d/m/Y') }}" place="{{ $event->place }}">
-						{{ Carbon\Carbon::parse($event->date)->format('d/m/Y').' '.$event->from_time.' - '.$event->name.' - '.$event->place }}</option>
+					<option value="{{ $event->id }}" name="{{ $event->name }}" time="{{ $event->from_time }}" date="{{ Carbon\Carbon::parse($event->date)->format('d/m/Y') }}" place="{{ $event->address }}">
+						{{ Carbon\Carbon::parse($event->date)->format('d/m/Y').' '.$event->from_time.' - '.$event->name.' - '.$event->address }}</option>
 					@endforeach
 				</select>
 			</div>

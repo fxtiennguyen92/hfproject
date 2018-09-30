@@ -33,6 +33,7 @@
 	<script src="assets/vendors/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js"></script>
 	<script src="assets/vendors/slick/slick.min.js"></script>
 	<script src="assets/vendors/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+	<script src="assets/vendors/barrating/jquery.barrating.min.js"></script>
 
 	<!-- Clean UI Scripts -->
 	<script src="assets/common/js/common.js"></script>

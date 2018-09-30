@@ -12,6 +12,7 @@ return [
 	'BLOG_CONTENT_PAGE' => 'blog',
 	'DOC_PAGE' => 'doc',
 	'SERVICE_PAGE' => 'service',
+	'SEARCH_PAGE' => 'search',
 
 	'SURVEY_PAGE' => 'survey',
 	'COMPLETE_PAGE' => 'complete',
@@ -47,6 +48,9 @@ return [
 	'MNG_VIDEO_PAGE' => 'mng.video',
 	'MNG_VIDEO_LIST_PAGE' => 'mng.videos',
 	'MNG_PA_LIST_PAGE' => 'mng.pas',
+	'MNG_WALLET_TRANS_PAGE' => 'mng.wallet-trans',
+	'MNG_WALLET_TRANS_REQUEST_PAGE' => 'mng.wallet-trans-request',
+	'MNG_EVENT_LIST_PAGE' => 'mng.events',
 	
 	'PA_COMPANY_LIST_PAGE' => 'mng.pa.companies',
 	'PA_COMPANY_PAGE' => 'mng.pa.company',
@@ -78,6 +82,7 @@ return [
 	
 	'ROLE_ADM' => '99', // Administrator
 	
+	'FLG_REJECT' => '-',
 	'FLG_OFF' => '0',
 	'FLG_ON' => '1',
 	
