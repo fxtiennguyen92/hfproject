@@ -360,11 +360,13 @@ $(document).ready(function() {
 						</div>
 					</div>
 					<div class="margin-bottom-30 row">
-						<div class="col-xs-8">
-							<input id="inpSAC" maxlength="4" class="form-control sac" placeholder="Mã PIN" name="sac" type="text" data-validation="[NOTEMPTY, INTEGER]">
+						<div class="col-xs-12 text-center">
+							<span id="btnSendSAC" class="btnSendSAC btn width-150">Gửi mã PIN</span>
 						</div>
-						<div class="col-xs-4 text-right">
-							<span id="btnSendSAC" class="btnSendSAC btn">Gửi mã PIN</span>
+					</div>
+					<div class="margin-bottom-30 row">
+						<div class="col-xs-12">
+							<input id="inpSAC" maxlength="4" class="form-control sac" placeholder="Nhập Mã PIN" name="sac" type="text" data-validation="[NOTEMPTY, INTEGER]">
 						</div>
 					</div>
 					<div class="padding-top-30 padding-bottom-30 text-center">
@@ -395,11 +397,13 @@ $(document).ready(function() {
 						</div>
 					</div>
 					<div class="margin-bottom-30 row">
-						<div class="col-xs-8">
-							<input id="inpSAC" maxlength="4" class="form-control sac" placeholder="Mã PIN" name="sac" type="text" data-validation="[NOTEMPTY, INTEGER]">
+						<div class="col-xs-12 text-center">
+							<span id="btnSendSAC" class="btnSendSAC btn width-150">Gửi mã PIN</span>
 						</div>
-						<div class="col-xs-4 text-right">
-							<span id="btnSendSAC" class="btnSendSAC btn">Gửi mã PIN</span>
+					</div>
+					<div class="margin-bottom-30 row">
+						<div class="col-xs-12">
+							<input id="inpSAC" maxlength="4" class="form-control sac" placeholder="Nhập Mã PIN" name="sac" type="text" data-validation="[NOTEMPTY, INTEGER]">
 						</div>
 					</div>
 					<div class="padding-top-30 padding-bottom-30 text-center">

@@ -41,6 +41,14 @@ Route::group(['middleware' => 'jwt.auth'], function () {
 	
 });
 
+Route::get('/user/services', 'API\ServiceController@getRootServices');
+Route::get('/user/services/search', 'API\ServiceController@search');
+
+Route::get('/user/service/{id}', 'API\ServiceController@get');
+Route::get('/user/service/{id}/services', 'API\ServiceController@getChildServices');
+Route::get('/user/service/{id}/survey', 'API\ServiceController@getSurvey');
+	
+
 Route::post('/user/order', 'API\OrderController@create');
 Route::get('/user/orders', 'API\OrderController@userGetAll');
 Route::get('/user/order/{id}/quoted', 'API\OrderController@userGetQuotedPrice');

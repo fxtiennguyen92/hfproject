@@ -55,10 +55,11 @@
 		$('.mng-list').DataTable({
 			responsive: true,
 			info: false,
-			paging: false,
+			paging: true,
 			language: {
 				zeroRecords: "Chưa có thông tin",
-				search: "Tìm kiếm cục bộ"
+				search: "Tìm kiếm cục bộ",
+				lengthMenu: "Hiển thị _MENU_",
 			},
 			order: [[3, 'desc']],
 			columnDefs: [{ orderable: false, targets: [5] }]
@@ -173,6 +174,21 @@
 		$('#modalWallet').modal('show');
 	}
 
+	function withdrawHand(proName, proId) {
+		$('#walletTitle').html('Nạp tiền ví Hand');
+		$('#walletName').val(proName);
+		$('#walletId').val(proId);
+		$('#walletMoney').val('');
+		$('#walletMoneyString').html('');
+		$('#btnWallet').addClass('btn-primary').removeClass('btn-danger');
+		
+		var url = '{{ route("mng_wallet_hand_update", ["id" => "walletId"]) }}';
+		url = url.replace('walletId', proId);
+		$('#frmWallet').attr('action', url);
+		
+		$('#modalWallet').modal('show');
+	}
+
 	function deposit(proName, proId) {
 		$('#walletTitle').html('Xuất tiền khỏi Tài khoản');
 		$('#walletName').val(proName);
@@ -233,13 +249,18 @@
 		</div>
 		@endif
 	</div>
+	
 	<div class="form-wrapper">
+		<div class="text-right">
+			<button class="btn btn-warning" type="button" onclick="location.href = '{{ route('export_pro') }}'">
+				<i class="material-icons">save_alt</i></button>
+		</div>
 		<div class="row">
 			<div class="col-sm-12">
 				<table class="table table-hover nowrap mng-list" width="100%">
 					<thead>
 						<tr>
-							<th class="text-center">Họ tên</th>
+							<th class="text-center">Id - Họ tên</th>
 							<th class="text-center">Địa chỉ</th>
 							<th class="text-center" style="width: 100px;">Ví</th>
 							<th class="text-center" style="width: 100px;">Ngày Đ.ký</th>
@@ -251,6 +272,7 @@
 						@foreach ($pros as $pro)
 						<tr>
 							<td class="col-pro-info"">
+								<div>{{ '#'.sprintf('%06d', $pro->id) }}</div>
 								<div class="@if ($pro->role == 2) color-danger @endif pro-name">
 									{{ $pro->name }}
 								</div>
@@ -324,10 +346,13 @@
 										<a class="dropdown-item" href="{{ route('mng_pro_edit', ['id' => $pro->id]) }}">
 											<i class="icmn-grid6"></i> Chi tiết
 										</a>
-										<a class="dropdown-item"  onclick="return withdraw('{{$pro->name}}', '{{$pro->id}}')">
-											<i class="icmn-coins"></i> Nạp tiền
+										<a class="dropdown-item" onclick="return withdraw('{{$pro->name}}', '{{$pro->id}}')">
+											<i class="icmn-coins"></i> Nạp ví tiền
 										</a>
-										<a class="dropdown-item"  onclick="return deposit('{{$pro->name}}', '{{$pro->id}}')">
+										<a class="dropdown-item" onclick="return withdrawHand('{{$pro->name}}', '{{$pro->id}}')">
+											<i class="icmn-piggy-bank"></i> Nạp ví Hand
+										</a>
+										<a class="dropdown-item" onclick="return deposit('{{$pro->name}}', '{{$pro->id}}')">
 											<i class="icmn-upload9"></i> Xuất tiền
 										</a>
 										<a class="dropdown-item" href="javascript:void(0);">
@@ -348,6 +373,12 @@
 										<a class="dropdown-item" href="javascript:void(0);">
 											<i class="icmn-user-check2"></i> Phục hồi
 										</a>
+										@if ($pro->password_temp)
+										<a class="dropdown-item"
+											target="_black" href="{{ route('mng_pro_print', ['id' => $pro->id]) }}">
+											<i class="icmn-printer2"></i> In tạm thông tin
+										</a>
+										@endif
 									</ul>
 								</div>
 							</td>
@@ -395,7 +426,7 @@
 						</div>
 					</div>
 					<div class="row row-complete margin-top-20">
-						<button id="btnWallet" type="button" class="btn" style="width: 100%">Thực hiện</button>
+						<button id="btnWallet" type="button" class="btn" style="width: 100%">Nạp Ví Tiền</button>
 						<input id="walletId" type="hidden" name="id" value="" />
 						<input id="walletWallet" type="hidden" name="wallet" value="" />
 						<input type="hidden" name="_token" value="{{ csrf_token() }}" />

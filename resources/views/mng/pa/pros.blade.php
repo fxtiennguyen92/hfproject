@@ -18,7 +18,7 @@
 				search: "Tìm kiếm"
 			},
 		});
-
+		$('.company-row').hide();
 		$('label.btn').on('click', function() {
 			var span = $(this).find('span');
 			if (span.hasClass('icmn-radio-unchecked')) {
@@ -83,7 +83,7 @@
 								} else if (xhr.status == 409) {
 									swal({
 										title: 'Thất bại',
-										text: 'Email không đúng hoặc đã được sử dụng!',
+										text: 'Số điện thoại đã được sử dụng!',
 										type: 'error',
 										confirmButtonClass: 'btn-default',
 										confirmButtonText: 'Quay lại',
@@ -97,7 +97,7 @@
 										confirmButtonText: 'Quay lại',
 									});
 								};
-								resetBtnSubmit('btnSubmit', 'Đăng ký');
+								resetBtnSubmit('btnSubmit', 'Lưu Đối tác');
 							}
 						});
 					}
@@ -146,8 +146,6 @@
 	<div class="page-header hf-bg-gradient text-capitalize">Đối tác</div>
 	<div class="form-wrapper">
 		<div class="text-right">
-			<button class="btn btn-success" type="button" onclick="location.href = '{{ route('pro_new') }}'">
-				<i class="material-icons">assignment_ind</i></button>
 			<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modalNewPro">
 				<i class="material-icons">person_add</i></button>
 		</div>
@@ -165,47 +163,20 @@
 						@foreach ($pros as $pro)
 						<tr>
 							<td class="col-pro-info"">
-								<div class="@if ($pro->role == 2) color-danger @endif pro-name">
+								<div class="pro-name">
 									{{ $pro->name }}
 								</div>
 								<div class="pro-phone padding-left-5">
 									<i class="material-icons">phone</i>
 									@if ($pro->phone){{ $pro->phone }}
-									@else
-										<span class="no-info">Chưa cập nhật</span>
 									@endif
 								</div>
-								<div class="pro-company padding-left-5">
-									@if (isset($pro->profile) && isset($pro->profile->company))
-									<i class="material-icons">store</i> {{ $pro->profile->company->name }}
-									@else
-									<i class="material-icons">build</i> Kinh doanh cá nhân
-									@endif
-								</div>
-								
-								@if ($pro->profile->address_1)
-								<div class="pro-company padding-left-5">
-									<i class="material-icons">location_on</i> {{ $pro->profile->address_1.'_'.$pro->profile->address_2 }}
-								</div>
-								@endif
-								
-								@if ($pro->password_temp)
-								<div class="pro-company padding-left-5">
-									<i class="material-icons">vpn_key</i> {{ $pro->password_temp }}
-								</div>
-								@endif
-								
 							</td>
 							<td class="text-center col-label-profile-state">
-								<div class="padding-bottom-5">
-								@if ($pro->profile->state == '0')
-									<span class="label label-success">Chờ Duyệt</span>
+								@if ($pro->user)
+									<span class="label label-primary">Đã tham gia</span>
 								@else
-									<span class="label label-primary">Đã hoạt động</span>
-								@endif
-								</div>
-								@if ($pro->profile->training_flg == '0')
-									<span class="label label-danger">Chưa training</span>
+									<span class="label label-warning">Chưa tham gia</span>
 								@endif
 							</td>
 							<td class="text-right">
@@ -264,11 +235,11 @@
 									<label>Loại tài khoản</label>
 									<div class="row" style="margin: 0px 5px;">
 										<div class="btn-group" data-toggle="buttons" class="col-sm-12">
-											<label class="col-sm-12 btn active">
+											<label class="col-sm-12 btn">
 												<input type="radio"
 													name="style"
-													value="1" checked>
-													<span class="icon icmn-checkmark-circle"></span> Doanh nghiệp
+													value="1">
+													<span class="icon icmn-radio-unchecked"></span> Doanh nghiệp
 											</label>
 											<label class="col-sm-12 btn">
 												<input type="radio"
@@ -276,11 +247,11 @@
 													value="2">
 													<span class="icon icmn-radio-unchecked"></span> Quản lý Doanh nghiệp
 											</label>
-											<label class="col-sm-12 btn">
+											<label class="col-sm-12 btn active">
 												<input type="radio"
 													name="style"
-													value="0">
-													<span id="spanNoCompany" class="icon icmn-radio-unchecked"></span> Cá nhân
+													value="0" checked>
+													<span id="spanNoCompany" class="icon icmn-checkmark-circle"></span> Cá nhân
 											</label>
 										</div>
 									</div>
@@ -314,7 +285,7 @@
 						</div>
 					</div>
 					<div class="row-complete">
-						<button id="btnSubmit" type="submit" class="btn btn-primary" style="width: 100%">Tạo tài khoản</button>
+						<button id="btnSubmit" type="submit" class="btn btn-primary" style="width: 100%">Lưu Đối tác</button>
 						<input type="hidden" name="_token" value="{{ csrf_token() }}" />
 					</div>
 				</div>

@@ -454,18 +454,6 @@
 			</div>
 		</div>
 		
-		<h5 class="padding-top-30">Buổi training</h5>
-		<div class="padding-20 margin-bottom-30 hf-card">
-			<div class="row">
-				<select class="form-control selectpicker hf-select" name="event">
-					<option value="" selected>Chưa tham gia</option>
-					@foreach ($events as $event)
-					<option value="{{ $event->id }}" name="{{ $event->name }}" @if ($pro->profile->training == $event->id) selected @endif>
-						{{ Carbon\Carbon::parse($event->date)->format('d/m/Y').' '.$event->from_time.' - '.$event->name.' - '.$event->address }}</option>
-					@endforeach
-				</select>
-			</div>
-		</div>
 		<div class="row-complete clearfix">
 			@if ($pro->profile->state == '0')
 			<button id="btnUpdate" type="button" class="btn btn-warning-outline" style="width: 50%">Cập nhật</button> 

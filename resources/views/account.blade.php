@@ -60,11 +60,22 @@ $(document).ready(function() {
 	});
 	
 	$('#btnFillWallet').on('click', function() {
+		var textAlert = '<p><strong>Cách 1: Chuyển Khoản Ngân Hàng</strong></p>';
+		textAlert += '<p>Ngân hàng: Vietcombank</p>';
+		textAlert += '<p>Số Tài khoản: 0071000686539</p>';
+		textAlert += '<p>Tên Tài Khoản: LA THANH MINH</p>';
+		textAlert += '<p><strong>Cách 2: Nạp qua MOMO</strong></p>';
+		textAlert += '<p>Số Điện thoại: 0903375500</p>';
+		textAlert += '<p><strong>Cách 3: Nạp Trực Tiếp</strong></p>';
+		textAlert += '<p>Văn Phòng Hand Free</p>';
+		textAlert += '<p>157/1A Nguyễn Gia Trí, Phường 25</p>';
+		textAlert += 'Quận Bình Thạnh, TPHCM';
+		
 		swal({
-			title: 'Tài khoản',
-			text: 'Hiện tại chúng tôi chưa cung cấp dịch vụ này',
-			type: 'warning',
-			confirmButtonClass: 'btn-warning',
+			html: true,
+			title: '',
+			text: textAlert,
+			confirmButtonClass: 'btn-primary',
 			confirmButtonText: 'Quay lại',
 		});
 	});
@@ -533,7 +544,7 @@ $(document).ready(function() {
 				</div>
 				<div class="col-xs-4 text-center">
 					<img class="social-icon" src="{{ env('CDN_HOST') }}/img/social/phone.png">
-					<label class="margin-top-10">0904 623 460</label>
+					<label class="margin-top-10">035 2221 050</label>
 				</div>
 			</div>
 		</div>

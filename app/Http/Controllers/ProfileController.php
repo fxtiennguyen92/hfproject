@@ -66,12 +66,6 @@ class ProfileController extends Controller
 			return response()->json('', 400);
 		}
 		
-		$validator = $this->phone_validator($request->all());
-		if ($validator->fails()) {
-			$errors = $validator->errors()->getMessages();
-			return response()->json($errors, 412);
-		}
-		
 		$userModel = new User();
 		$currUser = $userModel->getAvailableAcc(auth()->user()->id);
 		if (!$currUser) {

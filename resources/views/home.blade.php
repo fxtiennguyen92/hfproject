@@ -215,31 +215,23 @@ $(document).ready(function() {
 			<img src="{{ env('CDN_HOST') }}/img/logo/logoh.png" width="180px">
 		</div>
 		<div class="row margin-top-10">
-			<div class="col-md-4 col-xs-12">
+			<div class="col-md-3 col-xs-12">
 				<ul class="info">
-					<li>157/1A Đường D2, Bình Thạnh, Tp.HCM</li>
+					<li>157/1A Đường Nguyễn Gia Trí (D2), Bình Thạnh, Tp.HCM</li>
 					<li><i class="icmn-envelop3"></i> info@handfree.co</li>
 					<li><a href="javascript:void(0);" onclick="window.open('https://m.me/handfreeco', '_blank');">
 						<i class="icmn-bubble-notification"></i> handfreeco</a></li>
-					<li><i class="icmn-phone-wave"></i>0904 623 460</li>
+					<li><i class="icmn-phone-wave"></i>035 2221 050</li>
 					
 				</ul>
 			</div>
-			<div class="col-md-2 col-xs-6">
+			<div class="col-md-3 col-xs-12 text-right">
 				<ul class="link">
-					<li><a href="javascript:void(0);">Thông tin</a></li>
-					<li><a href="javascript:void(0);">Tuyển dụng</a></li>
-					<li><a href="{{ route('blog_page') }}">Blog</a>
-					</li>
-				</ul>
-			</div>
-			<div class="col-md-3 col-xs-6">
-				<ul class="link">
-					<li><a href="javascript:void(0);">Hỗ trợ Khách hàng</a></li>
 					<li><a href="{{ route('pro_new') }}">Trở thành Đối tác</a></li>
+					<li><a href="{{ route('blog_page') }}">Blog</a></li>
 				</ul>
 			</div>
-			<div class="col-md-3 text-right">
+			<div class="col-md-6 col-xs-12 text-right">
 				<div class="fb-page"
 					data-href="https://www.facebook.com/handfree.co"
 					data-tabs="timeline" data-width="300px"

@@ -53,10 +53,15 @@ class Order extends Model
 	}
 
 	public function getNewByPro($id, $services) {
+		$date = new \DateTime();
+		$date->modify('-24 hours');
+		$min_date = $date->format('Y-m-d H:i:s');
+		
 		return $this
 			->new()
 			->whereIn('service_id', json_decode($services))
 			->whereNotIn('id', QuotedPrice::getListNewQuotedOrderIdByPro($id))
+			->where('created_at', '>', $min_date)
 			->get();
 	}
 

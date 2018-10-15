@@ -2809,6 +2809,12 @@ span.header-info {
   font-size: 28px;
   color: #01a8fe !important;
 }
+.page-mng-content {
+  margin-left: 250px;
+}
+.mng-body nav.top-menu {
+  display: none;
+}
 
 /*
 * RESPONSIVE
@@ -2985,6 +2991,15 @@ span.header-info {
   }
   .modal:before {
     display: none;
+  }
+  .page-mng-content {
+    margin-left: 0px !important;
+  }
+  .mng-report {
+    display: none;
+  }
+  .mng-body nav.top-menu {
+    display: block;
   }
 }
 

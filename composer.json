@@ -10,7 +10,9 @@
         "laravel/socialite": "^3.0",
         "laravel/tinker": "~1.0",
         "league/flysystem-aws-s3-v3": "^1.0",
-		"tymon/jwt-auth": "1.0.0-rc.2"
+		"tymon/jwt-auth": "1.0.0-rc.2",
+        "spipu/html2pdf": "^5.2",
+        "maatwebsite/excel": "^2.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

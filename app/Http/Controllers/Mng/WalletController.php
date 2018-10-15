@@ -60,6 +60,39 @@ class WalletController extends Controller
 			return response()->json($e->getMessage(), 500);
 		}
 	}
+	
+	public function updateHand($id, Request $request) {
+		$validator = $this->validator($request->all());
+		if ($validator->fails()) {
+			return response()->json($validator->errors()->first(), 409);
+		}
+		
+		$wallet = Wallet::find($id);
+		if (!$wallet) {
+			return response()->json('', 400);
+		}
+		
+		try {
+			DB::beginTransaction();
+			
+// 			$transaction = new WalletTransaction();
+// 			$transaction->wallet_id = $wallet->id;
+// 			$transaction->prev_wallet = $wallet->wallet_1;
+// 			$transaction->wallet = $request->wallet;
+// 			$transaction->description = $request->description;
+// 			$transaction->created_by = auth()->user()->id;
+// 			$transaction->save();
+			
+			$wallet->wallet_2 = $wallet->wallet_2 + $request->wallet;
+			$wallet->save();
+			
+			DB::commit();
+			return response()->json('', 200);
+		} catch (\Exception $e) {
+			DB::rollback();
+			return response()->json($e->getMessage(), 500);
+		}
+	}
 
 	public function deposit($id, Request $request) {
 		$validator = $this->validator($request->all());

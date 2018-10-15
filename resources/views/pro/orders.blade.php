@@ -23,8 +23,9 @@
         <div class="row">
           @if (sizeof($quotedOrders) == 0)
             <div class="common-text">Không có đơn hàng nào</div>
-          @endif
-          @foreach ($quotedOrders as $quotedPrice) @php $order = $quotedPrice->order; $order->quoted = $quotedPrice->state; $order->quoted_price = $quotedPrice->price @endphp
+          @else
+          @foreach ($quotedOrders as $quotedPrice)
+            @php $order = $quotedPrice->order; $order->quoted = $quotedPrice->state; $order->quoted_price = $quotedPrice->price @endphp
             @if ($order->pro_id != auth()->user()->id && $order->state != 0)
           <div class="col-md-12 col-sm-12 fail-order">
             @else
@@ -33,6 +34,7 @@
             @include('order.order_detail_tag')
           </div>
           @endforeach
+          @endif
         </div>
       </div>
       <div class="tab-pane" id="notiTab" role="tabpanel" aria-expanded="false">

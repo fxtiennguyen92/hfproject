@@ -131,7 +131,17 @@
 	<!-- End Page Scripts -->
 </head>
 
-<body class="theme-default single-page">
+<body class="theme-default single-page mng-body">
+	<nav class="top-menu">
+		<div class="menu-icon-container hidden-md-up">
+			<div class="animate-menu-button left-menu-toggle">
+				<div><!-- --></div>
+			</div>
+		</div>
+		<div class="menu text-center">
+			<img src="https://cdn.handfree.co/img/logo/logoh.png" class="navbar-logo">
+		</div>
+	</nav>
 	<nav class="left-menu" left-menu>
 		<div class="logo-container">
 			<a href="javascript:void(0)" class="logo"><img src="{{ env('CDN_HOST') }}/img/logo/logoh.png" class="navbar-logo"></a>
@@ -258,7 +268,7 @@
 			</ul>
 		</div>
 	</nav>
-	<section style="margin-left: 250px;">
+	<section class="page-mng-content">
 		@include('template.header-top-bar')
 		@yield('content')
 	</section>

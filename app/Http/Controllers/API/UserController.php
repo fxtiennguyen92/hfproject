@@ -9,6 +9,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\Validator;
 use App\SAC;
 use App\Http\Controllers\FileController;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {

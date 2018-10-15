@@ -212,7 +212,7 @@ $(document).ready(function() {
 				<h5 class="padding-top-10">Cách thức liên hệ</h5>
 				<div class="padding-20 hf-card">
 					<div style="font-size: 13px; color: #aaa;">Hotline</div>
-					<div>024 7304 1114</div>
+					<div>035 2221 050</div>
 				</div>
 			</div>
 		</div>

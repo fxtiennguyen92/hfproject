@@ -19,6 +19,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\CommonController;
 use App\Order;
+use App\Http\Controllers\SMSController;
+use App\TempPro;
+use Spipu\Html2Pdf\Html2Pdf;
 
 class ProController extends Controller
 {
@@ -71,23 +74,16 @@ class ProController extends Controller
 		}
 		
 		$cities = $commonModel->getCityList();
-		
 		$districts = $commonModel->getDistList($pro->city);
 		$services = $serviceModel->getAllServingRoots();
 		$events = $eventModel->getAll();
 		$companies = $companyModel->getAll();
-		
-		$joinedEvents = $eventUserModel->getByUserId($id);
-		if (sizeof($joinedEvents) > 0) {
-			$pro->event = $joinedEvents->first()->id;
-		}
 		
 		return view(Config::get('constants.MNG_PRO_PAGE'), array(
 						'pro' => $pro,
 						'cities' => $cities,
 						'districts' => $districts,
 						'services' => $services,
-						'events' => $events,
 						'companies' => $companies
 		));
 	}
@@ -128,22 +124,6 @@ class ProController extends Controller
 			$user->phone = $request->phone;
 			
 			$user->save();
-			
-			// event
-			if ($request->event != $pro->training) {
-				if (!$pro->training) {
-					$this->createEventUser($id, $request->event);
-				} elseif (!$request->event) {
-					$eventUserModel = new EventUser();
-					$joinedEvent = $eventUserModel->getByEventIdAndUserId($pro->training, $id);
-					$joinedEvent->delete();
-				} else {
-					$eventUserModel = new EventUser();
-					$joinedEvent = $eventUserModel->getByEventIdAndUserId($pro->training, $id);
-					$joinedEvent->id = $request->event;
-					$joinedEvent->save();
-				}
-			}
 			
 			// profile
 			$pro->date_of_birth = CommonController::convertStringToDate($request->dateOfBirth);
@@ -222,13 +202,33 @@ class ProController extends Controller
 		return redirect()->route('mng_pro_list');
 	}
 
+	public function printTemp($id) {
+		$userModel = new User();
+		$pro = $userModel->getProOrProManager($id);
+		if (!$pro) {
+			throw new NotFoundHttpException();
+		}
+		
+		$content = '<page style="font-family: freeserif">';
+		$content.= '<h4>Thông tin Tài khoản</h4>';
+		$content.= '<p>Họ và tên: <strong>'.$pro->name.'</strong></p>';
+		$content.= '<p>Số Điện thoại: <strong>'.$pro->phone.'</strong></p>';
+		$content.= '<p>MK Mặc định: <strong>'.(($pro->password_temp) ? $pro->password_temp : 'Đã thay đổi').'</strong></p>';
+		$content.= '</page>';
+		
+		$html2pdf = new Html2Pdf('P', 'A4', 'fr');
+		$html2pdf->pdf->SetDisplayMode('real');
+		$html2pdf->writeHTML($content);
+		$html2pdf->output();
+	}
+
 	/** Partner Acquisition **/
 	public function viewListForPA() {
-		$userModel = new User();
+		$tempProModel = new TempPro();
 		$compModel = new Company();
 		$eventModel = new Event();
 		
-		$pros = $userModel->getAllProForPA(auth()->user()->id);
+		$pros = $tempProModel->getAllForPA(auth()->user()->id);
 		$companies = $compModel->getAll();
 		$events = $eventModel->getAll();
 		
@@ -250,19 +250,25 @@ class ProController extends Controller
 			return response()->json('Phone is registered', 409);
 		}
 		
+		if (TempPro::existPhone($request->phone)) {
+			return response()->json('Phone is registered', 409);
+		}
+		
 		DB::beginTransaction();
 		try {
-			// create user
-			$userId = $this->createUser($request);
-			// create pro profile
-			$this->createProProfile($userId, $request);
+			// create temp pro
+			$temp = new TempPro();
+			$temp->name = $request->name;
+			$temp->phone = $request->phone;
+			$temp->created_by = auth()->user()->id;
+			$temp->save();
+			
 			// create event
 			if ($request->event) {
-				$this->createEventUser($userId, $request->event);
+				$this->createEventUser($temp->id, $request->event);
 			}
 			
 			DB::commit();
-			
 			return response()->json('', 200);
 		} catch (\Exception $e) {
 			DB::rollback();
@@ -271,34 +277,9 @@ class ProController extends Controller
 	}
 	
 	public function deleteForPA($id) {
-		$userModel = new User();
-		$userModel->updateDeleteFlg($id, Config::get('constants.FLG_ON'));
+		TempPro::destroy($id);
 		
 		return redirect()->route('pa_pro_list');
-	}
-	
-	private function createUser($request) {
-		$user = new User();
-		$user->name = $request->name;
-		$user->phone = $request->phone;
-		$user->password_temp = str_random(6);
-		$user->password = bcrypt($user->password_temp);
-		$user->confirm_flg = Config::get('constants.FLG_ON');
-		$user->role = ($request->style == 2) ? Config::get('constants.ROLE_PRO_MNG') : Config::get('constants.ROLE_PRO');
-		$user->created_by = (auth()->check()) ? auth()->user()->id : null;
-		
-		$user->save();
-		return $user->id;
-	}
-	
-	private function createProProfile($userId, $request) {
-		$profile = new ProProfile();
-		$profile->id = $userId;
-		$profile->company_id = ($request->style != 0) ? $request->company : null;
-		$profile->training = $request->event;
-		$profile->created_by = (auth()->check()) ? auth()->user()->id : null;
-		
-		$profile->save();
 	}
 	
 	private function createEventUser($userId, $eventId) {
@@ -314,6 +295,7 @@ class ProController extends Controller
 	private function sendMessageAndEmail($id) {
 		$userModel = new User();
 		$pro = $userModel->getProOrProManager($id);
+		SMSController::sendActiveProAccountSMS($pro->phone, $pro->password_temp);
 		if ($pro->email) {
 			MailController::sendActiveProAccountMail($pro->name, $pro->email, $pro->password_temp);
 		}

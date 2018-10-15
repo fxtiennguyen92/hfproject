@@ -186,6 +186,8 @@ Route::middleware('cs.officer')->group(function() {
 	// Wallet
 	Route::post('/mng/wallet/{id}', 'Mng\WalletController@update')
 		->name('mng_wallet_update');
+	Route::post('/mng/wallet/{id}/hand', 'Mng\WalletController@updateHand')
+		->name('mng_wallet_hand_update');
 	Route::post('/mng/wallet/{id}/deposit', 'Mng\WalletController@deposit')
 		->name('mng_wallet_deposit');
 	
@@ -211,6 +213,8 @@ Route::middleware('cs.officer')->group(function() {
 		->name('mng_pro_active');
 	Route::post('/mng/pro/{id}/delete','Mng\ProController@delete')
 		->name('mng_pro_delete');
+	Route::get('/mng/pro/{id}/print','Mng\ProController@printTemp')
+		->name('mng_pro_print');
 	
 	Route::post('/mng/pro/avatar', 'Mng\ProController@approveAvatar')
 		->name('approve_pro_avatar');
@@ -343,9 +347,13 @@ Route::middleware('cs.officer')->group(function() {
 		->name('mng_pa_create');
 	Route::post('/mng/pa/{id}/delete', 'Mng\PAController@delete')
 		->name('mng_pa_delete');
+	
+	// Export
+	Route::get('/mng/exp/pro', 'Export\ExportController@proExport')
+		->name('export_pro');
 });
 /** Management - END **/
-// 	Route::get('/test', 'API\UserController@generateAPI');
+// 	Route::get('/test', 'Export\ExportController@proExport');
 	
 // Route::get('/test2', function () { return view('mail.out-location'); });
 // Route::get('/test3', function () { return view('test3'); });

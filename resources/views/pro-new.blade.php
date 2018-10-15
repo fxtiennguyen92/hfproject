@@ -356,6 +356,35 @@
 		<div class="padding-top-10">
 			<small><b>Dịch vụ đã chọn: </b><span class="header-info" id="chosenService">...</span></small>
 		</div>
+		<h5 class="padding-top-30">Phương thức thanh toán</h5>
+		<div class="padding-20 hf-card">
+			<div class="row">
+				<div class="col-sm-8 col-xs-12">
+					<div class="form-group">
+						<label>Ngân hàng</label>
+						<input type="text" maxlength="150" class="form-control" name="bankName">
+					</div>
+				</div>
+				<div class="col-sm-4 col-xs-12">
+					<div class="form-group">
+						<label>Chi nhánh</label>
+						<input type="text" maxlength="150" class="form-control" name="bankPosition">
+					</div>
+				</div>
+				<div class="col-sm-12 col-xs-12">
+					<div class="form-group">
+						<label>Số tài khoản</label>
+						<input type="text" maxlength="30" class="form-control" name="bankAccountNo">
+					</div>
+				</div>
+				<div class="col-sm-12 col-xs-12">
+					<div class="form-group">
+						<label>Tên tài khoản</label>
+						<input type="text" maxlength="150" class="form-control" name="bankAccountName">
+					</div>
+				</div>
+			</div>
+		</div>
 		<h5 class="padding-top-30">Buổi training</h5>
 		<div class="padding-20 margin-bottom-30 hf-card">
 			<div class="row">

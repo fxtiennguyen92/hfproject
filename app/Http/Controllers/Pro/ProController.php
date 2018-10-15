@@ -85,8 +85,16 @@ class ProController extends Controller
 			$pro->address_2 = $request->address_2;
 			$pro->district = $request->dist;
 			$pro->city = $request->city;
-			$pro->services = json_encode($request->services);
-			$pro->service_str = $request->service_str;
+			if ($request->service_str) {
+				$pro->services = json_encode($request->services);
+				$pro->service_str = $request->service_str;
+			}
+			
+			$pro->bank_name = $request->bankName;
+			$pro->bank_position = $request->bankPosition;
+			$pro->bank_account_no = $request->bankAccountNo;
+			$pro->bank_account_name = $request->bankAccountName;
+			
 			$pro->training = $request->event;
 			$pro->created_by = $user->id;
 			if (auth()->check()) {
